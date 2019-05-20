@@ -30,17 +30,34 @@ ArrowUp → Go down on text
 
 O → Menu State → Pop Itself
 
-# Prepare State
-
-Just to show an animation before the PlayState
-
-### Path
-
-5s → Main State → Pop Itself and add Main State
-
 # Play State
 
 The fight is in here
+
+```c++
+class PlayState : State {
+    public:
+    
+    	Update(float dt) {
+            f(dt);
+        }
+    
+    	UpdateLoading (float) {
+            // Imprime na tela o READY 3, 2, 1
+            f = UpdateStuff;
+        }
+
+    	UpdateStuff (float) {
+            
+        }
+    	
+    private:
+    
+    	Func f; // ponteiro para funcao do Update
+}
+```
+
+
 
 ### Path
 
@@ -60,7 +77,7 @@ Control sets and pause. Shows score of the current match
 
 R1 → continue (if in PAUSE) → Pop itself
 
-R2 → restart → Pop itself, Pop PlayState, Push PrepareState
+R2 → restart → Pop itself, Pop PlayState, Push PlayState
 
 L1 → next set (if SET_ENDED) → Pop itself, Pop PlayState, Push PlayState
 
@@ -74,7 +91,19 @@ namespace Constants
 {
     namespace Play
     {
-        const float SET_TIME
+        const float SET_TIME = ;
+        const int NUMBER_OF_SETS = 5;
+    }
+    
+    namespace Persona {
+        // Pode ser feito usando o valor do enum como índice para array.
+        // Será usado para carregar os assets de cada persona.
+        const enum {
+            PERSONA1 = "PERSONA1",
+            PERSONA2 = "PERSONA2",
+            PERSONA3 = "PERSONA3",
+            PERSONA4 = "PERSONA4"
+        }
     }
     // ...
     
@@ -85,7 +114,11 @@ namespace Constants
 ```c++
 class GameMetaData {
     public:
-        static const 
+    	// state control
+    	static int popRequested; // number of states to pop
+    	static bool quitRequested;
+    
+		//Set control
         static bool Finished;
         static int Set;
         enum ResultType {
@@ -93,22 +126,64 @@ class GameMetaData {
             PLAYER1_VICTORY,
             PLAYER2_VICTORY
         };
-        static ResultType Result[NUMBER_OF_SETS];
+        static ResultType Result[Constants::Play::NUMBER_OF_SETS];
+    	static std::unique_ptr<Player> player1 = nullptr;
+    	static std::unique_ptr<Player> player2 = nullptr;
 }
 ```
 # Player
+
+> We must update the GameObject parameters when a component is added to it, not only when the component is created.
+
 ```c++
-class Player : GameObject {
+class Player : Component {
     public:
         int hp;
+    	
+    	Vec2 speed;
+    	
+    	enum PlayerState {
+            IDLE,
+            RUNNING,
+            JUMPING,
+            FALLING,
+            ATTACKING,
+            HANGING // wall slide
+        }
+    
+    	PlayerState stateAnimation;
+    
+    	Player () {
+            associated->AddComponent(spriteArray[stateAnimation])
+        }
+    
+    	std::shared_ptr<Sprite> spriteArray[PlayerState.size()];
+    
+    	Update () {
+            associated.RemoveSprite();
+            associated.AddComponent(spriteArray[stateAnimation]);
+        }
+    
         PersonaTypes persona; // which persona
 
         IsMainObject() { return true; } // identify the main object
 }
 ```
+
+
 # Bullet
+
 ```c++
-class Bullet : GameObject {
+class Bullet : Component {
 
 }
 ```
+
+
+
+
+
+# O que deseja mudar
+
++ Claudio -> Quero mudar State para Page o nome
++ Adicionar ReplaceComponent(std::string type, Component* comp)
