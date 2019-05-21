@@ -258,7 +258,7 @@ O AddComponent permite que components sejam adicionados sem ter de dar 'new' e p
 	associated.AddComponent<Collider>();
 ```
 
-Como o GameObject tem dois ponteiros para o mesmo Component, um em ```c++ std::vector<std::unique_ptr<Component>> components;``` e outro em ```c++ std::array<Component*, Constants::NUMBER_OF_COMPONENTS_TYPES> componentsArray{};```, o método ```RemoveComponent() ``` também teve de ser alterado para remover os dois ponteiros.
+Como o GameObject tem dois ponteiros para o mesmo Component, um em ``` std::vector<std::unique_ptr<Component>> components;``` e outro em ``` std::array<Component*, Constants::NUMBER_OF_COMPONENTS_TYPES> componentsArray{};```, o método ```RemoveComponent() ``` também teve de ser alterado para remover os dois ponteiros.
 
 ```c++
 void GameObject::RemoveComponent(const Component* cpt) {
