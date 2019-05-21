@@ -170,6 +170,27 @@ class Player : Component {
 }
 ```
 
+# Components
+Para identificar as classes derivadas de Component podemos usar as funções a seguir.
+> Obs: Setar a macro _DEBUG no visual studio quando for compilar para release, essa macro remove os asserts.
+
+```c++
+inline unsigned GetNextComponentId() {
+	static auto lastId = 0u;
+	return lastId++;
+}
+
+
+template <typename T>
+unsigned GetComponentTypeId() {
+	static_assert(std::is_base_of<Component, T>::value, "");
+	static auto typeId = GetNextComponentId();
+	assert(typeId < Constants::NUMBER_OF_COMPONENTS_TYPES);
+	return typeId;
+}
+```
+
+
 
 # Bullet
 
