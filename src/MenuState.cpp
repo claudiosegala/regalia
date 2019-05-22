@@ -5,11 +5,15 @@
 #include <Text.h>
 #include <Rect.h>
 #include <Vec2.h>
+// #include <PlayerState.h>
+// #include <StoryState.h>
+// #include <CreditState.h>
 
 MenuState::MenuState() : option(0), cursor() {
     Logger::Info("Initing Menu State");
 
-    this->music.Open(Constants::Menu::Music);
+    //this->music.Open(Constants::Menu::Music);
+    LoadAssets();
 }
 
 MenuState::~MenuState() {
@@ -23,10 +27,10 @@ void MenuState::LoadAssets() {
     imageObject->AddComponent(image);
     imageObject->box.vector.Reset();
 
-    auto cursorObject = CreateOption("> ", { -50, -100 }); //> points towards first position
-    auto playObject = CreateOption("Play   ", { 0, -100 });
-    auto storyObject = CreateOption("Story  ", { 0, -200 });
-    auto creditsObject = CreateOption("Credits", { 0, -300 });
+    auto cursorObject = CreateOption(">", { -75, 0 }); //> points towards first position
+    auto playObject = CreateOption("Play", { 0, 0 });
+    auto storyObject = CreateOption("Story", { 0, 75 });
+    auto creditsObject = CreateOption("Credits", { 0, 150 });
 
     (void)AddObject(imageObject);
     (void)AddObject(playObject);
@@ -46,20 +50,42 @@ void MenuState::Update(float dt) {
 
     auto & in = InputManager::GetInstance();
 
-    if (in.KeyPress(Constants::Key::ArrowUp)) {
-        this->option = (this->option + 1) % 3 + 1; // 1 to 3
+    if (in.KeyPress(Constants::Key::ArrowDown)) {
+        this->option = (this->option + 1) % 3; // 0 to 2
 
         if (auto ptr = this->cursor.lock()) {
-            ptr->box.vector.y = this->option * (-100);
+            auto pos = Vec2 {
+                Constants::Window::Width / 2 - 75,
+                Constants::Window::Height / 2 + this->option * 75
+            };
+
+            ptr->box.SetCenter(pos);
         }
     }
 
-    if (in.KeyPress(Constants::Key::ArrowDown)) {
-        this->option = (this->option - 1 + 3) % 3 + 1; // 1 to 3
+    if (in.KeyPress(Constants::Key::ArrowUp)) {
+        this->option = (this->option - 1 + 3) % 3; // 0 to 2
 
         if (auto ptr = this->cursor.lock()) {
-            ptr->box.vector.y = this->option * (-100);
+            auto pos = Vec2 {
+                Constants::Window::Width / 2 - 75,
+                Constants::Window::Height / 2 + this->option * 75
+            };
+
+            ptr->box.SetCenter(pos);
         }
+    }
+
+    if (in.KeyPress(Constants::Key::Return)) {
+        // auto game = Game::GetInstance();
+
+        // if (this->option == 0) {
+        //     game->Push(new PlayState());
+        // } else if (this->option == 1) {
+        //     game->Push(new StoryState());
+        // } else {
+        //     game->Push(new CreditState());
+        // }
     }
 
     UpdateArray(dt);

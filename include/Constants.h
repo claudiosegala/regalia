@@ -34,7 +34,7 @@ namespace Constants {
         const int TextSize = 20;
 
         const std::string Music = "assets/audio/opening.ogg";
-        const std::string Background = "assets/image/menubackground.png";
+        const std::string Background = "assets/img/ocean.jpg";
     }
 
     namespace Play {
@@ -42,7 +42,7 @@ namespace Constants {
         const int NumSets = 5;
 
         const std::string Music = "assets/audio/gameon.ogg";
-        const std::string Background = "assets/image/menubackground.png";
+        const std::string Background = "assets/img/menubackground.png";
     }
 
     namespace Key {
@@ -53,6 +53,7 @@ namespace Constants {
 
         const int Escape = SDLK_ESCAPE;
         const int Space = SDLK_SPACE;
+        const int Return = SDLK_RETURN;
 
         const int A = SDLK_a;
         const int D = SDLK_d;

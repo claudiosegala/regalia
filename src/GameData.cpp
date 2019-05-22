@@ -1,3 +1,11 @@
 #include <GameData.h>
 
-bool GameData::playerVictory;
+int GameData::popRequested;
+
+bool GameData::quitRequested;
+
+bool GameData::Finished;
+
+int GameData::Set;
+
+GameData::ResultType GameData::Result[Constants::Play::NumSets];
