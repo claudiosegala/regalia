@@ -26,7 +26,7 @@ void StoryState::LoadAssets() {
 
     (void)AddObject(imageObject);
 
-    this->cursor = AddObject(cursorObject);
+    // TODO: add message to say "Press ESC to return to Menu"
 }
 
 void StoryState::Update(float dt) {
