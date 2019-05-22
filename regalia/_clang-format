@@ -9,5 +9,5 @@ SpacesInParentheses: 'false'
 Standard: Cpp11
 TabWidth: '4'
 UseTab: ForIndentation
-
+SortIncludes: 'false'
 ...
