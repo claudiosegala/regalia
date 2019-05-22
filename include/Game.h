@@ -4,7 +4,7 @@
 #include <Logger.h>
 #include <SDL_Include.h>
 #include <StageState.h>
-#include <Util.h>
+#include <Constants.h>
 
 #include <string>
 #include <stdexcept>

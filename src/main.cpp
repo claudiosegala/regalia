@@ -1,6 +1,6 @@
 #include <Game.h>
 #include <TitleState.h>
-#include <Util.h>
+#include <Constants.h>
 
 #include <stdlib.h>
 #include <time.h>

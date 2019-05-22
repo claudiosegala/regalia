@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL_Include.h>
-#include <Util.h>
+#include <Constants.h>
 #include <Component.h>
 #include <GameObject.h>
 #include <Timer.h>

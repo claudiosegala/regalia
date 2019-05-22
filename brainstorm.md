@@ -83,33 +83,6 @@ L1 → next set (if SET_ENDED) → Pop itself, Pop PlayState, Push PlayState
 
 L2 → quit → RequestQuit
 
-# Constants file
-```c++
-#pragma once
-
-namespace Constants
-{
-    namespace Play
-    {
-        const float SET_TIME = ;
-        const int NUMBER_OF_SETS = 5;
-    }
-    
-    namespace Persona {
-        // Pode ser feito usando o valor do enum como índice para array.
-        // Será usado para carregar os assets de cada persona.
-        const enum {
-            PERSONA1 = "PERSONA1",
-            PERSONA2 = "PERSONA2",
-            PERSONA3 = "PERSONA3",
-            PERSONA4 = "PERSONA4"
-        }
-    }
-    // ...
-    
-}
-```
-
 # Game Meta Data
 ```c++
 class GameMetaData {

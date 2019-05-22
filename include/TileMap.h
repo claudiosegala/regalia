@@ -4,7 +4,7 @@
 #include <GameObject.h>
 #include <Logger.h>
 #include <TileSet.h>
-#include <Util.h>
+#include <Constants.h>
 
 #include <string>
 #include <vector>
