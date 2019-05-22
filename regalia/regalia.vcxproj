@@ -156,6 +156,7 @@
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Vec2.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="include\ScoreState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="src\PlayState.cpp" />
     <ClCompile Include="src\Rect.cpp" />
     <ClCompile Include="src\Resources.cpp" />
+    <ClCompile Include="src\ScoreState.cpp" />
     <ClCompile Include="src\Sound.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\State.cpp" />

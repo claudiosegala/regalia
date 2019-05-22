@@ -85,7 +85,7 @@ namespace Constants {
     namespace Math {
         const float PI = 3.141592653589793f;
         const float TAO = 2.0f * PI;
-        const float EPS = 0.00001;
+        const float EPS = 0.00001f;
     }
 
     namespace StdColor {
