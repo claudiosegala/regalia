@@ -2,15 +2,12 @@
 #include <Util.h>
 
 InputManager& InputManager::GetInstance() {
-    // Make this a singleton
     static InputManager instance;
 
     return instance;
 }
 
 InputManager::InputManager() : mouseState { 0, 0, 0, 0, 0, 0 }, mouseUpdate { 0, 0, 0, 0, 0, 0} {
-    // Initialize variables
-
     this->quitRequested = false;
     this->updateCounter = 0;
     this->mouseX = 0;
@@ -116,6 +113,12 @@ int InputManager::GetMouseX() {
 
 int InputManager::GetMouseY() {
     return this->mouseY;
+}
+
+bool InputManager::PopRequested () {
+    auto& in = InputManager::GetInstance();
+
+    return in.KeyPress(ESCAPE_KEY);
 }
 
 bool InputManager::QuitRequested () {
