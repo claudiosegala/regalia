@@ -4,7 +4,7 @@ MenuState::MenuState() : option(0) {
     Logger::Info("Initing Menu State");
 
     this->cursor = nullptr;
-    this->music.Open(Constants::Music::Opening);
+    this->music.Open(Constants::Menu::Music);
 }
 
 MenuState::~MenuState() {
@@ -13,7 +13,7 @@ MenuState::~MenuState() {
 
 void MenuState::LoadAssets() {
     auto imageObject = new GameObject();
-    auto image = new Sprite(*imageObject, Constants::Image::MenuBackground);
+    auto image = new Sprite(*imageObject, Constants::Menu::Background);
 
     imageObject->AddComponent(image);
     imageObject->box.vector.Reset();
@@ -42,7 +42,7 @@ void MenuState::Update(float) {
         this->cursor->box.vector.y = this->option * (-100);
     }
 
-    if (in.KeyPress(Constants::Key::ArrowUp)) {
+    if (in.KeyPress(Constants::Key::ArrowDown)) {
         this->option = (this->option - 1 + 3) % 3 + 1; // 1 to 3
         this->cursor->box.vector.y = this->option * (-100);
     }
