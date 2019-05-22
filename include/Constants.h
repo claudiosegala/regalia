@@ -37,6 +37,16 @@ namespace Constants {
         const std::string Background = "assets/img/ocean.jpg";
     }
 
+    namespace Story {
+        const int TextSize = 15;
+
+        const std::string Story = "Here, on the other hand, I've gone crazy \
+            and really let the literal span several lines, \
+            without bothering with quoting each line's \
+            content. This works, but you can't indent.";
+        const std::string Background = "assets/img/ocean.jpg";
+    }
+
     namespace Play {
         const float SetTime = 45.0f;
         const int NumSets = 5;

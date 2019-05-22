@@ -41,8 +41,6 @@ void MenuState::LoadAssets() {
 }
 
 void MenuState::Update(float dt) {
-    UNUSED(dt);
-
     this->popRequested = InputManager::IsPopRequested();
     if (this->popRequested) return;
     this->quitRequested = InputManager::IsQuitRequested();
