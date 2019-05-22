@@ -1,31 +1,29 @@
 #pragma once
 
+#include <Music.h>
 #include <State.h>
 #include <Timer.h>
-#include <Music.h>
 
 class PlayState : public State {
-    public:
+public:
+	PlayState();
 
-        PlayState();
-        
-        ~PlayState();
-        
-        void LoadAssets();
-        
-        void Update(float);
-        
-        void Render();
-        
-        void Start();
-        
-        void Pause();
-        
-        void Resume();
+	~PlayState();
 
-    private:
+	void LoadAssets();
 
-        Timer roundTimer;
+	void Update(float);
 
-        Music music;
+	void Render();
+
+	void Start();
+
+	void Pause();
+
+	void Resume();
+
+private:
+	Timer roundTimer;
+
+	Music music;
 };

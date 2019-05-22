@@ -5,68 +5,65 @@
 #include <Vec2.h>
 
 class Sprite : public Component {
-    public:
+public:
+	Sprite(GameObject&, const std::string&, int frameCount = 1, float frameTime = 1.0f, float secondsToSelfDestruct = 0);
 
-        Sprite(GameObject&, const std::string&, int frameCount = 1, float frameTime = 1.0f, float secondsToSelfDestruct = 0);
+	~Sprite();
 
-        ~Sprite();
+	void Open(const std::string&);
 
-        void Open (const std::string&);
+	void SetClip(int, int, int, int);
 
-        void SetClip (int, int, int, int);
+	void SetClip();
 
-        void SetClip ();
+	void SetBox();
 
-        void SetBox ();
+	void SetScale(float, float);
 
-        void SetScale (float, float);
+	Vec2 GetScale();
 
-        Vec2 GetScale();
+	void SetFrame(int);
 
-        void SetFrame(int);
+	void SetFrameCount(int);
 
-        void SetFrameCount(int);
+	void SetFrameTime(float);
 
-        void SetFrameTime(float);
+	void Update(float);
 
-        void Update(float);
+	void Render();
 
-        void Render();
+	void Render(int, int);
 
-        void Render(int, int);
+	void Render(float, float);
 
-        void Render(float, float);
+	bool Is(std::string);
 
-        bool Is(std::string);
+	int GetWidth();
 
-        int GetWidth();
+	int GetHeight();
 
-        int GetHeight();
+	bool IsOpen();
 
-        bool IsOpen();
+private:
+	int width;
 
-    private:
+	int height;
 
-        int width;
+	Vec2 scale;
 
-        int height;
+	int frameCount;
 
-        Vec2 scale;
+	int currentFrame;
 
-        int frameCount;
+	float timeElapsed;
 
-        int currentFrame;
+	float frameTime;
 
-        float timeElapsed;
+	float secondsToSelfDestruct;
 
-        float frameTime;
+	Timer selfDestructCount;
 
-        float secondsToSelfDestruct;
+	std::shared_ptr<SDL_Texture> texture;
 
-        Timer selfDestructCount;
-
-        std::shared_ptr<SDL_Texture> texture;
-
-        SDL_Rect clipRect;
-
+	SDL_Rect clipRect;
 };

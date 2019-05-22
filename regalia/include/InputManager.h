@@ -3,62 +3,59 @@
 #include <Vec2.h>
 
 class InputManager {
-    public:
+public:
+	static InputManager& GetInstance();
 
-        static InputManager& GetInstance();
+	void Update();
 
-        void Update();
+	bool KeyPress(int);
 
-        bool KeyPress(int);
+	bool KeyRelease(int);
 
-        bool KeyRelease(int);
+	bool IsKeyDown(int);
 
-        bool IsKeyDown(int);
+	bool MousePress(int);
 
-        bool MousePress(int);
+	bool MouseRelease(int);
 
-        bool MouseRelease(int);
+	bool IsMouseDown(int);
 
-        bool IsMouseDown(int);
+	Vec2 GetMouse(Vec2 relative);
 
-        Vec2 GetMouse(Vec2 relative);
+	int GetMouseX();
 
-        int GetMouseX();
+	int GetMouseY();
 
-        int GetMouseY();
+	static bool IsPopRequested();
 
-        static bool IsPopRequested();
+	bool QuitRequested();
 
-        bool QuitRequested();
+	static bool IsQuitRequested();
 
-        static bool IsQuitRequested();
+private:
+	int mouseX;
 
-    private:
+	int mouseY;
 
-        int mouseX;
+	int updateCounter;
 
-        int mouseY;
+	bool quitRequested;
 
-        int updateCounter;
+	bool mouseState[6];
 
-        bool quitRequested;
+	int mouseUpdate[6];
 
-        bool mouseState[6];
+	std::unordered_map<int, bool> keyState;
 
-        int mouseUpdate[6];
+	std::unordered_map<int, int> keyUpdate;
 
-        std::unordered_map<int, bool> keyState;
+	InputManager();
 
-        std::unordered_map<int, int> keyUpdate;
+	~InputManager() = default;
 
-        InputManager();
+	void Setup();
 
-        ~InputManager() = default;
+	void RetrieveMouse();
 
-        void Setup();
-
-        void RetrieveMouse();
-
-        void TreatEvent(SDL_Event& event);
-
+	void TreatEvent(SDL_Event& event);
 };

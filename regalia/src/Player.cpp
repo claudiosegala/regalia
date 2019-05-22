@@ -3,7 +3,8 @@
 #include "Constants.h"
 #include "GameObject.h"
 
-Player::Player(GameObject& go) : Component(go) {
+Player::Player(GameObject& go)
+    : Component(go) {
 }
 
 void Player::Update(float dt) {
@@ -15,7 +16,6 @@ void Player::Update(float dt) {
 }
 
 void Player::Render() {
-
 }
 
 bool Player::Is(std::string type) {

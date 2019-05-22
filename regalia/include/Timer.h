@@ -1,19 +1,17 @@
 #pragma once
 
 class Timer {
-    public:
+public:
+	Timer();
 
-        Timer();
+	void SetStart(float);
 
-        void SetStart(float);
+	void Update(float);
 
-        void Update(float);
+	void Restart();
 
-        void Restart();
+	float Get();
 
-        float Get();
-
-    private:
-
-        float time;
+private:
+	float time;
 };

@@ -1,31 +1,28 @@
 #pragma once
 
-#include <GameObject.h>
 #include <Component.h>
-#include <Vec2.h>
+#include <GameObject.h>
 #include <Rect.h>
+#include <Vec2.h>
 
 class Collider : public Component {
-    public:
+public:
+	Rect box;
 
-        Rect box;
+	Collider(GameObject&, Vec2 scale = { 1, 1 }, Vec2 offset = { 0, 0 });
 
-        Collider (GameObject&, Vec2 scale = {1, 1}, Vec2 offset = {0, 0});
+	void Update(float);
 
-        void Update(float);
+	void Render();
 
-        void Render();
+	bool Is(std::string);
 
-        bool Is(std::string);
+	void SetScale(Vec2);
 
-        void SetScale(Vec2);
-        
-        void SetOffset(Vec2);
+	void SetOffset(Vec2);
 
-    private:
+private:
+	Vec2 offset;
 
-        Vec2 offset;
-
-        Vec2 scale;
-
+	Vec2 scale;
 };

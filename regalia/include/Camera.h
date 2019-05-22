@@ -4,25 +4,23 @@
 #include <Vec2.h>
 
 class Camera {
-    public:
+public:
+	static Vec2 pos;
 
-        static Vec2 pos;
+	static Vec2 speed;
 
-        static Vec2 speed;
+	static void Reset();
 
-        static void Reset();
+	static void Follow(GameObject*);
 
-        static void Follow(GameObject*);
+	static void Unfollow();
 
-        static void Unfollow();
+	static void Update(float);
 
-        static void Update(float);
+private:
+	static float const pace;
 
-    private:
+	static GameObject* focus;
 
-        static float const pace;
-
-        static GameObject* focus;
-
-        static Vec2 GetMovement();
+	static Vec2 GetMovement();
 };

@@ -1,9 +1,10 @@
+#include <pch.h>
 #include <Camera.h>
 #include <InputManager.h>
+#include <Logger.h>
 #include <Rect.h>
-#include <Sprite.h>
 #include <ScoreState.h>
-#include <Text.h>
+#include <Sprite.h>
 #include <Vec2.h>
 
 ScoreState::ScoreState() {

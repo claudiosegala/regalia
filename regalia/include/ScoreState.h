@@ -8,23 +8,23 @@
 #include <string>
 
 class ScoreState : public State {
-	public:
-		ScoreState();
+public:
+	ScoreState();
 
-		~ScoreState();
+	~ScoreState();
 
-		void LoadAssets();
+	void LoadAssets();
 
-		void Update(float);
+	void Update(float);
 
-		void Render();
+	void Render();
 
-		void Start();
+	void Start();
 
-		void Pause();
+	void Pause();
 
-		void Resume();
+	void Resume();
 
-	private:
-		Music music;
+private:
+	Music music;
 };

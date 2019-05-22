@@ -1,28 +1,26 @@
 #pragma once
 
-#include <State.h>
 #include <Music.h>
+#include <State.h>
 
 class StoryState : public State {
-    public:
+public:
+	StoryState();
 
-        StoryState();
-        
-        ~StoryState();
-        
-        void LoadAssets();
-        
-        void Update(float);
-        
-        void Render();
-        
-        void Start();
-        
-        void Pause();
-        
-        void Resume();
+	~StoryState();
 
-    private:
+	void LoadAssets();
 
-        Music music;
+	void Update(float);
+
+	void Render();
+
+	void Start();
+
+	void Pause();
+
+	void Resume();
+
+private:
+	Music music;
 };

@@ -5,53 +5,51 @@
 #include <Timer.h>
 
 class Text : public Component {
-    public:
+public:
+	enum class TextStyle {
+		SOLID,
+		SHADED,
+		BLENDED
+	};
 
-        enum class TextStyle {
-            SOLID, 
-            SHADED, 
-            BLENDED
-        };
+	Text(GameObject&, std::string, int, TextStyle, std::string, SDL_Color);
 
-        Text (GameObject&, std::string, int, TextStyle, std::string, SDL_Color);
+	~Text();
 
-        ~Text();
+	void Update(float);
 
-        void Update(float);
+	void Render();
 
-        void Render();
+	bool Is(std::string);
 
-        bool Is(std::string);
+	void SetText(std::string);
 
-        void SetText(std::string);
+	void SetColor(SDL_Color);
 
-        void SetColor(SDL_Color);
+	void SetStyle(TextStyle);
 
-        void SetStyle(TextStyle);
+	void SetFontFile(std::string);
 
-        void SetFontFile(std::string);
+	void SetFontSize(int);
 
-        void SetFontSize(int);
+	void SetFadeOut(float);
 
-        void SetFadeOut(float);
+private:
+	Timer* timer;
 
-    private:
+	std::shared_ptr<TTF_Font> font;
 
-        Timer* timer;
+	SDL_Texture* texture;
 
-        std::shared_ptr<TTF_Font> font;
+	std::string text;
 
-        SDL_Texture* texture;
+	TextStyle style;
 
-        std::string text;
+	std::string fontFile;
 
-        TextStyle style;
+	int fontSize;
 
-        std::string fontFile;
+	SDL_Color color;
 
-        int fontSize;
-
-        SDL_Color color;
-        
-        void RemakeTexture();
+	void RemakeTexture();
 };

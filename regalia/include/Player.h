@@ -4,33 +4,30 @@
 #include <Vec2.h>
 
 class Player : public Component {
-	public:
+public:
+	Player(GameObject&);
 
-		Player(GameObject&);
+	void Update(float);
 
-		void Update(float);
+	void Render();
 
-		void Render();
+	bool Is(std::string);
 
-		bool Is(std::string);
+private:
+	enum class PlayerState {
+		IDLE,
+		RUNNING,
+		JUMPING,
+		FALLING,
+		ATTACKING,
+		HANGING // wall slide
+	};
 
-	private:
+	PlayerState stateAnimation;
 
-		enum class PlayerState {
-			IDLE,
-			RUNNING,
-			JUMPING,
-			FALLING,
-			ATTACKING,
-			HANGING // wall slide
-		};
+	int hp;
 
-		PlayerState stateAnimation;
+	Vec2 speed;
 
-		int hp;
-
-		Vec2 speed;
-
-		//PersonaTypes persona; // which persona
-
+	//PersonaTypes persona; // which persona
 };

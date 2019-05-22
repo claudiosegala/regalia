@@ -5,34 +5,31 @@
 #include <Vec2.h>
 
 class Bullet : public Component {
-    public:
+public:
+	static int const defaultDamage;
 
-        static int const defaultDamage;
+	static float const defaultSpeed;
 
-        static float const defaultSpeed;
+	static float const defaultMaxDistance;
 
-        static float const defaultMaxDistance;
+	bool targetPlayer;
 
-        bool targetPlayer;
-        
-        Bullet(GameObject&, float, float, int, float, std::string, int frameCount = 1, float frameTime = 1.0f, bool targetPlayer = false);
+	Bullet(GameObject&, float, float, int, float, std::string, int frameCount = 1, float frameTime = 1.0f, bool targetPlayer = false);
 
-        void Update(float);
+	void Update(float);
 
-        void Render();
+	void Render();
 
-        void NotifyCollision(GameObject&);
+	void NotifyCollision(GameObject&);
 
-        bool Is(std::string);
+	bool Is(std::string);
 
-        int GetDamage();
+	int GetDamage();
 
-    private:
+private:
+	int damage;
 
-        int damage;
+	float distanceLeft;
 
-        float distanceLeft;
-
-        Vec2 speed;
-        
+	Vec2 speed;
 };

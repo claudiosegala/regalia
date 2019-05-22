@@ -4,32 +4,29 @@
 #include <GameObject.h>
 
 class Sound : public Component {
-    public:
+public:
+	Sound(GameObject&);
 
-        Sound(GameObject&);
+	Sound(GameObject&, std::string);
 
-        Sound(GameObject&, std::string);
+	~Sound();
 
-        ~Sound();
+	void Play(int times = 1);
 
-        void Play(int times = 1);
+	void Stop();
 
-        void Stop();
+	void Open(std::string);
 
-        void Open(std::string);
+	bool IsOpen();
 
-        bool IsOpen();
+	void Update(float);
 
-        void Update(float);
+	void Render();
 
-        void Render();
+	bool Is(std::string);
 
-        bool Is(std::string);
-    
-    private:
+private:
+	int channel;
 
-        int channel;
-
-        std::shared_ptr<Mix_Chunk> chunk;
-
+	std::shared_ptr<Mix_Chunk> chunk;
 };

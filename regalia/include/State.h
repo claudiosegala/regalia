@@ -3,49 +3,47 @@
 #include <GameObject.h>
 
 class State {
-    public:
-        
-        State();
-        
-        virtual ~State();
-        
-        virtual void LoadAssets() = 0;
-        
-        virtual void Update (float) = 0;
-        
-        virtual void Render() = 0;
-        
-        virtual void Start() = 0;
-        
-        virtual void Pause() = 0;
-        
-        virtual void Resume() = 0;
+public:
+	State();
 
-        virtual bool HasComponent(std::string);
+	virtual ~State();
 
-        virtual std::weak_ptr<GameObject> AddObject (GameObject*);
-        
-        virtual std::weak_ptr<GameObject> GetObjectPtr(GameObject*);
-        
-        bool PopRequested();
+	virtual void LoadAssets() = 0;
 
-        bool QuitRequested();
-        
-    protected:
+	virtual void Update(float) = 0;
 
-        bool started;
+	virtual void Render() = 0;
 
-        bool quitRequested;
+	virtual void Start() = 0;
 
-        bool popRequested;
+	virtual void Pause() = 0;
 
-        virtual void RenderArray();
+	virtual void Resume() = 0;
 
-        void StartArray();
+	virtual bool HasComponent(std::string);
 
-        virtual void UpdateArray(float);
+	virtual std::weak_ptr<GameObject> AddObject(GameObject*);
 
-        void PruneArray();
+	virtual std::weak_ptr<GameObject> GetObjectPtr(GameObject*);
 
-        std::vector<std::shared_ptr<GameObject>> objectArray;
+	bool PopRequested();
+
+	bool QuitRequested();
+
+protected:
+	bool started;
+
+	bool quitRequested;
+
+	bool popRequested;
+
+	virtual void RenderArray();
+
+	void StartArray();
+
+	virtual void UpdateArray(float);
+
+	void PruneArray();
+
+	std::vector<std::shared_ptr<GameObject>> objectArray;
 };

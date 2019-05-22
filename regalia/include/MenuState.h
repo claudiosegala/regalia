@@ -1,35 +1,33 @@
 #pragma once
 
 #include <GameObject.h>
-#include <State.h>
 #include <Music.h>
+#include <State.h>
 
 class MenuState : public State {
-    public:
+public:
+	MenuState();
 
-        MenuState();
-        
-        ~MenuState();
-        
-        void LoadAssets();
-        
-        void Update(float);
-        
-        void Render();
-        
-        void Start();
-        
-        void Pause();
-        
-        void Resume();
+	~MenuState();
 
-    private:
+	void LoadAssets();
 
-        int option;
+	void Update(float);
 
-        std::weak_ptr<GameObject> cursor;
+	void Render();
 
-        Music music;
+	void Start();
 
-        GameObject* CreateOption(std::string, Vec2 shift = { 0, 0 });
+	void Pause();
+
+	void Resume();
+
+private:
+	int option;
+
+	std::weak_ptr<GameObject> cursor;
+
+	Music music;
+
+	GameObject* CreateOption(std::string, Vec2 shift = { 0, 0 });
 };

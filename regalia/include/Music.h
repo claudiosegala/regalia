@@ -1,24 +1,21 @@
 #pragma once
 
 class Music {
-    public:
+public:
+	Music();
 
-        Music();
+	Music(const std::string&);
 
-        Music(const std::string&);
+	~Music();
 
-        ~Music();
+	void Play(int times = -1);
 
-        void Play(int times = -1);
+	void Stop(int msToStop = 1500);
 
-        void Stop(int msToStop = 1500);
+	void Open(const std::string&);
 
-        void Open(const std::string&);
+	bool IsOpen();
 
-        bool IsOpen();
-
-    private:
-
-        std::shared_ptr<Mix_Music> music;
-
+private:
+	std::shared_ptr<Mix_Music> music;
 };

@@ -3,46 +3,42 @@
 #include <Component.h>
 #include <TileSet.h>
 
-
 class TileMap : public Component {
-    public:
+public:
+	TileMap(GameObject&, std::string, TileSet*);
 
-        TileMap(GameObject&, std::string, TileSet*);
+	~TileMap();
 
-        ~TileMap();
+	void Load(std::string);
 
-        void Load(std::string);
+	void SetTileSet(TileSet*);
 
-        void SetTileSet(TileSet*);
+	unsigned int Pos(int, int, int);
 
-        unsigned int Pos(int, int, int);
+	int& At(int, int, int z = 0);
 
-        int& At(int, int, int z = 0);
+	void Update(float);
 
-        void Update(float);
+	void Render();
 
-        void Render();
+	void RenderLayer(int, int cameraX = 0, int cameraY = 0);
 
-        void RenderLayer(int, int cameraX = 0, int cameraY = 0);
+	int GetWidth();
 
-        int GetWidth();
+	int GetHeight();
 
-        int GetHeight();
+	int GetDepth();
 
-        int GetDepth();
+	bool Is(std::string);
 
-        bool Is(std::string);
+private:
+	int mapWidth;
 
-    private:
+	int mapHeight;
 
-        int mapWidth;
+	int mapDepth;
 
-        int mapHeight;
+	std::vector<int> tileMatrix;
 
-        int mapDepth;
-
-        std::vector<int> tileMatrix;
-
-        TileSet* tileSet;
-
+	TileSet* tileSet;
 };

@@ -3,64 +3,61 @@
 #include <State.h>
 
 class Game {
-    public:
+public:
+	static int const windowWidth;
 
-        static int const windowWidth;
+	static int const windowHeight;
 
-        static int const windowHeight;
+	static std::string const windowName;
 
-        static std::string const windowName;
+	Game(const std::string&, int, int);
 
-        Game(const std::string&, int, int);
+	~Game();
 
-        ~Game();
+	static Game* GetInstance();
 
-        static Game* GetInstance();
+	State* GetCurrentState();
 
-        State* GetCurrentState();
+	SDL_Renderer* GetRenderer();
 
-        SDL_Renderer* GetRenderer();
+	void Run();
 
-        void Run();
+	void Push(State*);
 
-        void Push(State*);
+	float GetDeltaTime();
 
-        float GetDeltaTime();
+private:
+	static Game* instance;
 
-    private:
+	float dt;
 
-        static Game* instance;
+	unsigned int frameStart;
 
-        float dt;
+	State* storedState;
 
-        unsigned int frameStart;
+	SDL_Window* window;
 
-        State* storedState;
+	SDL_Renderer* renderer;
 
-        SDL_Window* window;
+	std::stack<std::unique_ptr<State>> stateStack;
 
-        SDL_Renderer* renderer;
+	void CalculateDeltaTime();
 
-        std::stack<std::unique_ptr<State>> stateStack;
+	void Init_SDL();
 
-        void CalculateDeltaTime();
+	void Init_IMG();
 
-        void Init_SDL();
+	void Init_MIX();
 
-        void Init_IMG();
+	void Init_TTF();
 
-        void Init_MIX();
+	void Init_WDW(const std::string&, int, int);
 
-        void Init_TTF();
+	void Init_RDR();
 
-        void Init_WDW(const std::string&, int, int);
+	void Start();
 
-        void Init_RDR();
+	void Loop();
 
-        void Start();
-
-        void Loop();
-
-        void End();
-
+	void End();
 };

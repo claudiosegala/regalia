@@ -3,28 +3,25 @@
 #include <Sprite.h>
 
 class TileSet {
-    public:
-    
-        TileSet(GameObject&, int, int, std::string);
-        
-        void RenderTile(unsigned int, float, float);
+public:
+	TileSet(GameObject&, int, int, std::string);
 
-        unsigned int GetQuantityTiles() const;
+	void RenderTile(unsigned int, float, float);
 
-        int GetTileWidth() const;
+	unsigned int GetQuantityTiles() const;
 
-        int GetTileHeight() const;
+	int GetTileWidth() const;
 
-    private:
+	int GetTileHeight() const;
 
-        Sprite tileSet;
+private:
+	Sprite tileSet;
 
-        int rows;
+	int rows;
 
-        int columns;
+	int columns;
 
-        int tileWidth;
+	int tileWidth;
 
-        int tileHeight;
-
+	int tileHeight;
 };

@@ -1,28 +1,26 @@
 #pragma once
 
-#include <State.h>
 #include <Music.h>
+#include <State.h>
 
 class CreditState : public State {
-    public:
+public:
+	CreditState();
 
-        CreditState();
-        
-        ~CreditState();
-        
-        void LoadAssets();
-        
-        void Update(float);
-        
-        void Render();
-        
-        void Start();
-        
-        void Pause();
-        
-        void Resume();
+	~CreditState();
 
-    private:
+	void LoadAssets();
 
-        Music music;
+	void Update(float);
+
+	void Render();
+
+	void Start();
+
+	void Pause();
+
+	void Resume();
+
+private:
+	Music music;
 };

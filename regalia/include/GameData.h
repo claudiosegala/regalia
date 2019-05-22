@@ -3,24 +3,24 @@
 #include <Constants.h>
 
 class GameData {
-    public:
-    	static int popRequested; //> number of states to pop
+public:
+	static int popRequested; //> number of states to pop
 
-    	static bool quitRequested; //> if we should quit
-    
-        static bool Finished;
+	static bool quitRequested; //> if we should quit
 
-        static int Set;
+	static bool Finished;
 
-        enum class ResultType {
-            NONE,
-            PLAYER1_VICTORY,
-            PLAYER2_VICTORY
-        };
+	static int Set;
 
-        static ResultType Result[Constants::Play::NumSets];
+	enum class ResultType {
+		NONE,
+		PLAYER1_VICTORY,
+		PLAYER2_VICTORY
+	};
 
-//    	static std::unique_ptr<Player> player1 = nullptr;
+	static ResultType Result[Constants::Play::NumSets];
 
-//    	static std::unique_ptr<Player> player2 = nullptr;
+	//    	static std::unique_ptr<Player> player1 = nullptr;
+
+	//    	static std::unique_ptr<Player> player2 = nullptr;
 };
