@@ -2,11 +2,6 @@
 
 #include <Component.h>
 #include <GameObject.h>
-#include <Logger.h>
-#include <SDL_Include.h>
-#include <Constants.h>
-
-#include <memory>
 
 class Sound : public Component {
     public:

@@ -1,10 +1,12 @@
+#include <pch.h>
 #include <CreditState.h>
 #include <InputManager.h>
 #include <Camera.h>
 #include <Sprite.h>
-#include <Text.h>
 #include <Rect.h>
 #include <Vec2.h>
+#include <Logger.h>
+#include <Constants.h>
 
 CreditState::CreditState() {
     Logger::Info("Initing Credit State");

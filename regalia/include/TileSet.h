@@ -1,11 +1,6 @@
 #pragma once
 
-#include <GameObject.h>
-#include <Logger.h>
 #include <Sprite.h>
-#include <Constants.h>
-
-#include <string>
 
 class TileSet {
     public:

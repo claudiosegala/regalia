@@ -1,10 +1,5 @@
 #pragma once
 
-#include <SDL_Include.h>
-#include <iostream>
-#include <string>
-#include <cmath>
-
 namespace Constants {
 
     namespace Window {

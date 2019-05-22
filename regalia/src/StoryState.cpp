@@ -1,10 +1,12 @@
+#include <pch.h>
 #include <StoryState.h>
 #include <InputManager.h>
 #include <Camera.h>
 #include <Sprite.h>
-#include <Text.h>
 #include <Rect.h>
 #include <Vec2.h>
+#include <Logger.h>
+#include <Constants.h>
 
 StoryState::StoryState() {
     Logger::Info("Initing Story State");

@@ -1,3 +1,4 @@
+#include <pch.h>
 #include <MenuState.h>
 #include <InputManager.h>
 #include <Camera.h>
@@ -6,8 +7,8 @@
 #include <Rect.h>
 #include <Vec2.h>
 #include <PlayState.h>
-#include <StoryState.h>
-#include <CreditState.h>
+#include <Logger.h>
+#include <Constants.h>
 
 MenuState::MenuState() : option(0), cursor() {
     Logger::Info("Initing Menu State");

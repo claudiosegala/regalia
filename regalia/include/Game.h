@@ -1,15 +1,6 @@
 #pragma once
 
-#include <InputManager.h>
-#include <Logger.h>
-#include <SDL_Include.h>
 #include <State.h>
-#include <Constants.h>
-
-#include <string>
-#include <stdexcept>
-#include <iostream>
-#include <stack>
 
 class Game {
     public:

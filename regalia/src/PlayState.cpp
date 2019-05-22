@@ -1,13 +1,13 @@
+#include <pch.h>
 #include <PlayState.h>
 #include <InputManager.h>
 #include <Camera.h>
 #include <Sprite.h>
-#include <Text.h>
 #include <Rect.h>
 #include <Vec2.h>
-#include <PlayState.h>
 #include <StoryState.h>
-#include <CreditState.h>
+#include <Logger.h>
+#include <Constants.h>
 
 PlayState::PlayState() {
     Logger::Info("Initing Play State");

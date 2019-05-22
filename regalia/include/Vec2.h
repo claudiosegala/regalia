@@ -1,11 +1,5 @@
 #pragma once
 
-#include <Logger.h>
-#include <Constants.h>
-
-#include <iostream>
-#include <cmath>
-
 class Vec2 {
     public:
 

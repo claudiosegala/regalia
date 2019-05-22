@@ -1,6 +1,8 @@
+#include <pch.h>
 #include <Camera.h>
 #include <Game.h>
 #include <InputManager.h>
+#include <Constants.h>
 
 float const Camera::pace = 1500.0f;
 

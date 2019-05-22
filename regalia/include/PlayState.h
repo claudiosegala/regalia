@@ -1,13 +1,8 @@
 #pragma once
 
-#include <Constants.h>
-#include <GameObject.h>
 #include <State.h>
 #include <Timer.h>
 #include <Music.h>
-
-#include <string>
-#include <memory>
 
 class PlayState : public State {
     public:

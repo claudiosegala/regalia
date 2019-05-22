@@ -1,5 +1,9 @@
+#include <pch.h>
 #include <Sound.h>
 #include <Resources.h>
+#include <Logger.h>
+#include <Constants.h>
+
 
 Sound::Sound (GameObject& go) : Component(go), chunk() {
 	this->channel = -1;

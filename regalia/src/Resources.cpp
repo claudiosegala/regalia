@@ -1,6 +1,7 @@
-#include <SDL_Include.h>
+#include <pch.h>
 #include <Resources.h>
 #include <Game.h>
+#include <Logger.h>
 
 std::unordered_map<std::string, std::shared_ptr<SDL_Texture>> Resources::imageTable;
 

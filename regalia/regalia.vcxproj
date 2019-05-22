@@ -77,6 +77,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -89,6 +91,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,6 +107,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,6 +125,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,10 +150,10 @@
     <ClInclude Include="include\Logger.h" />
     <ClInclude Include="include\MenuState.h" />
     <ClInclude Include="include\Music.h" />
+    <ClInclude Include="include\pch.h" />
     <ClInclude Include="include\PlayState.h" />
     <ClInclude Include="include\Rect.h" />
     <ClInclude Include="include\Resources.h" />
-    <ClInclude Include="include\SDL_Include.h" />
     <ClInclude Include="include\Sound.h" />
     <ClInclude Include="include\Sprite.h" />
     <ClInclude Include="include\State.h" />
@@ -155,11 +163,11 @@
     <ClInclude Include="include\TileSet.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Vec2.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\ScoreState.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\CameraFollower.cpp" />
@@ -174,6 +182,12 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MenuState.cpp" />
     <ClCompile Include="src\Music.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\PlayState.cpp" />
     <ClCompile Include="src\Rect.cpp" />
     <ClCompile Include="src\Resources.cpp" />

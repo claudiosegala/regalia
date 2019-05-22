@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Constants.h>
 #include <GameObject.h>
 
 class State {

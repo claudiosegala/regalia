@@ -3,9 +3,6 @@
 #include <Rect.h>
 #include <Vec2.h>
 
-#include <algorithm>
-#include <cmath>
-
 class Collision {
 	public:
 	

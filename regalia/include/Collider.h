@@ -1,8 +1,6 @@
 #pragma once
 
-#include <Constants.h>
 #include <GameObject.h>
-#include <Collision.h>
 #include <Component.h>
 #include <Vec2.h>
 #include <Rect.h>
