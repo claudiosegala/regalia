@@ -52,7 +52,7 @@ void Text::Render() {
         static_cast<int>(this->associated.box.height)
     };
 
-    auto err = SDL_RenderCopyEx(game->GetRenderer(), this->texture, &srcRect, &dstRect, (this->associated.angle * 180) / PI, nullptr, SDL_FLIP_NONE);
+    auto err = SDL_RenderCopyEx(game->GetRenderer(), this->texture, &srcRect, &dstRect, (this->associated.angle * 180) / Constants::Math::PI, nullptr, SDL_FLIP_NONE);
 
     if (err < 0) {
         auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";

@@ -33,9 +33,11 @@ class InputManager {
 
         int GetMouseY();
 
-        static bool PopRequested();
+        static bool IsPopRequested();
 
-        static bool QuitRequested();
+        bool QuitRequested();
+
+        static bool IsQuitRequested();
 
     private:
 

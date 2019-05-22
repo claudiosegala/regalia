@@ -22,7 +22,7 @@ Logger* Logger::GetInstance () {
 
 void Logger::Error(const std::string &msg, int type) {
     #ifdef LOG_ERROR
-        std::cout << RED << "\n";
+        std::cout << Constants::StdColor::Red << "\n";
         if (type == 0 || type == 2) {
             std::cout << "> [error]: ";    
         }
@@ -32,7 +32,7 @@ void Logger::Error(const std::string &msg, int type) {
         if (type == 0 || type == 1) {
             std::cout << "\n\n";
         }
-        std::cout << RESET;
+        std::cout << Constants::StdColor::Reset;
     #else
         // Avoid warnings
         (void)msg;
@@ -60,7 +60,7 @@ void Logger::Info(const std::string &msg, int type) {
 
 void Logger::Warning(const std::string &msg, int type) {
     #ifdef LOG_WARN
-        std::cout << YELLOW;
+        std::cout << Constants::StdColor::Yellow;
         if (type == 0 || type == 2) {
             std::cout << "> [warn]: ";    
         }
@@ -70,7 +70,7 @@ void Logger::Warning(const std::string &msg, int type) {
         if (type == 0 || type == 1) {
             std::cout << "\n";
         }
-        std::cout << RESET;
+        std::cout << Constants::StdColor::Reset;
     #else
         // Avoid warnings
         (void)msg;

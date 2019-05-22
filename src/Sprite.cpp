@@ -4,7 +4,6 @@
 #include <Sprite.h>
 
 Sprite::Sprite(GameObject& associated, const std::string &file, int frameCount, float frameTime, float secondsToSelfDestruct)  : Component(associated), selfDestructCount() {
-    // Initing variables
     this->texture = nullptr;
     this->scale = Vec2(1, 1);
     this->frameCount = frameCount;
@@ -127,7 +126,7 @@ void Sprite::Render (int x, int y) {
         static_cast<int>(srcRect.h * this->scale.y)
     };
 
-    auto err = SDL_RenderCopyEx(game->GetRenderer(), this->texture.get(), &srcRect, &dstRect, (this->associated.angle * 180) / PI, nullptr, SDL_FLIP_NONE);
+    auto err = SDL_RenderCopyEx(game->GetRenderer(), this->texture.get(), &srcRect, &dstRect, (this->associated.angle * 180) / Constants::Math::PI, nullptr, SDL_FLIP_NONE);
     
     if (err < 0) {
         auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";

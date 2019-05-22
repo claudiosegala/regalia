@@ -3,7 +3,6 @@
 #include <Vec2.h>
 #include <Sprite.h>
 #include <Collider.h>
-#include <PenguinBody.h>
 
 int const Bullet::defaultDamage = 10;
 

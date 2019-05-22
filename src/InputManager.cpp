@@ -115,12 +115,14 @@ int InputManager::GetMouseY() {
     return this->mouseY;
 }
 
-bool InputManager::PopRequested () {
-    auto& in = InputManager::GetInstance();
-
-    return in.KeyPress(ESCAPE_KEY);
+bool InputManager::IsPopRequested () {
+    return InputManager::GetInstance().KeyPress(Constants::Key::Escape);
 }
 
 bool InputManager::QuitRequested () {
     return this->quitRequested;
+}
+
+bool InputManager::IsQuitRequested () {
+    return InputManager::GetInstance().QuitRequested();
 }

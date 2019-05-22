@@ -1,9 +1,14 @@
 #include <MenuState.h>
+#include <InputManager.h>
+#include <Camera.h>
+#include <Sprite.h>
+#include <Text.h>
+#include <Rect.h>
+#include <Vec2.h>
 
-MenuState::MenuState() : option(0) {
+MenuState::MenuState() : option(0), cursor() {
     Logger::Info("Initing Menu State");
 
-    this->cursor = nullptr;
     this->music.Open(Constants::Menu::Music);
 }
 
@@ -31,23 +36,33 @@ void MenuState::LoadAssets() {
     this->cursor = AddObject(cursorObject);
 }
 
-void MenuState::Update(float) {
-    if (this->popRequested = InputManager::PopRequested()) return;
-    if (this->quitRequested = InputManager::QuitRequested()) return;
+void MenuState::Update(float dt) {
+    UNUSED(dt);
+
+    this->popRequested = InputManager::IsPopRequested();
+    if (this->popRequested) return;
+    this->quitRequested = InputManager::IsQuitRequested();
+    if (this->quitRequested) return;
 
     auto & in = InputManager::GetInstance();
 
     if (in.KeyPress(Constants::Key::ArrowUp)) {
         this->option = (this->option + 1) % 3 + 1; // 1 to 3
-        this->cursor->box.vector.y = this->option * (-100);
+
+        if (auto ptr = this->cursor.lock()) {
+            ptr->box.vector.y = this->option * (-100);
+        }
     }
 
     if (in.KeyPress(Constants::Key::ArrowDown)) {
         this->option = (this->option - 1 + 3) % 3 + 1; // 1 to 3
-        this->cursor->box.vector.y = this->option * (-100);
+
+        if (auto ptr = this->cursor.lock()) {
+            ptr->box.vector.y = this->option * (-100);
+        }
     }
 
-    UpdateArray();
+    UpdateArray(dt);
 }
 
 void MenuState::Render() {
@@ -74,8 +89,8 @@ void MenuState::Resume() {
 
 GameObject* MenuState::CreateOption (std::string message, Vec2 shift) {
     auto pos = Vec2 {
-        Constants::Window::Width / 2;
-        Constants::Window::Height / 2;
+        Constants::Window::Width / 2,
+        Constants::Window::Height / 2
     };
 
     auto textAsset = "assets/font/Call me maybe.ttf";
@@ -83,6 +98,8 @@ GameObject* MenuState::CreateOption (std::string message, Vec2 shift) {
     auto object = new GameObject();
     auto text = new Text(*object, textAsset, Constants::Menu::TextSize, Text::TextStyle::SOLID, message, { 255, 0, 0, 1 });
 
-    textObject->AddComponent(text);
-    textObject->box.SetCenter(pos + shift);
+    object->AddComponent(text);
+    object->box.SetCenter(pos + shift);
+
+    return object;
 }

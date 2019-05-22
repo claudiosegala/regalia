@@ -1,13 +1,9 @@
 #pragma once
 
+#include <SDL_Include.h>
 #include <iostream>
 #include <string>
 #include <cmath>
-
-#define W(x)        std::cerr << "\033[31m" << #x << "=" << x << "\033[0m" << "\n";
-#define UNUSED(x)   (void)x
-#define EQUAL(x, y) fabs(x - y) < EPS
-#define RAND        static_cast <float> (rand()) / static_cast <float> (RAND_MAX) // 0.0 to 1.0
 
 namespace Constants {
 
@@ -97,3 +93,8 @@ namespace Constants {
     // }
     
 }
+
+#define W(x)        std::cerr << "\033[31m" << #x << "=" << x << "\033[0m" << "\n";
+#define UNUSED(x)   (void)x
+#define EQUAL(x, y) fabs(x - y) < Constants::Math::EPS
+#define RAND        static_cast <float> (rand()) / static_cast <float> (RAND_MAX) // 0.0 to 1.0

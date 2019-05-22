@@ -1,5 +1,5 @@
 #include <Game.h>
-#include <TitleState.h>
+#include <MenuState.h>
 #include <Constants.h>
 
 #include <stdlib.h>
@@ -17,7 +17,7 @@ int main(int argc, char** argv)
     
         auto game = Game::GetInstance();
 
-        game->Push(new TitleState());
+        game->Push(new MenuState());
 
         game->Run();
 

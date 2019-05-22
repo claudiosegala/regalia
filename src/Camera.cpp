@@ -39,10 +39,10 @@ void Camera::Update(float dt) {
 Vec2 Camera::GetMovement() {
     auto& in  = InputManager::GetInstance();
     
-    auto right = in.IsKeyDown(RIGHT_ARROW_KEY);
-    auto left = in.IsKeyDown(LEFT_ARROW_KEY);
-    auto up = in.IsKeyDown(UP_ARROW_KEY);
-    auto down = in.IsKeyDown(DOWN_ARROW_KEY);
+    auto right = in.IsKeyDown(Constants::Key::ArrowRight);
+    auto left = in.IsKeyDown(Constants::Key::ArrowLeft);
+    auto up = in.IsKeyDown(Constants::Key::ArrowUp);
+    auto down = in.IsKeyDown(Constants::Key::ArrowDown);
 
     float x = right ? 1.0f : (left ? -1.0f : 0.0f);
     float y = down ? 1.0f : (up ? -1.0f : 0.0f);

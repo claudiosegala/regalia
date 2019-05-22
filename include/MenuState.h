@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Constants.h>
+#include <GameObject.h>
 #include <State.h>
 #include <Music.h>
 
@@ -30,7 +31,7 @@ class MenuState : public State {
 
         int option;
 
-        std::shared_ptr<Text> cursor;
+        std::weak_ptr<GameObject> cursor;
 
         Music music;
 

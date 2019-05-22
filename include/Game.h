@@ -3,7 +3,7 @@
 #include <InputManager.h>
 #include <Logger.h>
 #include <SDL_Include.h>
-#include <StageState.h>
+#include <State.h>
 #include <Constants.h>
 
 #include <string>
