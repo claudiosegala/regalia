@@ -27,4 +27,12 @@ public:
 
 private:
 	Music music;
+
+	enum class ScoreStatus {
+		PAUSED,
+		UNFINISHED_MATCH,
+		FINISHED_MATCH
+	};
+
+	ScoreStatus status;
 };

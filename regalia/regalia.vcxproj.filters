@@ -29,6 +29,8 @@
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Vec2.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\ScoreState.cpp" />
+    <ClCompile Include="include\FrameInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
@@ -60,6 +62,7 @@
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Vec2.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\ScoreState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

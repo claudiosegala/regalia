@@ -26,6 +26,12 @@ public:
 
 	int GetMouseY();
 
+	bool GamepadPress(int);
+
+	bool GamepadRelease(int);
+
+	bool IsGamepadDown(int);
+
 	static bool IsPopRequested();
 
 	bool QuitRequested();

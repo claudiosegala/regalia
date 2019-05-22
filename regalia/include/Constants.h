@@ -77,6 +77,27 @@ namespace Mouse {
 	const int Right = SDL_BUTTON_RIGHT;
 }
 
+namespace Gamepad {
+	// TODO: replace
+	const int ArrowLeft = SDLK_LEFT;
+	const int ArrowRight = SDLK_RIGHT;
+	const int ArrowUp = SDLK_UP;
+	const int ArrowDown = SDLK_DOWN;
+
+	const int Select = SDLK_ESCAPE;
+	const int Start = SDLK_SPACE;
+
+	const int Cross = SDLK_a;
+	const int Ball = SDLK_d;
+	const int Square = SDLK_w;
+	const int Triangle = SDLK_s;
+
+	const int R1 = SDLK_LEFT;
+	const int R2 = SDLK_RIGHT;
+	const int L1 = SDLK_UP;
+	const int L2 = SDLK_DOWN;
+}
+
 namespace Math {
 	const float PI = 3.141592653589793f;
 	const float TAO = 2.0f * PI;

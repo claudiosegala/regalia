@@ -18,7 +18,7 @@ Game::Game(const std::string& title, int width, int height) {
 	}
 
 	this->instance = this;
-	this->frameStart = 0.0f;
+	this->frameStart = 0;
 	this->dt = 0.0f;
 	this->storedState = nullptr;
 	this->window = nullptr;
@@ -309,5 +309,5 @@ void Game::CalculateDeltaTime() {
 	auto oldFrameStart = (float)this->frameStart;
 
 	this->dt = (newFrameStart - oldFrameStart) / 1000.0f;
-	this->frameStart = newFrameStart;
+	this->frameStart = (unsigned int)newFrameStart;
 }

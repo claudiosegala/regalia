@@ -35,20 +35,6 @@ SELECT → ScoreTable (PAUSE) → add ScoreTable
 
 "Last set end" → ScoreTable(MATCH_ENDED) → add ScoreTable
 
-# Score State
-
-Control sets and pause. Shows score of the current match
-
-### Path
-
-R1 → continue (if in PAUSE) → Pop itself
-
-R2 → restart → Pop itself, Pop PlayState, Push PlayState
-
-L1 → next set (if SET_ENDED) → Pop itself, Pop PlayState, Push PlayState
-
-L2 → quit → RequestQuit
-
 # Components
 Para identificar as classes derivadas de Component podemos usar as funções a seguir.
 > Obs: Setar a macro NDEBUG no visual studio quando for compilar para release, essa macro remove os asserts.

@@ -1,5 +1,6 @@
 #include <pch.h>
 #include <Constants.h>
+#include <Logger.h>
 #include <InputManager.h>
 
 InputManager& InputManager::GetInstance() {
@@ -38,6 +39,37 @@ void InputManager::RetrieveMouse() {
 
 void InputManager::TreatEvent(SDL_Event& event) {
 	switch (event.type) {
+	case SDL_JOYDEVICEREMOVED: {
+		Logger::Error("Joystick Removed!");
+		this->quitRequested = true;
+		break;
+	}
+	case SDL_JOYAXISMOTION:
+		printf("Joystick %d axis %d value: %d\n", event.jaxis.which, event.jaxis.axis, event.jaxis.value);
+		break;
+	case SDL_JOYHATMOTION:
+		printf("Joystick %d hat %d value:", event.jhat.which, event.jhat.hat);
+		if (event.jhat.value == SDL_HAT_CENTERED)
+			printf(" centered");
+		if (event.jhat.value & SDL_HAT_UP)
+			printf(" up");
+		if (event.jhat.value & SDL_HAT_RIGHT)
+			printf(" right");
+		if (event.jhat.value & SDL_HAT_DOWN)
+			printf(" down");
+		if (event.jhat.value & SDL_HAT_LEFT)
+			printf(" left");
+		printf("\n");
+		break;
+	case SDL_JOYBALLMOTION:
+		printf("Joystick %d ball %d delta: (%d,%d)\n", event.jball.which, event.jball.ball, event.jball.xrel, event.jball.yrel);
+		break;
+	case SDL_JOYBUTTONDOWN:
+		printf("Joystick %d button %d down\n",  event.jbutton.which, event.jbutton.button);
+		break;
+	case SDL_JOYBUTTONUP:
+		printf("Joystick %d button %d up\n",  event.jbutton.which, event.jbutton.button);
+		break;
 	case SDL_QUIT: {
 		this->quitRequested = true;
 		break;
@@ -116,6 +148,18 @@ int InputManager::GetMouseX() {
 
 int InputManager::GetMouseY() {
 	return this->mouseY;
+}
+
+bool InputManager::GamepadPress(int button) {
+	return false;
+}
+
+bool InputManager::GamepadRelease(int button) {
+	return false;
+}
+
+bool InputManager::IsGamepadDown(int button) {
+	return false;
 }
 
 bool InputManager::IsPopRequested() {
