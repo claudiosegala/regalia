@@ -5,9 +5,9 @@
 #include <Text.h>
 #include <Rect.h>
 #include <Vec2.h>
-// #include <PlayerState.h>
-// #include <StoryState.h>
-// #include <CreditState.h>
+#include <PlayState.h>
+#include <StoryState.h>
+#include <CreditState.h>
 
 MenuState::MenuState() : option(0), cursor() {
     Logger::Info("Initing Menu State");
