@@ -49,45 +49,6 @@ L1 → next set (if SET_ENDED) → Pop itself, Pop PlayState, Push PlayState
 
 L2 → quit → RequestQuit
 
-# Player
-
-> We must update the GameObject parameters when a component is added to it, not only when the component is created.
-
-```c++
-class Player : Component {
-    public:
-        int hp;
-    	
-    	Vec2 speed;
-    	
-    	enum PlayerState {
-            IDLE,
-            RUNNING,
-            JUMPING,
-            FALLING,
-            ATTACKING,
-            HANGING // wall slide
-        }
-    
-    	PlayerState stateAnimation;
-    
-    	Player () {
-            associated->AddComponent(spriteArray[stateAnimation])
-        }
-    
-    	std::shared_ptr<Sprite> spriteArray[PlayerState.size()];
-    
-    	Update () {
-            associated.RemoveSprite();
-            associated.AddComponent(spriteArray[stateAnimation]);
-        }
-    
-        PersonaTypes persona; // which persona
-
-        IsMainObject() { return true; } // identify the main object
-}
-```
-
 # Components
 Para identificar as classes derivadas de Component podemos usar as funções a seguir.
 > Obs: Setar a macro NDEBUG no visual studio quando for compilar para release, essa macro remove os asserts.
@@ -209,5 +170,4 @@ class Bullet : Component {
 
 # O que deseja mudar
 
-+ Claudio -> Quero mudar State para Page o nome
 + Adicionar ReplaceComponent(std::string type, Component* comp)
