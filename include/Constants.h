@@ -47,6 +47,12 @@ namespace Constants {
         const std::string Background = "assets/img/ocean.jpg";
     }
 
+    namespace Credit {
+        const int TextSize = 15;
+
+        const std::string Background = "assets/img/ocean.jpg";
+    }
+
     namespace Play {
         const float SetTime = 45.0f;
         const int NumSets = 5;

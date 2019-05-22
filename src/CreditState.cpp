@@ -1,4 +1,4 @@
-#include <StoryState.h>
+#include <CreditState.h>
 #include <InputManager.h>
 #include <Camera.h>
 #include <Sprite.h>
@@ -6,20 +6,20 @@
 #include <Rect.h>
 #include <Vec2.h>
 
-StoryState::StoryState() {
-    Logger::Info("Initing Story State");
+CreditState::CreditState() {
+    Logger::Info("Initing Credit State");
 
-    //this->music.Open(Constants::Story::Music);
+    //this->music.Open(Constants::Credit::Music);
     LoadAssets();
 }
 
-StoryState::~StoryState() {
-    Logger::Info("Destroying Story State");
+CreditState::~CreditState() {
+    Logger::Info("Destroying Credit State");
 }
 
-void StoryState::LoadAssets() {
+void CreditState::LoadAssets() {
     auto imageObject = new GameObject();
-    auto image = new Sprite(*imageObject, Constants::Story::Background);
+    auto image = new Sprite(*imageObject, Constants::Credit::Background);
 
     imageObject->AddComponent(image);
     imageObject->box.vector.Reset();
@@ -29,7 +29,7 @@ void StoryState::LoadAssets() {
     // TODO: add message to say "Press ESC to return to Menu"
 }
 
-void StoryState::Update(float dt) {
+void CreditState::Update(float dt) {
     this->popRequested = InputManager::IsPopRequested();
     if (this->popRequested) return;
     this->quitRequested = InputManager::IsQuitRequested();
@@ -38,12 +38,12 @@ void StoryState::Update(float dt) {
     UpdateArray(dt);
 }
 
-void StoryState::Render() {
+void CreditState::Render() {
     RenderArray();
 }
 
-void StoryState::Start() {
-    Logger::Info("Starting Story State");
+void CreditState::Start() {
+    Logger::Info("Starting Credit State");
     Camera::Reset();
 
     StartArray();
@@ -51,11 +51,11 @@ void StoryState::Start() {
     this->started = true;
 }
 
-void StoryState::Pause() {
+void CreditState::Pause() {
     Logger::Info("Pausing Title State");
 }
 
-void StoryState::Resume() {
+void CreditState::Resume() {
     Logger::Info("Resuming Title State");
     Camera::Reset();
 }
