@@ -1,35 +1,3 @@
-# Menu State
-
-To show the menu options (Play, Story, Credits)
-
-### Path
-
-ArrowDown → Go up on option
-
-ArrowUp → Go down on option
-
-X → Push Option
-
-# Credits State
-
-To show an image of us.
-
-### Path
-
-O → MenuState → Pop itself
-
-# Story State
-
-To show a text with the story
-
-### Path
-
-ArrowDown → Go up on text
-
-ArrowUp → Go down on text
-
-O → Menu State → Pop Itself
-
 # Play State
 
 The fight is in here
@@ -57,8 +25,6 @@ class PlayState : State {
 }
 ```
 
-
-
 ### Path
 
 SELECT → ScoreTable (PAUSE) → add ScoreTable
@@ -83,27 +49,6 @@ L1 → next set (if SET_ENDED) → Pop itself, Pop PlayState, Push PlayState
 
 L2 → quit → RequestQuit
 
-# Game Meta Data
-```c++
-class GameMetaData {
-    public:
-    	// state control
-    	static int popRequested; // number of states to pop
-    	static bool quitRequested;
-    
-		//Set control
-        static bool Finished;
-        static int Set;
-        enum ResultType {
-            NONE,
-            PLAYER1_VICTORY,
-            PLAYER2_VICTORY
-        };
-        static ResultType Result[Constants::Play::NUMBER_OF_SETS];
-    	static std::unique_ptr<Player> player1 = nullptr;
-    	static std::unique_ptr<Player> player2 = nullptr;
-}
-```
 # Player
 
 > We must update the GameObject parameters when a component is added to it, not only when the component is created.
