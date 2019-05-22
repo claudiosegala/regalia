@@ -5,7 +5,7 @@ int const Game::windowWidth = 1024;
 
 int const Game::windowHeight = 600;
 
-std::string const Game::windowName = "ClaudioSegala_150032552";
+std::string const Game::windowName = "Regalia";
 
 Game* Game::instance;
 

@@ -9,7 +9,7 @@
 #include <StoryState.h>
 #include <CreditState.h>
 
-PlayState::PlayState() : roundTimer() {
+PlayState::PlayState() {
     Logger::Info("Initing Play State");
 
     //this->music.Open(Constants::Play::Music);
@@ -27,16 +27,11 @@ void PlayState::LoadAssets() {
     imageObject->AddComponent(image);
     imageObject->box.vector.Reset();
 
-    auto cursorObject = CreateOption(">", { -75, 0 }); //> points towards first position
-    auto playObject = CreateOption("Play", { 0, 0 });
-    auto storyObject = CreateOption("Story", { 0, 75 });
-    auto creditsObject = CreateOption("Credits", { 0, 150 });
-
     (void)AddObject(imageObject);
 }
 
 void PlayState::Update(float dt) {
-    roundTime.Update(dt);
+    roundTimer.Update(dt);
 
     this->popRequested = InputManager::IsPopRequested();
     if (this->popRequested) return;
@@ -45,7 +40,7 @@ void PlayState::Update(float dt) {
 
     auto & in = InputManager::GetInstance();
 
-    _update(dt);
+  //  _update(dt);
 
     UpdateArray(dt);
 }
