@@ -1,9 +1,7 @@
 #pragma once
 
-#include <SDL_Include.h>
-#include <Constants.h>
 #include <Component.h>
-#include <GameObject.h>
+#include <Text.h>
 #include <Timer.h>
 
 class Text : public Component {

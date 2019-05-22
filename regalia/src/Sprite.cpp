@@ -1,7 +1,9 @@
+#include <pch.h>
 #include <Camera.h>
 #include <Game.h>
 #include <Resources.h>
 #include <Sprite.h>
+#include <Constants.h>
 
 Sprite::Sprite(GameObject& associated, const std::string &file, int frameCount, float frameTime, float secondsToSelfDestruct)  : Component(associated), selfDestructCount() {
     this->texture = nullptr;

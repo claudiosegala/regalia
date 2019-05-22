@@ -1,3 +1,4 @@
+#include <pch.h>
 #include <Collider.h>
 #include <Vec2.h>
 #include <Constants.h>
@@ -5,8 +6,6 @@
 #ifdef DEBUG
 #include "Camera.h"
 #include "Game.h"
-
-#include <SDL2/SDL.h>
 #endif // DEBUG
 
 Collider::Collider (GameObject& go, Vec2 scale, Vec2 offset ) : Component(go) {

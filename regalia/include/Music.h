@@ -1,13 +1,5 @@
 #pragma once
 
-#include <Logger.h>
-#include <SDL_Include.h>
-#include <Constants.h>
-
-#include <memory>
-#include <iostream>
-#include <string>
-
 class Music {
     public:
 

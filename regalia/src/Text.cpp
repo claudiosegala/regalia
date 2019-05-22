@@ -1,8 +1,10 @@
+#include <pch.h>
 #include <Text.h>
 #include <Component.h>
 #include <Game.h>
 #include <Camera.h>
 #include <Resources.h>
+#include <Constants.h>
 
 Text::Text (GameObject& associated, std::string file, int size, TextStyle style, std::string text, SDL_Color color) 
 : Component(associated), text(text), style(style), fontFile(file), fontSize(size), color(color) {

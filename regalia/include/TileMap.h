@@ -1,16 +1,8 @@
 #pragma once
 
 #include <Component.h>
-#include <GameObject.h>
-#include <Logger.h>
 #include <TileSet.h>
-#include <Constants.h>
 
-#include <string>
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 class TileMap : public Component {
     public:

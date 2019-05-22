@@ -1,10 +1,5 @@
 #pragma once
 
-#include <Constants.h>
-
-#include <iostream>
-#include <string>
-
 class Logger {
     public:
 

@@ -1,5 +1,8 @@
+#include <pch.h>
 #include <Resources.h>
 #include <Game.h>
+#include <Logger.h>
+#include <InputManager.h>
 
 int const Game::windowWidth = 1024;
 

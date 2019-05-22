@@ -1,12 +1,6 @@
 #pragma once
 
-#include <Logger.h>
-#include <SDL_Include.h>
-#include <Constants.h>
 #include <Vec2.h>
-
-#include <unordered_map>
-#include <tuple>
 
 class InputManager {
     public:

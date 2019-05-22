@@ -1,11 +1,5 @@
 #pragma once
 
-#include <GameObject.h>
-#include <Logger.h>
-#include <Constants.h>
-
-#include <string>
-
 class GameObject;
 
 class Component {

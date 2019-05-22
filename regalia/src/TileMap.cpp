@@ -1,5 +1,7 @@
+#include <pch.h>
 #include <TileMap.h>
 #include <Camera.h>
+#include <Constants.h>
 
 TileMap::TileMap(GameObject& go, std::string file, TileSet* ts) : Component(go), tileSet(ts) {
 	this->mapDepth = 0;

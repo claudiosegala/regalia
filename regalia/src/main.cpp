@@ -1,9 +1,8 @@
+#include <pch.h>
 #include <Game.h>
 #include <MenuState.h>
 #include <Constants.h>
-
-#include <stdlib.h>
-#include <time.h>
+#include <Logger.h>
 
 int main(int argc, char** argv)
 {

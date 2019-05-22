@@ -1,3 +1,4 @@
+#include <pch.h>
 #include <TileSet.h>
 
 TileSet::TileSet(GameObject& go, int width, int height, std::string file) : tileSet(go, file) {

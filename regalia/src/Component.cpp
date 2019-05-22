@@ -1,4 +1,6 @@
+#include <pch.h>
 #include <Component.h>
+#include <Constants.h>
 
 Component::Component(GameObject& go) : associated(go) {}
 

@@ -1,5 +1,7 @@
+#include <pch.h>
 #include <Camera.h>
 #include <CameraFollower.h>
+#include <Constants.h>
 
 CameraFollower::CameraFollower(GameObject& go) : Component(go) {}
 

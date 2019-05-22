@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Constants.h>
+#include <Component.h>
 #include <GameObject.h>
 #include <Vec2.h>
 

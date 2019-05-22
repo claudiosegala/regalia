@@ -1,11 +1,7 @@
 #pragma once
 
-#include <Constants.h>
-#include <GameObject.h>
 #include <State.h>
 #include <Music.h>
-
-#include <string>
 
 class CreditState : public State {
     public:

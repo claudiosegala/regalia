@@ -1,15 +1,6 @@
 #pragma once
 
-#include <Component.h>
-#include <Logger.h>
 #include <Rect.h>
-#include <Vec2.h>
-#include <Constants.h>
-
-#include <vector>
-#include <string>
-#include <memory>
-#include <algorithm>
 
 class Component;
 

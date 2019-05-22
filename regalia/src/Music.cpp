@@ -1,5 +1,7 @@
+#include <pch.h>
 #include <Music.h>
 #include <Resources.h>
+#include <Logger.h>
 
 Music::Music() : music() {}
 

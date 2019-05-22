@@ -1,14 +1,8 @@
 #pragma once
 
 #include <Component.h>
-#include <GameObject.h>
-#include <Logger.h>
-#include <SDL_Include.h>
-#include <Constants.h>
 #include <Timer.h>
-
-#include <string>
-#include <iostream>
+#include <Vec2.h>
 
 class Sprite : public Component {
     public:
