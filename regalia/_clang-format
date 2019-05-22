@@ -1,0 +1,13 @@
+﻿---
+BasedOnStyle: WebKit
+AlignEscapedNewlinesLeft: 'true'
+AllowAllParametersOfDeclarationOnNextLine: 'true'
+BreakBeforeBraces: Attach
+BreakConstructorInitializersBeforeComma: 'true'
+ColumnLimit: '0'
+SpacesInParentheses: 'false'
+Standard: Cpp11
+TabWidth: '4'
+UseTab: ForIndentation
+
+...
