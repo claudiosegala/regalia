@@ -1,5 +1,7 @@
 #include <pch.h>
 #include <Camera.h>
+#include <TileMap.h>
+#include <TileSet.h>
 #include <Constants.h>
 #include <InputManager.h>
 #include <Logger.h>
@@ -12,7 +14,7 @@
 PlayState::PlayState() {
 	Logger::Info("Initing Play State");
 
-	//this->music.Open(Constants::Play::Music);
+	this->music.Open(Constants::Play::Music);
 	LoadAssets();
 }
 
@@ -21,13 +23,7 @@ PlayState::~PlayState() {
 }
 
 void PlayState::LoadAssets() {
-	auto imageObject = new GameObject();
-	auto image = new Sprite(*imageObject, Constants::Menu::Background);
-
-	imageObject->AddComponent(image);
-	imageObject->box.vector.Reset();
-
-	(void)AddObject(imageObject);
+	CreateField();
 }
 
 void PlayState::Update(float dt) {
@@ -61,13 +57,29 @@ void PlayState::Start() {
 	StartArray();
 
 	this->started = true;
+	this->music.Play();
 }
 
 void PlayState::Pause() {
-	Logger::Info("Pausing Title State");
+	Logger::Info("Pausing Play State");
+	this->music.Stop(0);
 }
 
 void PlayState::Resume() {
-	Logger::Info("Resuming Title State");
+	Logger::Info("Resuming Play State");
 	Camera::Reset();
+	this->music.Play();
+}
+
+void PlayState::CreateField() {
+	auto backgroundObject = new GameObject();
+	auto image = new Sprite(*backgroundObject, "assets/img/ocean.jpg");
+	auto tileSet = new TileSet(*backgroundObject, 24, 24, "assets/img/tileSetSample.png");
+	auto tileMap = new TileMap(*backgroundObject, "assets/map/tileMapSample.txt", tileSet);
+
+	backgroundObject->AddComponent(image);
+	backgroundObject->AddComponent(tileMap);
+	backgroundObject->box.vector = Vec2(0, 0);
+
+	(void)AddObject(backgroundObject);
 }

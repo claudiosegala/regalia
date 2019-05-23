@@ -53,7 +53,7 @@ namespace Play {
 	const float SetTime = 45.0f;
 	const int NumSets = 5;
 
-	const std::string Music = "assets/audio/gameon.ogg";
+	const std::string Music = "assets/audio/stageState.ogg";
 	const std::string Background = "assets/img/menubackground.png";
 }
 

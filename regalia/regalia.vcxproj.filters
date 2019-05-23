@@ -67,4 +67,10 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\img\tileSetSample.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\map\tileMapSample.txt" />
+  </ItemGroup>
 </Project>

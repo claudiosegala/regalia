@@ -1,4 +1,5 @@
 #include <pch.h>
+#include <Game.h>
 #include <Camera.h>
 #include <Constants.h>
 #include <InputManager.h>
@@ -81,8 +82,10 @@ void MenuState::Update(float dt) {
 		}
 	}
 
-	if (in.KeyPress(Constants::Key::Return)) {
-		// auto game = Game::GetInstance();
+	if (in.KeyPress(Constants::Key::Space)) {
+		auto game = Game::GetInstance();
+
+		game->Push(new PlayState());
 
 		// if (this->option == 0) {
 		//     game->Push(new PlayState());

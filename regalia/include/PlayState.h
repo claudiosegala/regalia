@@ -28,4 +28,6 @@ private:
 	Timer roundTimer;
 
 	Music music;
+	
+	void CreateField();
 };

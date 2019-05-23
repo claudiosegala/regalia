@@ -36,15 +36,15 @@ void TileMap::Load(std::string file) {
 	auto n = static_cast<unsigned int>(x * y * z);
 
 	this->tileMatrix.resize(n);
+	this->mapHeight = x;
+	this->mapWidth = y;
 	this->mapDepth = z;
-	this->mapHeight = y;
-	this->mapWidth = x;
 
-	for (auto k = 0; k < z; k++) {
-		for (auto i = 0; i < x; i++) {
-			for (auto j = 0; j < y; j++) {
+	for (auto layer = 0; layer < this->mapDepth; layer++) {
+		for (auto row = 0; row < this->mapHeight; row++) {
+			for (auto col = 0; col < this->mapWidth; col++) {
 				getline(fs, line, ',');
-				auto idx = Pos(j, i, k);
+				auto idx = Pos(col, row, layer);
 				this->tileMatrix[idx] = std::stoi(line);
 				this->tileMatrix[idx]--;
 			}
@@ -59,15 +59,15 @@ void TileMap::SetTileSet(TileSet* ts) {
 	this->tileSet = ts;
 }
 
-unsigned int TileMap::Pos(int x, int y, int z) {
+unsigned int TileMap::Pos(int col, int row, int layer) {
 	auto mapSize = (this->mapWidth * this->mapHeight);
-	auto columnSize = (this->mapWidth);
+	auto rowSize = (this->mapWidth);
 
-	return static_cast<unsigned int>(z * mapSize + y * columnSize + x);
+	return static_cast<unsigned int>(layer * mapSize + row * rowSize + col);
 }
 
-int& TileMap::At(int x, int y, int z) {
-	auto idx = Pos(x, y, z);
+int& TileMap::At(int col, int row, int layer) {
+	auto idx = Pos(col, row, layer);
 	return this->tileMatrix[idx];
 }
 
@@ -82,13 +82,12 @@ void TileMap::Render() {
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
-	for (int i = 0; i < this->mapHeight; i++) {
-		for (int j = 0; j < this->mapWidth; j++) {
-			auto idx = (unsigned int)At(i, j, layer);
-			auto x = i * this->tileSet->GetTileWidth() - cameraX;
-			auto y = j * this->tileSet->GetTileHeight() - cameraY;
-
-			tileSet->RenderTile(idx, (float)x, (float)y);
+	auto tileHeight = this->tileSet->GetTileHeight();
+	auto tileWidth = this->tileSet->GetTileWidth();
+	for (int row = 0; row < this->mapHeight; row++) {
+		for (int col = 0; col < this->mapWidth; col++) {
+			auto tileSetIdx = (unsigned int)At(col, row, layer);
+			tileSet->RenderTile(tileSetIdx, (float)(col * tileWidth - cameraY), (float)(row * tileHeight - cameraX));
 		}
 	}
 }
