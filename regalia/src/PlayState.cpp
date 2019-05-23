@@ -34,11 +34,14 @@ void PlayState::Update(float dt) {
 	roundTimer.Update(dt);
 
 	this->popRequested = InputManager::IsPopRequested();
-	if (this->popRequested)
+	if (this->popRequested) {
 		return;
+	}
+
 	this->quitRequested = InputManager::IsQuitRequested();
-	if (this->quitRequested)
+	if (this->quitRequested) {
 		return;
+	}
 
 	auto& in = InputManager::GetInstance();
 

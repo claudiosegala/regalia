@@ -4,10 +4,6 @@
 
 class GameData {
 public:
-	static int popRequested; //> number of states to pop
-
-	static bool quitRequested; //> if we should quit
-
 	static bool Finished;
 
 	static int Set;

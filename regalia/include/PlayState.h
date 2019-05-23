@@ -4,6 +4,8 @@
 #include <State.h>
 #include <Timer.h>
 
+// TODO: add animation of Ready? Go!
+
 class PlayState : public State {
 public:
 	PlayState();

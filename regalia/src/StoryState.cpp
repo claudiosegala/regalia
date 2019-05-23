@@ -33,11 +33,14 @@ void StoryState::LoadAssets() {
 
 void StoryState::Update(float dt) {
 	this->popRequested = InputManager::IsPopRequested();
-	if (this->popRequested)
+	if (this->popRequested > 0) {
 		return;
+	}
+
 	this->quitRequested = InputManager::IsQuitRequested();
-	if (this->quitRequested)
+	if (this->quitRequested) {
 		return;
+	}
 
 	UpdateArray(dt);
 }

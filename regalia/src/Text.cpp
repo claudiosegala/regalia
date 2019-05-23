@@ -133,7 +133,10 @@ void Text::RemakeTexture() {
 		throw std::runtime_error(msg);
 	}
 
-	std::tie(this->associated.box.width, this->associated.box.height) = Resources::QueryImage(this->texture);
+	int w, h;
+	std::tie(w, h) = Resources::QueryImage(this->texture);
+	this->associated.box.width = static_cast<float>(w);
+	this->associated.box.height = static_cast<float>(h);
 
 	SDL_FreeSurface(aux);
 }

@@ -5,7 +5,7 @@ State::State()
     : objectArray() {
 	this->started = false;
 	this->quitRequested = false;
-	this->popRequested = false;
+	this->popRequested = 0;
 }
 
 State::~State() {
@@ -44,7 +44,7 @@ std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* gameObject) {
 	    : std::weak_ptr<GameObject>();
 }
 
-bool State::PopRequested() {
+int State::PopRequested() {
 	return this->popRequested;
 }
 

@@ -26,7 +26,7 @@ public:
 
 	virtual std::weak_ptr<GameObject> GetObjectPtr(GameObject*);
 
-	bool PopRequested();
+	int PopRequested();
 
 	bool QuitRequested();
 
@@ -35,7 +35,7 @@ protected:
 
 	bool quitRequested;
 
-	bool popRequested;
+	int popRequested;
 
 	virtual void RenderArray();
 

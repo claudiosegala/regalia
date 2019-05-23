@@ -12,7 +12,7 @@ ScoreState::ScoreState() {
 	Logger::Info("Initing Story State");
 
 	//this->music.Open(Constants::Story::Music);
-	//this->status = ; // Infer from game data the current situation
+	this->status = ScoreStatus::FINISHED_MATCH; // TODO: Infer from game data the current situation
 	LoadAssets();
 }
 
@@ -44,7 +44,7 @@ void ScoreState::Update(float dt) {
 
 	if (in.GamepadPress(Constants::Gamepad::R1) && this->status == ScoreStatus::PAUSED) {
 		// continue
-		this->popRequested = 1;
+		//this->popRequested = 1;
 		return;
 	}
 
@@ -53,7 +53,7 @@ void ScoreState::Update(float dt) {
 		//GameData::Reset();
 		//Game::Append(new PlayState());
 
-		this->popRequested = 2;
+		//this->popRequested = 2;
 		return;
 	}
 
@@ -61,7 +61,7 @@ void ScoreState::Update(float dt) {
 		// has next set
 		//Game::Append(new PlayState());
 
-		this->popRequested = 2;
+		//this->popRequested = 2;
 		return;
 	}
 
