@@ -1,14 +1,9 @@
 #include <pch.h>
 #include <Game.h>
+#include <Constants.h>
 #include <InputManager.h>
 #include <Logger.h>
 #include <Resources.h>
-
-int const Game::windowWidth = 1024;
-
-int const Game::windowHeight = 600;
-
-std::string const Game::windowName = "Regalia";
 
 Game* Game::instance;
 
@@ -164,7 +159,7 @@ Game* Game::GetInstance() {
 		return Game::instance;
 	}
 
-	return Game::instance = new Game(Game::windowName, Game::windowWidth, Game::windowHeight);
+	return Game::instance = new Game(Constants::Window::Name, Constants::Window::Width, Constants::Window::Height);
 }
 
 State* Game::GetCurrentState() {

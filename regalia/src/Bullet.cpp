@@ -5,12 +5,6 @@
 #include <Sprite.h>
 #include <Vec2.h>
 
-int const Bullet::defaultDamage = 10;
-
-float const Bullet::defaultSpeed = 100.0f;
-
-float const Bullet::defaultMaxDistance = 400.0f;
-
 Bullet::Bullet(GameObject& go, float angle, float speed, int damage, float maxDistance, std::string sprite, int frameCount, float frameTime, bool targetPlayer)
     : Component(go) {
 	// Adding Image

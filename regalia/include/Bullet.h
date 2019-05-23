@@ -6,12 +6,6 @@
 
 class Bullet : public Component {
 public:
-	static int const defaultDamage;
-
-	static float const defaultSpeed;
-
-	static float const defaultMaxDistance;
-
 	bool targetPlayer;
 
 	Bullet(GameObject&, float, float, int, float, std::string, int frameCount = 1, float frameTime = 1.0f, bool targetPlayer = false);

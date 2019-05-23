@@ -4,12 +4,6 @@
 
 class Game {
 public:
-	static int const windowWidth;
-
-	static int const windowHeight;
-
-	static std::string const windowName;
-
 	Game(const std::string&, int, int);
 
 	~Game();

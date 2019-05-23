@@ -1,33 +1,8 @@
 # Play State
 
-The fight is in here
-
-```c++
-class PlayState : State {
-    public:
-    
-    	Update(float dt) {
-            f(dt);
-        }
-    
-    	UpdateLoading (float) {
-            // Imprime na tela o READY 3, 2, 1
-            f = UpdateStuff;
-        }
-
-    	UpdateStuff (float) {
-            
-        }
-    	
-    private:
-    
-    	Func f; // ponteiro para funcao do Update
-}
-```
-
 ### Path
 
-SELECT → ScoreTable (PAUSE) → add ScoreTable
+MENU → ScoreTable (PAUSE) → add ScoreTable
 
 "Time Up" → ScoreTable (SET_ENDED) → add ScoreTable
 

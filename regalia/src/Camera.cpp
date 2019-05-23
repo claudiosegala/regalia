@@ -28,7 +28,7 @@ void Camera::Update(float dt) {
 	if (focus != nullptr) {
 		// Follows the game object
 		auto center = Camera::focus->box.Center();
-		auto centerWindow = Vec2(Game::windowWidth, Game::windowHeight) / 2;
+		auto centerWindow = Vec2(Constants::Window::Width, Constants::Window::Height) / 2;
 
 		Camera::pos = center - centerWindow;
 		return;

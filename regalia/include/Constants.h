@@ -3,8 +3,9 @@
 namespace Constants {
 
 namespace Window {
-	const int Width = 1024;
-	const int Height = 600;
+	const int Width = 480;
+	const int Height = 336;
+	const std::string Name = "Regalia";
 }
 
 namespace SharedAssets {
@@ -54,6 +55,14 @@ namespace Play {
 
 	const std::string Music = "assets/audio/gameon.ogg";
 	const std::string Background = "assets/img/menubackground.png";
+}
+
+namespace Bullet {
+	const int DefaultDamage = 10;
+
+	const float DefaultSpeed = 100.0f;
+
+	const float DefaultMaxDistance = 400.0f;
 }
 
 namespace Key {
