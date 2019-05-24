@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Constants.h>
+#include <Player.h>
 
 class GameData {
 public:
@@ -16,7 +17,7 @@ public:
 
 	static ResultType Result[Constants::Play::NumSets];
 
-	//    	static std::unique_ptr<Player> player1 = nullptr;
+	static std::unique_ptr<Player> player1;
 
-	//    	static std::unique_ptr<Player> player2 = nullptr;
+	static std::unique_ptr<Player> player2;
 };

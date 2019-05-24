@@ -10,11 +10,17 @@
 #include <Sprite.h>
 #include <StoryState.h>
 #include <Vec2.h>
+#include <GameData.h>
+#include <Player.h>
 
 PlayState::PlayState() {
 	Logger::Info("Initing Play State");
 
+	this->backgroundIdx = 0;
+	this->tileSetIdx = 0;
+	this->tileMapIdx = 0;
 	this->music.Open(Constants::Play::Music);
+
 	LoadAssets();
 }
 
@@ -24,6 +30,14 @@ PlayState::~PlayState() {
 
 void PlayState::LoadAssets() {
 	CreateField();
+
+	// TODO: remove player initiation from here
+	auto go = new GameObject();
+	auto player = new Player(*go);
+
+	go->AddComponent(player);
+
+	(void)AddObject(go);
 }
 
 void PlayState::Update(float dt) {
