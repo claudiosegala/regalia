@@ -72,14 +72,46 @@ void PlayState::Resume() {
 }
 
 void PlayState::CreateField() {
-	auto backgroundObject = new GameObject();
-	auto image = new Sprite(*backgroundObject, "assets/img/ocean.jpg");
-	auto tileSet = new TileSet(*backgroundObject, 24, 24, "assets/img/tileSetSample.png");
-	auto tileMap = new TileMap(*backgroundObject, "assets/map/tileMapSample.txt", tileSet);
+	auto rnd = rand();
 
-	backgroundObject->AddComponent(image);
-	backgroundObject->AddComponent(tileMap);
-	backgroundObject->box.vector = Vec2(0, 0);
+	auto go = new GameObject();
+	auto image = BuildBackground(go, rnd);
+	auto tileSet = BuildTileSet(go, rnd);
+	auto tileMap = BuildTileMap(go, tileSet);
 
-	(void)AddObject(backgroundObject);
+	go->AddComponent(image);
+	go->AddComponent(tileMap);
+	go->box.vector = Vec2(0, 0);
+
+	(void)AddObject(go);
+}
+
+Sprite* PlayState::BuildBackground(GameObject* gameObject, int rnd) {
+	auto assets = Constants::Play::Backgrounds;
+	auto idx = rnd % assets.size();
+	auto asset = assets[idx];
+
+	this->backgroundIdx = (int)idx;
+
+	return new Sprite(*gameObject, asset.file);
+}
+
+TileSet* PlayState::BuildTileSet(GameObject* gameObject, int rnd) {
+	auto assets = Constants::Play::TileSets;
+	auto idx = rnd % assets.size();
+	auto asset = assets[idx];
+
+	this->tileSetIdx = (int)idx;
+
+	return new TileSet(*gameObject, asset.width, asset.height, asset.file);
+}
+
+TileMap* PlayState::BuildTileMap(GameObject* gameObject, TileSet* tileSet) {
+	auto assets = Constants::Play::TileMaps;
+	auto idx = rand() % assets.size();
+	auto asset = assets[idx];
+
+	this->tileMapIdx = (int)idx;
+
+	return new TileMap(*gameObject, asset.file, tileSet);
 }

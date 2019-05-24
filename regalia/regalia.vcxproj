@@ -165,6 +165,7 @@
     <ClInclude Include="include\Text.h" />
     <ClInclude Include="include\TileMap.h" />
     <ClInclude Include="include\TileSet.h" />
+    <ClInclude Include="include\Interfaces.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Vec2.h" />
     <ClInclude Include="include\Player.h" />
@@ -214,7 +215,12 @@
     <Image Include="assets\img\tileSetSample.png" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="assets\map\tileMapSample.txt" />
+    <Text Include="assets\map\00.txt" />
+    <Text Include="assets\map\01.txt" />
+    <Text Include="assets\map\02.txt" />
+    <Text Include="assets\map\03.txt" />
+    <Text Include="assets\map\04.txt" />
+    <Text Include="assets\map\05.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

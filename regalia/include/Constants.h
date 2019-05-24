@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Interfaces.h>
+
 namespace Constants {
 
 namespace Window {
@@ -54,7 +56,23 @@ namespace Play {
 	const int NumSets = 5;
 
 	const std::string Music = "assets/audio/stageState.ogg";
-	const std::string Background = "assets/img/menubackground.png";
+
+	const std::vector<BackgroundData> Backgrounds = {
+		{ "assets/img/ocean.jpg" }
+	};
+
+	const std::vector<TileSetData> TileSets = {
+		{ 24, 24, "assets/img/tileSetSample.png" }
+	};
+
+	const std::vector<TileMapData> TileMaps = {
+		{ "assets/map/00.txt" },
+		{ "assets/map/01.txt" },
+		{ "assets/map/02.txt" },
+		{ "assets/map/03.txt" },
+		{ "assets/map/04.txt" },
+		{ "assets/map/05.txt" }
+	};
 }
 
 namespace Bullet {

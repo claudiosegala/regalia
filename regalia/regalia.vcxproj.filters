@@ -63,6 +63,7 @@
     <ClInclude Include="include\Vec2.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\ScoreState.h" />
+    <ClInclude Include="include\Interfaces.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -71,6 +72,11 @@
     <Image Include="assets\img\tileSetSample.png" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="assets\map\tileMapSample.txt" />
+    <Text Include="assets\map\00.txt" />
+    <Text Include="assets\map\01.txt" />
+    <Text Include="assets\map\02.txt" />
+    <Text Include="assets\map\03.txt" />
+    <Text Include="assets\map\04.txt" />
+    <Text Include="assets\map\05.txt" />
   </ItemGroup>
 </Project>
