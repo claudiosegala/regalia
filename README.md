@@ -1,2 +1,2 @@
 # regalia
-yes, it is a game.
+yes, it is a game. just wait...
