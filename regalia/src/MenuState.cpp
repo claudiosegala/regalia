@@ -130,7 +130,7 @@ GameObject* MenuState::CreateOption(std::string message, Vec2 shift) {
 	auto textAsset = "assets/font/Call me maybe.ttf";
 
 	auto object = new GameObject();
-	auto text = new Text(*object, textAsset, Constants::Menu::TextSize, Text::TextStyle::SOLID, message, { 255, 0, 0, 1 });
+	auto text = new Text(*object, textAsset, Constants::Menu::TextSize, Text::TextStyle::SOLID, message, { 255, 0, 0, 0 });
 
 	object->AddComponent(text);
 	object->box.SetCenter(pos + shift);
