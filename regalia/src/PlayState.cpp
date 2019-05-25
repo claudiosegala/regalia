@@ -109,32 +109,32 @@ void PlayState::CreatePlayers() {
 	//(void)AddObject(go2);
 }
 
-Sprite* PlayState::BuildBackground(GameObject* gameObject, int rnd) {
+Sprite* PlayState::BuildBackground(GameObject* go, int rnd) {
 	auto assets = Constants::Play::Backgrounds;
 	const auto idx = rnd % assets.size();
 	const auto& asset = assets[idx];
 
 	this->backgroundIdx = int(idx);
 
-	return new Sprite(*gameObject, asset.file);
+	return new Sprite(*go, asset.file);
 }
 
-TileSet* PlayState::BuildTileSet(GameObject* gameObject, int rnd) {
+TileSet* PlayState::BuildTileSet(GameObject* go, int rnd) {
 	auto assets = Constants::Play::TileSets;
 	const auto idx = rnd % assets.size();
 	const auto& asset = assets[idx];
 
 	this->tileSetIdx = int(idx);
 
-	return new TileSet(*gameObject, asset.width, asset.height, asset.file);
+	return new TileSet(*go, asset.width, asset.height, asset.file);
 }
 
-TileMap* PlayState::BuildTileMap(GameObject* gameObject, TileSet* tileSet) {
+TileMap* PlayState::BuildTileMap(GameObject* go, TileSet* tileSet) {
 	auto assets = Constants::Play::TileMaps;
 	const auto idx = rand() % assets.size();
 	const auto& asset = assets[idx];
 
 	this->tileMapIdx = int(idx);
 
-	return new TileMap(*gameObject, asset.file, tileSet);
+	return new TileMap(*go, asset.file, tileSet);
 }

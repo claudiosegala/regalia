@@ -25,23 +25,12 @@ MenuState::~MenuState() {
 }
 
 void MenuState::LoadAssets() {
-	auto imageObject = new GameObject();
-	const auto image = new Sprite(*imageObject, Constants::Menu::Background);
+	(void)AddObject(CreateBackground());
+	(void)AddObject(CreateOption("Play", { 0, 0 }));
+	(void)AddObject(CreateOption("Story", { 0, 75 }));
+	(void)AddObject(CreateOption("Credits", { 0, 150 }));
 
-	imageObject->AddComponent(image);
-	imageObject->box.vector.Reset();
-
-	const auto cursorObject = CreateOption(">", { -75, 0 }); //> points towards first position
-	const auto playObject = CreateOption("Play", { 0, 0 });
-	const auto storyObject = CreateOption("Story", { 0, 75 });
-	const auto creditsObject = CreateOption("Credits", { 0, 150 });
-
-	(void)AddObject(imageObject);
-	(void)AddObject(playObject);
-	(void)AddObject(storyObject);
-	(void)AddObject(creditsObject);
-
-	this->cursor = AddObject(cursorObject);
+	this->cursor = AddObject(CreateOption(">", { -75, 0 })); //> points towards first position
 }
 
 void MenuState::Update(float dt) {
@@ -121,6 +110,16 @@ void MenuState::Resume() {
 	Camera::Reset();
 }
 
+GameObject* MenuState::CreateBackground() {
+	auto go = new GameObject();
+	const auto image = new Sprite(*go, Constants::Menu::Background);
+
+	go->AddComponent(image);
+	go->box.vector.Reset();
+
+	return go;
+}
+
 GameObject* MenuState::CreateOption(std::string message, Vec2 shift) {
 	const auto pos = Vec2 {
 		Constants::Window::Width / 2,
@@ -129,11 +128,11 @@ GameObject* MenuState::CreateOption(std::string message, Vec2 shift) {
 
 	const auto textAsset = "assets/font/Call me maybe.ttf";
 
-	auto object = new GameObject();
-	const auto text = new Text(*object, textAsset, Constants::Menu::TextSize, Text::TextStyle::SOLID, message, { 255, 0, 0, 0 });
+	auto go = new GameObject();
+	const auto text = new Text(*go, textAsset, Constants::Menu::TextSize, Text::TextStyle::SOLID, message, { 255, 0, 0, 0 });
 
-	object->AddComponent(text);
-	object->box.SetCenter(pos + shift);
+	go->AddComponent(text);
+	go->box.SetCenter(pos + shift);
 
-	return object;
+	return go;
 }

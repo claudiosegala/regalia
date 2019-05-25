@@ -22,19 +22,19 @@ bool State::HasComponent(std::string type) {
 	return false;
 }
 
-std::weak_ptr<GameObject> State::AddObject(GameObject* gameObject) {
-	this->objectArray.emplace_back(gameObject);
+std::weak_ptr<GameObject> State::AddObject(GameObject* go) {
+	this->objectArray.emplace_back(go);
 
 	if (this->started) {
-		gameObject->Start();
+		go->Start();
 	}
 
 	return this->objectArray.back();
 }
 
-std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* gameObject) {
+std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* go) {
 	auto f = [&](const std::shared_ptr<GameObject>& _go) {
-		return _go.get() == gameObject;
+		return _go.get() == go;
 	};
 
 	auto ptr = std::find_if(this->objectArray.begin(), this->objectArray.end(), f);

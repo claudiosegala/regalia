@@ -135,7 +135,7 @@ int InputManager::GetMouseY() const {
 }
 
 bool InputManager::GamepadPress(SDL_GameControllerButton button) {
-	for (size_t i = 0; i < controllers.size(); i++) {
+	for (auto i = 0; i < (int)controllers.size(); i++) {
 		if (GamepadPress(button, i)) {
 			return true;
 		}
@@ -149,7 +149,7 @@ bool InputManager::GamepadPress(SDL_GameControllerButton button, int controllerN
 }
 
 bool InputManager::GamepadRelease(SDL_GameControllerButton button) {
-	for (size_t i = 0; i < controllers.size(); i++) {
+	for (auto i = 0; i < (int)controllers.size(); i++) {
 		if (GamepadRelease(button, i)) {
 			return true;
 		}
@@ -163,7 +163,7 @@ bool InputManager::GamepadRelease(SDL_GameControllerButton button, int controlle
 }
 
 bool InputManager::IsGamepadDown(SDL_GameControllerButton button) {
-	for (size_t i = 0; i < controllers.size(); i++) {
+	for (auto i = 0; i < (int)controllers.size(); i++) {
 		if (IsGamepadDown(button, i)) {
 			return true;
 		}

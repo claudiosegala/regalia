@@ -5,8 +5,8 @@
 #include <Resources.h>
 #include <Sprite.h>
 
-Sprite::Sprite(GameObject& associated, const std::string& file, int frameCount, float frameTime, float secondsToSelfDestruct)
-    : Component(associated)
+Sprite::Sprite(GameObject& go, const std::string& file, int frameCount, float frameTime, float secondsToSelfDestruct)
+    : Component(go)
     , selfDestructCount() {
 	this->texture = nullptr;
 	this->scale = Vec2(1, 1);

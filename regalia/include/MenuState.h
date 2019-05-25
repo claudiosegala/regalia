@@ -29,5 +29,7 @@ private:
 
 	Music music;
 
+	GameObject* CreateBackground();
+
 	GameObject* CreateOption(std::string, Vec2 shift = { 0, 0 });
 };

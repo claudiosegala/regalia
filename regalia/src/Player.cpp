@@ -17,6 +17,10 @@ Player::Player(GameObject& go)
 	LoadAssets();
 }
 
+void Player::NotifyCollision(GameObject& go) {
+
+}
+
 void Player::Update(float dt) {
 	Move(dt);
 

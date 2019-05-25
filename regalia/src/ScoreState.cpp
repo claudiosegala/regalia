@@ -21,13 +21,13 @@ ScoreState::~ScoreState() {
 }
 
 void ScoreState::LoadAssets() {
-	auto imageObject = new GameObject();
-	auto image = new Sprite(*imageObject, Constants::Story::Background);
+	auto go = new GameObject();
+	auto image = new Sprite(*go, Constants::Story::Background);
 
-	imageObject->AddComponent(image);
-	imageObject->box.vector.Reset();
+	go->AddComponent(image);
+	go->box.vector.Reset();
 
-	(void)AddObject(imageObject);
+	(void)AddObject(go);
 
 	// TODO: add message to say "Press ESC to return to Menu"
 }
