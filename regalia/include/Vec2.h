@@ -21,6 +21,9 @@ public:
 	void Reset();
 
 	//> Limit the values of x and y to a range
+	void Limit(float limit);
+
+	//> Limit the values of x and y to a range
 	void Limit(float, float, float, float);
 
 	///> Find magnitude of vector

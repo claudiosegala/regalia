@@ -19,7 +19,7 @@ Player::Player(GameObject& go)
 	this->stateAnimation = PlayerState::IDLE;
 
 	// TODO: discover why there is one tile of shift
-	this->associated.box.SetCenter({ 50.0f, 226.0f });
+	this->associated.box.SetCenter({ 20.0f, 26.0f });
 
 	LoadAssets();
 }
@@ -76,41 +76,45 @@ void Player::LoadAssets() {
 
 void Player::Move(float dt) {
 	auto& in = InputManager::GetInstance();
+	auto direction = in.GamepadLeftStick(0);
+	auto isJumping = false;
 
-	Vec2 velocity = in.GamepadLeftStick(0);
-	if (velocity == Vec2(0, 0)) { // No input from gamepad stick, look for other inputs
+	if (direction == Vec2(0.0f, 0.0f)) { // No input from gamepad stick, look for other inputs
 		const auto keyUp = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, 0);
 		const auto keyDown = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, 0);
 		const auto keyLeft = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, 0);
 		const auto keyRight = in.IsKeyDown(Constants::Key::D) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, 0);
 
 		if (keyUp) {
-			velocity.y -= 1;
+			isJumping = true;
 		}
 
 		if (keyDown) {
-			velocity.y += 1;
+			// nothing
 		}
 
 		if (keyLeft) {
-			velocity.x -= 1;
+			direction.x -= 1;
 		}
 
 		if (keyRight) {
-			velocity.x += 1;
+			direction.x += 1;
 		}
+		W(direction);
 	}
+	W(Vec2(Constants::Player::SpeedMultiplier, 0.0f));
+	auto horizontal_velocity = direction * Constants::Player::SpeedMultiplier;
+	auto vertical_velocity = isJumping ? Constants::Game::Jump : (this->speed);
+	auto velocity = Vec2(horizontal_velocity.x, vertical_velocity.y);
 
-	velocity *= (Constants::Player::SpeedMultiplier * dt);
+	CheckBestDelta(velocity, dt);
+	W(direction);
+	
 
-	const auto nxtPos = this->collisionBox + velocity;
+	this->associated.box.vector += this->speed;
+}
 
-	auto points = nxtPos.GetPoints();
-	const auto upperLeft = std::get<1>(points);
-	const auto downRight = std::get<0>(points);
-
-	bool can = true;
-
+void Player::CheckBestDelta(Vec2 velocity, float delta) {
 	// TODO: PlayState should let this available
 	int collisionSet[14][20] = {
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -129,25 +133,54 @@ void Player::Move(float dt) {
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
 	};
 
-	const auto x1 = int(upperLeft.x) / 24;
-	const auto y1 = int(upperLeft.y) / 24;
-	const auto x2 = int(downRight.x) / 24;
-	const auto y2 = int(downRight.y) / 24;
+	auto cnt = 20;
+	auto l = 0.0f;
+	auto r = delta;
+	auto d = delta;
+	auto ans = Vec2(0.0f, 0.0f);
 
-	for (int i = x1; i <= x2; i++) {
-		for (int j = y1; j <= y2; j++) {
-			std::cout << collisionSet[j][i] << " ";
-			if (collisionSet[j][i]) {
-				can = false;
-				//break;
+	while (cnt--) {
+		const auto m = (r + l) / 2.0f;
+		auto v = (velocity + Constants::Game::Gravity * m) * m;
+
+		v.Limit(Constants::Game::MaxVelocity);
+
+		const auto nxtPos = this->collisionBox + v;
+
+		auto points = nxtPos.GetPoints();
+		const auto upperLeft = std::get<1>(points);
+		const auto downRight = std::get<0>(points);
+
+		bool can = true;
+
+		const auto x1 = int(upperLeft.x) / 24;
+		const auto y1 = int(upperLeft.y) / 24;
+		const auto x2 = int(downRight.x) / 24;
+		const auto y2 = int(downRight.y) / 24;
+
+		if (x1 < 0 || x1 >= 14 || y1 < 0 || y1 >= 20 || x2 < 0 || x2 >= 14 || y2 < 0 || y2 >= 20) {
+			can = false;
+		} else {
+			for (int i = x1; i <= x2; i++) {
+				for (int j = y1; j <= y2; j++) {
+					if (collisionSet[j][i]) {
+						can = false;
+						break;
+					}
+				}
 			}
 		}
-		std::cout << std::endl;
-	}
 
-	if (can) {
-		W(this->associated.box)
-		this->associated.box.vector += velocity;
+		if (can) {
+			if (ans.GetLength() < v.GetLength()) {
+				ans = v;
+				this->speed = v;
+			}
+
+			l = m;
+		} else {
+			r = m;
+		}
 	}
 }
 

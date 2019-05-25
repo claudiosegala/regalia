@@ -23,6 +23,7 @@ public:
 	bool Is(std::string);
 
 private:
+
 	enum class PlayerState {
 		IDLE,
 		RUNNING,
@@ -43,6 +44,8 @@ private:
 	void LoadAssets();
 	
 	void Move(float dt);
-	
+
+	void CheckBestDelta(Vec2, float);
+
 	void Die();
 };
