@@ -1,4 +1,5 @@
 #pragma once
+#include "Constants.h"
 
 class GameObject;
 
@@ -16,8 +17,19 @@ public:
 
 	virtual void Render() = 0;
 
-	virtual bool Is(std::string) = 0;
-
 protected:
 	GameObject& associated;
 };
+
+inline unsigned GetNextComponentId() {
+	static auto lastId = 0u;
+	return lastId++;
+}
+
+template <typename T>
+unsigned GetComponentTypeId() {
+	static_assert(std::is_base_of<Component, T>::value, "Invalid base type");
+	static auto typeId = GetNextComponentId();
+	assert(typeId < Constants::NumberOfComponentsTypes);
+	return typeId;
+}

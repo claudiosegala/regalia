@@ -29,8 +29,6 @@ public:
 
 	int GetDepth();
 
-	bool Is(std::string);
-
 private:
 	int mapWidth;
 

@@ -13,7 +13,3 @@ void CameraFollower::Update(float dt) {
 }
 
 void CameraFollower::Render() {}
-
-bool CameraFollower::Is(std::string type) {
-	return (type == "CameraFollower");
-}

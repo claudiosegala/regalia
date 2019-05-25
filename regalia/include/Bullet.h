@@ -17,8 +17,6 @@ public:
 
 	void NotifyCollision(GameObject&) override;
 
-	bool Is(std::string);
-
 	int GetDamage();
 
 private:

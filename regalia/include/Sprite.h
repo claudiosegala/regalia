@@ -37,8 +37,6 @@ public:
 
 	void Render(float, float);
 
-	bool Is(std::string);
-
 	int GetWidth();
 
 	int GetHeight();

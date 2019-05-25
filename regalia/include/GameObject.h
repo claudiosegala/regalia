@@ -1,8 +1,8 @@
 #pragma once
 
 #include <Rect.h>
-
-class Component;
+#include "Constants.h"
+#include "Component.h"
 
 class GameObject {
 public:
@@ -27,9 +27,10 @@ public:
 
 	void AddComponent(Component*);
 
-	void RemoveComponent(std::shared_ptr<Component>&);
+	void RemoveComponent(const Component*);
 
-	std::shared_ptr<Component> GetComponent(std::string);
+	template <class T>
+	T* GetComponent() const;
 
 	void NotifyCollision(GameObject&);
 
@@ -38,5 +39,12 @@ private:
 
 	bool isDead;
 
-	std::vector<std::shared_ptr<Component>> components;
+	std::vector<std::unique_ptr<Component>> components;
+	std::array<Component*, Constants::NumberOfComponentsTypes> componentsArray {};
 };
+
+template <class T>
+T* GameObject::GetComponent() const {
+	static_assert(std::is_base_of<Component, T>::value, "Invalid type");
+	return static_cast<T*>(componentsArray[GetComponentTypeId<T>()]);
+}

@@ -36,13 +36,7 @@ void Bullet::Update(float dt) {
 void Bullet::Render() {}
 
 void Bullet::NotifyCollision(GameObject& go) {
-	auto component = go.GetComponent("Player");
-
-	if (component == nullptr) {
-		return;
-	}
-
-	auto player = std::static_pointer_cast<Player>(component);
+	auto player = go.GetComponent<Player>();
 
 	if (player == nullptr) {
 		return;
@@ -52,10 +46,6 @@ void Bullet::NotifyCollision(GameObject& go) {
 		this->associated.RequestDelete();
 		return;
 	}
-}
-
-bool Bullet::Is(std::string type) {
-	return (type == "Bullet");
 }
 
 int Bullet::GetDamage() {

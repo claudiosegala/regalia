@@ -68,10 +68,6 @@ void Text::Render() {
 	}
 }
 
-bool Text::Is(std::string type) {
-	return (type == "Text");
-}
-
 void Text::SetText(std::string text) {
 	this->text = text;
 

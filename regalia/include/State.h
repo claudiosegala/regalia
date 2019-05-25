@@ -20,8 +20,6 @@ public:
 
 	virtual void Resume() = 0;
 
-	virtual bool HasComponent(std::string);
-
 	virtual std::weak_ptr<GameObject> AddObject(GameObject*);
 
 	virtual std::weak_ptr<GameObject> GetObjectPtr(GameObject*);

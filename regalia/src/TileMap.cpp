@@ -103,7 +103,3 @@ int TileMap::GetHeight() {
 int TileMap::GetDepth() {
 	return this->mapDepth;
 }
-
-bool TileMap::Is(std::string type) {
-	return (type == "TileMap");
-}

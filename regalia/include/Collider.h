@@ -16,8 +16,6 @@ public:
 
 	void Render() override;
 
-	bool Is(std::string);
-
 	void SetScale(Vec2);
 
 	void SetOffset(Vec2);

@@ -49,23 +49,19 @@ void GameObject::AddComponent(Component* component) {
 	}
 }
 
-void GameObject::RemoveComponent(std::shared_ptr<Component>& component) {
-	auto it = std::remove_if(this->components.begin(), this->components.end(), [&](std::shared_ptr<Component>& c) {
-		return c == component;
+void GameObject::RemoveComponent(const Component* cpt) {
+	auto it = std::remove_if(this->components.begin(), this->components.end(), [&cpt](const std::unique_ptr<Component>& c) {
+		return c.get() == cpt;
 	});
 
-	this->components.erase(it, this->components.end());
-}
+	if (it != components.end()) {
+		this->components.erase(it);
+	}
 
-std::shared_ptr<Component> GameObject::GetComponent(std::string type) {
-	auto it = std::find_if(this->components.begin(), this->components.end(), [&](std::shared_ptr<Component>& c) {
-		return c->Is(type);
-	});
-
-	if (it != this->components.end()) {
-		return (*it);
-	} else {
-		return nullptr;
+	for (auto& component : componentsArray) {
+		if (component == cpt) {
+			component = nullptr;
+		}
 	}
 }
 

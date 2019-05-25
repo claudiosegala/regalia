@@ -29,13 +29,11 @@ Player::~Player() {
 }
 
 void Player::NotifyCollision(GameObject& go) {
-	auto component = go.GetComponent("Bullet");
+	auto bullet = go.GetComponent<Bullet>();
 
-	if (component == nullptr) {
+	if (bullet == nullptr) {
 		return;
 	}
-
-	auto bullet = std::static_pointer_cast<Bullet>(component);
 
 	if (bullet->shooterId != this->id) {
 		return; //> you cannot fire yourself
@@ -60,10 +58,6 @@ void Player::Update(float dt) {
 }
 
 void Player::Render() {
-}
-
-bool Player::Is(std::string type) {
-	return (type == "Player");
 }
 
 void Player::LoadAssets() {

@@ -138,10 +138,6 @@ void Sprite::Render(int x, int y) {
 	}
 }
 
-bool Sprite::Is(std::string type) {
-	return (type == "Sprite");
-}
-
 int Sprite::GetWidth() {
 	return this->width * static_cast<int>(this->scale.x) / this->frameCount;
 }

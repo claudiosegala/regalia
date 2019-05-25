@@ -5,6 +5,9 @@
 
 namespace Constants {
 
+	// TODO: This is the size of the components array on a GameObject optimal size will be the exact number of components type we have
+	const int NumberOfComponentsTypes = 32;
+
 namespace Window {
 	const int Width = 480;
 	const int Height = 336;

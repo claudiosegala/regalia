@@ -23,8 +23,6 @@ public:
 
 	void Render() override;
 
-	bool Is(std::string);
-
 private:
 	int channel;
 

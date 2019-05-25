@@ -12,16 +12,6 @@ State::~State() {
 	this->objectArray.clear();
 }
 
-bool State::HasComponent(std::string type) {
-	for (auto object : this->objectArray) {
-		if (object->GetComponent(type) != nullptr) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
 std::weak_ptr<GameObject> State::AddObject(GameObject* go) {
 	this->objectArray.emplace_back(go);
 

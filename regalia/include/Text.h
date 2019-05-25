@@ -20,8 +20,6 @@ public:
 
 	void Render() override;
 
-	bool Is(std::string);
-
 	void SetText(std::string);
 
 	void SetColor(SDL_Color);
