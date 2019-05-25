@@ -26,7 +26,7 @@ MenuState::~MenuState() {
 
 void MenuState::LoadAssets() {
 	auto imageObject = new GameObject();
-	auto image = new Sprite(*imageObject, Constants::Menu::Background);
+	const auto image = new Sprite(*imageObject, Constants::Menu::Background);
 
 	imageObject->AddComponent(image);
 	imageObject->box.vector.Reset();

@@ -4,21 +4,19 @@
 Logger* Logger::instance;
 
 Logger::Logger() {
-	if (this->instance != nullptr) {
+	if (instance != nullptr) {
 		throw std::runtime_error("There should be only one instance!\n");
 	}
 
-	this->instance = this;
+	instance = this;
 }
 
-Logger::~Logger() {}
-
 Logger* Logger::GetInstance() {
-	if (Logger::instance != nullptr) {
-		return Logger::instance;
+	if (instance != nullptr) {
+		return instance;
 	}
 
-	return Logger::instance = new Logger();
+	return instance = new Logger();
 }
 
 void Logger::Error(const std::string& msg, int type) {

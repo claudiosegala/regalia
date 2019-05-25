@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Gamepad.h"
+#include "Constants.h"
 
 Gamepad::Gamepad(int index)
     : controller(SDL_GameControllerOpen(index)) {
@@ -36,8 +37,14 @@ bool Gamepad::ButtonReleased(SDL_GameControllerButton button, int counter) {
 }
 
 Vec2 Gamepad::GetStickPosition(Stick side) {
-	const auto position = side == Left
+	auto position = side == Left
 	    ? Vec2(float(axis[SDL_CONTROLLER_AXIS_LEFTX]), float(axis[SDL_CONTROLLER_AXIS_LEFTY]))
 	    : Vec2(float(axis[SDL_CONTROLLER_AXIS_RIGHTX]), float(axis[SDL_CONTROLLER_AXIS_RIGHTY]));
+	if (abs(position.x) < Constants::Gamepad::StickDeadZone) {
+		position.x = 0.f;
+	}
+	if (abs(position.y) < Constants::Gamepad::StickDeadZone) {
+		position.y = 0.f;
+	}
 	return position / 32768.f;
 }

@@ -14,7 +14,7 @@
 #include <Player.h>
 
 PlayState::PlayState() {
-	Logger::Info("Initing Play State");
+	Logger::Info("Initializing Play State");
 
 	this->backgroundIdx = 0;
 	this->tileSetIdx = 0;
@@ -26,7 +26,7 @@ PlayState::PlayState() {
 		//GameData::Persona2 = (Persona)(rand() % 4);
 	}
 
-	LoadAssets();
+	PlayState::LoadAssets();
 }
 
 PlayState::~PlayState() {
@@ -80,12 +80,12 @@ void PlayState::Resume() {
 }
 
 void PlayState::CreateField() {
-	auto rnd = rand();
+	const auto rnd = rand();
 
 	auto go = new GameObject();
-	auto image = BuildBackground(go, rnd);
-	auto tileSet = BuildTileSet(go, rnd);
-	auto tileMap = BuildTileMap(go, tileSet);
+	const auto image = BuildBackground(go, rnd);
+	const auto tileSet = BuildTileSet(go, rnd);
+	const auto tileMap = BuildTileMap(go, tileSet);
 
 	go->AddComponent(image);
 	go->AddComponent(tileMap);
@@ -98,7 +98,7 @@ void PlayState::CreatePlayers() {
 	auto go1 = new GameObject();
 	//auto go2 = new GameObject();
 
-	auto player1 = new Player(*go1);
+	const auto player1 = new Player(*go1);
 	//auto player1 = new Player(*go1, GameData::Persona1);
 	//auto player2 = new Player(*go2, GameData::Persona2);
 
@@ -111,30 +111,30 @@ void PlayState::CreatePlayers() {
 
 Sprite* PlayState::BuildBackground(GameObject* gameObject, int rnd) {
 	auto assets = Constants::Play::Backgrounds;
-	auto idx = rnd % assets.size();
-	auto asset = assets[idx];
+	const auto idx = rnd % assets.size();
+	const auto& asset = assets[idx];
 
-	this->backgroundIdx = (int)idx;
+	this->backgroundIdx = int(idx);
 
 	return new Sprite(*gameObject, asset.file);
 }
 
 TileSet* PlayState::BuildTileSet(GameObject* gameObject, int rnd) {
 	auto assets = Constants::Play::TileSets;
-	auto idx = rnd % assets.size();
-	auto asset = assets[idx];
+	const auto idx = rnd % assets.size();
+	const auto& asset = assets[idx];
 
-	this->tileSetIdx = (int)idx;
+	this->tileSetIdx = int(idx);
 
 	return new TileSet(*gameObject, asset.width, asset.height, asset.file);
 }
 
 TileMap* PlayState::BuildTileMap(GameObject* gameObject, TileSet* tileSet) {
 	auto assets = Constants::Play::TileMaps;
-	auto idx = rand() % assets.size();
-	auto asset = assets[idx];
+	const auto idx = rand() % assets.size();
+	const auto& asset = assets[idx];
 
-	this->tileMapIdx = (int)idx;
+	this->tileMapIdx = int(idx);
 
 	return new TileMap(*gameObject, asset.file, tileSet);
 }

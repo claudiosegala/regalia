@@ -2,7 +2,7 @@
 
 class Logger {
 public:
-	~Logger();
+	~Logger() = default;
 
 	static Logger* GetInstance();
 
