@@ -3,7 +3,7 @@
 #include <InputManager.h>
 #include "Game.h"
 
-#define PROTECT_RANGE(number, defaultValue)       \
+#define PROTECT_RANGE(number, defaultValue)     \
 	if (unsigned(number) >= controllers.size()) \
 	return (defaultValue)
 
@@ -83,19 +83,19 @@ void InputManager::TreatEvent(SDL_Event& event) {
 		this->mouseUpdate[idx] = this->updateCounter;
 		break;
 	}
-	case SDL_WINDOWEVENT_SIZE_CHANGED: {
-		std::cout << "Window resize" << std::endl;
-		// Set the dynamic window scale
-		auto game = Game::GetInstance();
-		int windowWidth, windowHeight;
-		SDL_GetWindowSize(game->GetWindow(), &windowWidth, &windowHeight);
-		SDL_RenderSetScale(game->GetRenderer(), float(windowWidth) / Constants::Window::Width, float(windowHeight) / Constants::Window::Width);
+	case SDL_WINDOWEVENT: {
+		if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+			// Set the dynamic window scale
+			auto game = Game::GetInstance();
+			int windowWidth, windowHeight;
+			SDL_GetWindowSize(game->GetWindow(), &windowWidth, &windowHeight);
+			SDL_RenderSetScale(game->GetRenderer(), float(windowWidth) / Constants::Window::Width, float(windowHeight) / Constants::Window::Width);
+		}
 		break;
 	}
 	default:
 		break;
 	}
-	std::cout << "event" << std::endl;
 }
 
 void InputManager::LoadControllers() {
