@@ -34,6 +34,7 @@ void Collider::Update(float dt) {
 		auto circle = static_cast<Circle*>(this->shape);
 
 		circle->center = this->associated.box.Center();
+		// TODO: verify if this is ok
 		circle->radius = this->associated.box.MaxRadius() * this->scale.x;
 	}
 }

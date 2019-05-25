@@ -1,22 +1,52 @@
 #pragma once
 
+#include <Circle.h>
+#include <Shape.h>
 #include <Rect.h>
 #include <Vec2.h>
 
 class Collision {
 public:
+	static inline bool IsColliding(Shape* a, Shape* b, float angleOfA, float angleOfB) {
+		if (a->Is("Rect")) {
+			auto _a = static_cast<Rect*>(a);
+
+			if (b->Is("Rect")) {
+				auto _b = static_cast<Rect*>(b);
+				IsColliding(_a, _b, angleOfA, angleOfB);
+			} else {
+				auto _b = static_cast<Circle*>(b);
+				IsColliding(_a, _b, angleOfA, angleOfB);
+			}
+		} else {
+			auto _a = static_cast<Circle*>(a);
+
+			if (b->Is("Rect")) {
+				auto _b = static_cast<Rect*>(b);
+				IsColliding(_a, _b, angleOfA, angleOfB);
+			} else {
+				auto _b = static_cast<Circle*>(b);
+				IsColliding(_a, _b, angleOfA, angleOfB);
+			}
+		}
+	}
+
 	// Observação: IsColliding espera ângulos em radianos!
 	// Para usar graus, forneça a sua própria implementação de Rotate,
 	// ou transforme os ângulos no corpo de IsColliding.
 	static inline bool IsColliding(Rect& a, Rect& b, float angleOfA, float angleOfB) {
-		Vec2 A[] = { Vec2(a.vector.x, a.vector.y + a.height),
+		Vec2 A[] = { 
+			Vec2(a.vector.x, a.vector.y + a.height),
 			Vec2(a.vector.x + a.width, a.vector.y + a.height),
 			Vec2(a.vector.x + a.width, a.vector.y),
-			Vec2(a.vector.x, a.vector.y) };
-		Vec2 B[] = { Vec2(b.vector.x, b.vector.y + b.height),
+			Vec2(a.vector.x, a.vector.y) 
+		};
+		Vec2 B[] = { 
+			Vec2(b.vector.x, b.vector.y + b.height),
 			Vec2(b.vector.x + b.width, b.vector.y + b.height),
 			Vec2(b.vector.x + b.width, b.vector.y),
-			Vec2(b.vector.x, b.vector.y) };
+			Vec2(b.vector.x, b.vector.y) 
+		};
 
 		for (auto& v : A) {
 			v = Rotate(v - a.Center(), angleOfA) + a.Center();
@@ -50,6 +80,19 @@ public:
 		return true;
 	}
 
+	static inline bool IsColliding(Rect& a, Circle& b, float angleOfA, float angleOfB) {
+		return IsColliding(b, a, angleOfB, angleOfA);
+	}
+
+	static inline bool IsColliding(Circle& a, Rect& b, float angleOfA, float angleOfB) {
+		// TODO: implement
+		return false;
+	}
+
+	static inline bool IsColliding(Circle& a, Circle& b, float angleOfA, float angleOfB) {
+		return Vec2::Distance(a.center, b.center) < a.radius + b.radius;
+	}
+
 private:
 	static inline float Mag(const Vec2& p) {
 		return std::sqrt(p.x * p.x + p.y * p.y);
@@ -68,19 +111,3 @@ private:
 		return Vec2(p.x * cs - p.y * sn, p.x * sn + p.y * cs);
 	}
 };
-
-// Aqui estão três operadores que sua classe Vec2 deve precisar, se já não tiver.
-// Se sua classe tiver métodos para Mag, Norm, Dot e/ou Rotate, você pode substituir
-// os usos desses métodos por usos dos seus, mas garanta que deem resultados corretos.
-
-// Vec2 operator+(const Vec2& rhs) const {
-//    return Vec2(x + rhs.x, y + rhs.y);
-// }
-
-// Vec2 operator-(const Vec2& rhs) const {
-//    return Vec2(x - rhs.x, y - rhs.y);
-// }
-
-// Vec2 operator*(const float rhs) const {
-//    return Vec2(x * rhs, y * rhs);
-// }

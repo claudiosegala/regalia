@@ -1,4 +1,6 @@
 #include <pch.h>
+#include <Collider.h>
+#include <Collision.h>
 #include <Camera.h>
 #include <Constants.h>
 #include <Game.h>
@@ -69,6 +71,7 @@ void PlayState::Update(float dt) {
 		return;
 	}*/
 
+	CheckCollision();
 	UpdateArray(dt);
 }
 
@@ -95,6 +98,11 @@ void PlayState::Resume() {
 	Logger::Info("Resuming Play State");
 	Camera::Reset();
 	this->music.Play();
+}
+
+
+void PlayState::CheckCollision() {
+	// TODO: implement
 }
 
 void PlayState::CreateField() {

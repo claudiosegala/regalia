@@ -39,6 +39,8 @@ private:
 
 	Music music;
 	
+	void CheckCollision();
+
 	void CreateField();
 
 	void CreatePlayers();
