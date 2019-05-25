@@ -38,46 +38,46 @@ void Collider::Update(float dt) {
 	}
 }
 
-	// Copie o conteúdo dessa função para dentro da sua e adapte o nome das funções para as suas.
-	// Funções usadas:
-	// Rect::Center()				- Retorna um Vec2 no centro do Rect
-	// Vec2::operator-( const Vec2& )	- Subtrai dois Vec2
-	// Vec2::Rotate( float rad )		- Rotaciona um Vec2 pelo ângulo em radianos passado
-	void Collider::Render() {
+// Copie o conteúdo dessa função para dentro da sua e adapte o nome das funções para as suas.
+// Funções usadas:
+// Rect::Center()				- Retorna um Vec2 no centro do Rect
+// Vec2::operator-( const Vec2& )	- Subtrai dois Vec2
+// Vec2::Rotate( float rad )		- Rotaciona um Vec2 pelo ângulo em radianos passado
+void Collider::Render() {
 #ifdef DEBUG
-		Vec2 center(box.Center());
-		SDL_Point points[5];
+	Vec2 center(box.Center());
+	SDL_Point points[5];
 
-		Vec2 point = (Vec2(box.vector.x, box.vector.y) - center).GetRotate(associated.angle) + center - Camera::pos;
+	Vec2 point = (Vec2(box.vector.x, box.vector.y) - center).GetRotate(associated.angle) + center - Camera::pos;
 
-		points[0] = { (int)point.x, (int)point.y };
-		points[4] = { (int)point.x, (int)point.y };
+	points[0] = { (int)point.x, (int)point.y };
+	points[4] = { (int)point.x, (int)point.y };
 
-		point = (Vec2(box.vector.x + box.width, box.vector.y) - center).GetRotate(associated.angle) + center - Camera::pos;
+	point = (Vec2(box.vector.x + box.width, box.vector.y) - center).GetRotate(associated.angle) + center - Camera::pos;
 
-		points[1] = { (int)point.x, (int)point.y };
+	points[1] = { (int)point.x, (int)point.y };
 
-		point = (Vec2(box.vector.x + box.width, box.vector.y + box.height) - center).GetRotate(associated.angle) + center - Camera::pos;
+	point = (Vec2(box.vector.x + box.width, box.vector.y + box.height) - center).GetRotate(associated.angle) + center - Camera::pos;
 
-		points[2] = { (int)point.x, (int)point.y };
+	points[2] = { (int)point.x, (int)point.y };
 
-		point = (Vec2(box.vector.x, box.vector.y + box.height) - center).GetRotate(associated.angle) + center - Camera::pos;
+	point = (Vec2(box.vector.x, box.vector.y + box.height) - center).GetRotate(associated.angle) + center - Camera::pos;
 
-		points[3] = { (int)point.x, (int)point.y };
+	points[3] = { (int)point.x, (int)point.y };
 
-		SDL_SetRenderDrawColor(Game::GetInstance()->GetRenderer(), 255, 0, 0, SDL_ALPHA_OPAQUE);
-		SDL_RenderDrawLines(Game::GetInstance()->GetRenderer(), points, 5);
+	SDL_SetRenderDrawColor(Game::GetInstance()->GetRenderer(), 255, 0, 0, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawLines(Game::GetInstance()->GetRenderer(), points, 5);
 #endif // DEBUG
-	}
+}
 
-	bool Collider::Is(std::string type) {
-		return (type == "Collider");
-	}
+bool Collider::Is(std::string type) {
+	return (type == "Collider");
+}
 
-	void Collider::SetScale(Vec2 scale) {
-		this->scale = scale;
-	}
+void Collider::SetScale(Vec2 scale) {
+	this->scale = scale;
+}
 
-	void Collider::SetOffset(Vec2 offset) {
-		this->offset = offset;
-	}
+void Collider::SetOffset(Vec2 offset) {
+	this->offset = offset;
+}
