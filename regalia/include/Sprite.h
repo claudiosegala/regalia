@@ -29,9 +29,9 @@ public:
 
 	void SetFrameTime(float);
 
-	void Update(float);
+	void Update(float) override;
 
-	void Render();
+	void Render() override;
 
 	void Render(int, int);
 

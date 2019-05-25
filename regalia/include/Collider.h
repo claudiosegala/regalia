@@ -12,9 +12,9 @@ public:
 
 	Collider(GameObject&, Shape*, Vec2 scale = { 1, 1 }, Vec2 offset = { 0, 0 });
 
-	void Update(float);
+	void Update(float) override;
 
-	void Render();
+	void Render() override;
 
 	bool Is(std::string);
 

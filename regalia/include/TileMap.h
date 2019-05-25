@@ -17,9 +17,9 @@ public:
 
 	int& At(int, int, int z = 0);
 
-	void Update(float);
+	void Update(float) override;
 
-	void Render();
+	void Render() override;
 
 	void RenderLayer(int, int cameraX = 0, int cameraY = 0);
 

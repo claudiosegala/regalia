@@ -11,11 +11,11 @@ public:
 
 	Bullet(GameObject&, BulletData&, std::string, int frameCount = 1, float frameTime = 1.0f);
 
-	void Update(float);
+	void Update(float) override;
 
-	void Render();
+	void Render() override;
 
-	void NotifyCollision(GameObject&);
+	void NotifyCollision(GameObject&) override;
 
 	bool Is(std::string);
 

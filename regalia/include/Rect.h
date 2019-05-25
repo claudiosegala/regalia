@@ -18,7 +18,7 @@ public:
 
 	Rect(float, float, float, float);
 
-	bool Is(std::string);
+	bool Is(std::string) override;
 
 	float MaxRadius();
 

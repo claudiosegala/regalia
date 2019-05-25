@@ -14,11 +14,11 @@ public:
 
 	~Player();
 
-	void NotifyCollision(GameObject& go);
+	void NotifyCollision(GameObject& go) override;
 
-	void Update(float);
+	void Update(float) override;
 
-	void Render();
+	void Render() override;
 
 	bool Is(std::string);
 
