@@ -33,6 +33,7 @@
     <ClCompile Include="src\TileSet.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Vec2.cpp" />
+    <ClCompile Include="include\CollisionBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
@@ -69,6 +70,7 @@
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\ScoreState.h" />
     <ClInclude Include="include\CollisionShape.h" />
+    <ClInclude Include="include\CollisionBox.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\img\mister_n_spritesheet.png" />
