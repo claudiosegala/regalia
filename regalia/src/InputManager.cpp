@@ -2,6 +2,8 @@
 #include <Constants.h>
 #include <Logger.h>
 #include <InputManager.h>
+#include "Game.h"
+
 
 InputManager& InputManager::GetInstance() {
 	static InputManager instance;
@@ -108,7 +110,17 @@ void InputManager::TreatEvent(SDL_Event& event) {
 		this->mouseUpdate[idx] = this->updateCounter;
 		break;
 	}
+	case SDL_WINDOWEVENT_SIZE_CHANGED: {
+		std::cout << "Window resize" << std::endl;
+		// Set the dynamic window scale
+		auto game = Game::GetInstance();
+		int windowWidth, windowHeight;
+		SDL_GetWindowSize(game->GetWindow(), &windowWidth, &windowHeight);
+		SDL_RenderSetScale(game->GetRenderer(), float(windowWidth) / Constants::Window::Width, float(windowHeight) / Constants::Window::Width);
+		break;
 	}
+	}
+	std::cout << "event" << std::endl;
 }
 
 bool InputManager::KeyPress(int key) {

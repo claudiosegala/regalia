@@ -14,6 +14,8 @@ public:
 
 	SDL_Renderer* GetRenderer();
 
+	SDL_Window* GetWindow();
+
 	void Run();
 
 	void Push(State*);

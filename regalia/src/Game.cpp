@@ -170,6 +170,10 @@ SDL_Renderer* Game::GetRenderer() {
 	return this->renderer;
 }
 
+SDL_Window* Game::GetWindow() {
+	return this->window;
+}
+
 void Game::Init_RDR() {
 	auto index = -1; // SDL will choose the best for us
 
@@ -195,7 +199,7 @@ void Game::Init_RDR() {
 
 void Game::Init_WDW(const std::string& title, int width, int height) {
 	auto pos = SDL_WINDOWPOS_CENTERED;
-	uint32_t flags = 0;
+	uint32_t flags = SDL_WINDOW_RESIZABLE;
 
 	Logger::Info("Creating Window");
 	this->window = SDL_CreateWindow(title.c_str(), (int)pos, (int)pos, width, height, flags);
