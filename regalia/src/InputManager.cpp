@@ -1,7 +1,10 @@
 #include <pch.h>
 #include <Constants.h>
-#include <Logger.h>
 #include <InputManager.h>
+
+#define PROTECT_RANGE(number, defaultValue)       \
+	if (unsigned(number) >= controllers.size()) \
+	return (defaultValue)
 
 InputManager& InputManager::GetInstance() {
 	static InputManager instance;
@@ -9,13 +12,8 @@ InputManager& InputManager::GetInstance() {
 	return instance;
 }
 
-InputManager::InputManager()
-    : mouseState { 0, 0, 0, 0, 0, 0 }
-    , mouseUpdate { 0, 0, 0, 0, 0, 0 } {
-	this->quitRequested = false;
-	this->updateCounter = 0;
-	this->mouseX = 0;
-	this->mouseY = 0;
+InputManager::InputManager() {
+	LoadControllers();
 }
 
 void InputManager::Update() {
@@ -39,37 +37,13 @@ void InputManager::RetrieveMouse() {
 
 void InputManager::TreatEvent(SDL_Event& event) {
 	switch (event.type) {
-	case SDL_JOYDEVICEREMOVED: {
-		Logger::Error("Joystick Removed!");
-		this->quitRequested = true;
+	// Gamepad events
+	case SDL_CONTROLLERAXISMOTION:
+	case SDL_CONTROLLERBUTTONDOWN:
+	case SDL_CONTROLLERBUTTONUP: {
+		controllers[event.cbutton.which].Update(event, updateCounter);
 		break;
 	}
-	case SDL_JOYAXISMOTION:
-		printf("Joystick %d axis %d value: %d\n", event.jaxis.which, event.jaxis.axis, event.jaxis.value);
-		break;
-	case SDL_JOYHATMOTION:
-		printf("Joystick %d hat %d value:", event.jhat.which, event.jhat.hat);
-		if (event.jhat.value == SDL_HAT_CENTERED)
-			printf(" centered");
-		if (event.jhat.value & SDL_HAT_UP)
-			printf(" up");
-		if (event.jhat.value & SDL_HAT_RIGHT)
-			printf(" right");
-		if (event.jhat.value & SDL_HAT_DOWN)
-			printf(" down");
-		if (event.jhat.value & SDL_HAT_LEFT)
-			printf(" left");
-		printf("\n");
-		break;
-	case SDL_JOYBALLMOTION:
-		printf("Joystick %d ball %d delta: (%d,%d)\n", event.jball.which, event.jball.ball, event.jball.xrel, event.jball.yrel);
-		break;
-	case SDL_JOYBUTTONDOWN:
-		printf("Joystick %d button %d down\n",  event.jbutton.which, event.jbutton.button);
-		break;
-	case SDL_JOYBUTTONUP:
-		printf("Joystick %d button %d up\n",  event.jbutton.which, event.jbutton.button);
-		break;
 	case SDL_QUIT: {
 		this->quitRequested = true;
 		break;
@@ -108,31 +82,41 @@ void InputManager::TreatEvent(SDL_Event& event) {
 		this->mouseUpdate[idx] = this->updateCounter;
 		break;
 	}
+	default:
+		break;
+	}
+}
+
+void InputManager::LoadControllers() {
+	for (int i = 0; i < SDL_NumJoysticks(); i++) {
+		if (SDL_IsGameController(i)) {
+			controllers.emplace_back(i);
+		}
 	}
 }
 
 bool InputManager::KeyPress(int key) {
-	return this->keyState[key] && this->keyUpdate[key] == this->updateCounter;
+	return keyState[key] && keyUpdate[key] == updateCounter;
 }
 
 bool InputManager::KeyRelease(int key) {
-	return !this->keyState[key] && this->keyUpdate[key] == this->updateCounter;
+	return !keyState[key] && keyUpdate[key] == updateCounter;
 }
 
 bool InputManager::IsKeyDown(int key) {
-	return this->keyState[key];
+	return keyState[key];
 }
 
 bool InputManager::MousePress(int button) {
-	return this->mouseState[button] && this->mouseUpdate[button] == this->updateCounter;
+	return mouseState[button] && mouseUpdate[button] == updateCounter;
 }
 
 bool InputManager::MouseRelease(int button) {
-	return !this->mouseState[button] && this->mouseUpdate[button] == this->updateCounter;
+	return !mouseState[button] && mouseUpdate[button] == updateCounter;
 }
 
 bool InputManager::IsMouseDown(int button) {
-	return this->mouseState[button];
+	return mouseState[button];
 }
 
 Vec2 InputManager::GetMouse(Vec2 relative) {
@@ -142,28 +126,68 @@ Vec2 InputManager::GetMouse(Vec2 relative) {
 	};
 }
 
-int InputManager::GetMouseX() {
-	return this->mouseX;
+int InputManager::GetMouseX() const {
+	return mouseX;
 }
 
-int InputManager::GetMouseY() {
-	return this->mouseY;
+int InputManager::GetMouseY() const {
+	return mouseY;
 }
 
-bool InputManager::GamepadPress(int button) {
+bool InputManager::GamepadPress(SDL_GameControllerButton button) {
+	for (size_t i = 0; i < controllers.size(); i++) {
+		if (GamepadPress(button, i)) {
+			return true;
+		}
+	}
 	return false;
 }
 
-bool InputManager::GamepadRelease(int button) {
+bool InputManager::GamepadPress(SDL_GameControllerButton button, int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, false);
+	return controllers[controllerNumber].ButtonPressed(button, updateCounter);
+}
+
+bool InputManager::GamepadRelease(SDL_GameControllerButton button) {
+	for (size_t i = 0; i < controllers.size(); i++) {
+		if (GamepadRelease(button, i)) {
+			return true;
+		}
+	}
 	return false;
 }
 
-bool InputManager::IsGamepadDown(int button) {
+bool InputManager::GamepadRelease(SDL_GameControllerButton button, int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, false);
+	return controllers[controllerNumber].ButtonReleased(button, updateCounter);
+}
+
+bool InputManager::IsGamepadDown(SDL_GameControllerButton button) {
+	for (size_t i = 0; i < controllers.size(); i++) {
+		if (IsGamepadDown(button, i)) {
+			return true;
+		}
+	}
 	return false;
+}
+
+bool InputManager::IsGamepadDown(SDL_GameControllerButton button, int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, false);
+	return controllers[controllerNumber].IsButtonDown(button);
+}
+
+Vec2 InputManager::GamepadLeftStick(int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, Vec2());
+	return controllers[controllerNumber].GetStickPosition(Gamepad::Left);
+}
+
+Vec2 InputManager::GamepadRightStick(int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, Vec2());
+	return controllers[controllerNumber].GetStickPosition(Gamepad::Right);
 }
 
 bool InputManager::IsPopRequested() {
-	return InputManager::GetInstance().KeyPress(Constants::Key::Escape);
+	return GetInstance().KeyPress(Constants::Key::Escape);
 }
 
 bool InputManager::QuitRequested() {
@@ -171,5 +195,5 @@ bool InputManager::QuitRequested() {
 }
 
 bool InputManager::IsQuitRequested() {
-	return InputManager::GetInstance().QuitRequested();
+	return GetInstance().QuitRequested();
 }

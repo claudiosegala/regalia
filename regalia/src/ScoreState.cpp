@@ -42,33 +42,33 @@ void ScoreState::Update(float dt) {
 
 	auto& in = InputManager::GetInstance();
 
-	if (in.GamepadPress(Constants::Gamepad::R1) && this->status == ScoreStatus::PAUSED) {
-		// continue
-		//this->popRequested = 1;
-		return;
-	}
+	//if (in.GamepadPress(Constants::Gamepad::R1) && this->status == ScoreStatus::PAUSED) {
+	//	// continue
+	//	//this->popRequested = 1;
+	//	return;
+	//}
 
-	if (in.GamepadPress(Constants::Gamepad::R2)) {
-		// restart
-		//GameData::Reset();
-		//Game::Append(new PlayState());
+	//if (in.GamepadPress(Constants::Gamepad::R2)) {
+	//	// restart
+	//	//GameData::Reset();
+	//	//Game::Append(new PlayState());
 
-		//this->popRequested = 2;
-		return;
-	}
+	//	//this->popRequested = 2;
+	//	return;
+	//}
 
-	if (in.GamepadPress(Constants::Gamepad::L1) && this->status == ScoreStatus::UNFINISHED_MATCH) {
-		// has next set
-		//Game::Append(new PlayState());
+	//if (in.GamepadPress(Constants::Gamepad::L1) && this->status == ScoreStatus::UNFINISHED_MATCH) {
+	//	// has next set
+	//	//Game::Append(new PlayState());
 
-		//this->popRequested = 2;
-		return;
-	}
+	//	//this->popRequested = 2;
+	//	return;
+	//}
 
-	if (in.GamepadPress(Constants::Gamepad::L2)) {
-		this->quitRequested = true;
-		return;
-	}
+	//if (in.GamepadPress(Constants::Gamepad::L2)) {
+	//	this->quitRequested = true;
+	//	return;
+	//}
 
 	UpdateArray(dt);
 }

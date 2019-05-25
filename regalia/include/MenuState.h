@@ -10,17 +10,17 @@ public:
 
 	~MenuState();
 
-	void LoadAssets();
+	void LoadAssets() override;
 
-	void Update(float);
+	void Update(float) override;
 
-	void Render();
+	void Render() override;
 
-	void Start();
+	void Start() override;
 
-	void Pause();
+	void Pause() override;
 
-	void Resume();
+	void Resume() override;
 
 private:
 	int option;
