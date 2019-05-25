@@ -25,7 +25,8 @@ public:
 
 	void RequestDelete();
 
-	void AddComponent(Component*);
+	template <class T, class... TArgs>
+	T* AddComponent(TArgs&&... args);
 
 	void RemoveComponent(const Component*);
 
@@ -42,6 +43,21 @@ private:
 	std::vector<std::unique_ptr<Component>> components;
 	std::array<Component*, Constants::NumberOfComponentsTypes> componentsArray {};
 };
+
+template <class T, class... TArgs>
+T* GameObject::AddComponent(TArgs&&... args) {
+
+	auto cpt = new T(*this, std::forward<TArgs>(args)...);
+
+	components.emplace_back(cpt);
+	componentsArray[GetComponentTypeId<T>()] = cpt;
+
+	if (started) {
+		cpt->Start();
+	}
+
+	return cpt;
+}
 
 template <class T>
 T* GameObject::GetComponent() const {

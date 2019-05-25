@@ -21,9 +21,9 @@ StoryState::~StoryState() {
 
 void StoryState::LoadAssets() {
 	auto go = new GameObject();
-	auto image = new Sprite(*go, Constants::Story::Background);
 
-	go->AddComponent(image);
+	go->AddComponent<Sprite>(Constants::Story::Background);
+
 	go->box.vector.Reset();
 
 	(void)AddObject(go);

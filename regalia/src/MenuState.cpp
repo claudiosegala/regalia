@@ -112,9 +112,9 @@ void MenuState::Resume() {
 
 GameObject* MenuState::CreateBackground() {
 	auto go = new GameObject();
-	const auto image = new Sprite(*go, Constants::Menu::Background);
 
-	go->AddComponent(image);
+	go->AddComponent<Sprite>(Constants::Menu::Background);
+
 	go->box.vector.Reset();
 
 	return go;
@@ -129,9 +129,9 @@ GameObject* MenuState::CreateOption(std::string message, Vec2 shift) {
 	const auto textAsset = "assets/font/Call me maybe.ttf";
 
 	auto go = new GameObject();
-	const auto text = new Text(*go, textAsset, Constants::Menu::TextSize, Text::TextStyle::SOLID, message, { 255, 0, 0, 0 });
 
-	go->AddComponent(text);
+	go->AddComponent<Text>(textAsset, Constants::Menu::TextSize, Text::TextStyle::SOLID, message, Constants::Colors::Red);
+
 	go->box.SetCenter(pos + shift);
 
 	return go;

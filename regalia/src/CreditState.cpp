@@ -21,9 +21,9 @@ CreditState::~CreditState() {
 
 void CreditState::LoadAssets() {
 	auto go = new GameObject();
-	auto image = new Sprite(*go, Constants::Credit::Background);
 
-	go->AddComponent(image);
+	go->AddComponent<Sprite>(Constants::Credit::Background);
+
 	go->box.vector.Reset();
 
 	(void)AddObject(go);

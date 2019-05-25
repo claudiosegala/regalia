@@ -41,14 +41,6 @@ void GameObject::RequestDelete() {
 	this->isDead = true;
 }
 
-void GameObject::AddComponent(Component* component) {
-	this->components.emplace_back(component);
-
-	if (this->started) {
-		component->Start();
-	}
-}
-
 void GameObject::RemoveComponent(const Component* cpt) {
 	auto it = std::remove_if(this->components.begin(), this->components.end(), [&cpt](const std::unique_ptr<Component>& c) {
 		return c.get() == cpt;

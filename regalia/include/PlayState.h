@@ -45,11 +45,11 @@ private:
 
 	void CreatePlayers();
 
-	Sprite* BuildBackground(GameObject* gameObject, int rnd);
+	const BackgroundData& GetBackgroundData(int rnd);
 
-	TileSet* BuildTileSet(GameObject* gameObject, int rnd);
+	const TileSetData& GetTileSetData(int rnd);
 
-	TileMap* BuildTileMap(GameObject* gameObject, TileSet* tileSet);
+	const TileMapData& GetTileMapData(int rnd);
 
 	void LoadScoreState();
 

@@ -61,11 +61,8 @@ void Player::Render() {
 }
 
 void Player::LoadAssets() {
-	auto image = new Sprite(this->associated, "assets/img/mister_n_idle.png");
-	auto collider = new Collider(this->associated, &this->collisionBox, { 0.5f, 0.8f }, { 0.0f, 4.0f });
-
-	this->associated.AddComponent(image);
-	this->associated.AddComponent(collider);
+	associated.AddComponent<Sprite>("assets/img/mister_n_idle.png");
+	associated.AddComponent<Collider>(&collisionBox, Vec2(0.5f, 0.8f), Vec2(0.0f, 4.0f));
 }
 
 void Player::Move(float dt) {

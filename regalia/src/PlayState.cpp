@@ -108,13 +108,15 @@ void PlayState::CheckCollision() {
 void PlayState::CreateField() {
 	const auto rnd = rand();
 
-	auto go = new GameObject();
-	const auto image = BuildBackground(go, rnd);
-	const auto tileSet = BuildTileSet(go, rnd);
-	const auto tileMap = BuildTileMap(go, tileSet);
+	auto& back = GetBackgroundData(rnd);
+	auto& tileSet = GetTileSetData(rnd);
+	auto& tileMap = GetTileMapData(rnd);
 
-	go->AddComponent(image);
-	go->AddComponent(tileMap);
+	auto go = new GameObject();
+
+	go->AddComponent<Sprite>(back.file);
+	go->AddComponent<TileMap>(tileMap.file, new TileSet(*go, tileSet.width, tileSet.height, tileSet.file));
+
 	go->box.vector = Vec2(0, 0);
 
 	(void)AddObject(go);
@@ -124,45 +126,39 @@ void PlayState::CreatePlayers() {
 	auto go1 = new GameObject();
 	//auto go2 = new GameObject();
 
-	const auto player1 = new Player(*go1);
 	//auto player1 = new Player(*go1, GameData::Persona1);
 	//auto player2 = new Player(*go2, GameData::Persona2);
 
-	go1->AddComponent(player1);
+	go1->AddComponent<Player>();
+
 	//go2->AddComponent(this->player2);
 
 	(void)AddObject(go1);
 	//(void)AddObject(go2);
 }
 
-Sprite* PlayState::BuildBackground(GameObject* go, int rnd) {
-	auto assets = Constants::Play::Backgrounds;
+const BackgroundData& PlayState::GetBackgroundData(int rnd) {
+	auto& assets = Constants::Play::Backgrounds;
 	const auto idx = rnd % assets.size();
-	const auto& asset = assets[idx];
-
 	this->backgroundIdx = int(idx);
 
-	return new Sprite(*go, asset.file);
+	return assets[idx];
 }
 
-TileSet* PlayState::BuildTileSet(GameObject* go, int rnd) {
-	auto assets = Constants::Play::TileSets;
+const TileSetData& PlayState::GetTileSetData(int rnd) {
+	auto& assets = Constants::Play::TileSets;
 	const auto idx = rnd % assets.size();
-	const auto& asset = assets[idx];
-
 	this->tileSetIdx = int(idx);
 
-	return new TileSet(*go, asset.width, asset.height, asset.file);
+	return assets[idx];
 }
 
-TileMap* PlayState::BuildTileMap(GameObject* go, TileSet* tileSet) {
-	auto assets = Constants::Play::TileMaps;
-	const auto idx = rand() % assets.size();
-	const auto& asset = assets[idx];
-
+const TileMapData& PlayState::GetTileMapData(int rnd) {
+	auto& assets = Constants::Play::TileMaps;
+	const auto idx = rnd % assets.size();
 	this->tileMapIdx = int(idx);
 
-	return new TileMap(*go, asset.file, tileSet);
+	return assets[idx];
 }
 
 void PlayState::LoadScoreState() {
