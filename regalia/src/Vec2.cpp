@@ -87,6 +87,14 @@ Vec2 Vec2::operator=(const Vec2& V) {
 	return *this;
 }
 
+bool Vec2::operator==(const Vec2& rhs) const {
+	return x == rhs.x && y == rhs.y;
+}
+
+bool Vec2::operator!=(const Vec2& rhs) const {
+	return !(rhs == *this);
+}
+
 Vec2 Vec2::operator*(const Vec2& V) {
 	this->x *= V.y;
 	this->y *= V.x;

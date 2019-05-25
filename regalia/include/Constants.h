@@ -123,6 +123,9 @@ namespace Gamepad {
 	const int R2 = SDLK_RIGHT;
 	const int L1 = SDLK_UP;
 	const int L2 = SDLK_DOWN;
+
+	const int StickDeadZone = 8000;
+	const int TriggerDeadZone = 8000;
 }
 
 namespace Math {
@@ -151,6 +154,10 @@ namespace StdColor {
 //         PERSONA4 = "PERSONA4"
 //     }
 // }
+
+namespace Player {
+	const float SpeedMultiplier = 100.0f;
+}
 
 }
 
