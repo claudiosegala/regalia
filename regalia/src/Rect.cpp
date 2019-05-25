@@ -41,8 +41,8 @@ bool Rect::IsInside(const Vec2& V) const {
 }
 
 std::tuple<Vec2, Vec2> Rect::GetPoints() const {
-	auto u = this->vector; // down left
-	auto v = u + Vec2(this->width, this->height); // upper right
+	auto u = this->vector; // upper left
+	auto v = u + Vec2(this->width, this->height); // down right
 
 	return std::make_tuple(v, u);
 }

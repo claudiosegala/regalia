@@ -30,4 +30,8 @@ private:
 	Vec2 speed;
 
 	//PersonaTypes persona; // which persona
+
+	void LoadAssets();
+	
+	void Move(float dt);
 };

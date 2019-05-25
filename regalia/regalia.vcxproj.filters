@@ -72,6 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\img\tileSetSample.png" />
+    <Image Include="assets\img\mister_n_spritesheet.png" />
+    <Image Include="assets\img\tileSet_01.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\map\00.txt" />

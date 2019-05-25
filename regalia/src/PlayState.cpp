@@ -10,11 +10,22 @@
 #include <Sprite.h>
 #include <StoryState.h>
 #include <Vec2.h>
+#include <GameData.h>
+#include <Player.h>
 
 PlayState::PlayState() {
 	Logger::Info("Initing Play State");
 
+	this->backgroundIdx = 0;
+	this->tileSetIdx = 0;
+	this->tileMapIdx = 0;
 	this->music.Open(Constants::Play::Music);
+
+	if (GameData::Set == 0) {
+		//GameData::Persona1 = (Persona)(rand() % 4);
+		//GameData::Persona2 = (Persona)(rand() % 4);
+	}
+
 	LoadAssets();
 }
 
@@ -24,6 +35,7 @@ PlayState::~PlayState() {
 
 void PlayState::LoadAssets() {
 	CreateField();
+	CreatePlayers();
 }
 
 void PlayState::Update(float dt) {
@@ -38,10 +50,6 @@ void PlayState::Update(float dt) {
 	if (this->quitRequested) {
 		return;
 	}
-
-	auto& in = InputManager::GetInstance();
-
-	//  _update(dt);
 
 	UpdateArray(dt);
 }
@@ -84,6 +92,21 @@ void PlayState::CreateField() {
 	go->box.vector = Vec2(0, 0);
 
 	(void)AddObject(go);
+}
+
+void PlayState::CreatePlayers() {
+	auto go1 = new GameObject();
+	//auto go2 = new GameObject();
+
+	auto player1 = new Player(*go1);
+	//auto player1 = new Player(*go1, GameData::Persona1);
+	//auto player2 = new Player(*go2, GameData::Persona2);
+
+	go1->AddComponent(player1);
+	//go2->AddComponent(this->player2);
+
+	(void)AddObject(go1);
+	//(void)AddObject(go2);
 }
 
 Sprite* PlayState::BuildBackground(GameObject* gameObject, int rnd) {

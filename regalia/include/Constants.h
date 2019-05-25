@@ -67,11 +67,11 @@ namespace Play {
 
 	const std::vector<TileMapData> TileMaps = {
 		{ "assets/map/00.txt" },
-		{ "assets/map/01.txt" },
+		/*{ "assets/map/01.txt" },
 		{ "assets/map/02.txt" },
 		{ "assets/map/03.txt" },
 		{ "assets/map/04.txt" },
-		{ "assets/map/05.txt" }
+		{ "assets/map/05.txt" }*/
 	};
 }
 
