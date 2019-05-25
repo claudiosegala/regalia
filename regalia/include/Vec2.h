@@ -71,7 +71,11 @@ public:
 
 	Vec2 operator=(const Vec2&);
 
-	friend std::ostream& operator<<(std::ostream& os, const Vec2& n);
+	bool operator==(const Vec2& rhs) const;
 
-	friend std::istream& operator>>(std::istream& is, Vec2& n);
+	bool operator!=(const Vec2& rhs) const;
+
+	friend std::ostream& operator<<(std::ostream& out, const Vec2& V);
+
+	friend std::istream& operator>>(std::istream& in, Vec2& V);
 };

@@ -40,31 +40,41 @@ void Player::LoadAssets() {
 void Player::Move(float dt) {
 	auto& in = InputManager::GetInstance();
 
-	auto keyA = in.IsKeyDown(Constants::Key::A);
-	auto keyD = in.IsKeyDown(Constants::Key::D);
-	auto keyW = in.IsKeyDown(Constants::Key::W);
-	auto keyS = in.IsKeyDown(Constants::Key::S);
+	Vec2 velocity = in.GamepadLeftStick(0);
+	if (velocity == Vec2(0, 0)) { // No input from gamepad stick, look for other inputs
+		const auto keyUp    = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, 0);
+		const auto keyDown  = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, 0);
+		const auto keyLeft  = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, 0);
+		const auto keyRight = in.IsKeyDown(Constants::Key::D) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, 0);
 
-	auto x = 0.0f;
-	auto y = 0.0f;
+		if (keyUp) {
+			velocity.y -= 1;
+		}
 
-	if (keyW || keyS) {
-		y = (keyW ? -1.0f : 1.0f) * 100.0f * dt;
+		if (keyDown) {
+			velocity.y += 1;
+		}
+
+		if (keyLeft) {
+			velocity.x -= 1;
+		}
+
+		if (keyRight) {
+			velocity.x += 1;
+		}
 	}
 
-	if (keyA || keyD) {
-		x = (keyA ? -1.0f : 1.0f) * 100.0f * dt;
-	}
+	velocity *= (Constants::Player::SpeedMultiplier * dt);
 
-	auto nxtPos = this->associated.box + Vec2(x, y);
+	const auto nxtPos = this->associated.box + velocity;
 
 	auto points = nxtPos.GetPoints();
-	auto upperLeft = std::get<1>(points);
-	auto downRight = std::get<0>(points);
+	const auto upperLeft = std::get<1>(points);
+	const auto downRight = std::get<0>(points);
 
 	bool can = true;
 
-	// TODO: PlayState should let this available 
+	// TODO: PlayState should let this available
 	int collisionSet[14][20] = {
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
@@ -82,10 +92,10 @@ void Player::Move(float dt) {
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
 	};
 
-	int x1 = (int)upperLeft.x / 24;
-	int y1 = (int)upperLeft.y / 24;
-	int x2 = (int)downRight.x / 24;
-	int y2 = (int)downRight.y / 24;
+	const auto x1 = int(upperLeft.x) / 24;
+	const auto y1 = int(upperLeft.y) / 24;
+	const auto x2 = int(downRight.x) / 24;
+	const auto y2 = int(downRight.y) / 24;
 
 	for (int i = x1; i <= x2; i++) {
 		for (int j = y1; j <= y2; j++) {
@@ -100,6 +110,6 @@ void Player::Move(float dt) {
 
 	if (can) {
 		W(this->associated.box)
-		this->associated.box.vector += { x, y };
+		this->associated.box.vector += velocity;
 	}
 }
