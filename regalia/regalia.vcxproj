@@ -146,6 +146,7 @@
     <ClInclude Include="include\Collider.h" />
     <ClInclude Include="include\Collision.h" />
     <ClInclude Include="include\CollisionBox.h" />
+    <ClInclude Include="include\CollisionDisc.h" />
     <ClInclude Include="include\CollisionShape.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Constants.h" />
@@ -178,6 +179,7 @@
   <ItemGroup>
     <ClCompile Include="include\Circle.cpp" />
     <ClCompile Include="include\CollisionBox.cpp" />
+    <ClCompile Include="include\CollisionDisc.cpp" />
     <ClCompile Include="include\FrameInfo.h" />
     <ClCompile Include="src\Gamepad.cpp" />
     <ClCompile Include="src\Player.cpp" />
