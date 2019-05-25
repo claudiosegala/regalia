@@ -142,6 +142,7 @@
     <ClInclude Include="include\Bullet.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\CameraFollower.h" />
+    <ClInclude Include="include\Circle.h" />
     <ClInclude Include="include\Collider.h" />
     <ClInclude Include="include\Collision.h" />
     <ClInclude Include="include\Component.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="include\ScoreState.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\Circle.cpp" />
     <ClCompile Include="include\FrameInfo.h" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
