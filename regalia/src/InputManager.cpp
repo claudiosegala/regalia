@@ -89,7 +89,12 @@ void InputManager::TreatEvent(SDL_Event& event) {
 			auto game = Game::GetInstance();
 			int windowWidth, windowHeight;
 			SDL_GetWindowSize(game->GetWindow(), &windowWidth, &windowHeight);
-			SDL_RenderSetScale(game->GetRenderer(), float(windowWidth) / Constants::Window::Width, float(windowHeight) / Constants::Window::Width);
+
+			// Calculate the window width to keep the same aspect ratio
+			windowWidth = int(float(windowHeight) * float(Constants::Window::Width) / float(Constants::Window::Height));
+
+			SDL_SetWindowSize(game->GetWindow(), windowWidth, windowHeight);
+			SDL_RenderSetScale(game->GetRenderer(), float(windowWidth) / Constants::Window::Width, float(windowHeight) / Constants::Window::Height);
 		}
 		break;
 	}
