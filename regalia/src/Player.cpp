@@ -1,10 +1,11 @@
 #include <pch.h>
-#include <Player.h>
-#include <Sprite.h>
 #include <Bullet.h>
+#include <Collider.h>
 #include <Constants.h>
 #include <GameObject.h>
 #include <InputManager.h>
+#include <Player.h>
+#include <Sprite.h>
 
 int Player::counter = 0;
 
@@ -64,7 +65,11 @@ bool Player::Is(std::string type) {
 
 void Player::LoadAssets() {
 	auto image = new Sprite(this->associated, "assets/img/mister_n_idle.png");
+	auto box = new Rect();
+	auto collider = new Collider(this->associated, box);
+
 	this->associated.AddComponent(image);
+	this->associated.AddComponent(collider);
 }
 
 void Player::Move(float dt) {

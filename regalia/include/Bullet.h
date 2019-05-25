@@ -27,4 +27,6 @@ private:
 	float distanceLeft;
 
 	Vec2 speed;
+
+	void LoadAssets(std::string, int, float);
 };

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Shape.h>
 #include <Component.h>
 #include <GameObject.h>
 #include <Rect.h>
@@ -7,9 +8,9 @@
 
 class Collider : public Component {
 public:
-	Rect box;
+	Shape* shape;
 
-	Collider(GameObject&, Vec2 scale = { 1, 1 }, Vec2 offset = { 0, 0 });
+	Collider(GameObject&, Shape*, Vec2 scale = { 1, 1 }, Vec2 offset = { 0, 0 });
 
 	void Update(float);
 

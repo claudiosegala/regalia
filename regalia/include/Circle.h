@@ -2,15 +2,20 @@
 
 #include <pch.h>
 #include <Constants.h>
+#include <Shape.h>
 #include <Vec2.h>
 
-class Circle {
+class Circle : public Shape {
 public:
 	float radius;
 
 	Vec2 center;
 
-	Circle(Vec2, float);
+	Circle();
+
+	Circle(float, Vec2);
+
+	bool Is(std::string);
 
 	float Perimeter();
 

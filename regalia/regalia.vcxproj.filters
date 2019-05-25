@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="include\Circle.cpp" />
     <ClCompile Include="include\FrameInfo.h" />
     <ClCompile Include="src\Gamepad.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -33,8 +32,8 @@
     <ClCompile Include="src\TileSet.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Vec2.cpp" />
-    <ClCompile Include="include\CollisionBox.cpp" />
-    <ClCompile Include="include\CollisionDisc.cpp" />
+    <ClCompile Include="src\Circle.cpp" />
+    <ClCompile Include="src\Shape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
@@ -70,9 +69,7 @@
     <ClInclude Include="include\Vec2.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\ScoreState.h" />
-    <ClInclude Include="include\CollisionShape.h" />
-    <ClInclude Include="include\CollisionBox.h" />
-    <ClInclude Include="include\CollisionDisc.h" />
+    <ClInclude Include="include\Shape.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\img\mister_n_spritesheet.png" />

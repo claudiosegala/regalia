@@ -1,5 +1,6 @@
 #include <pch.h>
 #include <Bullet.h>
+#include <Circle.h>
 #include <Collider.h>
 #include <GameObject.h>
 #include <Player.h>
@@ -8,19 +9,12 @@
 
 Bullet::Bullet(GameObject& go, BulletData& data, std::string file, int frameCount, float frameTime)
     : Component(go) {
-	// Adding Image
-	auto image = new Sprite(this->associated, file, frameCount, frameTime);
-	this->associated.AddComponent(image);
-
-	// Adding Collider
-	auto collider = new Collider(this->associated);
-	this->associated.AddComponent(collider);
-
-	// Initialization of variables
 	this->shooterId = data.shooterId;
 	this->distanceLeft = data.maxDistance;
 	this->damage = data.damage;
 	this->speed = Vec2(1, 0).GetRotate(data.angle) * data.speed;
+
+	LoadAssets(file, frameCount, frameTime);
 }
 
 void Bullet::Update(float dt) {
@@ -66,4 +60,13 @@ bool Bullet::Is(std::string type) {
 
 int Bullet::GetDamage() {
 	return this->damage;
+}
+
+void Bullet::LoadAssets(std::string file, int frameCount, float frameTime) {
+	auto image = new Sprite(this->associated, file, frameCount, frameTime);
+	auto circle = new Circle();
+	auto collider = new Collider(this->associated, circle);
+
+	this->associated.AddComponent(image);
+	this->associated.AddComponent(collider);
 }

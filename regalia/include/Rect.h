@@ -1,8 +1,10 @@
 #pragma once
 
+#include <pch.h>
+#include <Shape.h>
 #include <Vec2.h>
 
-class Rect {
+class Rect : public Shape {
 public:
 	Vec2 vector;
 
@@ -15,6 +17,10 @@ public:
 	Rect(Vec2, float, float);
 
 	Rect(float, float, float, float);
+
+	bool Is(std::string);
+
+	float MaxRadius();
 
 	Vec2 Center() const;
 

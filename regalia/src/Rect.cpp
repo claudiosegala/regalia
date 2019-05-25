@@ -16,6 +16,14 @@ Rect::Rect(float x, float y, float w, float h)
     , width(w)
     , height(h) {}
 
+bool Rect::Is(std::string type) {
+	return (type == "Rect");
+}
+
+float Rect::MaxRadius() {
+	return fmax(this->width, this->height) / 2.0f;
+}
+
 Vec2 Rect::Center() const {
 	Vec2 dl, ur;
 

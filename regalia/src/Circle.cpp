@@ -1,7 +1,16 @@
 #include "pch.h"
 #include "Circle.h"
 
-Circle::Circle(Vec2 p, float r) : radius(r), center(p) {}
+Circle::Circle() : radius(0), center() {
+}
+
+Circle::Circle(float r, Vec2 p)
+    : radius(r)
+    , center(p) {}
+
+bool Circle::Is(std::string type) {
+	return (type == "Cicle");
+}
 
 float Circle::Perimeter() {
 	return 2.0f * Constants::Math::PI * this->radius;
