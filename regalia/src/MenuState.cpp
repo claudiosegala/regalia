@@ -82,7 +82,7 @@ void MenuState::Update(float dt) {
 		}
 	}
 
-	if (in.KeyPress(Constants::Key::Space)) {
+	if (in.KeyPress(Constants::Key::Space) || in.GamepadPress(SDL_CONTROLLER_BUTTON_A, 0)) {
 		auto game = Game::GetInstance();
 
 		game->Push(new PlayState());

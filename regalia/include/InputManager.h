@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Vec2.h>
+#include "Gamepad.h"
 
 class InputManager {
 public:
@@ -22,15 +23,21 @@ public:
 
 	Vec2 GetMouse(Vec2 relative);
 
-	int GetMouseX();
+	int GetMouseX() const;
 
-	int GetMouseY();
+	int GetMouseY() const;
 
-	bool GamepadPress(int);
+	bool GamepadPress(SDL_GameControllerButton button);
+	bool GamepadPress(SDL_GameControllerButton button, int controllerNumber);
 
-	bool GamepadRelease(int);
+	bool GamepadRelease(SDL_GameControllerButton button);
+	bool GamepadRelease(SDL_GameControllerButton button, int controllerNumber);
 
-	bool IsGamepadDown(int);
+	bool IsGamepadDown(SDL_GameControllerButton button);
+	bool IsGamepadDown(SDL_GameControllerButton button, int controllerNumber);
+
+	Vec2 GamepadLeftStick(int controllerNumber);
+	Vec2 GamepadRightStick(int controllerNumber);
 
 	static bool IsPopRequested();
 
@@ -39,17 +46,17 @@ public:
 	static bool IsQuitRequested();
 
 private:
-	int mouseX;
+	int mouseX = 0;
 
-	int mouseY;
+	int mouseY = 0;
 
-	int updateCounter;
+	int updateCounter = 0;
 
-	bool quitRequested;
+	bool quitRequested = false;
 
-	bool mouseState[6];
+	bool mouseState[6] = { false };
 
-	int mouseUpdate[6];
+	int mouseUpdate[6] = { false };
 
 	std::unordered_map<int, bool> keyState;
 
@@ -64,4 +71,8 @@ private:
 	void RetrieveMouse();
 
 	void TreatEvent(SDL_Event& event);
+
+	void LoadControllers();
+
+	std::vector<Gamepad> controllers;
 };

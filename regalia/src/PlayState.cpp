@@ -29,7 +29,7 @@ void PlayState::LoadAssets() {
 void PlayState::Update(float dt) {
 	roundTimer.Update(dt);
 
-	this->popRequested = InputManager::IsPopRequested();
+	this->popRequested = InputManager::IsPopRequested() || InputManager::GetInstance().GamepadPress(SDL_CONTROLLER_BUTTON_B);
 	if (this->popRequested) {
 		return;
 	}
