@@ -20,7 +20,7 @@ namespace Game {
 	const int Players = 2;
 	const float SetLenght = 45.0f;
 	const float MaxVelocity = 1000.0f;
-	const Vec2 Gravity = { 0.0f, 10000.0f };
+	const Vec2 Gravity = { 0.0f, 2000.0f };
 	const Vec2 Jump = { 0.0f, -500.0f };
 }
 

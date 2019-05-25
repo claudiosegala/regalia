@@ -100,16 +100,13 @@ void Player::Move(float dt) {
 		if (keyRight) {
 			direction.x += 1;
 		}
-		W(direction);
 	}
-	W(Vec2(Constants::Player::SpeedMultiplier, 0.0f));
+
 	auto horizontal_velocity = direction * Constants::Player::SpeedMultiplier;
 	auto vertical_velocity = isJumping ? Constants::Game::Jump : (this->speed);
 	auto velocity = Vec2(horizontal_velocity.x, vertical_velocity.y);
 
 	CheckBestDelta(velocity, dt);
-	W(direction);
-	
 
 	this->associated.box.vector += this->speed;
 }
@@ -158,18 +155,21 @@ void Player::CheckBestDelta(Vec2 velocity, float delta) {
 		const auto x2 = int(downRight.x) / 24;
 		const auto y2 = int(downRight.y) / 24;
 
-		if (x1 < 0 || x1 >= 14 || y1 < 0 || y1 >= 20 || x2 < 0 || x2 >= 14 || y2 < 0 || y2 >= 20) {
+		if (x1 < 0 || x1 >= 20 || y1 < 0 || y1 >= 14 || x2 < 0 || x2 >= 20 || y2 < 0 || y2 >= 14) {
 			can = false;
 		} else {
-			for (int i = x1; i <= x2; i++) {
-				for (int j = y1; j <= y2; j++) {
+			for (int j = y1; j <= y2; j++) {
+				for (int i = x1; i <= x2; i++) {
+					std::cout << collisionSet[j][i];
 					if (collisionSet[j][i]) {
 						can = false;
-						break;
+						//break;
 					}
 				}
+				std::cout << std::endl;
 			}
 		}
+		std::cout << std::endl;
 
 		if (can) {
 			if (ans.GetLength() < v.GetLength()) {
