@@ -145,6 +145,7 @@
     <ClInclude Include="include\Circle.h" />
     <ClInclude Include="include\Collider.h" />
     <ClInclude Include="include\Collision.h" />
+    <ClInclude Include="include\CollisionShape.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\CreditState.h" />

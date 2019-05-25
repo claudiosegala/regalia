@@ -1,11 +1,14 @@
 #pragma once
 
+#include <CollisionShape.h>
 #include <Rect.h>
 
 class Component;
 
 class GameObject {
 public:
+	CollisionShape* shape;
+
 	Rect box;
 
 	float angle;
