@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Component.h>
+#include <Rect.h>
 #include <Vec2.h>
 
 class Player : public Component {
@@ -36,6 +37,8 @@ private:
 	int hp;
 
 	Vec2 speed;
+
+	Rect collisionBox;
 
 	void LoadAssets();
 	

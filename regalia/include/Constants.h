@@ -19,6 +19,7 @@ namespace Game {
 	const int Sets = 5;
 	const int Players = 2;
 	const float SetLenght = 45.0f;
+	const float Gravity = 10.0f;
 }
 
 namespace SharedAssets {

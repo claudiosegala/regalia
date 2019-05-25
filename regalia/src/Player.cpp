@@ -6,15 +6,17 @@
 #include <InputManager.h>
 #include <Player.h>
 #include <Sprite.h>
+#include <Vec2.h>
 
 int Player::counter = 0;
 
 Player::Player(GameObject& go)
-    : Component(go) {
+    : Component(go)
+    , speed()
+    , collisionBox() {
 	this->id = ++Player::counter;
 	this->hp = 50;
 	this->stateAnimation = PlayerState::IDLE;
-	this->speed = Vec2(0, 0);
 
 	// TODO: discover why there is one tile of shift
 	this->associated.box.SetCenter({ 50.0f, 226.0f });
@@ -49,6 +51,7 @@ void Player::NotifyCollision(GameObject& go) {
 }
 
 void Player::Update(float dt) {
+	//Gravity(dt);
 	Move(dt);
 
 	// change Player State
@@ -65,8 +68,7 @@ bool Player::Is(std::string type) {
 
 void Player::LoadAssets() {
 	auto image = new Sprite(this->associated, "assets/img/mister_n_idle.png");
-	auto box = new Rect();
-	auto collider = new Collider(this->associated, box);
+	auto collider = new Collider(this->associated, &this->collisionBox, { 0.5f, 0.8f }, { 0.0f, 4.0f });
 
 	this->associated.AddComponent(image);
 	this->associated.AddComponent(collider);
@@ -77,9 +79,9 @@ void Player::Move(float dt) {
 
 	Vec2 velocity = in.GamepadLeftStick(0);
 	if (velocity == Vec2(0, 0)) { // No input from gamepad stick, look for other inputs
-		const auto keyUp    = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, 0);
-		const auto keyDown  = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, 0);
-		const auto keyLeft  = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, 0);
+		const auto keyUp = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, 0);
+		const auto keyDown = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, 0);
+		const auto keyLeft = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, 0);
 		const auto keyRight = in.IsKeyDown(Constants::Key::D) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, 0);
 
 		if (keyUp) {
@@ -101,7 +103,7 @@ void Player::Move(float dt) {
 
 	velocity *= (Constants::Player::SpeedMultiplier * dt);
 
-	const auto nxtPos = this->associated.box + velocity;
+	const auto nxtPos = this->collisionBox + velocity;
 
 	auto points = nxtPos.GetPoints();
 	const auto upperLeft = std::get<1>(points);
