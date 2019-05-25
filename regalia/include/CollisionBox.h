@@ -6,6 +6,8 @@
 
 class CollisionBox : public CollisionShape {
 public:
+	Rect box;
+
 	bool IsColliding(Circle);
 
 	bool IsColliding(Rect);
