@@ -35,7 +35,7 @@ private:
 
 	int tileMapIdx;
 
-	Timer roundTimer;
+	Timer timer;
 
 	Music music;
 	
@@ -48,5 +48,7 @@ private:
 	TileSet* BuildTileSet(GameObject* gameObject, int rnd);
 
 	TileMap* BuildTileMap(GameObject* gameObject, TileSet* tileSet);
+
+	void LoadScoreState();
 
 };

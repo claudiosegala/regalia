@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Interfaces.h>
+#include <Vec2.h>
 
 namespace Constants {
 
@@ -8,6 +9,16 @@ namespace Window {
 	const int Width = 480;
 	const int Height = 336;
 	const std::string Name = "Regalia";
+	const Vec2 Center = {
+		float(Width) / 2.0f,
+		float(Height) / 2.0f
+	};
+}
+
+namespace Game {
+	const int Sets = 5;
+	const int Players = 2;
+	const float SetLenght = 45.0f;
 }
 
 namespace SharedAssets {
@@ -52,9 +63,6 @@ namespace Credit {
 }
 
 namespace Play {
-	const float SetTime = 45.0f;
-	const int NumSets = 5;
-
 	const std::string Music = "assets/audio/stageState.ogg";
 
 	const std::vector<BackgroundData> Backgrounds = {

@@ -9,7 +9,7 @@
 #include <Vec2.h>
 
 CreditState::CreditState() {
-	Logger::Info("Initing Credit State");
+	Logger::Info("Initializing Credit State");
 
 	//this->music.Open(Constants::Credit::Music);
 	LoadAssets();

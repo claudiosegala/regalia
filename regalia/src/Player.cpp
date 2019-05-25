@@ -1,12 +1,16 @@
-#include "pch.h"
-#include "Player.h"
-#include "Sprite.h"
-#include "Constants.h"
-#include "GameObject.h"
-#include "InputManager.h"
+#include <pch.h>
+#include <Player.h>
+#include <Sprite.h>
+#include <Bullet.h>
+#include <Constants.h>
+#include <GameObject.h>
+#include <InputManager.h>
+
+int Player::counter = 0;
 
 Player::Player(GameObject& go)
     : Component(go) {
+	this->id = ++Player::counter;
 	this->hp = 50;
 	this->stateAnimation = PlayerState::IDLE;
 	this->speed = Vec2(0, 0);
@@ -17,8 +21,26 @@ Player::Player(GameObject& go)
 	LoadAssets();
 }
 
-void Player::NotifyCollision(GameObject& go) {
+Player::~Player() {
+	Player::counter--;
+}
 
+void Player::NotifyCollision(GameObject& go) {
+	auto component = go.GetComponent("Bullet");
+
+	if (component == nullptr)
+		return;
+
+	auto bullet = std::static_pointer_cast<Bullet>(component);
+
+	if (bullet->shooterId != this->id) return; //> you cannot fire yourself
+
+	this->hp -= bullet->GetDamage();
+
+	if (this->hp > 0)
+		return;
+
+	Die();
 }
 
 void Player::Update(float dt) {
@@ -116,4 +138,10 @@ void Player::Move(float dt) {
 		W(this->associated.box)
 		this->associated.box.vector += velocity;
 	}
+}
+
+void Player::Die() {
+	this->associated.RequestDelete();
+
+	// TODO: add animation of death
 }

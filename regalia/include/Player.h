@@ -5,7 +5,13 @@
 
 class Player : public Component {
 public:
+	static int counter;
+
 	Player(GameObject&);
+
+	~Player();
+
+	void NotifyCollision(GameObject& go);
 
 	void Update(float);
 
@@ -25,6 +31,8 @@ private:
 
 	PlayerState stateAnimation;
 
+	int id;
+
 	int hp;
 
 	Vec2 speed;
@@ -34,4 +42,6 @@ private:
 	void LoadAssets();
 	
 	void Move(float dt);
+	
+	void Die();
 };

@@ -9,7 +9,7 @@
 #include <Vec2.h>
 
 StoryState::StoryState() {
-	Logger::Info("Initing Story State");
+	Logger::Info("Initializing Story State");
 
 	//this->music.Open(Constants::Story::Music);
 	LoadAssets();

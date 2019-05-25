@@ -1,17 +1,19 @@
 #include <pch.h>
 #include <Camera.h>
-#include <TileMap.h>
-#include <TileSet.h>
 #include <Constants.h>
+#include <Game.h>
+#include <GameData.h>
 #include <InputManager.h>
 #include <Logger.h>
+#include <Player.h>
 #include <PlayState.h>
 #include <Rect.h>
+#include <ScoreState.h>
 #include <Sprite.h>
 #include <StoryState.h>
+#include <TileMap.h>
+#include <TileSet.h>
 #include <Vec2.h>
-#include <GameData.h>
-#include <Player.h>
 
 PlayState::PlayState() {
 	Logger::Info("Initializing Play State");
@@ -21,9 +23,8 @@ PlayState::PlayState() {
 	this->tileMapIdx = 0;
 	this->music.Open(Constants::Play::Music);
 
-	if (GameData::Set == 0) {
-		//GameData::Persona1 = (Persona)(rand() % 4);
-		//GameData::Persona2 = (Persona)(rand() % 4);
+	if (!GameData::Started || GameData::Finished) {
+		GameData::Init();
 	}
 
 	PlayState::LoadAssets();
@@ -39,9 +40,9 @@ void PlayState::LoadAssets() {
 }
 
 void PlayState::Update(float dt) {
-	roundTimer.Update(dt);
+	auto& in = InputManager::GetInstance();
 
-	this->popRequested = InputManager::IsPopRequested() || InputManager::GetInstance().GamepadPress(SDL_CONTROLLER_BUTTON_B);
+	this->popRequested = InputManager::IsPopRequested() || in.GamepadPress(SDL_CONTROLLER_BUTTON_B);
 	if (this->popRequested) {
 		return;
 	}
@@ -50,6 +51,23 @@ void PlayState::Update(float dt) {
 	if (this->quitRequested) {
 		return;
 	}
+
+	// TODO: uncomment this when constant is ok
+	/*if (in.GamepadPress(Constants::Gamepad::Menu)) {
+		GameData::Paused = true;
+		LoadScoreState();
+		return;
+	}*/
+
+	this->timer.Update(dt);
+
+	// TODO: uncomment this when there are two players
+	/*if (Player::counter == 1 || this->timer.Get() > Constants::Game::SetLenght) {
+		GameData::Set++;
+		GameData::Finished = (GameData::Set == Constants::Game::Sets);
+		LoadScoreState();
+		return;
+	}*/
 
 	UpdateArray(dt);
 }
@@ -137,4 +155,10 @@ TileMap* PlayState::BuildTileMap(GameObject* go, TileSet* tileSet) {
 	this->tileMapIdx = int(idx);
 
 	return new TileMap(*go, asset.file, tileSet);
+}
+
+void PlayState::LoadScoreState() {
+	auto game = Game::GetInstance();
+
+	game->Push(new ScoreState());
 }

@@ -14,7 +14,7 @@
 MenuState::MenuState()
     : option(0)
     , cursor() {
-	Logger::Info("Initing Menu State");
+	Logger::Info("Initializing Menu State");
 
 	//this->music.Open(Constants::Menu::Music);
 	LoadAssets();

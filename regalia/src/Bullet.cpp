@@ -5,10 +5,10 @@
 #include <Sprite.h>
 #include <Vec2.h>
 
-Bullet::Bullet(GameObject& go, float angle, float speed, int damage, float maxDistance, std::string sprite, int frameCount, float frameTime, bool targetPlayer)
+Bullet::Bullet(GameObject& go, BulletData& data, std::string file, int frameCount, float frameTime)
     : Component(go) {
 	// Adding Image
-	auto image = new Sprite(this->associated, sprite, frameCount, frameTime);
+	auto image = new Sprite(this->associated, file, frameCount, frameTime);
 	this->associated.AddComponent(image);
 
 	// Adding Collider
@@ -16,10 +16,10 @@ Bullet::Bullet(GameObject& go, float angle, float speed, int damage, float maxDi
 	this->associated.AddComponent(collider);
 
 	// Initialization of variables
-	this->targetPlayer = targetPlayer;
-	this->distanceLeft = maxDistance;
-	this->damage = damage;
-	this->speed = Vec2(1, 0).GetRotate(angle) * speed;
+	this->shooterId = data.shooterId;
+	this->distanceLeft = data.maxDistance;
+	this->damage = data.damage;
+	this->speed = Vec2(1, 0).GetRotate(data.angle) * data.speed;
 }
 
 void Bullet::Update(float dt) {
@@ -42,7 +42,7 @@ void Bullet::Render() {}
 
 void Bullet::NotifyCollision(GameObject& other) {
 	// If hit an penguin body or alien, it should destroy itself
-	if ((other.GetPenguinBody() != nullptr && !targetPlayer) || (other.GetAlien() != nullptr && targetPlayer)) {
+	if ((other.GetPenguinBody() != nullptr && !shooterId) || (other.GetAlien() != nullptr && shooterId)) {
 		this->associated.RequestDelete();
 		return;
 	}

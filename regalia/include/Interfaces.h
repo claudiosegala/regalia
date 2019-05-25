@@ -2,6 +2,14 @@
 
 #include <pch.h>
 
+struct BulletData {
+	int shooterId;
+	int damage;
+	float angle;
+	float speed;
+	float maxDistance;
+};
+
 struct TileSetData {
 	int width;
 	int height;

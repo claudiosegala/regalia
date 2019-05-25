@@ -2,13 +2,14 @@
 
 #include <Component.h>
 #include <GameObject.h>
+#include <Interfaces.h>
 #include <Vec2.h>
 
 class Bullet : public Component {
 public:
-	bool targetPlayer;
+	int shooterId;
 
-	Bullet(GameObject&, float, float, int, float, std::string, int frameCount = 1, float frameTime = 1.0f, bool targetPlayer = false);
+	Bullet(GameObject&, BulletData&, std::string, int frameCount = 1, float frameTime = 1.0f);
 
 	void Update(float);
 
