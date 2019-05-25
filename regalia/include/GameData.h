@@ -4,19 +4,26 @@
 
 class GameData {
 public:
+	static bool Started;
+
+	static bool Paused;
+
 	static bool Finished;
 
 	static int Set;
 
-	enum class ResultType {
-		NONE,
-		PLAYER1_VICTORY,
-		PLAYER2_VICTORY
+	static int Result[Constants::Game::Sets]; //> holds the id of the winner
+
+	enum class PersonaType {
+		MISTER_N,
+		GOTICA,
+		OUTRO,
+		MAIS_OUTRO
 	};
 
-	static ResultType Result[Constants::Play::NumSets];
+	static PersonaType Persona1;
 
-	//    	static std::unique_ptr<Player> player1 = nullptr;
+	static PersonaType Persona2;
 
-	//    	static std::unique_ptr<Player> player2 = nullptr;
+	static void Init();
 };

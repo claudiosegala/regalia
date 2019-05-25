@@ -14,7 +14,7 @@
 MenuState::MenuState()
     : option(0)
     , cursor() {
-	Logger::Info("Initing Menu State");
+	Logger::Info("Initializing Menu State");
 
 	//this->music.Open(Constants::Menu::Music);
 	LoadAssets();
@@ -25,23 +25,12 @@ MenuState::~MenuState() {
 }
 
 void MenuState::LoadAssets() {
-	auto imageObject = new GameObject();
-	auto image = new Sprite(*imageObject, Constants::Menu::Background);
+	(void)AddObject(CreateBackground());
+	(void)AddObject(CreateOption("Play", { 0, 0 }));
+	(void)AddObject(CreateOption("Story", { 0, 75 }));
+	(void)AddObject(CreateOption("Credits", { 0, 150 }));
 
-	imageObject->AddComponent(image);
-	imageObject->box.vector.Reset();
-
-	auto cursorObject = CreateOption(">", { -75, 0 }); //> points towards first position
-	auto playObject = CreateOption("Play", { 0, 0 });
-	auto storyObject = CreateOption("Story", { 0, 75 });
-	auto creditsObject = CreateOption("Credits", { 0, 150 });
-
-	(void)AddObject(imageObject);
-	(void)AddObject(playObject);
-	(void)AddObject(storyObject);
-	(void)AddObject(creditsObject);
-
-	this->cursor = AddObject(cursorObject);
+	this->cursor = AddObject(CreateOption(">", { -75, 0 })); //> points towards first position
 }
 
 void MenuState::Update(float dt) {
@@ -56,11 +45,11 @@ void MenuState::Update(float dt) {
 
 	auto& in = InputManager::GetInstance();
 
-	if (in.KeyPress(Constants::Key::ArrowDown)) {
+	if (in.KeyPress(Constants::Key::ArrowDown) || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
 		this->option = (this->option + 1) % 3; // 0 to 2
 
 		if (auto ptr = this->cursor.lock()) {
-			auto pos = Vec2 {
+			const auto pos = Vec2 {
 				Constants::Window::Width / 2 - 75,
 				Constants::Window::Height / 2 + this->option * 75
 			};
@@ -69,11 +58,11 @@ void MenuState::Update(float dt) {
 		}
 	}
 
-	if (in.KeyPress(Constants::Key::ArrowUp)) {
+	else if (in.KeyPress(Constants::Key::ArrowUp) || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP)) {
 		this->option = (this->option - 1 + 3) % 3; // 0 to 2
 
 		if (auto ptr = this->cursor.lock()) {
-			auto pos = Vec2 {
+			const auto pos = Vec2 {
 				Constants::Window::Width / 2 - 75,
 				Constants::Window::Height / 2 + this->option * 75
 			};
@@ -82,7 +71,7 @@ void MenuState::Update(float dt) {
 		}
 	}
 
-	if (in.KeyPress(Constants::Key::Space)) {
+	else if (in.KeyPress(Constants::Key::Space) || in.GamepadPress(SDL_CONTROLLER_BUTTON_A, 0)) {
 		auto game = Game::GetInstance();
 
 		game->Push(new PlayState());
@@ -121,19 +110,29 @@ void MenuState::Resume() {
 	Camera::Reset();
 }
 
+GameObject* MenuState::CreateBackground() {
+	auto go = new GameObject();
+	const auto image = new Sprite(*go, Constants::Menu::Background);
+
+	go->AddComponent(image);
+	go->box.vector.Reset();
+
+	return go;
+}
+
 GameObject* MenuState::CreateOption(std::string message, Vec2 shift) {
-	auto pos = Vec2 {
+	const auto pos = Vec2 {
 		Constants::Window::Width / 2,
 		Constants::Window::Height / 2
 	};
 
-	auto textAsset = "assets/font/Call me maybe.ttf";
+	const auto textAsset = "assets/font/Call me maybe.ttf";
 
-	auto object = new GameObject();
-	auto text = new Text(*object, textAsset, Constants::Menu::TextSize, Text::TextStyle::SOLID, message, { 255, 0, 0, 0 });
+	auto go = new GameObject();
+	const auto text = new Text(*go, textAsset, Constants::Menu::TextSize, Text::TextStyle::SOLID, message, { 255, 0, 0, 0 });
 
-	object->AddComponent(text);
-	object->box.SetCenter(pos + shift);
+	go->AddComponent(text);
+	go->box.SetCenter(pos + shift);
 
-	return object;
+	return go;
 }

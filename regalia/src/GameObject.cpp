@@ -69,22 +69,6 @@ std::shared_ptr<Component> GameObject::GetComponent(std::string type) {
 	}
 }
 
-std::shared_ptr<Component> GameObject::GetPenguinBody() {
-	return GetComponent("PenguinBody");
-}
-
-std::shared_ptr<Component> GameObject::GetPenguinCannon() {
-	return GetComponent("PenguinCannon");
-}
-
-std::shared_ptr<Component> GameObject::GetBullet() {
-	return GetComponent("Bullet");
-}
-
-std::shared_ptr<Component> GameObject::GetAlien() {
-	return GetComponent("Alien");
-}
-
 void GameObject::NotifyCollision(GameObject& other) {
 	for (int i = 0; i < (int)this->components.size(); i++) {
 		this->components[i]->NotifyCollision(other);

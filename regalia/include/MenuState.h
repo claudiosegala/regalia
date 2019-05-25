@@ -10,17 +10,17 @@ public:
 
 	~MenuState();
 
-	void LoadAssets();
+	void LoadAssets() override;
 
-	void Update(float);
+	void Update(float) override;
 
-	void Render();
+	void Render() override;
 
-	void Start();
+	void Start() override;
 
-	void Pause();
+	void Pause() override;
 
-	void Resume();
+	void Resume() override;
 
 private:
 	int option;
@@ -28,6 +28,8 @@ private:
 	std::weak_ptr<GameObject> cursor;
 
 	Music music;
+
+	GameObject* CreateBackground();
 
 	GameObject* CreateOption(std::string, Vec2 shift = { 0, 0 });
 };

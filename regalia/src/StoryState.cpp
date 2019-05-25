@@ -9,7 +9,7 @@
 #include <Vec2.h>
 
 StoryState::StoryState() {
-	Logger::Info("Initing Story State");
+	Logger::Info("Initializing Story State");
 
 	//this->music.Open(Constants::Story::Music);
 	LoadAssets();
@@ -20,13 +20,13 @@ StoryState::~StoryState() {
 }
 
 void StoryState::LoadAssets() {
-	auto imageObject = new GameObject();
-	auto image = new Sprite(*imageObject, Constants::Story::Background);
+	auto go = new GameObject();
+	auto image = new Sprite(*go, Constants::Story::Background);
 
-	imageObject->AddComponent(image);
-	imageObject->box.vector.Reset();
+	go->AddComponent(image);
+	go->box.vector.Reset();
 
-	(void)AddObject(imageObject);
+	(void)AddObject(go);
 
 	// TODO: add message to say "Press ESC to return to Menu"
 }

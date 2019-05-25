@@ -1,11 +1,20 @@
 #pragma once
 
 #include <Component.h>
+#include <Rect.h>
 #include <Vec2.h>
 
 class Player : public Component {
 public:
+	static int counter;
+
+	int id;
+
 	Player(GameObject&);
+
+	~Player();
+
+	void NotifyCollision(GameObject& go);
 
 	void Update(float);
 
@@ -14,6 +23,7 @@ public:
 	bool Is(std::string);
 
 private:
+
 	enum class PlayerState {
 		IDLE,
 		RUNNING,
@@ -29,5 +39,13 @@ private:
 
 	Vec2 speed;
 
-	//PersonaTypes persona; // which persona
+	Rect collisionBox;
+
+	void LoadAssets();
+	
+	void Move(float dt);
+
+	void CheckBestDelta(Vec2, float);
+
+	void Die();
 };

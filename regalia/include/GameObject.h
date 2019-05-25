@@ -6,6 +6,7 @@ class Component;
 
 class GameObject {
 public:
+
 	Rect box;
 
 	float angle;
@@ -29,14 +30,6 @@ public:
 	void RemoveComponent(std::shared_ptr<Component>&);
 
 	std::shared_ptr<Component> GetComponent(std::string);
-
-	std::shared_ptr<Component> GetPenguinBody();
-
-	std::shared_ptr<Component> GetPenguinCannon();
-
-	std::shared_ptr<Component> GetBullet();
-
-	std::shared_ptr<Component> GetAlien();
 
 	void NotifyCollision(GameObject&);
 

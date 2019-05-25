@@ -25,6 +25,10 @@ void Vec2::Reset() {
 	this->x = this->y = 0;
 }
 
+void Vec2::Limit(float limit) {
+	Limit(limit, -limit, limit, -limit);
+}
+
 void Vec2::Limit(float upperX, float lowerX, float upperY, float lowerY) {
 	if (this->x < lowerX) {
 		this->x = lowerX;
@@ -87,11 +91,16 @@ Vec2 Vec2::operator=(const Vec2& V) {
 	return *this;
 }
 
-Vec2 Vec2::operator*(const Vec2& V) {
-	this->x *= V.y;
-	this->y *= V.x;
+bool Vec2::operator==(const Vec2& rhs) const {
+	return x == rhs.x && y == rhs.y;
+}
 
-	return *this;
+bool Vec2::operator!=(const Vec2& rhs) const {
+	return !(rhs == *this);
+}
+
+Vec2 Vec2::operator*(const Vec2& V) {
+	return Vec2(this->x * V.y, this->y * V.x);
 }
 
 float Vec2::operator^(const Vec2& V) const {

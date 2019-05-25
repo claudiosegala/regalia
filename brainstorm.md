@@ -1,15 +1,3 @@
-# Play State
-
-### Path
-
-MENU → ScoreTable (PAUSE) → add ScoreTable
-
-"Time Up" → ScoreTable (SET_ENDED) → add ScoreTable
-
-"Set end" → ScoreTable (SET_ENDED) → add ScoreTable
-
-"Last set end" → ScoreTable(MATCH_ENDED) → add ScoreTable
-
 # Components
 Para identificar as classes derivadas de Component podemos usar as funções a seguir.
 > Obs: Setar a macro NDEBUG no visual studio quando for compilar para release, essa macro remove os asserts.
@@ -116,19 +104,3 @@ void GameObject::RemoveComponent(const Component* cpt) {
 	}
 }
 ```
-
-
-# Bullet
-
-```c++
-class Bullet : Component {
-
-}
-```
-
-
-
-
-# O que deseja mudar
-
-+ Adicionar ReplaceComponent(std::string type, Component* comp)

@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="include\FrameInfo.h" />
+    <ClCompile Include="src\Gamepad.cpp" />
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\CameraFollower.cpp" />
@@ -19,6 +22,7 @@
     <ClCompile Include="src\PlayState.cpp" />
     <ClCompile Include="src\Rect.cpp" />
     <ClCompile Include="src\Resources.cpp" />
+    <ClCompile Include="src\ScoreState.cpp" />
     <ClCompile Include="src\Sound.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\State.cpp" />
@@ -28,14 +32,14 @@
     <ClCompile Include="src\TileSet.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Vec2.cpp" />
-    <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\ScoreState.cpp" />
-    <ClCompile Include="include\FrameInfo.h" />
+    <ClCompile Include="src\Circle.cpp" />
+    <ClCompile Include="src\Shape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\CameraFollower.h" />
+    <ClInclude Include="include\Circle.h" />
     <ClInclude Include="include\Collider.h" />
     <ClInclude Include="include\Collision.h" />
     <ClInclude Include="include\Component.h" />
@@ -44,6 +48,7 @@
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameData.h" />
     <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\Gamepad.h" />
     <ClInclude Include="include\InputManager.h" />
     <ClInclude Include="include\Logger.h" />
     <ClInclude Include="include\MenuState.h" />
@@ -59,17 +64,20 @@
     <ClInclude Include="include\Text.h" />
     <ClInclude Include="include\TileMap.h" />
     <ClInclude Include="include\TileSet.h" />
+    <ClInclude Include="include\Interfaces.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Vec2.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\ScoreState.h" />
-    <ClInclude Include="include\Interfaces.h" />
+    <ClInclude Include="include\Shape.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\img\mister_n_spritesheet.png" />
+    <Image Include="assets\img\tileSetSample.png" />
+    <Image Include="assets\img\tileSet_01.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="assets\img\tileSetSample.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\map\00.txt" />

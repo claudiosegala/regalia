@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Interfaces.h>
+#include <Vec2.h>
 
 namespace Constants {
 
@@ -8,6 +9,19 @@ namespace Window {
 	const int Width = 480;
 	const int Height = 336;
 	const std::string Name = "Regalia";
+	const Vec2 Center = {
+		float(Width) / 2.0f,
+		float(Height) / 2.0f
+	};
+}
+
+namespace Game {
+	const int Sets = 5;
+	const int Players = 2;
+	const float SetLenght = 45.0f;
+	const float MaxVelocity = 1000.0f;
+	const Vec2 Gravity = { 0.0f, 2000.0f };
+	const Vec2 Jump = { 0.0f, -500.0f };
 }
 
 namespace SharedAssets {
@@ -52,9 +66,6 @@ namespace Credit {
 }
 
 namespace Play {
-	const float SetTime = 45.0f;
-	const int NumSets = 5;
-
 	const std::string Music = "assets/audio/stageState.ogg";
 
 	const std::vector<BackgroundData> Backgrounds = {
@@ -67,11 +78,11 @@ namespace Play {
 
 	const std::vector<TileMapData> TileMaps = {
 		{ "assets/map/00.txt" },
-		{ "assets/map/01.txt" },
+		/*{ "assets/map/01.txt" },
 		{ "assets/map/02.txt" },
 		{ "assets/map/03.txt" },
 		{ "assets/map/04.txt" },
-		{ "assets/map/05.txt" }
+		{ "assets/map/05.txt" }*/
 	};
 }
 
@@ -123,6 +134,9 @@ namespace Gamepad {
 	const int R2 = SDLK_RIGHT;
 	const int L1 = SDLK_UP;
 	const int L2 = SDLK_DOWN;
+
+	const int StickDeadZone = 8000;
+	const int TriggerDeadZone = 8000;
 }
 
 namespace Math {
@@ -151,6 +165,10 @@ namespace StdColor {
 //         PERSONA4 = "PERSONA4"
 //     }
 // }
+
+namespace Player {
+	const float SpeedMultiplier = 100.0f;
+}
 
 }
 

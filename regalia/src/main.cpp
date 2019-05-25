@@ -11,8 +11,6 @@ int main(int argc, char** argv) {
 	try {
 		srand((unsigned int)time(NULL));
 
-		Logger::GetInstance();
-
 		auto game = Game::GetInstance();
 
 		game->Push(new MenuState());

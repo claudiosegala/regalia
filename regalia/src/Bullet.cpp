@@ -1,25 +1,20 @@
 #include <pch.h>
 #include <Bullet.h>
+#include <Circle.h>
 #include <Collider.h>
 #include <GameObject.h>
+#include <Player.h>
 #include <Sprite.h>
 #include <Vec2.h>
 
-Bullet::Bullet(GameObject& go, float angle, float speed, int damage, float maxDistance, std::string sprite, int frameCount, float frameTime, bool targetPlayer)
+Bullet::Bullet(GameObject& go, BulletData& data, std::string file, int frameCount, float frameTime)
     : Component(go) {
-	// Adding Image
-	auto image = new Sprite(this->associated, sprite, frameCount, frameTime);
-	this->associated.AddComponent(image);
+	this->shooterId = data.shooterId;
+	this->distanceLeft = data.maxDistance;
+	this->damage = data.damage;
+	this->speed = Vec2(1, 0).GetRotate(data.angle) * data.speed;
 
-	// Adding Collider
-	auto collider = new Collider(this->associated);
-	this->associated.AddComponent(collider);
-
-	// Initialization of variables
-	this->targetPlayer = targetPlayer;
-	this->distanceLeft = maxDistance;
-	this->damage = damage;
-	this->speed = Vec2(1, 0).GetRotate(angle) * speed;
+	LoadAssets(file, frameCount, frameTime);
 }
 
 void Bullet::Update(float dt) {
@@ -40,9 +35,20 @@ void Bullet::Update(float dt) {
 
 void Bullet::Render() {}
 
-void Bullet::NotifyCollision(GameObject& other) {
-	// If hit an penguin body or alien, it should destroy itself
-	if ((other.GetPenguinBody() != nullptr && !targetPlayer) || (other.GetAlien() != nullptr && targetPlayer)) {
+void Bullet::NotifyCollision(GameObject& go) {
+	auto component = go.GetComponent("Player");
+
+	if (component == nullptr) {
+		return;
+	}
+
+	auto player = std::static_pointer_cast<Player>(component);
+
+	if (player == nullptr) {
+		return;
+	}
+
+	if (player->id != shooterId) {
 		this->associated.RequestDelete();
 		return;
 	}
@@ -54,4 +60,13 @@ bool Bullet::Is(std::string type) {
 
 int Bullet::GetDamage() {
 	return this->damage;
+}
+
+void Bullet::LoadAssets(std::string file, int frameCount, float frameTime) {
+	auto image = new Sprite(this->associated, file, frameCount, frameTime);
+	auto circle = new Circle();
+	auto collider = new Collider(this->associated, circle);
+
+	this->associated.AddComponent(image);
+	this->associated.AddComponent(collider);
 }

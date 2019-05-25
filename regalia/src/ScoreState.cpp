@@ -1,18 +1,21 @@
 #include <pch.h>
-#include <ScoreState.h>
-#include <InputManager.h>
-#include <GameData.h>
 #include <Camera.h>
+#include <Game.h>
+#include <GameData.h>
+#include <InputManager.h>
 #include <Logger.h>
+#include <Player.h>
+#include <PlayState.h>
 #include <Rect.h>
+#include <ScoreState.h>
 #include <Sprite.h>
 #include <Vec2.h>
 
 ScoreState::ScoreState() {
-	Logger::Info("Initing Story State");
+	Logger::Info("Initializing Story State");
 
 	//this->music.Open(Constants::Story::Music);
-	this->status = ScoreStatus::FINISHED_MATCH; // TODO: Infer from game data the current situation
+
 	LoadAssets();
 }
 
@@ -21,15 +24,16 @@ ScoreState::~ScoreState() {
 }
 
 void ScoreState::LoadAssets() {
-	auto imageObject = new GameObject();
-	auto image = new Sprite(*imageObject, Constants::Story::Background);
+	LoadBackground();
+	LoadScore();
 
-	imageObject->AddComponent(image);
-	imageObject->box.vector.Reset();
-
-	(void)AddObject(imageObject);
-
-	// TODO: add message to say "Press ESC to return to Menu"
+	if (GameData::Paused) {
+		LoadPausedOptions();
+	} else if (GameData::Finished) {
+		LoadFinishedOptions();
+	} else {
+		LoadContinueOptions();
+	}
 }
 
 void ScoreState::Update(float dt) {
@@ -40,35 +44,32 @@ void ScoreState::Update(float dt) {
 	if (this->quitRequested)
 		return;
 
-	auto& in = InputManager::GetInstance();
+	//auto& in = InputManager::GetInstance();
 
-	if (in.GamepadPress(Constants::Gamepad::R1) && this->status == ScoreStatus::PAUSED) {
-		// continue
-		//this->popRequested = 1;
-		return;
-	}
+	//if (in.GamepadPress(Constants::Gamepad::A)) {
+	//	if (GameData::Paused) {
+	//		GameData::Paused = false;
+	//		this->popRequested = 1;
+	//		return;
+	//	}
 
-	if (in.GamepadPress(Constants::Gamepad::R2)) {
-		// restart
-		//GameData::Reset();
-		//Game::Append(new PlayState());
+	//	if (!GameData::Finished) { // has next set
+	//		Game::Append(new PlayState());
+	//		this->popRequested = 2;
+	//		return;
+	//	}
+	//}
 
-		//this->popRequested = 2;
-		return;
-	}
+	//if (in.GamepadPress(Constants::Gamepad::R1)) { // restart
+	//	Game::Append(new PlayState());
+	//	this->popRequested = 2;
+	//	return;
+	//}
 
-	if (in.GamepadPress(Constants::Gamepad::L1) && this->status == ScoreStatus::UNFINISHED_MATCH) {
-		// has next set
-		//Game::Append(new PlayState());
-
-		//this->popRequested = 2;
-		return;
-	}
-
-	if (in.GamepadPress(Constants::Gamepad::L2)) {
-		this->quitRequested = true;
-		return;
-	}
+	//if (in.GamepadPress(Constants::Gamepad::R2)) { // quit
+	//	this->quitRequested = true;
+	//	return;
+	//}
 
 	UpdateArray(dt);
 }
@@ -93,4 +94,45 @@ void ScoreState::Pause() {
 void ScoreState::Resume() {
 	Logger::Info("Resuming Title State");
 	Camera::Reset();
+}
+
+void ScoreState::LoadBackground() {
+	auto go = new GameObject();
+	auto image = new Sprite(*go, Constants::Story::Background);
+
+	go->AddComponent(image);
+	go->box.SetCenter(Constants::Window::Center);
+
+	(void)AddObject(go);
+}
+
+void ScoreState::LoadScore() {
+	// TODO: load score in a cool way
+}
+
+void ScoreState::LoadPausedOptions() {
+	//    SCORE
+	// X    v    Y
+	//
+	// A - Continue Set
+	// R1 - Restart
+	// R2 - Quit
+}
+
+void ScoreState::LoadContinueOptions() {
+	//    SCORE
+	// X    v    Y
+	//
+	// A - Continue Match
+	// R1 - Restart
+	// R2 - Quit
+}
+
+
+void ScoreState::LoadFinishedOptions() {
+	//    SCORE
+	// X    v    Y
+	//
+	// R1 - Restart
+	// R2 - Quit
 }

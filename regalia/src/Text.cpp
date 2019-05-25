@@ -6,8 +6,8 @@
 #include <Resources.h>
 #include <Text.h>
 
-Text::Text(GameObject& associated, std::string file, int size, TextStyle style, std::string text, SDL_Color color)
-    : Component(associated)
+Text::Text(GameObject& go, std::string file, int size, TextStyle style, std::string text, SDL_Color color)
+    : Component(go)
     , text(text)
     , style(style)
     , fontFile(file)

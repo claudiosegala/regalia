@@ -1,26 +1,6 @@
 #include <pch.h>
 #include <Logger.h>
 
-Logger* Logger::instance;
-
-Logger::Logger() {
-	if (this->instance != nullptr) {
-		throw std::runtime_error("There should be only one instance!\n");
-	}
-
-	this->instance = this;
-}
-
-Logger::~Logger() {}
-
-Logger* Logger::GetInstance() {
-	if (Logger::instance != nullptr) {
-		return Logger::instance;
-	}
-
-	return Logger::instance = new Logger();
-}
-
 void Logger::Error(const std::string& msg, int type) {
 #ifdef LOG_ERROR
 	std::cout << Constants::StdColor::Red << "\n";

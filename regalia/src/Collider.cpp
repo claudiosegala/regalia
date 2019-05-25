@@ -1,6 +1,8 @@
 #include <pch.h>
+#include <Circle.h>
 #include <Collider.h>
 #include <Constants.h>
+#include <Rect.h>
 #include <Vec2.h>
 
 #ifdef DEBUG
@@ -8,19 +10,33 @@
 #include "Game.h"
 #endif // DEBUG
 
-Collider::Collider(GameObject& go, Vec2 scale, Vec2 offset)
+Collider::Collider(GameObject& go, Shape* shape, Vec2 scale, Vec2 offset)
     : Component(go) {
 	this->scale = scale;
 	this->offset = offset;
+	this->shape = shape;
 }
 
 void Collider::Update(float dt) {
 	UNUSED(dt);
 
-	this->box = this->associated.box;
-	this->box.width *= this->scale.x;
-	this->box.height *= this->scale.y;
-	this->box.SetCenter(this->associated.box.Center() + this->offset.GetRotate(this->associated.angle));
+	if (this->shape == nullptr) {
+		return;
+	}
+
+	if (this->shape->Is("Rect")) {
+		auto rect = static_cast<Rect*>(this->shape);
+
+		rect->width = this->associated.box.width * this->scale.x;
+		rect->height = this->associated.box.height * this->scale.y;
+		rect->SetCenter(this->associated.box.Center() + this->offset.GetRotate(this->associated.angle));
+	} else {
+		auto circle = static_cast<Circle*>(this->shape);
+
+		circle->center = this->associated.box.Center();
+		// TODO: verify if this is ok
+		circle->radius = this->associated.box.MaxRadius() * this->scale.x;
+	}
 }
 
 // Copie o conteúdo dessa função para dentro da sua e adapte o nome das funções para as suas.

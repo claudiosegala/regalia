@@ -15,17 +15,17 @@ public:
 
 	~PlayState();
 
-	void LoadAssets();
+	void LoadAssets() override;
 
-	void Update(float);
+	void Update(float) override;
 
-	void Render();
+	void Render() override;
 
-	void Start();
+	void Start() override;
 
-	void Pause();
+	void Pause() override;
 
-	void Resume();
+	void Resume() override;
 
 private:
 
@@ -35,16 +35,22 @@ private:
 
 	int tileMapIdx;
 
-	Timer roundTimer;
+	Timer timer;
 
 	Music music;
 	
+	void CheckCollision();
+
 	void CreateField();
+
+	void CreatePlayers();
 
 	Sprite* BuildBackground(GameObject* gameObject, int rnd);
 
 	TileSet* BuildTileSet(GameObject* gameObject, int rnd);
 
 	TileMap* BuildTileMap(GameObject* gameObject, TileSet* tileSet);
+
+	void LoadScoreState();
 
 };

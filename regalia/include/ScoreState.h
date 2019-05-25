@@ -28,11 +28,14 @@ public:
 private:
 	Music music;
 
-	enum class ScoreStatus {
-		PAUSED,
-		UNFINISHED_MATCH,
-		FINISHED_MATCH
-	};
+	void LoadBackground();
 
-	ScoreStatus status;
+	void LoadScore();
+
+	void LoadPausedOptions();
+
+	void LoadContinueOptions();
+
+	void LoadFinishedOptions();
+
 };

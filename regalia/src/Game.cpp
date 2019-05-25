@@ -279,7 +279,7 @@ void Game::Init_SDL() {
 	/* 
         Available Flags:
         SDL_INIT_TIMER
-        SDL_INIT_GAMECONTROLLER
+        SDL_INIT_GAMECONTROLLER,
         SDL_INIT_AUDIO
         SDL_INIT_EVENTS
         SDL_INIT_VIDEO
@@ -288,7 +288,7 @@ void Game::Init_SDL() {
         SDL_INIT_NOPARACHUTE
         SDL_INIT_HAPTIC
     */
-	auto flags = (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
+	auto flags = (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK);
 
 	Logger::Info("Initing SDL");
 	auto err = SDL_Init(flags);
