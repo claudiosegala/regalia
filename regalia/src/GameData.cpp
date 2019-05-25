@@ -7,6 +7,6 @@ int GameData::Set = 0;
 
 GameData::ResultType GameData::Result[Constants::Play::NumSets];
 
-std::unique_ptr<Player> GameData::player1 = nullptr;
+GameData::PersonaType GameData::Persona1;
 
-std::unique_ptr<Player> GameData::player2 = nullptr;
+GameData::PersonaType GameData::Persona2;

@@ -64,6 +64,7 @@ void Player::Move(float dt) {
 
 	bool can = true;
 
+	// TODO: PlayState should let this available 
 	int collisionSet[14][20] = {
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },

@@ -41,6 +41,8 @@ private:
 	
 	void CreateField();
 
+	void CreatePlayers();
+
 	Sprite* BuildBackground(GameObject* gameObject, int rnd);
 
 	TileSet* BuildTileSet(GameObject* gameObject, int rnd);
