@@ -7,6 +7,8 @@ class Player : public Component {
 public:
 	static int counter;
 
+	int id;
+
 	Player(GameObject&);
 
 	~Player();
@@ -31,13 +33,9 @@ private:
 
 	PlayerState stateAnimation;
 
-	int id;
-
 	int hp;
 
 	Vec2 speed;
-
-	//PersonaTypes persona; // which persona
 
 	void LoadAssets();
 	

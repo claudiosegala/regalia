@@ -2,6 +2,7 @@
 #include <Bullet.h>
 #include <Collider.h>
 #include <GameObject.h>
+#include <Player.h>
 #include <Sprite.h>
 #include <Vec2.h>
 
@@ -40,9 +41,20 @@ void Bullet::Update(float dt) {
 
 void Bullet::Render() {}
 
-void Bullet::NotifyCollision(GameObject& other) {
-	// If hit an penguin body or alien, it should destroy itself
-	if ((other.GetPenguinBody() != nullptr && !shooterId) || (other.GetAlien() != nullptr && shooterId)) {
+void Bullet::NotifyCollision(GameObject& go) {
+	auto component = go.GetComponent("Player");
+
+	if (component == nullptr) {
+		return;
+	}
+
+	auto player = std::static_pointer_cast<Player>(component);
+
+	if (player == nullptr) {
+		return;
+	}
+
+	if (player->id != shooterId) {
 		this->associated.RequestDelete();
 		return;
 	}

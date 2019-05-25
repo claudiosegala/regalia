@@ -28,17 +28,21 @@ Player::~Player() {
 void Player::NotifyCollision(GameObject& go) {
 	auto component = go.GetComponent("Bullet");
 
-	if (component == nullptr)
+	if (component == nullptr) {
 		return;
+	}
 
 	auto bullet = std::static_pointer_cast<Bullet>(component);
 
-	if (bullet->shooterId != this->id) return; //> you cannot fire yourself
+	if (bullet->shooterId != this->id) {
+		return; //> you cannot fire yourself
+	}
 
 	this->hp -= bullet->GetDamage();
 
-	if (this->hp > 0)
+	if (this->hp > 0) {
 		return;
+	}
 
 	Die();
 }
