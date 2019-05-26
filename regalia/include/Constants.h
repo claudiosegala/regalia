@@ -181,23 +181,19 @@ namespace Colors {
 namespace PlayerSpriteSheets {
 	enum {
 		Idle = 0,
-		Running
+		Running,
+		TOTAL_PLAYER_ANIMATIONS
 	};
 
 	const SpriteSheetData MisterN(
 	    "",
-		384,
-		48,
-		0.2f,
+	    384,
+	    48,
+	    0.2f,
+	    TOTAL_PLAYER_ANIMATIONS,
 	    {
-	        {
-	            Idle,
-				1
-	        },
-	        {
-	            Running,
-				0
-	        },
+	        { Idle, 1 },
+	        { Running, 6 },
 	    });
 }
 

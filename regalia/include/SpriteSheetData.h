@@ -1,29 +1,30 @@
 #pragma once
 
-class AnimationData {
-public:
-	AnimationData(int id, int numberOfFrames);
-
-	int id;
-	int numberOfFrames;
-};
 
 class SpriteSheetData {
 public:
-	SpriteSheetData(const std::string& file, int width, int height, float frameTime, const std::vector<AnimationData>& animations);
+	SpriteSheetData(const std::string& file, int imageWidth, int imageHeight, float frameTime, int totalAnimations, const std::map<int, int>& animationsFrames);
 
 	std::string file;
 	float frameTime;
 
-	inline SDL_Rect getAnimationRect(int animationId, int frame) {
+	inline SDL_Rect GetAnimationRect(int animationId, int frame) {
 		assert(animationId >= 0 && animationId < animationsRect.size());
 		assert(frame >= 0 && frame < animationsRect[animationId].size());
 		return animationsRect[animationId][frame];
 	};
 
-	inline int getNumberOfFrames(int animationId) {
+	inline int GetNumberOfFrames(int animationId) {
 		assert(animationId >= 0 && animationId < animationsRect.size());
 		return int(animationsRect[animationId].size());
+	}
+
+	inline int GetFrameWidth() const {
+		return frameWidth;
+	}
+
+	inline int GetFrameHeight() const {
+		return imageHeight;
 	}
 
 // Only check in DEBUG mode
@@ -34,5 +35,5 @@ public:
 private:
 	std::vector<std::vector<SDL_Rect>> animationsRect;
 
-	int width, height;
+	int imageWidth, imageHeight, frameWidth;
 };
