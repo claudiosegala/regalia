@@ -1,6 +1,10 @@
 #ifndef PCH_H
 #define PCH_H
 
+#ifdef _DEBUG
+#define DEBUG
+#endif // DEBUG
+
 //#define VS_LEAK_CHECK
 #ifdef VS_LEAK_CHECK
 #define _CRTDBG_MAP_ALLOC

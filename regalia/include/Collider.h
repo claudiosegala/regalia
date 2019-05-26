@@ -15,7 +15,6 @@ public:
 	void Update(float) override;
 
 	void Render() override;
-
 	void SetScale(Vec2);
 
 	void SetOffset(Vec2);
