@@ -4,7 +4,7 @@
 
 class TileSet {
 public:
-	TileSet(GameObject&, int, int, std::string);
+	TileSet(GameObject&, int, int, const std::string&);
 
 	void RenderTile(unsigned int, float, float);
 

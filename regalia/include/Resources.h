@@ -4,21 +4,21 @@ class Resources {
 public:
 	static void Prune();
 
-	static std::shared_ptr<SDL_Texture> GetImage(std::string);
+	static std::shared_ptr<SDL_Texture> GetImage(const std::string&);
 
 	static std::tuple<int, int> QueryImage(SDL_Texture*);
 
 	static void PruneImages();
 
-	static std::shared_ptr<Mix_Music> GetMusic(std::string);
+	static std::shared_ptr<Mix_Music> GetMusic(const std::string&);
 
 	static void PruneMusics();
 
-	static std::shared_ptr<Mix_Chunk> GetSound(std::string);
+	static std::shared_ptr<Mix_Chunk> GetSound(const std::string&);
 
 	static void PruneSounds();
 
-	static std::shared_ptr<TTF_Font> GetText(std::string, int);
+	static std::shared_ptr<TTF_Font> GetText(const std::string&, int);
 
 	static void PruneTexts();
 

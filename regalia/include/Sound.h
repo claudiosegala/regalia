@@ -7,7 +7,7 @@ class Sound : public Component {
 public:
 	Sound(GameObject&);
 
-	Sound(GameObject&, std::string);
+	Sound(GameObject& go, const std::string& file);
 
 	~Sound();
 
@@ -15,7 +15,7 @@ public:
 
 	void Stop();
 
-	void Open(std::string);
+	void Open(const std::string& file);
 
 	bool IsOpen();
 
@@ -24,7 +24,7 @@ public:
 	void Render() override;
 
 private:
-	int channel;
+	int channel = -1;
 
 	std::shared_ptr<Mix_Chunk> chunk;
 };

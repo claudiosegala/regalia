@@ -16,7 +16,7 @@ Rect::Rect(float x, float y, float w, float h)
     , width(w)
     , height(h) {}
 
-bool Rect::Is(std::string type) {
+bool Rect::Is(const std::string& type) {
 	return (type == "Rect");
 }
 

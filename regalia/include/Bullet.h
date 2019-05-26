@@ -11,11 +11,11 @@ public:
 
 	Bullet(GameObject& go, BulletData& data);
 
-	void Update(float) override;
+	void Update(float dt) override;
 
 	void Render() override;
 
-	void NotifyCollision(GameObject&) override;
+	void NotifyCollision(GameObject& go) override;
 
 	int GetDamage();
 

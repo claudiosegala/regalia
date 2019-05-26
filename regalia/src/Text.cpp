@@ -6,7 +6,7 @@
 #include <Resources.h>
 #include <Text.h>
 
-Text::Text(GameObject& go, std::string file, int size, TextStyle style, std::string text, SDL_Color color)
+Text::Text(GameObject& go, const std::string& file, int size, TextStyle style, const std::string& text, SDL_Color color)
     : Component(go)
     , text(text)
     , style(style)
@@ -68,7 +68,7 @@ void Text::Render() {
 	}
 }
 
-void Text::SetText(std::string text) {
+void Text::SetText(const std::string& text) {
 	this->text = text;
 
 	Text::RemakeTexture();
@@ -84,7 +84,7 @@ void Text::SetStyle(TextStyle style) {
 	RemakeTexture();
 }
 
-void Text::SetFontFile(std::string file) {
+void Text::SetFontFile(const std::string& file) {
 	this->fontFile = file;
 	RemakeTexture();
 }

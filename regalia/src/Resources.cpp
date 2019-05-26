@@ -18,7 +18,7 @@ void Resources::Prune() {
 	Resources::PruneTexts();
 }
 
-std::shared_ptr<SDL_Texture> Resources::GetImage(std::string file) {
+std::shared_ptr<SDL_Texture> Resources::GetImage(const std::string& file) {
 	if (Resources::imageTable.find(file) == Resources::imageTable.end()) {
 		Logger::Info("Loading image in path: " + file);
 
@@ -66,7 +66,7 @@ void Resources::PruneImages() {
 	}
 }
 
-std::shared_ptr<Mix_Music> Resources::GetMusic(std::string file) {
+std::shared_ptr<Mix_Music> Resources::GetMusic(const std::string& file) {
 	if (Resources::musicTable.find(file) == Resources::musicTable.end()) {
 		Logger::Info("Loading music in path: " + file);
 
@@ -99,7 +99,7 @@ void Resources::PruneMusics() {
 	}
 }
 
-std::shared_ptr<Mix_Chunk> Resources::GetSound(std::string file) {
+std::shared_ptr<Mix_Chunk> Resources::GetSound(const std::string& file) {
 	if (Resources::soundTable.find(file) == Resources::soundTable.end()) {
 		Logger::Info("Loading sound in path: " + file);
 
@@ -132,7 +132,7 @@ void Resources::PruneSounds() {
 	}
 }
 
-std::shared_ptr<TTF_Font> Resources::GetText(std::string file, int size) {
+std::shared_ptr<TTF_Font> Resources::GetText(const std::string& file, int size) {
 	auto key = std::to_string(size) + "pt-" + file;
 
 	if (Resources::textTable.find(key) == Resources::textTable.end()) {

@@ -12,7 +12,7 @@ public:
 		BLENDED
 	};
 
-	Text(GameObject&, std::string, int, TextStyle, std::string, SDL_Color);
+	Text(GameObject&, const std::string&, int, TextStyle, const std::string&, SDL_Color);
 
 	~Text();
 
@@ -20,13 +20,13 @@ public:
 
 	void Render() override;
 
-	void SetText(std::string);
+	void SetText(const std::string&);
 
 	void SetColor(SDL_Color);
 
 	void SetStyle(TextStyle);
 
-	void SetFontFile(std::string);
+	void SetFontFile(const std::string&);
 
 	void SetFontSize(int);
 

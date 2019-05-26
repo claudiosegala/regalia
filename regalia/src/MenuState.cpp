@@ -120,7 +120,7 @@ GameObject* MenuState::CreateBackground() {
 	return go;
 }
 
-GameObject* MenuState::CreateOption(std::string message, Vec2 shift) {
+GameObject* MenuState::CreateOption(const std::string& message, Vec2 shift) {
 	const auto pos = Vec2 {
 		Constants::Window::Width / 2,
 		Constants::Window::Height / 2

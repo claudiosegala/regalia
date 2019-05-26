@@ -10,12 +10,9 @@ Sound::Sound(GameObject& go)
 	this->channel = -1;
 }
 
-Sound::Sound(GameObject& go, std::string name)
-    : Component(go)
-    , chunk() {
-	this->channel = -1;
-
-	Open(name);
+Sound::Sound(GameObject& go, const std::string& file)
+    : Component(go) {
+	Open(file);
 }
 
 Sound::~Sound() {}
@@ -39,7 +36,7 @@ void Sound::Stop() {
 	}
 }
 
-void Sound::Open(std::string file) {
+void Sound::Open(const std::string& file) {
 	this->chunk = Resources::GetSound(file);
 }
 

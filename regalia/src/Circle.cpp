@@ -8,7 +8,7 @@ Circle::Circle(float r, Vec2 p)
     : radius(r)
     , center(p) {}
 
-bool Circle::Is(std::string type) {
+bool Circle::Is(const std::string& type) {
 	return (type == "Cicle");
 }
 
