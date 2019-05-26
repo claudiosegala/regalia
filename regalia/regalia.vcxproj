@@ -173,6 +173,7 @@
     <ClInclude Include="include\Vec2.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\ScoreState.h" />
+    <ClInclude Include="include\SpriteSheetData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Shape.cpp" />
@@ -206,6 +207,7 @@
     <ClCompile Include="src\ScoreState.cpp" />
     <ClCompile Include="src\Sound.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\SpriteSheetData.cpp" />
     <ClCompile Include="src\State.cpp" />
     <ClCompile Include="src\StoryState.cpp" />
     <ClCompile Include="src\Text.cpp" />

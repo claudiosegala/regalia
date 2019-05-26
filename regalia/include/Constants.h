@@ -2,6 +2,7 @@
 
 #include <Interfaces.h>
 #include <Vec2.h>
+#include <SpriteSheetData.h>
 
 namespace Constants {
 
@@ -175,6 +176,29 @@ namespace Player {
 
 namespace Colors {
 	const SDL_Color Red = { 255, 0, 0, 0 };
+}
+
+namespace PlayerSpriteSheets {
+	enum {
+		Idle = 0,
+		Running
+	};
+
+	const SpriteSheetData MisterN(
+	    "",
+		384,
+		48,
+		0.2f,
+	    {
+	        {
+	            Idle,
+				1
+	        },
+	        {
+	            Running,
+				0
+	        },
+	    });
 }
 
 }

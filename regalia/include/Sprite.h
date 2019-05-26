@@ -6,7 +6,6 @@
 
 class Sprite : public Component {
 public:
-	// TODO: see if every animation has the same frameCount
 	Sprite(GameObject&, const std::string&, int frameCount = 1, float frameTime = 1.0f, float secondsToSelfDestruct = 0);
 
 	~Sprite();

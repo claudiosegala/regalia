@@ -1,0 +1,44 @@
+#include "pch.h"
+#include "SpriteSheetData.h"
+
+AnimationData::AnimationData(int id, int numberOfFrames)
+    : id(id)
+    , numberOfFrames(numberOfFrames) {}
+
+SpriteSheetData::SpriteSheetData(const std::string& file, int width, int height, float frameTime, const std::vector<AnimationData>& animations)
+    : file(file)
+    , frameTime(frameTime)
+    , width(width)
+    , height(height) {
+
+#ifdef _DEBUG
+	assert(std::is_sorted(animations.begin(), animations.end(), [](const AnimationData& x, const AnimationData& y) { return x.id < y.id; }));
+
+	// Assert if there isn't any empty animation
+	assert(animations.begin()->id == 0);
+	assert(animations.end()->id == animations.size());
+
+	// Check if all ids are unique
+	auto it = std::unique(animations.begin(), animations.end(), [](const AnimationData& x, const AnimationData& y) { return x.id == y.id; });
+	assert(it != animations.end());
+#endif
+
+	auto totalFrames = std::accumulate(animations.begin(), animations.end(), 0, [](const AnimationData& x, const AnimationData& y) { return x.id + y.id; });
+
+	// Fill the animationsRect vector
+	animationsRect.resize(animations.size());
+	auto frameWidth = width / totalFrames;
+	auto nextFrameX = 0;
+
+	for (auto& animation : animations) {
+		animationsRect[animation.id].reserve(animation.numberOfFrames);
+
+		for (auto i = 0; i < animation.numberOfFrames; i++) {
+			animationsRect[animation.id][i] = { nextFrameX, 0, frameWidth, height};
+			nextFrameX += frameWidth;
+		}
+	}
+}
+
+#ifdef _DEBUG
+#endif

@@ -37,6 +37,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <numeric>
 
 // Disable asserts when not in debug
 #ifndef _DEBUG
