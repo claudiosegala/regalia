@@ -5,13 +5,13 @@
 
 class Sprite : public Component {
 public:
-	Sprite(GameObject&, const std::string&);
+	Sprite(GameObject& go, const std::string& file);
 
-	Sprite(GameObject&, const SpriteSheetData* spriteSheetData);
+	Sprite(GameObject& go, const SpriteSheetData* spriteSheetData);
 
 	~Sprite();
 
-	void Open(const std::string&);
+	void Open(const std::string& file);
 
 	void SetClip(int, int, int, int);
 

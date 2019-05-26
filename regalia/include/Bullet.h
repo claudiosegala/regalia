@@ -9,13 +9,13 @@ class Bullet : public Component {
 public:
 	int shooterId;
 
-	Bullet(GameObject&, BulletData&, std::string, int frameCount = 1, float frameTime = 1.0f);
+	Bullet(GameObject& associated, BulletData& data, const std::string& file, int frameCount = 1, float frameTime = 1.0f);
 
-	void Update(float) override;
+	void Update(float dt) override;
 
 	void Render() override;
 
-	void NotifyCollision(GameObject&) override;
+	void NotifyCollision(GameObject& go) override;
 
 	int GetDamage();
 
@@ -26,5 +26,5 @@ private:
 
 	Vec2 speed;
 
-	void LoadAssets(std::string, int, float);
+	void LoadAssets(const std::string& file, int frameCount, float frameTime);
 };

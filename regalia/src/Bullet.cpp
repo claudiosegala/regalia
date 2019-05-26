@@ -7,8 +7,8 @@
 #include <Sprite.h>
 #include <Vec2.h>
 
-Bullet::Bullet(GameObject& go, BulletData& data, std::string file, int frameCount, float frameTime)
-    : Component(go) {
+Bullet::Bullet(GameObject& associated, BulletData& data, const std::string& file, int frameCount, float frameTime)
+    : Component(associated) {
 	this->shooterId = data.shooterId;
 	this->distanceLeft = data.maxDistance;
 	this->damage = data.damage;
@@ -52,7 +52,7 @@ int Bullet::GetDamage() {
 	return this->damage;
 }
 
-void Bullet::LoadAssets(std::string file, int frameCount, float frameTime) {
+void Bullet::LoadAssets(const std::string& file, int frameCount, float frameTime) {
 	associated.AddComponent<Sprite>(file);
 	auto circle = new Circle();
 	associated.AddComponent<Collider>(circle);
