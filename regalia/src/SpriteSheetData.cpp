@@ -15,9 +15,8 @@ SpriteSheetData::SpriteSheetData(const std::string& file, int width, int height,
 	// Check if the animations ids are sorted and there is no empty animation
 	assert(std::is_sorted(animations.begin(), animations.end(), [](const AnimationData& x, const AnimationData& y) { return x.id == (y.id - 1); }));
 
-	// Assert if there isn't any empty animation
-	assert(animations.begin()->id == 0);
-	assert(animations.end()->id == animations.size());
+	assert(animations.front().id == 0);
+	assert(animations.back().id == animations.size() - 1);
 #endif
 
 	auto totalFrames = std::accumulate(animations.begin(), animations.end(), 0, [](int acc, const AnimationData& y) { return acc + y.id; });
@@ -28,10 +27,10 @@ SpriteSheetData::SpriteSheetData(const std::string& file, int width, int height,
 	auto nextFrameX = 0;
 
 	for (auto& animation : animations) {
-		animationsRect[animation.id].reserve(animation.numberOfFrames);
+		animationsRect[animation.id].resize(animation.numberOfFrames);
 
 		for (auto i = 0; i < animation.numberOfFrames; i++) {
-			animationsRect[animation.id][i] = { nextFrameX, 0, frameWidth, height};
+			animationsRect[animation.id][i] = { nextFrameX, 0, frameWidth, height };
 			nextFrameX += frameWidth;
 		}
 	}
