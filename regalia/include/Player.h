@@ -10,7 +10,7 @@ public:
 
 	int id;
 
-	Player(GameObject&);
+	Player(GameObject& go, int playerId);
 
 	~Player();
 
@@ -20,11 +20,15 @@ public:
 
 	void Render() override;
 
+	int GetPlayerId() const;
+
 private:
 
 	Constants::Player::State state;
 
 	int hp;
+
+	int playerId;
 
 	Vec2 speed;
 
