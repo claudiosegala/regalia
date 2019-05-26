@@ -46,7 +46,9 @@ void Collider::Update(float dt) {
 // Vec2::Rotate( float rad )		- Rotaciona um Vec2 pelo ângulo em radianos passado
 void Collider::Render() {
 #ifdef DEBUG
-	Vec2 center(box.Center());
+	const auto& box = associated.box;
+
+	const Vec2 center(box.Center());
 	SDL_Point points[5];
 
 	Vec2 point = (Vec2(box.vector.x, box.vector.y) - center).GetRotate(associated.angle) + center - Camera::pos;
