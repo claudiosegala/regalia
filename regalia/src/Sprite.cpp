@@ -61,11 +61,12 @@ void Sprite::SetScale(float x, float y) {
 	SetBox();
 }
 
-void Sprite::SetAnimationId(int animationId) {
+void Sprite::SetNextAnimation(int animationId, bool flipAnimation) {
 	if (spriteSheetData == nullptr) {
 		throw std::runtime_error("Trying to set a animation id in a sprite that doesn't have animation");
 	}
 	nextAnimationId = animationId;
+	this->flipAnimation = flipAnimation;
 }
 
 Vec2 Sprite::GetScale() const {
@@ -115,6 +116,7 @@ void Sprite::Render(float _x, float _y) {
 void Sprite::Render(int x, int y) {
 	auto game = Game::GetInstance();
 	auto srcRect = clipRect;
+	auto flip = flipAnimation ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
 	SDL_Rect dstRect {
 		x,
@@ -123,7 +125,7 @@ void Sprite::Render(int x, int y) {
 		int(srcRect.h * scale.y)
 	};
 
-	auto err = SDL_RenderCopyEx(game->GetRenderer(), texture.get(), &srcRect, &dstRect, (associated.angle * 180) / Constants::Math::PI, nullptr, SDL_FLIP_NONE);
+	auto err = SDL_RenderCopyEx(game->GetRenderer(), texture.get(), &srcRect, &dstRect, (associated.angle * 180) / Constants::Math::PI, nullptr, flip);
 
 	if (err < 0) {
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";

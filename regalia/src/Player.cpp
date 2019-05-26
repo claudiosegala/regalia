@@ -70,7 +70,7 @@ void Player::UpdateState() {
 	switch (state) {
 	case Constants::Player::Idle:
 		if (speed.x != 0) {
-			SetState(Constants::Player::Running);
+			SetState(Constants::Player::Running, speed.x < 0);
 		}
 		break;
 
@@ -85,11 +85,11 @@ void Player::UpdateState() {
 	}
 }
 
-void Player::SetState(Constants::Player::State newState) {
-	state = newState;
+void Player::SetState(Constants::Player::State nextState, bool flipAnimation) {
+	state = nextState;
 
 	auto sprite = associated.GetComponent<Sprite>();
-	sprite->SetAnimationId(newState);
+	sprite->SetNextAnimation(nextState, flipAnimation);
 }
 
 void Player::Move(float dt) {

@@ -34,7 +34,7 @@ private:
 
 	void UpdateState();
 
-	void SetState(Constants::Player::State newState);
+	void SetState(Constants::Player::State nextState, bool flipAnimation = false);
 	
 	void Move(float dt);
 

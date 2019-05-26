@@ -21,7 +21,7 @@ public:
 
 	void SetScale(float, float);
 
-	void SetAnimationId(int animationId);
+	void SetNextAnimation(int animationId, bool flipAnimation);
 
 	Vec2 GetScale() const;
 
@@ -62,4 +62,6 @@ private:
 	int currentAnimationId = 0;
 
 	int nextAnimationId = 0;
+
+	bool flipAnimation = false;
 };
