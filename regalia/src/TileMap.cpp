@@ -3,7 +3,7 @@
 #include <Constants.h>
 #include <TileMap.h>
 
-TileMap::TileMap(GameObject& go, std::string file, TileSet* ts)
+TileMap::TileMap(GameObject& go, const std::string& file, TileSet* ts)
     : Component(go)
     , tileSet(ts) {
 	this->mapDepth = 0;
@@ -17,7 +17,7 @@ TileMap::~TileMap() {
 	delete this->tileSet;
 }
 
-void TileMap::Load(std::string file) {
+void TileMap::Load(const std::string& file) {
 	std::string line;
 	std::ifstream fs(file);
 

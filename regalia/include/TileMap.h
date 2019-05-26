@@ -5,11 +5,11 @@
 
 class TileMap : public Component {
 public:
-	TileMap(GameObject&, std::string, TileSet*);
+	TileMap(GameObject&, const std::string&, TileSet*);
 
 	~TileMap();
 
-	void Load(std::string);
+	void Load(const std::string&);
 
 	void SetTileSet(TileSet*);
 
