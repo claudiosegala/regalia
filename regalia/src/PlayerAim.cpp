@@ -4,7 +4,6 @@
 #include "GameObject.h"
 #include "Sprite.h"
 
-
 PlayerAim::PlayerAim(GameObject& go, std::weak_ptr<GameObject> player, int playerId)
     : Component(go)
     , player(player)
@@ -24,6 +23,18 @@ void PlayerAim::Update(float dt) {
 
 	auto& in = InputManager::GetInstance();
 	auto rightStickVec = in.GamepadRightStick(playerId);
+
+	if (rightStickVec.x == 0 && rightStickVec.y == 0) {
+		associated.hide = true;
+		return;
+	}
+
+	auto angle = rightStickVec.GetAngle();
+	auto position = Vec2(50, 0).GetRotate(angle) + player->box.Center();
+
+	associated.hide = false;
+	associated.box.SetCenter(position);
+	associated.angle = angle;
 }
 
 void PlayerAim::Render() {}

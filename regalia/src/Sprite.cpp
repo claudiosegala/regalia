@@ -114,6 +114,10 @@ void Sprite::Render(float _x, float _y) {
 }
 
 void Sprite::Render(int x, int y) {
+	if (associated.hide) {
+		return;
+	}
+
 	auto game = Game::GetInstance();
 	auto srcRect = clipRect;
 	auto flip = flipAnimation ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
