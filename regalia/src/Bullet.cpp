@@ -53,7 +53,7 @@ int Bullet::GetDamage() {
 }
 
 void Bullet::LoadAssets(std::string file, int frameCount, float frameTime) {
-	associated.AddComponent<Sprite>(file/*, frameCount, frameTime*/);
+	associated.AddComponent<Sprite>(file);
 	auto circle = new Circle();
 	associated.AddComponent<Collider>(circle);
 }

@@ -182,15 +182,15 @@ namespace PlayerSpriteSheets {
 	enum {
 		Idle = 0,
 		Running,
-		TOTAL_PLAYER_ANIMATIONS
+		TOTAL_ANIMATIONS
 	};
 
 	const SpriteSheetData MisterN(
-	    "",
+	    "assets/img/mister_n_spritesheet.png",
 	    384,
 	    48,
 	    0.2f,
-	    TOTAL_PLAYER_ANIMATIONS,
+	    TOTAL_ANIMATIONS,
 	    {
 	        { Idle, 1 },
 	        { Running, 6 },

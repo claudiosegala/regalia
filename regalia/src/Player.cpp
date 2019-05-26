@@ -61,7 +61,7 @@ void Player::Render() {
 }
 
 void Player::LoadAssets() {
-	associated.AddComponent<Sprite>("assets/img/mister_n_idle.png");
+	associated.AddComponent<Sprite>(&Constants::PlayerSpriteSheets::MisterN);
 	associated.AddComponent<Collider>(&collisionBox, Vec2(0.5f, 0.8f), Vec2(0.0f, 4.0f));
 }
 

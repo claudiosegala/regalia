@@ -2,9 +2,10 @@
 #include "SpriteSheetData.h"
 #include "Logger.h"
 
-SpriteSheetData::SpriteSheetData(const std::string& file, int imageWidth, int imageHeight, float frameTime, int totalAnimations, const std::map<int, int>& animationsFrames)
+SpriteSheetData::SpriteSheetData(const std::string& file, int imageWidth, int imageHeight, float frameTime, int totalAnimations, const std::map<int, int>& animationsFrames, bool selfDestruct)
     : file(file)
     , frameTime(frameTime)
+	, selfDestruct(selfDestruct)
     , imageWidth(imageWidth)
     , imageHeight(imageHeight) {
 

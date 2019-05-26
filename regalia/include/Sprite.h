@@ -1,12 +1,13 @@
 #pragma once
 
 #include <Component.h>
-#include <Timer.h>
 #include <Vec2.h>
 
 class Sprite : public Component {
 public:
-	Sprite(GameObject&, const std::string&, int frameCount = 1, float frameTime = 1.0f, float secondsToSelfDestruct = 0);
+	Sprite(GameObject&, const std::string&);
+
+	Sprite(GameObject&, const SpriteSheetData* spriteSheetData);
 
 	~Sprite();
 
@@ -20,13 +21,9 @@ public:
 
 	void SetScale(float, float);
 
-	Vec2 GetScale();
+	void SetAnimationId(int animationId);
 
-	void SetFrame(int);
-
-	void SetFrameCount(int);
-
-	void SetFrameTime(float);
+	Vec2 GetScale() const;
 
 	void Update(float) override;
 
@@ -36,32 +33,33 @@ public:
 
 	void Render(float, float);
 
-	int GetWidth();
+	int GetWidth() const;
 
-	int GetHeight();
+	int GetHeight() const;
 
-	bool IsOpen();
+	bool IsOpen() const;
 
 private:
-	int width;
+	int width = 0;
 
-	int height;
+	int height = 0;
 
-	Vec2 scale;
+	Vec2 scale = { 1, 1 };
 
-	int frameCount;
+	std::shared_ptr<SDL_Texture> texture = nullptr;
 
-	int currentFrame;
+	SDL_Rect clipRect{};
 
-	float timeElapsed;
+	// Animation
+	const SpriteSheetData* spriteSheetData = nullptr;
 
-	float frameTime;
+	int frameCount = 1;
 
-	float secondsToSelfDestruct;
+	int currentFrame = 0;
 
-	Timer selfDestructCount;
+	float timeElapsed = 0;
 
-	std::shared_ptr<SDL_Texture> texture;
+	int currentAnimationId = 0;
 
-	SDL_Rect clipRect;
+	int nextAnimationId = 0;
 };

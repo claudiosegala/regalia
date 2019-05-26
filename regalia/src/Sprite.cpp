@@ -5,132 +5,123 @@
 #include <Resources.h>
 #include <Sprite.h>
 
-Sprite::Sprite(GameObject& go, const std::string& file, int frameCount, float frameTime, float secondsToSelfDestruct)
-    : Component(go)
-    , selfDestructCount() {
-	this->texture = nullptr;
-	this->scale = Vec2(1, 1);
-	this->frameCount = frameCount;
-	this->currentFrame = 0;
-	this->timeElapsed = 0.0;
-	this->frameTime = frameTime;
-	this->secondsToSelfDestruct = secondsToSelfDestruct;
-	this->associated.angle = 0.0f;
-	this->clipRect = { 0, 0, 0, 0 };
-	this->height = 0;
-	this->width = 0;
+Sprite::Sprite(GameObject& go, const std::string& file)
+    : Component(go) {
 
 	Open(file);
+}
+
+Sprite::Sprite(GameObject& go, const SpriteSheetData* spriteSheetData)
+    : Component(go)
+    , spriteSheetData(spriteSheetData) {
+
+	Open(spriteSheetData->file);
 }
 
 Sprite::~Sprite() {}
 
 void Sprite::Open(const std::string& file) {
-	this->texture = Resources::GetImage(file);
+	texture = Resources::GetImage(file);
 
-	std::tie(this->width, this->height) = Resources::QueryImage(this->texture.get());
+	std::tie(width, height) = Resources::QueryImage(texture.get());
 
 	SetClip();
 	SetBox();
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
-	this->clipRect = { x, y, w, h };
+	clipRect = { x, y, w, h };
 }
 
 void Sprite::SetClip() {
-	auto frameWidth = this->width / this->frameCount;
-	auto frameHeight = this->height;
-
-	SetClip(frameWidth * this->currentFrame, 0, frameWidth, frameHeight);
+	if (spriteSheetData == nullptr) {
+		SetClip(0, 0, width, height);
+	} else {
+		clipRect = spriteSheetData->GetAnimationRect(currentAnimationId, currentFrame);
+	}
 }
 
 void Sprite::SetBox() {
 	auto frameWidth = GetWidth();
 	auto frameHeight = GetHeight();
 
-	this->associated.box.width = static_cast<float>(frameWidth);
-	this->associated.box.height = static_cast<float>(frameHeight);
+	associated.box.width = float(frameWidth);
+	associated.box.height = float(frameHeight);
 }
 
 void Sprite::SetScale(float x, float y) {
-	x = EQUAL(x, 0) ? this->scale.x : x;
-	y = EQUAL(y, 0) ? this->scale.y : y;
+	x = EQUAL(x, 0) ? scale.x : x;
+	y = EQUAL(y, 0) ? scale.y : y;
 
-	this->scale = Vec2(x, y);
-
-	SetClip();
-	SetBox();
-}
-
-Vec2 Sprite::GetScale() {
-	return this->scale;
-}
-
-void Sprite::SetFrame(int frame) {
-	this->currentFrame = frame;
-
-	SetClip();
-}
-
-void Sprite::SetFrameCount(int frameCount) {
-	this->currentFrame = 0;
-	this->frameCount = frameCount;
+	scale = Vec2(x, y);
 
 	SetClip();
 	SetBox();
 }
 
-void Sprite::SetFrameTime(float frameTime) {
-	this->frameTime = frameTime;
+void Sprite::SetAnimationId(int animationId) {
+	if (spriteSheetData == nullptr) {
+		throw std::runtime_error("Trying to set a animation id in a sprite that doesn't have animation");
+	}
+	nextAnimationId = animationId;
+}
+
+Vec2 Sprite::GetScale() const {
+	return scale;
 }
 
 void Sprite::Update(float dt) {
-	if (secondsToSelfDestruct > 0) {
-		this->selfDestructCount.Update(dt);
+	if (spriteSheetData != nullptr) {
+		timeElapsed += dt;
 
-		if (this->selfDestructCount.Get() >= secondsToSelfDestruct) {
-			this->associated.RequestDelete();
-			return;
+		if (nextAnimationId != currentAnimationId) {
+			currentAnimationId = nextAnimationId;
+			currentFrame = 0;
+			frameCount = spriteSheetData->GetNumberOfFrames(currentAnimationId);
+			timeElapsed = spriteSheetData->frameTime; // Force the sprite to be updated now
 		}
-	}
 
-	this->timeElapsed += dt;
+		if (timeElapsed >= spriteSheetData->frameTime) {
+			timeElapsed = 0;
 
-	if (this->timeElapsed > this->frameTime) {
-		this->timeElapsed -= this->frameTime;
-		this->currentFrame = (this->currentFrame + 1) % this->frameCount;
+			if (spriteSheetData->selfDestruct && currentFrame == frameCount) {
+				associated.RequestDelete();
+				return;
+			}
 
-		SetClip();
+			currentFrame = (currentFrame + 1) % frameCount;
+
+			SetClip();
+		}
 	}
 }
 
 void Sprite::Render() {
-	auto x = static_cast<int>(this->associated.box.vector.x - Camera::pos.x);
-	auto y = static_cast<int>(this->associated.box.vector.y - Camera::pos.y);
+	auto x = int(associated.box.vector.x - Camera::pos.x);
+	auto y = int(associated.box.vector.y - Camera::pos.y);
 
 	Render(x, y);
 }
 
 void Sprite::Render(float _x, float _y) {
-	auto x = static_cast<int>(_x);
-	auto y = static_cast<int>(_y);
+	auto x = int(_x);
+	auto y = int(_y);
 
 	Render(x, y);
 }
 
 void Sprite::Render(int x, int y) {
 	auto game = Game::GetInstance();
-	auto srcRect = this->clipRect;
+	auto srcRect = clipRect;
 
 	SDL_Rect dstRect {
 		x,
 		y,
-		static_cast<int>(srcRect.w * this->scale.x),
-		static_cast<int>(srcRect.h * this->scale.y)
+		int(srcRect.w * scale.x),
+		int(srcRect.h * scale.y)
 	};
 
-	auto err = SDL_RenderCopyEx(game->GetRenderer(), this->texture.get(), &srcRect, &dstRect, (this->associated.angle * 180) / Constants::Math::PI, nullptr, SDL_FLIP_NONE);
+	auto err = SDL_RenderCopyEx(game->GetRenderer(), texture.get(), &srcRect, &dstRect, (associated.angle * 180) / Constants::Math::PI, nullptr, SDL_FLIP_NONE);
 
 	if (err < 0) {
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
@@ -138,14 +129,15 @@ void Sprite::Render(int x, int y) {
 	}
 }
 
-int Sprite::GetWidth() {
-	return this->width * static_cast<int>(this->scale.x) / this->frameCount;
+int Sprite::GetWidth() const {
+	auto frameWidth = spriteSheetData == nullptr ? width : spriteSheetData->GetFrameWidth();
+	return frameWidth * int(scale.x);
 }
 
-int Sprite::GetHeight() {
-	return this->height * static_cast<int>(this->scale.y);
+int Sprite::GetHeight() const {
+	return height * int(scale.y);
 }
 
-bool Sprite::IsOpen() {
-	return (this->texture != nullptr);
+bool Sprite::IsOpen() const {
+	return (texture != nullptr);
 }
