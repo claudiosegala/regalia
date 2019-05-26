@@ -1,5 +1,6 @@
 #include <pch.h>
 #include <Vec2.h>
+#include <Constants.h>
 
 Vec2::Vec2()
     : x(0)
