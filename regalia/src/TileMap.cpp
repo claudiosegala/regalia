@@ -3,7 +3,7 @@
 #include <Constants.h>
 #include <TileMap.h>
 
-TileMap::TileMap(GameObject& go, std::string file, TileSet* ts)
+TileMap::TileMap(GameObject& go, const std::string& file, TileSet* ts)
     : Component(go)
     , tileSet(ts) {
 	this->mapDepth = 0;
@@ -17,41 +17,27 @@ TileMap::~TileMap() {
 	delete this->tileSet;
 }
 
-void TileMap::Load(std::string file) {
-	std::string line;
+void TileMap::Load(const std::string& file) {
 	std::ifstream fs(file);
+	char c;
+	fs >> mapWidth >> c;
+	fs >> mapHeight >> c;
+	fs >> mapDepth >> c;
 
-	if (!fs.is_open()) {
-		auto msg = std::string("Could not open file created file\n");
-		throw std::runtime_error(msg);
+	const size_t mapSize = mapWidth * mapHeight * mapDepth;
+
+	tileMatrix.clear();
+	tileMatrix.reserve(mapSize);
+
+	while (tileMatrix.size() < tileMatrix.capacity()) {
+		int tile;
+		fs >> tile >> c;
+		tileMatrix.push_back(tile - 1);
 	}
 
-	getline(fs, line, ',');
-	auto x = std::stoi(line);
-	getline(fs, line, ',');
-	auto y = std::stoi(line);
-	getline(fs, line, ',');
-	auto z = std::stoi(line);
-
-	auto n = static_cast<unsigned int>(x * y * z);
-
-	this->tileMatrix.resize(n);
-	this->mapHeight = x;
-	this->mapWidth = y;
-	this->mapDepth = z;
-
-	for (auto layer = 0; layer < this->mapDepth; layer++) {
-		for (auto row = 0; row < this->mapHeight; row++) {
-			for (auto col = 0; col < this->mapWidth; col++) {
-				getline(fs, line, ',');
-				auto idx = Pos(col, row, layer);
-				this->tileMatrix[idx] = std::stoi(line);
-				this->tileMatrix[idx]--;
-			}
-		}
+	if (tileMatrix.size() != mapSize) {
+		throw std::runtime_error("Bad tile map: " + file);
 	}
-
-	fs.close();
 }
 
 void TileMap::SetTileSet(TileSet* ts) {
