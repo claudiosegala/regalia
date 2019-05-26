@@ -42,6 +42,8 @@ private:
 	
 	void Move(float dt);
 
+	void Shoot();
+
 	void CheckBestDelta(Vec2, float);
 
 	void Die();

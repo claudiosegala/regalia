@@ -9,7 +9,7 @@ class Bullet : public Component {
 public:
 	int shooterId;
 
-	Bullet(GameObject&, BulletData&, std::string, int frameCount = 1, float frameTime = 1.0f);
+	Bullet(GameObject& go, BulletData& data);
 
 	void Update(float) override;
 
@@ -26,5 +26,5 @@ private:
 
 	Vec2 speed;
 
-	void LoadAssets(std::string, int, float);
+	void LoadAssets(BulletData& data);
 };

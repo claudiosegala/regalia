@@ -4,6 +4,7 @@
 class SpriteSheetData {
 public:
 	SpriteSheetData(const std::string& file, int imageWidth, int imageHeight, float frameTime, int totalAnimations, const std::map<int, int>& animationsFrames, bool selfDestruct = false);
+	SpriteSheetData(const SpriteSheetData& other) = delete;
 
 	std::string file;
 	float frameTime;

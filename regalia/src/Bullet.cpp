@@ -7,14 +7,14 @@
 #include <Sprite.h>
 #include <Vec2.h>
 
-Bullet::Bullet(GameObject& go, BulletData& data, std::string file, int frameCount, float frameTime)
+Bullet::Bullet(GameObject& go, BulletData& data)
     : Component(go) {
 	this->shooterId = data.shooterId;
 	this->distanceLeft = data.maxDistance;
 	this->damage = data.damage;
-	this->speed = Vec2(1, 0).GetRotate(data.angle) * data.speed;
+	this->speed = Vec2(-data.speed * cos(data.angle), -data.speed * sin(data.angle));
 
-	LoadAssets(file, frameCount, frameTime);
+	LoadAssets(data);
 }
 
 void Bullet::Update(float dt) {
@@ -52,8 +52,8 @@ int Bullet::GetDamage() {
 	return this->damage;
 }
 
-void Bullet::LoadAssets(std::string file, int frameCount, float frameTime) {
-	associated.AddComponent<Sprite>(file);
+void Bullet::LoadAssets(BulletData& data) {
+	associated.AddComponent<Sprite>(data.spriteSheetData);
 	auto circle = new Circle();
 	associated.AddComponent<Collider>(circle);
 }

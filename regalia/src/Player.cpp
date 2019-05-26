@@ -7,6 +7,7 @@
 #include <Player.h>
 #include <Sprite.h>
 #include <Vec2.h>
+#include "Game.h"
 
 int Player::counter = 0;
 
@@ -52,6 +53,7 @@ void Player::NotifyCollision(GameObject& go) {
 void Player::Update(float dt) {
 	//Gravity(dt);
 	Move(dt);
+	Shoot();
 
 	UpdateState();
 
@@ -62,11 +64,9 @@ void Player::Update(float dt) {
 void Player::Render() {
 }
 
-
 int Player::GetPlayerId() const {
 	return playerId;
 }
-
 
 void Player::LoadAssets() {
 	associated.AddComponent<Sprite>(&Constants::Player::MisterN);
@@ -101,14 +101,14 @@ void Player::SetState(Constants::Player::State nextState, bool flipAnimation) {
 
 void Player::Move(float dt) {
 	auto& in = InputManager::GetInstance();
-	auto direction = in.GamepadLeftStick(0);
+	auto direction = in.GamepadLeftStick(playerId);
 	auto isJumping = false;
 
 	if (direction == Vec2(0.0f, 0.0f)) { // No input from gamepad stick, look for other inputs
-		const auto keyUp = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, 0);
-		const auto keyDown = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, 0);
-		const auto keyLeft = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, 0);
-		const auto keyRight = in.IsKeyDown(Constants::Key::D) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, 0);
+		const auto keyUp = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, playerId);
+		const auto keyDown = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, playerId);
+		const auto keyLeft = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, playerId);
+		const auto keyRight = in.IsKeyDown(Constants::Key::D) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, playerId);
 
 		if (keyUp) {
 			isJumping = true;
@@ -134,6 +134,32 @@ void Player::Move(float dt) {
 	CheckBestDelta(velocity, dt);
 
 	this->associated.box.vector += this->speed;
+}
+
+void Player::Shoot() {
+	auto& inputManager = InputManager::GetInstance();
+
+	if (inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)) {
+		auto angle = inputManager.GamepadRightStick(playerId).GetAngle();
+		auto pos = Vec2(25, 0).GetRotate(angle) + associated.box.Center();
+
+		BulletData bulletData = { 
+			playerId,
+			10,
+			angle,
+			20,
+			500,
+			&Constants::Bullet::DefaultSpriteSheet
+		};
+
+		auto bulletGO = new GameObject();
+		bulletGO->AddComponent<Bullet>(bulletData);
+		bulletGO->box.SetCenter(pos);
+		bulletGO->angle = angle;
+
+		auto state = Game::GetInstance()->GetCurrentState();
+		(void)state->AddObject(bulletGO);
+	}
 }
 
 void Player::CheckBestDelta(Vec2 velocity, float delta) {

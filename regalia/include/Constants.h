@@ -96,6 +96,16 @@ namespace Bullet {
 	const float DefaultSpeed = 100.0f;
 
 	const float DefaultMaxDistance = 400.0f;
+
+	const SpriteSheetData DefaultSpriteSheet(
+	    "assets/img/penguinbullet.png",
+	    120,
+	    29,
+	    0.1f,
+	    1,
+	    {
+	        { 0, 4 },
+	    });
 }
 
 namespace Key {
