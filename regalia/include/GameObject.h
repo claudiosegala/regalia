@@ -6,11 +6,6 @@
 
 class GameObject {
 public:
-
-	Rect box;
-
-	float angle;
-
 	GameObject();
 
 	~GameObject();
@@ -34,6 +29,12 @@ public:
 	T* GetComponent() const;
 
 	void NotifyCollision(GameObject&);
+
+	Rect box;
+
+	float angle;
+
+	bool hide = false;
 
 private:
 	bool started;

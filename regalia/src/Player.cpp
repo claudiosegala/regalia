@@ -10,8 +10,9 @@
 
 int Player::counter = 0;
 
-Player::Player(GameObject& go)
+Player::Player(GameObject& go, int playerId)
     : Component(go)
+    , playerId(playerId)
     , speed({ 0, 0 })
     , collisionBox() {
 	this->id = ++Player::counter;
@@ -60,6 +61,12 @@ void Player::Update(float dt) {
 
 void Player::Render() {
 }
+
+
+int Player::GetPlayerId() const {
+	return playerId;
+}
+
 
 void Player::LoadAssets() {
 	associated.AddComponent<Sprite>(&Constants::Player::MisterN);

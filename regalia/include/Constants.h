@@ -188,7 +188,7 @@ namespace Player {
 	    "assets/img/mister_n_spritesheet.png",
 	    384,
 	    48,
-	    0.2f,
+	    0.1f,
 	    TOTAL_STATES,
 	    {
 	        { Idle, 1 },

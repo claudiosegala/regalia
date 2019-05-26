@@ -16,6 +16,8 @@
 #include <TileMap.h>
 #include <TileSet.h>
 #include <Vec2.h>
+#include "PlayerAim.h"
+
 
 PlayState::PlayState() {
 	Logger::Info("Initializing Play State");
@@ -100,7 +102,6 @@ void PlayState::Resume() {
 	this->music.Play();
 }
 
-
 void PlayState::CheckCollision() {
 	// TODO: implement
 }
@@ -123,18 +124,18 @@ void PlayState::CreateField() {
 }
 
 void PlayState::CreatePlayers() {
-	auto go1 = new GameObject();
-	//auto go2 = new GameObject();
+	CreatePlayer(0);
+	//CreatePlayer(1);
+}
 
-	//auto player1 = new Player(*go1, GameData::Persona1);
-	//auto player2 = new Player(*go2, GameData::Persona2);
+void PlayState::CreatePlayer(int playerId) {
+	auto playerGO = new GameObject();
+	playerGO->AddComponent<Player>(playerId);
+	auto player = AddObject(playerGO);
 
-	go1->AddComponent<Player>();
-
-	//go2->AddComponent(this->player2);
-
-	(void)AddObject(go1);
-	//(void)AddObject(go2);
+	auto playerAimGO = new GameObject();
+	playerAimGO->AddComponent<PlayerAim>(player, playerId);
+	(void)AddObject(playerAimGO);
 }
 
 const BackgroundData& PlayState::GetBackgroundData(int rnd) {

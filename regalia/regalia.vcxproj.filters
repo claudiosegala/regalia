@@ -35,6 +35,7 @@
     <ClCompile Include="src\Circle.cpp" />
     <ClCompile Include="src\Shape.cpp" />
     <ClCompile Include="src\SpriteSheetData.cpp" />
+    <ClCompile Include="src\PlayerAim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
@@ -72,6 +73,7 @@
     <ClInclude Include="include\ScoreState.h" />
     <ClInclude Include="include\Shape.h" />
     <ClInclude Include="include\SpriteSheetData.h" />
+    <ClInclude Include="include\PlayerAim.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\img\mister_n_spritesheet.png" />

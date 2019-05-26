@@ -174,8 +174,10 @@
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\ScoreState.h" />
     <ClInclude Include="include\SpriteSheetData.h" />
+    <ClInclude Include="include\PlayerAim.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\PlayerAim.cpp" />
     <ClCompile Include="src\Shape.cpp" />
     <ClCompile Include="src\Circle.cpp" />
     <ClCompile Include="include\FrameInfo.h" />
