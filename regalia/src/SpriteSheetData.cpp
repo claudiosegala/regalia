@@ -12,18 +12,15 @@ SpriteSheetData::SpriteSheetData(const std::string& file, int width, int height,
     , height(height) {
 
 #ifdef _DEBUG
-	assert(std::is_sorted(animations.begin(), animations.end(), [](const AnimationData& x, const AnimationData& y) { return x.id < y.id; }));
+	// Check if the animations ids are sorted and there is no empty animation
+	assert(std::is_sorted(animations.begin(), animations.end(), [](const AnimationData& x, const AnimationData& y) { return x.id == (y.id - 1); }));
 
 	// Assert if there isn't any empty animation
 	assert(animations.begin()->id == 0);
 	assert(animations.end()->id == animations.size());
-
-	// Check if all ids are unique
-	auto it = std::unique(animations.begin(), animations.end(), [](const AnimationData& x, const AnimationData& y) { return x.id == y.id; });
-	assert(it != animations.end());
 #endif
 
-	auto totalFrames = std::accumulate(animations.begin(), animations.end(), 0, [](const AnimationData& x, const AnimationData& y) { return x.id + y.id; });
+	auto totalFrames = std::accumulate(animations.begin(), animations.end(), 0, [](int acc, const AnimationData& y) { return acc + y.id; });
 
 	// Fill the animationsRect vector
 	animationsRect.resize(animations.size());
