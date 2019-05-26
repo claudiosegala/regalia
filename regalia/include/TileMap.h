@@ -5,23 +5,23 @@
 
 class TileMap : public Component {
 public:
-	TileMap(GameObject& go, const std::string& file, TileSet* ts);
+	TileMap(GameObject&, std::string, TileSet*);
 
 	~TileMap();
 
-	void Load(const std::string& file);
+	void Load(std::string);
 
 	void SetTileSet(TileSet*);
 
-	unsigned int Pos(int col, int row, int layer);
+	unsigned int Pos(int, int, int);
 
-	int& At(int col, int row, int layer = 0);
+	int& At(int, int, int z = 0);
 
 	void Update(float) override;
 
 	void Render() override;
 
-	void RenderLayer(int layer, int cameraX = 0, int cameraY = 0);
+	void RenderLayer(int, int cameraX = 0, int cameraY = 0);
 
 	int GetWidth();
 
