@@ -2,7 +2,7 @@
 #include <TileSet.h>
 #include <Constants.h>
 
-TileSet::TileSet(GameObject& go, int width, int height, std::string file)
+TileSet::TileSet(GameObject& go, int width, int height, const std::string& file)
     : tileSet(go, file) {
 	this->tileWidth = width;
 	this->tileHeight = height;

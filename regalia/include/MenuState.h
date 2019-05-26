@@ -31,5 +31,5 @@ private:
 
 	GameObject* CreateBackground();
 
-	GameObject* CreateOption(std::string, Vec2 shift = { 0, 0 });
+	GameObject* CreateOption(const std::string&, Vec2 shift = { 0, 0 });
 };

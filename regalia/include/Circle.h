@@ -15,7 +15,7 @@ public:
 
 	Circle(float, Vec2);
 
-	bool Is(std::string) override;
+	bool Is(const std::string&) override;
 
 	float Perimeter();
 
