@@ -10,13 +10,13 @@ public:
 	bool selfDestruct;
 
 	inline SDL_Rect GetAnimationRect(int animationId, int frame) const {
-		assert(animationId >= 0 && animationId < animationsRect.size());
-		assert(frame >= 0 && frame < animationsRect[animationId].size());
+		assert(animationId >= 0 && animationId < int(animationsRect.size()));
+		assert(frame >= 0 && frame < int(animationsRect[animationId].size()));
 		return animationsRect[animationId][frame];
 	}
 
 	inline int GetNumberOfFrames(int animationId) const {
-		assert(animationId >= 0 && animationId < animationsRect.size());
+		assert(animationId >= 0 && animationId < int(animationsRect.size()));
 		return int(animationsRect[animationId].size());
 	}
 
