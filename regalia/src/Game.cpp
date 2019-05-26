@@ -134,6 +134,8 @@ void Game::Loop() {
 		state->Render();
 
 		SDL_RenderPresent(this->renderer);
+		
+		SDL_Delay(16);
 	}
 }
 
