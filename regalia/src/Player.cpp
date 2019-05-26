@@ -12,11 +12,11 @@ int Player::counter = 0;
 
 Player::Player(GameObject& go)
     : Component(go)
-    , speed()
+    , speed({ 0, 0 })
     , collisionBox() {
 	this->id = ++Player::counter;
 	this->hp = 50;
-	this->stateAnimation = PlayerState::IDLE;
+	this->state = Constants::Player::Idle;
 
 	// TODO: discover why there is one tile of shift
 	this->associated.box.SetCenter({ 20.0f, 26.0f });
@@ -52,8 +52,9 @@ void Player::Update(float dt) {
 	//Gravity(dt);
 	Move(dt);
 
+	UpdateState();
+
 	// change Player State
-	// update sprite
 	// actions if necessary
 }
 
@@ -61,8 +62,34 @@ void Player::Render() {
 }
 
 void Player::LoadAssets() {
-	associated.AddComponent<Sprite>(&Constants::PlayerSpriteSheets::MisterN);
+	associated.AddComponent<Sprite>(&Constants::Player::MisterN);
 	associated.AddComponent<Collider>(&collisionBox, Vec2(0.5f, 0.8f), Vec2(0.0f, 4.0f));
+}
+
+void Player::UpdateState() {
+	switch (state) {
+	case Constants::Player::Idle:
+		if (speed.x != 0) {
+			SetState(Constants::Player::Running);
+		}
+		break;
+
+	case Constants::Player::Running:
+		if (speed.x == 0) {
+			SetState(Constants::Player::Idle);
+		}
+		break;
+
+	default:
+		throw std::runtime_error("Player state not implemented");
+	}
+}
+
+void Player::SetState(Constants::Player::State newState) {
+	state = newState;
+
+	auto sprite = associated.GetComponent<Sprite>();
+	sprite->SetAnimationId(newState);
 }
 
 void Player::Move(float dt) {

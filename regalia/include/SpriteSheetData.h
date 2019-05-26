@@ -13,7 +13,7 @@ public:
 		assert(animationId >= 0 && animationId < animationsRect.size());
 		assert(frame >= 0 && frame < animationsRect[animationId].size());
 		return animationsRect[animationId][frame];
-	};
+	}
 
 	inline int GetNumberOfFrames(int animationId) const {
 		assert(animationId >= 0 && animationId < animationsRect.size());
@@ -28,10 +28,10 @@ public:
 		return imageHeight;
 	}
 
-// Only check in DEBUG mode
-#ifdef _DEBUG
-#else
-#endif
+	inline void AssertSize(int width, int height) const {
+		assert(width == imageWidth);
+		assert(height == imageHeight);
+	};
 
 private:
 	std::vector<std::vector<SDL_Rect>> animationsRect;

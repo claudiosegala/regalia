@@ -170,30 +170,30 @@ namespace StdColor {
 //     }
 // }
 
-namespace Player {
-	const float SpeedMultiplier = 100.0f;
-}
-
 namespace Colors {
 	const SDL_Color Red = { 255, 0, 0, 0 };
 }
 
-namespace PlayerSpriteSheets {
-	enum {
+namespace Player {
+	enum State {
 		Idle = 0,
 		Running,
-		TOTAL_ANIMATIONS
+		Jumping,
+		TOTAL_STATES
 	};
+
+	const float SpeedMultiplier = 100.0f;
 
 	const SpriteSheetData MisterN(
 	    "assets/img/mister_n_spritesheet.png",
 	    384,
 	    48,
 	    0.2f,
-	    TOTAL_ANIMATIONS,
+	    TOTAL_STATES,
 	    {
 	        { Idle, 1 },
 	        { Running, 6 },
+	        { Jumping, 1 },
 	    });
 }
 

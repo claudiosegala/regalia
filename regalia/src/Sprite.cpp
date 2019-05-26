@@ -16,6 +16,8 @@ Sprite::Sprite(GameObject& go, const SpriteSheetData* spriteSheetData)
     , spriteSheetData(spriteSheetData) {
 
 	Open(spriteSheetData->file);
+
+	spriteSheetData->AssertSize(width, height);
 }
 
 Sprite::~Sprite() {}

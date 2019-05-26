@@ -39,6 +39,3 @@ SpriteSheetData::SpriteSheetData(const std::string& file, int imageWidth, int im
 		}
 	}
 }
-
-#ifdef _DEBUG
-#endif

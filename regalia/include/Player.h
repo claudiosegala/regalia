@@ -22,16 +22,7 @@ public:
 
 private:
 
-	enum class PlayerState {
-		IDLE,
-		RUNNING,
-		JUMPING,
-		FALLING,
-		ATTACKING,
-		HANGING // wall slide
-	};
-
-	PlayerState stateAnimation;
+	Constants::Player::State state;
 
 	int hp;
 
@@ -40,6 +31,10 @@ private:
 	Rect collisionBox;
 
 	void LoadAssets();
+
+	void UpdateState();
+
+	void SetState(Constants::Player::State newState);
 	
 	void Move(float dt);
 
