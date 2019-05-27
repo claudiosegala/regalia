@@ -20,7 +20,7 @@ public:
 
 	bool Is(const std::string&) override;
 
-	float MaxRadius();
+	float MaxRadius() const;
 
 	Vec2 Center() const;
 
@@ -32,6 +32,10 @@ public:
 
 	std::tuple<Vec2, Vec2> GetPoints() const;
 
+	Vec2 GetUpperLeft() const;
+
+	Vec2 GetDownRight() const;
+
 	Rect operator+(const Vec2&) const;
 
 	void operator+=(const Vec2&);
@@ -39,10 +43,6 @@ public:
 	Rect operator-(const Vec2&) const;
 
 	void operator-=(const Vec2&);
-
-	Rect operator*(float)const;
-
-	void operator*=(float);
 
 	friend std::ostream& operator<<(std::ostream& os, const Rect& n);
 
