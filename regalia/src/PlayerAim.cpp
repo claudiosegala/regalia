@@ -15,6 +15,8 @@ PlayerAim::PlayerAim(GameObject& go, std::weak_ptr<GameObject> player, int playe
 PlayerAim::~PlayerAim() {}
 
 void PlayerAim::Update(float dt) {
+	UNUSED(dt);
+
 	auto player = this->player.lock();
 	if (!player) {
 		associated.RequestDelete();

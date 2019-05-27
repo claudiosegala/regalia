@@ -14,11 +14,11 @@ int Player::counter = 0;
 Player::Player(GameObject& go, int playerId)
     : Component(go)
     , playerId(playerId)
-	, hp(50)
+    , hp(50)
     , speed({ 0, 0 })
     , collisionBox()
-	, isOnFloor(false)
-	, isOnWall(false) {
+    , isOnFloor(false)
+    , isOnWall(false) {
 	this->id = ++Player::counter;
 	this->state = Constants::Player::Idle;
 
@@ -76,21 +76,18 @@ void Player::LoadAssets() {
 }
 
 void Player::UpdateState() {
-	switch (state) {
-	case Constants::Player::Idle:
-		if (speed.x != 0) {
+	if (isOnFloor) {
+		if (EQUAL(speed.x, 0)) {
+			SetState(Constants::Player::Idle);
+		} else {
 			SetState(Constants::Player::Running, speed.x < 0);
 		}
-		break;
-
-	case Constants::Player::Running:
-		if (speed.x == 0) {
-			SetState(Constants::Player::Idle);
+	} else {
+		if (speed.y < 0) {
+			SetState(Constants::Player::JumpingUp, speed.x < 0);
+		} else {
+			SetState(Constants::Player::JumpingDown, speed.x < 0);
 		}
-		break;
-
-	default:
-		throw std::runtime_error("Player state not implemented");
 	}
 }
 
@@ -108,7 +105,7 @@ void Player::Shoot() {
 		auto angle = inputManager.GamepadRightStick(playerId).GetAngle();
 		auto pos = Vec2(25, 0).GetRotate(angle) + associated.box.Center();
 
-		BulletData bulletData = { 
+		BulletData bulletData = {
 			playerId,
 			10,
 			angle,
@@ -161,21 +158,22 @@ void Player::Move(float dt) {
 		this->speed.y = Constants::Player::JumpForce;
 	}
 
-	W(this->isOnFloor); W(this->isOnWall);
+	W(this->isOnFloor);
+	W(this->isOnWall);
 
 	MoveAndSlide(this->speed, dt);
 }
 
 void Player::MoveAndSlide(Vec2 velocity, float dt) {
 	auto box = this->collisionBox;
-	auto& pos = this->associated.box; 
+	auto& pos = this->associated.box;
 	/* try to move diagonaly */
 	auto delta = FindMaxDelta(box, velocity, Constants::Game::Gravity, dt);
 	if (!(EQUAL(delta, 0.0f))) {
 		pos = CalculatePosition(pos, velocity, Constants::Game::Gravity, delta);
 		box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
 	}
-	
+
 	this->speed += Constants::Game::Gravity * delta; // accumulate gravity
 
 	/* try slide horizontaly */
@@ -232,9 +230,9 @@ std::vector<std::vector<int>> Player::GetCollisionSet() {
 // TODO: change to calculate velocity and return a vec2, let the box + v to be in another place
 Rect Player::CalculatePosition(const Rect box, const Vec2 velocity, const Vec2 acceleration, const float dt) {
 	auto v = (velocity + acceleration * dt) * dt;
-	
+
 	v.Limit(Constants::Game::MaxVelocity);
-	
+
 	return box + v;
 }
 
@@ -283,7 +281,7 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 			max_delta = delta;
 		}
 	}
-	
+
 	return ans;
 }
 

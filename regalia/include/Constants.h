@@ -187,7 +187,8 @@ namespace Player {
 	enum State {
 		Idle = 0,
 		Running,
-		Jumping,
+		JumpingUp,
+		JumpingDown,
 		TOTAL_STATES
 	};
 
@@ -204,7 +205,8 @@ namespace Player {
 	    {
 	        { Idle, 1 },
 	        { Running, 6 },
-	        { Jumping, 2 },
+	        { JumpingUp, 1 },
+	        { JumpingDown, 1 },
 	    });
 }
 
