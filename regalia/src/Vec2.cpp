@@ -3,8 +3,8 @@
 #include <Constants.h>
 
 Vec2::Vec2()
-    : x(0)
-    , y(0) {}
+    : x(0.0f)
+    , y(0.0f) {}
 
 Vec2::Vec2(int xv, int yv)
     : x(static_cast<float>(xv))
@@ -19,7 +19,7 @@ Vec2::Vec2(Vec2& start, Vec2& destination) {
 }
 
 bool Vec2::IsOrigin() const {
-	return this->x == 0 && this->y == 0;
+	return EQUAL(this->x, 0.0f) && EQUAL(this->y, 0.0f);
 }
 
 void Vec2::Reset() {
