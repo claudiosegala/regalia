@@ -11,10 +11,10 @@
 #endif // DEBUG
 
 Collider::Collider(GameObject& go, Shape* shape, Vec2 scale, Vec2 offset)
-    : Component(go) {
-	this->scale = scale;
-	this->offset = offset;
-	this->shape = shape;
+    : Component(go)
+	, scale(scale)
+	, offset(offset)
+	, shape(shape) {
 }
 
 void Collider::Update(float dt) {
@@ -24,18 +24,21 @@ void Collider::Update(float dt) {
 		return;
 	}
 
+	const auto& box = this->associated.box;
+
 	if (this->shape->Is("Rect")) {
 		auto rect = static_cast<Rect*>(this->shape);
-
-		rect->width = this->associated.box.width * this->scale.x;
-		rect->height = this->associated.box.height * this->scale.y;
-		rect->SetCenter(this->associated.box.Center() + this->offset.GetRotate(this->associated.angle));
+		(*rect) = box;
+		rect->width *= this->scale.x;
+		rect->height *= this->scale.y;
+		rect->SetCenter(box.Center());
+		(*rect) += this->offset.GetRotate(this->associated.angle);
 	} else {
 		auto circle = static_cast<Circle*>(this->shape);
 
-		circle->center = this->associated.box.Center();
+		circle->center = box.Center() + this->offset.GetRotate(this->associated.angle);
 		// TODO: verify if this is ok
-		circle->radius = this->associated.box.MaxRadius() * this->scale.x;
+		circle->radius = box.MaxRadius() * this->scale.x;
 	}
 }
 
