@@ -20,7 +20,7 @@ bool Rect::Is(const std::string& type) {
 	return (type == "Rect");
 }
 
-float Rect::MaxRadius() {
+float Rect::MaxRadius() const {
 	return fmax(this->width, this->height) / 2.0f;
 }
 
@@ -55,13 +55,20 @@ std::tuple<Vec2, Vec2> Rect::GetPoints() const {
 	return std::make_tuple(v, u);
 }
 
+Vec2 Rect::GetUpperLeft() const {
+	return this->vector;
+}
+
+Vec2 Rect::GetDownRight() const {
+	return this->vector + Vec2(this->width, this->height);
+}
+
 Rect Rect::operator+(const Vec2& V) const {
 	return Rect { this->vector + V, this->width, this->height };
 }
 
 void Rect::operator+=(const Vec2& V) {
-	this->vector.x += V.x;
-	this->vector.y += V.y;
+	this->vector += V;
 }
 
 Rect Rect::operator-(const Vec2& V) const {
@@ -69,20 +76,7 @@ Rect Rect::operator-(const Vec2& V) const {
 }
 
 void Rect::operator-=(const Vec2& V) {
-	this->vector.x -= V.x;
-	this->vector.y -= V.y;
-}
-
-Rect Rect::operator*(float value) const {
-	auto w = this->width * value;
-	auto h = this->height * value;
-
-	return Rect { this->vector, w, h };
-}
-
-void Rect::operator*=(float v) {
-	this->vector.x *= v;
-	this->vector.y *= v;
+	this->vector -= V;
 }
 
 std::ostream& operator<<(std::ostream& out, const Rect& R) {
