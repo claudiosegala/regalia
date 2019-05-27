@@ -17,6 +17,8 @@ Sprite::Sprite(GameObject& go, const SpriteSheetData* spriteSheetData)
 
 	Open(spriteSheetData->file);
 
+	frameCount = spriteSheetData->GetNumberOfFrames(currentAnimationId);
+
 	spriteSheetData->AssertSize(width, height);
 }
 
