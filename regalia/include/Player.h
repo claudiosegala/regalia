@@ -30,6 +30,10 @@ private:
 
 	int playerId;
 
+	bool isOnFloor;
+
+	bool isOnWall;
+
 	Vec2 speed;
 
 	Rect collisionBox;
@@ -40,11 +44,19 @@ private:
 
 	void SetState(Constants::Player::State nextState, bool flipAnimation = false);
 	
-	void Move(float dt);
-
 	void Shoot();
 
-	void CheckBestDelta(Vec2, float);
+	void Move(float dt);
+
+	void MoveAndSlide(Vec2 velocity, float dt);
+
+	std::vector<std::vector<int>> GetCollisionSet();
+
+	Rect CalculatePosition(const Rect pos, const Vec2 velocity, const Vec2 acceleration, const float dt);
+
+	float FindMaxDelta(const Rect pos, const Vec2 velocity, const Vec2 acceleration, const float dt);
+
+	void CheckBestDelta(Vec2 velocity, float delta);
 
 	void Die();
 };
