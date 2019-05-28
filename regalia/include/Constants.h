@@ -188,7 +188,7 @@ namespace Constants {
 
 		const float SpeedMultiplier = 100.0f;
 
-		const float JumpForce = -400.0f;
+		const float JumpForce = -100.0f;
 
 		const SpriteSheetData MisterN(
 			"assets/img/mister_n_spritesheet.png",

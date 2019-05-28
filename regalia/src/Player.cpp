@@ -168,41 +168,52 @@ void Player::Move(float dt) {
 void Player::MoveAndSlide(Vec2 velocity, float dt) {
 	auto box = this->collisionBox;
 	auto& pos = this->associated.box;
+
 	/* try to move diagonaly */
 	auto delta = FindMaxDelta(box, velocity, Constants::Game::Gravity, dt);
-	if (!Number::Zero(delta)) {
-		pos = CalculatePosition(pos, velocity, Constants::Game::Gravity, delta);
-		box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
+
+	pos = CalculatePosition(pos, velocity, Constants::Game::Gravity, delta);
+	box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
+		
+	auto accumulatedGravity = Constants::Game::Gravity.y * delta * delta;
+	this->speed.y += accumulatedGravity;
+	velocity.y += accumulatedGravity;
+
+	if (Number::Equal(dt, delta)) {
+		this->isOnWall = false;
+		this->isOnFloor = false;
+		return;
 	}
 
-	this->speed += Constants::Game::Gravity * delta; // accumulate gravity
-
 	/* try slide horizontaly */
-	if (!Number::Equal(dt, delta)) {
+
+	if (!Number::Zero(velocity.x)) {
 		auto horizontal = Vec2 { velocity.x, 0.0f };
 		auto delta_slide = FindMaxDelta(box, horizontal, Vec2(), dt - delta);
-		if (!Number::Zero(delta_slide)) {
-			this->isOnWall = false;
-			pos = CalculatePosition(pos, horizontal, Vec2(), delta_slide);
-			box = CalculatePosition(box, horizontal, Vec2(), delta_slide);
-		} else if (!horizontal.IsOrigin()) {
-			this->isOnWall = true;
+
+		pos = CalculatePosition(pos, horizontal, Vec2(), delta_slide);
+		box = CalculatePosition(box, horizontal, Vec2(), delta_slide);
+
+		this->isOnWall = !Number::Equal(dt - delta, delta_slide); // is on wall if could not finish the movement
+
+		if (this->isOnWall) {
+			this->speed.x = 0.0f;
 		}
 	}
 
 	/* try slide verticaly */
-	if (!Number::Equal(dt, delta)) {
-		auto vertical = Vec2 { 0.0f, velocity.y };
-		auto delta_slide = FindMaxDelta(box, vertical, Constants::Game::Gravity, dt - delta);
-		if (!Number::Zero(delta_slide)) {
-			this->isOnFloor = false;
-			pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta_slide);
-			box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta_slide);
-		} else {
-			this->isOnFloor = true;
-		}
+	auto vertical = Vec2 { 0.0f, velocity.y };
+	auto delta_slide = FindMaxDelta(box, vertical, Constants::Game::Gravity, dt - delta);
 
-		this->speed += Constants::Game::Gravity * delta_slide; // accumulate gravity
+	pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta_slide);
+	box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta_slide);
+	
+	this->isOnFloor = !Number::Equal(dt - delta, delta_slide); // is on floor if could not finish the movement
+
+	if (this->isOnFloor) {
+		this->speed.y = 0.0f;
+	} else {
+		this->speed.y += Constants::Game::Gravity.y * delta_slide * delta_slide; // accumulate gravity
 	}
 }
 
@@ -264,15 +275,22 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 		} else {
 			for (int j = y1; j <= y2; j++) {
 				for (int i = x1; i <= x2; i++) {
-					//std::cout << collisionSet[j][i];
 					if (collisionSet[j][i]) {
 						conflict = true;
 						//break;
 					}
 				}
-				//std::cout << std::endl;
 			}
-			//std::cout << std::endl;
+
+			#ifdef DEBUG
+			/*for (int j = y1; j <= y2; j++) {
+				for (int i = x1; i <= x2; i++) {
+					std::cout << collisionSet[j][i];
+				}
+				std::cout << '\n';
+			}
+			std::cout << '\n';*/
+			#endif
 		}
 
 		if (!conflict) {
