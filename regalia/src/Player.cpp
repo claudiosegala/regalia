@@ -85,9 +85,9 @@ void Player::UpdateState() {
 		}
 	} else {
 		if (speed.y < 0) {
-			SetState(Constants::Player::JumpingUp, speed.x < 0);
+			SetState(Constants::Player::Jumping, speed.x < 0);
 		} else {
-			SetState(Constants::Player::JumpingDown, speed.x < 0);
+			SetState(Constants::Player::Falling, speed.x < 0);
 		}
 	}
 }
