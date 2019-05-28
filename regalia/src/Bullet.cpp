@@ -9,28 +9,28 @@
 
 Bullet::Bullet(GameObject& go, BulletData& data)
     : Component(go) {
-	this->shooterId = data.shooterId;
-	this->distanceLeft = data.maxDistance;
-	this->damage = data.damage;
-	this->speed = Vec2(-data.speed * cos(data.angle), -data.speed * sin(data.angle));
+	shooterId = data.shooterId;
+	distanceLeft = data.maxDistance;
+	damage = data.damage;
+	speed = Vec2(-data.speed * cos(data.angle), -data.speed * sin(data.angle));
 
 	LoadAssets(data);
 }
 
 void Bullet::Update(float dt) {
 	// Reduce the distance left
-	auto dist = this->speed * dt;
+	auto dist = speed * dt;
 
-	this->distanceLeft -= dist.GetLength();
+	distanceLeft -= dist.GetLength();
 
 	// Destroy if hit the maximum distance
-	if (this->distanceLeft <= 0) {
-		this->associated.RequestDelete();
+	if (distanceLeft <= 0) {
+		associated.RequestDelete();
 		return;
 	}
 
 	// Change position
-	this->associated.box.vector -= dist;
+	associated.box.vector -= dist;
 }
 
 void Bullet::Render() {}
@@ -43,13 +43,13 @@ void Bullet::NotifyCollision(GameObject& go) {
 	}
 
 	if (player->id != shooterId) {
-		this->associated.RequestDelete();
+		associated.RequestDelete();
 		return;
 	}
 }
 
 int Bullet::GetDamage() {
-	return this->damage;
+	return damage;
 }
 
 void Bullet::LoadAssets(BulletData& data) {

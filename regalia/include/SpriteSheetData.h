@@ -23,20 +23,20 @@ public:
 	}
 
 	inline int GetImageWidth() const {
-		return this->imageWidth;
+		return imageWidth;
 	}
 
 	inline int GetFrameWidth() const {
-		return this->frameWidth;
+		return frameWidth;
 	}
 
 	inline int GetFrameHeight() const {
-		return this->imageHeight;
+		return imageHeight;
 	}
 
 	inline void AssertSize(int width, int height) const {
-		assert(width == this->imageWidth);
-		assert(height == this->imageHeight);
+		assert(width == imageWidth);
+		assert(height == imageHeight);
 		UNUSED(width);
 		UNUSED(height);
 	};

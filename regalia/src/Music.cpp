@@ -13,11 +13,11 @@ Music::Music(const std::string& file) {
 Music::~Music() {}
 
 void Music::Play(int times) {
-	if (this->music == nullptr)
+	if (music == nullptr)
 		return;
 
 	Logger::Info("Start Playing Music");
-	auto err = Mix_PlayMusic(this->music.get(), times);
+	auto err = Mix_PlayMusic(music.get(), times);
 
 	if (err < 0) {
 		auto msg = "MixError: " + std::string(Mix_GetError()) + "\n";
@@ -36,9 +36,9 @@ void Music::Stop(int msToStop) {
 }
 
 void Music::Open(const std::string& file) {
-	this->music = Resources::GetMusic(file);
+	music = Resources::GetMusic(file);
 }
 
 bool Music::IsOpen() {
-	return (this->music != nullptr);
+	return (music != nullptr);
 }

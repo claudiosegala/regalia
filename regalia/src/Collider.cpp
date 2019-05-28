@@ -20,25 +20,25 @@ Collider::Collider(GameObject& go, Shape* shape, Vec2 scale, Vec2 offset)
 void Collider::Update(float dt) {
 	UNUSED(dt);
 
-	if (this->shape == nullptr) {
+	if (shape == nullptr) {
 		return;
 	}
 
-	const auto& box = this->associated.box;
+	const auto& box = associated.box;
 
-	if (this->shape->Is("Rect")) {
-		auto rect = static_cast<Rect*>(this->shape);
+	if (shape->Is("Rect")) {
+		auto rect = static_cast<Rect*>(shape);
 		(*rect) = box;
-		rect->width *= this->scale.x;
-		rect->height *= this->scale.y;
+		rect->width *= scale.x;
+		rect->height *= scale.y;
 		rect->SetCenter(box.Center());
-		(*rect) += this->offset.GetRotate(this->associated.angle);
+		(*rect) += offset.GetRotate(associated.angle);
 	} else {
-		auto circle = static_cast<Circle*>(this->shape);
+		auto circle = static_cast<Circle*>(shape);
 
-		circle->center = box.Center() + this->offset.GetRotate(this->associated.angle);
+		circle->center = box.Center() + offset.GetRotate(associated.angle);
 		// TODO: verify if this is ok
-		circle->radius = box.MaxRadius() * this->scale.x;
+		circle->radius = box.MaxRadius() * scale.x;
 	}
 }
 
@@ -49,9 +49,9 @@ void Collider::Update(float dt) {
 // Vec2::Rotate( float rad )		- Rotaciona um Vec2 pelo ângulo em radianos passado
 void Collider::Render() {
 #ifdef DEBUG
-	RenderBox(this->associated.box, 255, 0, 0);
+	RenderBox(associated.box, 255, 0, 0);
 
-	if (this->shape->Is("Rect")) {
+	if (shape->Is("Rect")) {
 		auto rect = (Rect*) shape;
 		RenderBox(*rect, 0, 255, 0);
 	}
@@ -84,9 +84,9 @@ void Collider::RenderBox(const Rect& box, int r, int g, int b) {
 }
 
 void Collider::SetScale(Vec2 scale) {
-	this->scale = scale;
+	scale = scale;
 }
 
 void Collider::SetOffset(Vec2 offset) {
-	this->offset = offset;
+	offset = offset;
 }

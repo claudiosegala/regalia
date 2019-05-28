@@ -11,7 +11,7 @@
 StoryState::StoryState() {
 	Logger::Info("Initializing Story State");
 
-	//this->music.Open(Constants::Story::Music);
+	//music.Open(Constants::Story::Music);
 	LoadAssets();
 }
 
@@ -32,13 +32,13 @@ void StoryState::LoadAssets() {
 }
 
 void StoryState::Update(float dt) {
-	this->popRequested = InputManager::IsPopRequested();
-	if (this->popRequested > 0) {
+	popRequested = InputManager::IsPopRequested();
+	if (popRequested > 0) {
 		return;
 	}
 
-	this->quitRequested = InputManager::IsQuitRequested();
-	if (this->quitRequested) {
+	quitRequested = InputManager::IsQuitRequested();
+	if (quitRequested) {
 		return;
 	}
 
@@ -55,7 +55,7 @@ void StoryState::Start() {
 
 	StartArray();
 
-	this->started = true;
+	started = true;
 }
 
 void StoryState::Pause() {

@@ -20,11 +20,11 @@ Player::Player(GameObject& go, int playerId)
     , collisionBox()
     , isOnFloor(false)
     , isOnWall(false) {
-	this->id = ++Player::counter;
-	this->state = Constants::Player::Idle;
+	id = ++Player::counter;
+	state = Constants::Player::Idle;
 
 	// TODO: discover why there is one tile of shift
-	this->associated.box.SetCenter({ 20.0f, 26.0f });
+	associated.box.SetCenter({ 20.0f, 26.0f });
 
 	LoadAssets();
 }
@@ -40,13 +40,13 @@ void Player::NotifyCollision(GameObject& go) {
 		return;
 	}
 
-	if (bullet->shooterId != this->id) {
+	if (bullet->shooterId != id) {
 		return; //> you cannot fire yourself
 	}
 
-	this->hp -= bullet->GetDamage();
+	hp -= bullet->GetDamage();
 
-	if (this->hp > 0) {
+	if (hp > 0) {
 		return;
 	}
 
@@ -167,21 +167,21 @@ void Player::Move(float dt) {
 		isJumping = true;
 	}
 
-	this->speed.x = direction.x * Constants::Player::SpeedMultiplier;
+	speed.x = direction.x * Constants::Player::SpeedMultiplier;
 
-	if ((this->isOnFloor || this->isOnWall) && isJumping) {
-		this->speed.y = Constants::Player::JumpForce;
+	if ((isOnFloor || isOnWall) && isJumping) {
+		speed.y = Constants::Player::JumpForce;
 	}
 
-	W(this->isOnFloor);
-	W(this->isOnWall);
+	W(isOnFloor);
+	W(isOnWall);
 
-	MoveAndSlide(this->speed, dt);
+	MoveAndSlide(speed, dt);
 }
 
 void Player::MoveAndSlide(Vec2 velocity, float dt) {
-	auto box = this->collisionBox;
-	auto& pos = this->associated.box;
+	auto box = collisionBox;
+	auto& pos = associated.box;
 
 	/* try to move diagonaly */
 	auto delta = FindMaxDelta(box, velocity, Constants::Game::Gravity, dt);
@@ -190,12 +190,12 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 	box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
 
 	auto accumulatedGravity = Constants::Game::Gravity.y * delta * delta;
-	this->speed.y += accumulatedGravity;
+	speed.y += accumulatedGravity;
 	velocity.y += accumulatedGravity;
 
 	if (Number::Equal(dt, delta)) {
-		this->isOnWall = false;
-		this->isOnFloor = false;
+		isOnWall = false;
+		isOnFloor = false;
 		return;
 	}
 
@@ -208,10 +208,10 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 		pos = CalculatePosition(pos, horizontal, Vec2(), delta_slide);
 		box = CalculatePosition(box, horizontal, Vec2(), delta_slide);
 
-		this->isOnWall = !Number::Equal(dt - delta, delta_slide); // is on wall if could not finish the movement
+		isOnWall = !Number::Equal(dt - delta, delta_slide); // is on wall if could not finish the movement
 
-		if (this->isOnWall) {
-			this->speed.x = 0.0f;
+		if (isOnWall) {
+			speed.x = 0.0f;
 		}
 	}
 
@@ -222,12 +222,12 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 	pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta_slide);
 	box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta_slide);
 
-	this->isOnFloor = !Number::Equal(dt - delta, delta_slide); // is on floor if could not finish the movement
+	isOnFloor = !Number::Equal(dt - delta, delta_slide); // is on floor if could not finish the movement
 
-	if (this->isOnFloor) {
-		this->speed.y = 0.0f;
+	if (isOnFloor) {
+		speed.y = 0.0f;
 	} else {
-		this->speed.y += Constants::Game::Gravity.y * delta_slide * delta_slide; // accumulate gravity
+		speed.y += Constants::Game::Gravity.y * delta_slide * delta_slide; // accumulate gravity
 	}
 }
 
@@ -319,7 +319,7 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 }
 
 void Player::Die() {
-	this->associated.RequestDelete();
+	associated.RequestDelete();
 
 	// TODO: add animation of death
 }

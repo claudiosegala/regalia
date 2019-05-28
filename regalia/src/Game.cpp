@@ -9,16 +9,16 @@
 Game* Game::instance;
 
 Game::Game(const std::string& title, int width, int height) {
-	if (this->instance != nullptr) {
+	if (instance != nullptr) {
 		throw std::runtime_error("There should be only one instance!\n");
 	}
 
-	this->instance = this;
-	this->frameStart = 0;
-	this->dt = 0.0f;
-	this->storedState = nullptr;
-	this->window = nullptr;
-	this->renderer = nullptr;
+	instance = this;
+	frameStart = 0;
+	dt = 0.0f;
+	storedState = nullptr;
+	window = nullptr;
+	renderer = nullptr;
 
 	Init_SDL();
 	Init_IMG();
@@ -33,10 +33,10 @@ Game::Game(const std::string& title, int width, int height) {
 Game::~Game() {
 	// Clean SDL instances
 	Logger::Info("Destroying Renderer");
-	SDL_DestroyRenderer(this->renderer);
+	SDL_DestroyRenderer(renderer);
 
 	Logger::Info("Destroying Window");
-	SDL_DestroyWindow(this->window);
+	SDL_DestroyWindow(window);
 
 	Logger::Info("Quiting SDL TTF");
 	TTF_Quit();
@@ -57,12 +57,12 @@ Game::~Game() {
 }
 
 void Game::Push(State* state) {
-	this->storedState = state;
+	storedState = state;
 }
 
 void Game::Run() {
 	Logger::Info("Running");
-	if (this->storedState == nullptr) {
+	if (storedState == nullptr) {
 		return;
 	}
 
@@ -74,19 +74,19 @@ void Game::Run() {
 void Game::Start() {
 	Logger::Info("Starting Game");
 
-	this->stateStack.emplace(this->storedState);
+	stateStack.emplace(storedState);
 
-	this->storedState->Start();
+	storedState->Start();
 
-	this->storedState = nullptr;
+	storedState = nullptr;
 }
 
 void Game::Loop() {
 	Logger::Info("Initting Loop");
 	auto& in = InputManager::GetInstance();
 
-	while (!this->stateStack.empty()) {
-		auto state = this->stateStack.top().get();
+	while (!stateStack.empty()) {
+		auto state = stateStack.top().get();
 
 		if (state->QuitRequested()) {
 			Logger::Info("Quitting");
@@ -95,35 +95,35 @@ void Game::Loop() {
 
 		if (state->PopRequested()) {
 			Logger::Info("Popping State");
-			this->stateStack.pop();
+			stateStack.pop();
 
 			Resources::Prune();
 
-			if (!this->stateStack.empty()) {
+			if (!stateStack.empty()) {
 				Logger::Info("Changing State");
-				state = this->stateStack.top().get();
+				state = stateStack.top().get();
 				state->Resume();
 			}
 		}
 
-		if (this->storedState != nullptr) {
+		if (storedState != nullptr) {
 			Logger::Info("Adding State");
 			if (state != nullptr) {
 				state->Pause();
 			}
 
-			this->stateStack.emplace(this->storedState);
+			stateStack.emplace(storedState);
 
-			this->storedState = nullptr;
+			storedState = nullptr;
 
 			Logger::Info("Changing State");
 
-			state = this->stateStack.top().get();
+			state = stateStack.top().get();
 
 			state->Start();
 		}
 
-		if (this->stateStack.empty()) {
+		if (stateStack.empty()) {
 			break;
 		}
 
@@ -136,10 +136,10 @@ void Game::Loop() {
 			SDL_SetWindowFullscreen(window, GameData::WindowFullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
 		}
 
-		state->Update(this->dt);
+		state->Update(dt);
 		state->Render();
 
-		SDL_RenderPresent(this->renderer);
+		SDL_RenderPresent(renderer);
 
 		SDL_Delay(16);
 	}
@@ -148,14 +148,14 @@ void Game::Loop() {
 void Game::End() {
 	Logger::Info("Ended Game");
 
-	if (this->storedState != nullptr) {
+	if (storedState != nullptr) {
 		Logger::Info("Erasing Stored State");
-		delete this->storedState;
+		delete storedState;
 	}
 
 	Logger::Info("Cleaning Stack of States");
-	while (!this->stateStack.empty()) {
-		this->stateStack.pop();
+	while (!stateStack.empty()) {
+		stateStack.pop();
 	}
 
 	Logger::Info("Destroying Resources");
@@ -171,15 +171,15 @@ Game* Game::GetInstance() {
 }
 
 State* Game::GetCurrentState() {
-	return this->stateStack.top().get();
+	return stateStack.top().get();
 }
 
 SDL_Renderer* Game::GetRenderer() {
-	return this->renderer;
+	return renderer;
 }
 
 SDL_Window* Game::GetWindow() {
-	return this->window;
+	return window;
 }
 
 void Game::Init_RDR() {
@@ -195,9 +195,9 @@ void Game::Init_RDR() {
 	uint32_t flags = (SDL_RENDERER_ACCELERATED);
 
 	Logger::Info("Creating Renderer");
-	this->renderer = SDL_CreateRenderer(this->window, index, flags);
+	renderer = SDL_CreateRenderer(window, index, flags);
 
-	if (this->renderer == nullptr) {
+	if (renderer == nullptr) {
 		SDL_GetNumRenderDrivers(); // TODO: WTF is this?
 
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
@@ -216,9 +216,9 @@ void Game::Init_WDW(const std::string& title, int width, int height) {
 	uint32_t flags = SDL_WINDOW_RESIZABLE;
 
 	Logger::Info("Creating Window");
-	this->window = SDL_CreateWindow(title.c_str(), (int)pos, (int)pos, width, height, flags);
+	window = SDL_CreateWindow(title.c_str(), (int)pos, (int)pos, width, height, flags);
 
-	if (this->window == nullptr) {
+	if (window == nullptr) {
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
 		throw std::runtime_error(msg);
 	}
@@ -314,13 +314,13 @@ void Game::Init_SDL() {
 }
 
 float Game::GetDeltaTime() {
-	return this->dt;
+	return dt;
 }
 
 void Game::CalculateDeltaTime() {
 	auto newFrameStart = (float)SDL_GetTicks();
-	auto oldFrameStart = (float)this->frameStart;
+	auto oldFrameStart = (float)frameStart;
 
-	this->dt = (newFrameStart - oldFrameStart) / 1000.0f;
-	this->frameStart = (unsigned int)newFrameStart;
+	dt = (newFrameStart - oldFrameStart) / 1000.0f;
+	frameStart = (unsigned int)newFrameStart;
 }

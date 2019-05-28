@@ -28,12 +28,12 @@ void InputManager::Update() {
 }
 
 void InputManager::Setup() {
-	this->quitRequested = false;
-	this->updateCounter++;
+	quitRequested = false;
+	updateCounter++;
 }
 
 void InputManager::RetrieveMouse() {
-	SDL_GetMouseState(&this->mouseX, &this->mouseY);
+	SDL_GetMouseState(&mouseX, &mouseY);
 }
 
 void InputManager::TreatEvent(SDL_Event& event) {
@@ -46,7 +46,7 @@ void InputManager::TreatEvent(SDL_Event& event) {
 		break;
 	}
 	case SDL_QUIT: {
-		this->quitRequested = true;
+		quitRequested = true;
 		break;
 	}
 	case SDL_KEYDOWN: {
@@ -55,8 +55,8 @@ void InputManager::TreatEvent(SDL_Event& event) {
 		if (!isRepeated) {
 			auto key = event.key.keysym.sym;
 
-			this->keyState[key] = true;
-			this->keyUpdate[key] = this->updateCounter;
+			keyState[key] = true;
+			keyUpdate[key] = updateCounter;
 		}
 		break;
 	}
@@ -66,21 +66,21 @@ void InputManager::TreatEvent(SDL_Event& event) {
 		if (!isRepeated) {
 			auto key = event.key.keysym.sym;
 
-			this->keyState[key] = false;
-			this->keyUpdate[key] = this->updateCounter;
+			keyState[key] = false;
+			keyUpdate[key] = updateCounter;
 		}
 		break;
 	}
 	case SDL_MOUSEBUTTONDOWN: {
 		auto idx = event.button.button;
-		this->mouseState[idx] = true;
-		this->mouseUpdate[idx] = this->updateCounter;
+		mouseState[idx] = true;
+		mouseUpdate[idx] = updateCounter;
 		break;
 	}
 	case SDL_MOUSEBUTTONUP: {
 		auto idx = event.button.button;
-		this->mouseState[idx] = false;
-		this->mouseUpdate[idx] = this->updateCounter;
+		mouseState[idx] = false;
+		mouseUpdate[idx] = updateCounter;
 		break;
 	}
 	default:
@@ -192,7 +192,7 @@ bool InputManager::IsPopRequested() {
 }
 
 bool InputManager::QuitRequested() {
-	return this->quitRequested;
+	return quitRequested;
 }
 
 bool InputManager::IsQuitRequested() {

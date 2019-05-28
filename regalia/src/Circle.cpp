@@ -14,9 +14,9 @@ bool Circle::Is(const std::string& type) {
 }
 
 float Circle::Perimeter() {
-	return 2.0f * Number::Pi * this->radius;
+	return 2.0f * Number::Pi * radius;
 }
 
 float Circle::Area() {
-	return Number::Pi * this->radius * this->radius;
+	return Number::Pi * radius * radius;
 }

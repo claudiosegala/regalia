@@ -12,35 +12,35 @@ Text::Text(GameObject& go, const std::string& file, int size, TextStyle style, c
     , fontFile(file)
     , fontSize(size)
     , color(color) {
-	this->font = Resources::GetText(this->fontFile, this->fontSize);
-	this->texture = nullptr;
-	this->timer = nullptr;
+	font = Resources::GetText(fontFile, fontSize);
+	texture = nullptr;
+	timer = nullptr;
 
 	RemakeTexture();
 }
 
 Text::~Text() {
-	if (this->texture != nullptr) {
-		SDL_DestroyTexture(this->texture);
+	if (texture != nullptr) {
+		SDL_DestroyTexture(texture);
 	}
 
-	if (this->timer != nullptr) {
-		delete this->timer;
+	if (timer != nullptr) {
+		delete timer;
 	}
 }
 
 void Text::Update(float dt) {
-	if (this->timer != nullptr) {
-		this->timer->Update(dt);
+	if (timer != nullptr) {
+		timer->Update(dt);
 
-		if (this->timer->Get() > 0.0f) {
-			this->associated.RequestDelete();
+		if (timer->Get() > 0.0f) {
+			associated.RequestDelete();
 		}
 	}
 }
 
 void Text::Render() {
-	if (this->texture == nullptr)
+	if (texture == nullptr)
 		return;
 
 	auto game = Game::GetInstance();
@@ -48,18 +48,18 @@ void Text::Render() {
 	SDL_Rect srcRect {
 		static_cast<int>(0),
 		static_cast<int>(0),
-		static_cast<int>(this->associated.box.width),
-		static_cast<int>(this->associated.box.height)
+		static_cast<int>(associated.box.width),
+		static_cast<int>(associated.box.height)
 	};
 
 	SDL_Rect dstRect {
-		static_cast<int>(this->associated.box.vector.x - Camera::pos.x),
-		static_cast<int>(this->associated.box.vector.y - Camera::pos.y),
-		static_cast<int>(this->associated.box.width),
-		static_cast<int>(this->associated.box.height)
+		static_cast<int>(associated.box.vector.x - Camera::pos.x),
+		static_cast<int>(associated.box.vector.y - Camera::pos.y),
+		static_cast<int>(associated.box.width),
+		static_cast<int>(associated.box.height)
 	};
 
-	auto err = SDL_RenderCopyEx(game->GetRenderer(), this->texture, &srcRect, &dstRect, (this->associated.angle * 180) / Number::Pi, nullptr, SDL_FLIP_NONE);
+	auto err = SDL_RenderCopyEx(game->GetRenderer(), texture, &srcRect, &dstRect, (associated.angle * 180) / Number::Pi, nullptr, SDL_FLIP_NONE);
 
 	if (err < 0) {
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
@@ -74,64 +74,64 @@ void Text::SetText(const std::string& text) {
 }
 
 void Text::SetColor(SDL_Color color) {
-	this->color = color;
+	color = color;
 	RemakeTexture();
 }
 
 void Text::SetStyle(TextStyle style) {
-	this->style = style;
+	style = style;
 	RemakeTexture();
 }
 
 void Text::SetFontFile(const std::string& file) {
-	this->fontFile = file;
+	fontFile = file;
 	RemakeTexture();
 }
 
 void Text::SetFontSize(int size) {
-	this->fontSize = size;
+	fontSize = size;
 	RemakeTexture();
 }
 
 void Text::SetFadeOut(float t) {
-	this->timer = new Timer();
-	this->timer->SetStart(-t);
+	timer = new Timer();
+	timer->SetStart(-t);
 }
 
 void Text::RemakeTexture() {
-	if (this->texture != nullptr) {
-		SDL_DestroyTexture(this->texture);
+	if (texture != nullptr) {
+		SDL_DestroyTexture(texture);
 	}
 
-	this->font = Resources::GetText(this->fontFile, this->fontSize);
+	font = Resources::GetText(fontFile, fontSize);
 
 	SDL_Surface* aux = nullptr;
 	auto game = Game::GetInstance();
 	auto renderer = game->GetRenderer();
 
-	switch (this->style) {
+	switch (style) {
 	case TextStyle::SOLID:
-		aux = TTF_RenderText_Solid(this->font.get(), this->text.c_str(), this->color);
+		aux = TTF_RenderText_Solid(font.get(), text.c_str(), color);
 		break;
 	case TextStyle::SHADED:
-		aux = TTF_RenderText_Shaded(this->font.get(), this->text.c_str(), this->color, SDL_Color { 0, 0, 0, 0 });
+		aux = TTF_RenderText_Shaded(font.get(), text.c_str(), color, SDL_Color { 0, 0, 0, 0 });
 		break;
 	case TextStyle::BLENDED:
-		aux = TTF_RenderText_Blended(this->font.get(), this->text.c_str(), this->color);
+		aux = TTF_RenderText_Blended(font.get(), text.c_str(), color);
 		break;
 	}
 
-	this->texture = SDL_CreateTextureFromSurface(renderer, aux);
+	texture = SDL_CreateTextureFromSurface(renderer, aux);
 
-	if (this->texture == nullptr) {
+	if (texture == nullptr) {
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
 		throw std::runtime_error(msg);
 	}
 
 	int w, h;
-	std::tie(w, h) = Resources::QueryImage(this->texture);
-	this->associated.box.width = static_cast<float>(w);
-	this->associated.box.height = static_cast<float>(h);
+	std::tie(w, h) = Resources::QueryImage(texture);
+	associated.box.width = static_cast<float>(w);
+	associated.box.height = static_cast<float>(h);
 
 	SDL_FreeSurface(aux);
 }

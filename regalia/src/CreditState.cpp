@@ -11,7 +11,7 @@
 CreditState::CreditState() {
 	Logger::Info("Initializing Credit State");
 
-	//this->music.Open(Constants::Credit::Music);
+	//music.Open(Constants::Credit::Music);
 	LoadAssets();
 }
 
@@ -32,13 +32,13 @@ void CreditState::LoadAssets() {
 }
 
 void CreditState::Update(float dt) {
-	this->popRequested = InputManager::IsPopRequested();
-	if (this->popRequested) {
+	popRequested = InputManager::IsPopRequested();
+	if (popRequested) {
 		return;
 	}
 	
-	this->quitRequested = InputManager::IsQuitRequested();
-	if (this->quitRequested) {
+	quitRequested = InputManager::IsQuitRequested();
+	if (quitRequested) {
 		return;
 	}
 
@@ -55,7 +55,7 @@ void CreditState::Start() {
 
 	StartArray();
 
-	this->started = true;
+	started = true;
 }
 
 void CreditState::Pause() {
