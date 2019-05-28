@@ -1,7 +1,7 @@
 #include <pch.h>
 #include <Constants.h>
 #include <InputManager.h>
-#include "Game.h"
+#include <Game.h>
 
 #define PROTECT_RANGE(number, defaultValue)     \
 	if (unsigned(number) >= controllers.size()) \

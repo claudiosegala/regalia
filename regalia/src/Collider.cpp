@@ -1,20 +1,20 @@
 #include <pch.h>
 #include <Circle.h>
 #include <Collider.h>
-#include <Constants.h>
+#include <Util.h>
 #include <Rect.h>
 #include <Vec2.h>
 
 #ifdef DEBUG
-#include "Camera.h"
-#include "Game.h"
+#include <Camera.h>
+#include <Game.h>
 #endif // DEBUG
 
 Collider::Collider(GameObject& go, Shape* shape, Vec2 scale, Vec2 offset)
     : Component(go)
+	, shape(shape)
 	, scale(scale)
-	, offset(offset)
-	, shape(shape) {
+	, offset(offset) {
 }
 
 void Collider::Update(float dt) {

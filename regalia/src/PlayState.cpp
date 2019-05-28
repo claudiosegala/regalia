@@ -7,6 +7,7 @@
 #include <GameData.h>
 #include <InputManager.h>
 #include <Logger.h>
+#include <Number.h>
 #include <Player.h>
 #include <PlayState.h>
 #include <Rect.h>
@@ -16,7 +17,7 @@
 #include <TileMap.h>
 #include <TileSet.h>
 #include <Vec2.h>
-#include "PlayerAim.h"
+#include <PlayerAim.h>
 
 
 PlayState::PlayState() {
@@ -107,7 +108,7 @@ void PlayState::CheckCollision() {
 }
 
 void PlayState::CreateField() {
-	const auto rnd = rand();
+	const auto rnd = Number::Rand();
 
 	auto& back = GetBackgroundData(rnd);
 	auto& tileSet = GetTileSetData(rnd);

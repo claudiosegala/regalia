@@ -1,6 +1,6 @@
-#include "pch.h"
-#include "Gamepad.h"
-#include "Constants.h"
+#include <pch.h>
+#include <Gamepad.h>
+#include <Constants.h>
 
 Gamepad::Gamepad(int index)
     : controller(SDL_GameControllerOpen(index)) {

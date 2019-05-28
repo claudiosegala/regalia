@@ -1,7 +1,7 @@
 #include <pch.h>
 #include <Camera.h>
-#include <Constants.h>
 #include <Game.h>
+#include <Number.h>
 #include <Resources.h>
 #include <Sprite.h>
 
@@ -54,8 +54,8 @@ void Sprite::SetBox() {
 }
 
 void Sprite::SetScale(float x, float y) {
-	x = EQUAL(x, 0) ? scale.x : x;
-	y = EQUAL(y, 0) ? scale.y : y;
+	x = Number::Zero(x) ? scale.x : x;
+	y = Number::Zero(y) ? scale.y : y;
 
 	scale = Vec2(x, y);
 
@@ -131,7 +131,7 @@ void Sprite::Render(int x, int y) {
 		int(srcRect.h * scale.y)
 	};
 
-	auto err = SDL_RenderCopyEx(game->GetRenderer(), texture.get(), &srcRect, &dstRect, (associated.angle * 180) / Constants::Math::PI, nullptr, flip);
+	auto err = SDL_RenderCopyEx(game->GetRenderer(), texture.get(), &srcRect, &dstRect, (associated.angle * 180) / Number::Pi, nullptr, flip);
 
 	if (err < 0) {
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";

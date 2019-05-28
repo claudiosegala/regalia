@@ -1,7 +1,6 @@
 #pragma once
 
 #include <pch.h>
-#include <Constants.h>
 #include <Shape.h>
 #include <Vec2.h>
 

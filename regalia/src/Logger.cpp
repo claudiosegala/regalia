@@ -1,5 +1,6 @@
 #include <pch.h>
 #include <Logger.h>
+#include <Constants.h>
 
 void Logger::Error(const std::string& msg, int type) {
 #ifdef LOG_ERROR

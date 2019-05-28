@@ -3,6 +3,7 @@
 #include <Circle.h>
 #include <Shape.h>
 #include <Rect.h>
+#include <Util.h>
 #include <Vec2.h>
 
 class Collision {
@@ -13,20 +14,20 @@ public:
 
 			if (b->Is("Rect")) {
 				auto _b = static_cast<Rect*>(b);
-				IsColliding(_a, _b, angleOfA, angleOfB);
+				return IsColliding(*_a, *_b, angleOfA, angleOfB);
 			} else {
 				auto _b = static_cast<Circle*>(b);
-				IsColliding(_a, _b, angleOfA, angleOfB);
+				return IsColliding(*_a, *_b, angleOfA, angleOfB);
 			}
 		} else {
 			auto _a = static_cast<Circle*>(a);
 
 			if (b->Is("Rect")) {
 				auto _b = static_cast<Rect*>(b);
-				IsColliding(_a, _b, angleOfA, angleOfB);
+				return IsColliding(*_a, *_b, angleOfA, angleOfB);
 			} else {
 				auto _b = static_cast<Circle*>(b);
-				IsColliding(_a, _b, angleOfA, angleOfB);
+				return IsColliding(*_a, *_b, angleOfA, angleOfB);
 			}
 		}
 	}
@@ -86,6 +87,10 @@ public:
 
 	static inline bool IsColliding(Circle& a, Rect& b, float angleOfA, float angleOfB) {
 		// TODO: implement
+		UNUSED(a);
+		UNUSED(b);
+		UNUSED(angleOfA);
+		UNUSED(angleOfB);
 		return false;
 	}
 

@@ -26,17 +26,17 @@ private:
 
 	Constants::Player::State state;
 
-	int hp;
-
 	int playerId;
 
-	bool isOnFloor;
-
-	bool isOnWall;
+	int hp;
 
 	Vec2 speed;
 
 	Rect collisionBox;
+
+	bool isOnFloor;
+
+	bool isOnWall;
 
 	void LoadAssets();
 

@@ -1,8 +1,8 @@
 #include <pch.h>
-#include <Constants.h>
 #include <Logger.h>
 #include <Resources.h>
 #include <Sound.h>
+#include <Util.h>
 
 Sound::Sound(GameObject& go)
     : Component(go)

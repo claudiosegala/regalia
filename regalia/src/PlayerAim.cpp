@@ -1,8 +1,9 @@
-#include "pch.h"
-#include "PlayerAim.h"
-#include "InputManager.h"
-#include "GameObject.h"
-#include "Sprite.h"
+#include <pch.h>
+#include <PlayerAim.h>
+#include <InputManager.h>
+#include <GameObject.h>
+#include <Sprite.h>
+#include <Util.h>
 
 PlayerAim::PlayerAim(GameObject& go, std::weak_ptr<GameObject> player, int playerId)
     : Component(go)

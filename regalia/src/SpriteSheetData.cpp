@@ -1,6 +1,6 @@
-#include "pch.h"
-#include "SpriteSheetData.h"
-#include "Logger.h"
+#include <pch.h>
+#include <SpriteSheetData.h>
+#include <Logger.h>
 
 SpriteSheetData::SpriteSheetData(const std::string& file, int imageWidth, int imageHeight, float frameTime, int totalAnimations, const std::map<int, int>& animationsFrames, bool selfDestruct)
     : file(file)

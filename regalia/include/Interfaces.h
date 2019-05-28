@@ -1,7 +1,7 @@
 #pragma once
 
 #include <pch.h>
-#include "SpriteSheetData.h"
+#include <SpriteSheetData.h>
 
 class BulletData {
 public:

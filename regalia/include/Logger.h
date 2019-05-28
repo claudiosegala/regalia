@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Constants.h>
-
 class Logger {
 public:
 	static void Error(const std::string&, int type = 0);

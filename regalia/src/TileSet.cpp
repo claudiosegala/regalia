@@ -1,6 +1,5 @@
 #include <pch.h>
 #include <TileSet.h>
-#include <Constants.h>
 
 TileSet::TileSet(GameObject& go, int width, int height, const std::string& file)
     : tileSet(go, file) {

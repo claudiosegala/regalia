@@ -1,6 +1,6 @@
 #include <pch.h>
+#include <Number.h>
 #include <Vec2.h>
-#include <Constants.h>
 
 Vec2::Vec2()
     : x(0.0f)
@@ -19,7 +19,7 @@ Vec2::Vec2(Vec2& start, Vec2& destination) {
 }
 
 bool Vec2::IsOrigin() const {
-	return EQUAL(this->x, 0.0f) && EQUAL(this->y, 0.0f);
+	return Number::Zero(this->x) && Number::Zero(this->y);
 }
 
 void Vec2::Reset() {

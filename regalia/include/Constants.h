@@ -1,219 +1,207 @@
 #pragma once
 
 #include <Interfaces.h>
-#include <Vec2.h>
 #include <SpriteSheetData.h>
+#include <Vec2.h>
 
 namespace Constants {
 
-// TODO: This is the size of the components array on a GameObject optimal size will be the exact number of components type we have
-const int NumberOfComponentsTypes = 32;
+	// TODO: This is the size of the components array on a GameObject optimal size will be the exact number of components type we have
+	const int NumberOfComponentsTypes = 32;
 
-namespace Window {
-	const int Width = 480;
-	const int Height = 336;
-	const std::string Name = "Regalia";
-	const Vec2 Center = {
-		float(Width) / 2.0f,
-		float(Height) / 2.0f
-	};
-}
-
-namespace Game {
-	const int Sets = 5;
-	const int Players = 2;
-	const float SetLenght = 45.0f;
-	const float MaxVelocity = 1000.0f;
-	const Vec2 Gravity = { 0.0f, 2000.0f };
-}
-
-namespace SharedAssets {
-	namespace Music {
-
+	namespace Window {
+		const int Width = 480;
+		const int Height = 336;
+		const std::string Name = "Regalia";
+		const Vec2 Center = {
+			float(Width) / 2.0f,
+			float(Height) / 2.0f
+		};
 	}
 
-	namespace Text {
-
+	namespace Game {
+		const int Sets = 5;
+		const int Players = 2;
+		const float SetLenght = 45.0f;
+		const float MaxVelocity = 1000.0f;
+		const Vec2 Gravity = { 0.0f, 2000.0f };
 	}
 
-	namespace Image {
+	namespace SharedAssets {
+		namespace Music {
 
+		}
+
+		namespace Text {
+
+		}
+
+		namespace Image {
+
+		}
+
+		namespace Map {
+
+		}
 	}
 
-	namespace Map {
+	namespace Menu {
+		const int TextSize = 20;
 
+		const std::string Music = "assets/audio/opening.ogg";
+		const std::string Background = "assets/img/ocean.jpg";
 	}
-}
 
-namespace Menu {
-	const int TextSize = 20;
+	namespace Story {
+		const int TextSize = 15;
 
-	const std::string Music = "assets/audio/opening.ogg";
-	const std::string Background = "assets/img/ocean.jpg";
-}
+		const std::string Story = "Here, on the other hand, I've gone crazy \
+				and really let the literal span several lines, \
+				without bothering with quoting each line's \
+				content. This works, but you can't indent.";
+		const std::string Background = "assets/img/ocean.jpg";
+	}
 
-namespace Story {
-	const int TextSize = 15;
+	namespace Credit {
+		const int TextSize = 15;
 
-	const std::string Story = "Here, on the other hand, I've gone crazy \
-            and really let the literal span several lines, \
-            without bothering with quoting each line's \
-            content. This works, but you can't indent.";
-	const std::string Background = "assets/img/ocean.jpg";
-}
+		const std::string Background = "assets/img/ocean.jpg";
+	}
 
-namespace Credit {
-	const int TextSize = 15;
+	namespace Play {
+		const std::string Music = "assets/audio/stageState.ogg";
 
-	const std::string Background = "assets/img/ocean.jpg";
-}
+		const std::vector<BackgroundData> Backgrounds = {
+			{ "assets/img/ocean.jpg" }
+		};
 
-namespace Play {
-	const std::string Music = "assets/audio/stageState.ogg";
+		const std::vector<TileSetData> TileSets = {
+			{ 24, 24, "assets/img/tileSetSample.png" }
+		};
 
-	const std::vector<BackgroundData> Backgrounds = {
-		{ "assets/img/ocean.jpg" }
-	};
+		const std::vector<TileMapData> TileMaps = {
+			{ "assets/map/00.txt" },
+			/*{ "assets/map/01.txt" },
+			{ "assets/map/02.txt" },
+			{ "assets/map/03.txt" },
+			{ "assets/map/04.txt" },
+			{ "assets/map/05.txt" }*/
+		};
+	}
 
-	const std::vector<TileSetData> TileSets = {
-		{ 24, 24, "assets/img/tileSetSample.png" }
-	};
+	namespace Bullet {
+		const int DefaultDamage = 10;
 
-	const std::vector<TileMapData> TileMaps = {
-		{ "assets/map/00.txt" },
-		/*{ "assets/map/01.txt" },
-		{ "assets/map/02.txt" },
-		{ "assets/map/03.txt" },
-		{ "assets/map/04.txt" },
-		{ "assets/map/05.txt" }*/
-	};
-}
+		const float DefaultSpeed = 100.0f;
 
-namespace Bullet {
-	const int DefaultDamage = 10;
+		const float DefaultMaxDistance = 400.0f;
 
-	const float DefaultSpeed = 100.0f;
+		const SpriteSheetData DefaultSpriteSheet(
+			"assets/img/penguinbullet.png",
+			120,
+			29,
+			0.1f,
+			1,
+			{
+				{ 0, 4 },
+			});
+	}
 
-	const float DefaultMaxDistance = 400.0f;
+	namespace Key {
+		const int ArrowLeft = SDLK_LEFT;
+		const int ArrowRight = SDLK_RIGHT;
+		const int ArrowUp = SDLK_UP;
+		const int ArrowDown = SDLK_DOWN;
 
-	const SpriteSheetData DefaultSpriteSheet(
-	    "assets/img/penguinbullet.png",
-	    120,
-	    29,
-	    0.1f,
-	    1,
-	    {
-	        { 0, 4 },
-	    });
-}
+		const int Escape = SDLK_ESCAPE;
+		const int Space = SDLK_SPACE;
+		const int Return = SDLK_RETURN;
 
-namespace Key {
-	const int ArrowLeft = SDLK_LEFT;
-	const int ArrowRight = SDLK_RIGHT;
-	const int ArrowUp = SDLK_UP;
-	const int ArrowDown = SDLK_DOWN;
+		const int A = SDLK_a;
+		const int D = SDLK_d;
+		const int W = SDLK_w;
+		const int S = SDLK_s;
+	}
 
-	const int Escape = SDLK_ESCAPE;
-	const int Space = SDLK_SPACE;
-	const int Return = SDLK_RETURN;
+	namespace Mouse {
+		const int Left = SDL_BUTTON_LEFT;
+		const int Right = SDL_BUTTON_RIGHT;
+	}
 
-	const int A = SDLK_a;
-	const int D = SDLK_d;
-	const int W = SDLK_w;
-	const int S = SDLK_s;
-}
+	namespace Gamepad {
+		// TODO: replace
+		const int ArrowLeft = SDLK_LEFT;
+		const int ArrowRight = SDLK_RIGHT;
+		const int ArrowUp = SDLK_UP;
+		const int ArrowDown = SDLK_DOWN;
 
-namespace Mouse {
-	const int Left = SDL_BUTTON_LEFT;
-	const int Right = SDL_BUTTON_RIGHT;
-}
+		const int Select = SDLK_ESCAPE;
+		const int Start = SDLK_SPACE;
 
-namespace Gamepad {
-	// TODO: replace
-	const int ArrowLeft = SDLK_LEFT;
-	const int ArrowRight = SDLK_RIGHT;
-	const int ArrowUp = SDLK_UP;
-	const int ArrowDown = SDLK_DOWN;
+		const int Cross = SDLK_a;
+		const int Ball = SDLK_d;
+		const int Square = SDLK_w;
+		const int Triangle = SDLK_s;
 
-	const int Select = SDLK_ESCAPE;
-	const int Start = SDLK_SPACE;
+		const int R1 = SDLK_LEFT;
+		const int R2 = SDLK_RIGHT;
+		const int L1 = SDLK_UP;
+		const int L2 = SDLK_DOWN;
 
-	const int Cross = SDLK_a;
-	const int Ball = SDLK_d;
-	const int Square = SDLK_w;
-	const int Triangle = SDLK_s;
+		const int StickDeadZone = 8000;
+		const int TriggerDeadZone = 8000;
+	}
 
-	const int R1 = SDLK_LEFT;
-	const int R2 = SDLK_RIGHT;
-	const int L1 = SDLK_UP;
-	const int L2 = SDLK_DOWN;
+	namespace StdColor {
+		const std::string Red = "\x1b[31m";
+		const std::string Green = "\x1b[32m";
+		const std::string Yellow = "\x1b[33m";
+		const std::string Blue = "\x1b[34m";
+		const std::string Magenta = "\x1b[35m";
+		const std::string Cyan = "\x1b[36m";
+		const std::string Reset = "\x1b[0m";
+	}
 
-	const int StickDeadZone = 8000;
-	const int TriggerDeadZone = 8000;
-}
+	// namespace Persona {
+	//     // Pode ser feito usando o valor do enum como índice para array.
+	//     // Será usado para carregar os assets de cada persona.
+	//     const enum {
+	//         PERSONA1 = "PERSONA1",
+	//         PERSONA2 = "PERSONA2",
+	//         PERSONA3 = "PERSONA3",
+	//         PERSONA4 = "PERSONA4"
+	//     }
+	// }
 
-namespace Math {
-	const float PI = 3.141592653589793f;
-	const float TAO = 2.0f * PI;
-	const float EPS = 0.00001f;
-}
+	namespace Colors {
+		const SDL_Color Red = { 255, 0, 0, 0 };
+	}
 
-namespace StdColor {
-	const std::string Red = "\x1b[31m";
-	const std::string Green = "\x1b[32m";
-	const std::string Yellow = "\x1b[33m";
-	const std::string Blue = "\x1b[34m";
-	const std::string Magenta = "\x1b[35m";
-	const std::string Cyan = "\x1b[36m";
-	const std::string Reset = "\x1b[0m";
-}
+	namespace Player {
+		enum State {
+			Idle = 0,
+			Running,
+			JumpingUp,
+			JumpingDown,
+			TOTAL_STATES
+		};
 
-// namespace Persona {
-//     // Pode ser feito usando o valor do enum como índice para array.
-//     // Será usado para carregar os assets de cada persona.
-//     const enum {
-//         PERSONA1 = "PERSONA1",
-//         PERSONA2 = "PERSONA2",
-//         PERSONA3 = "PERSONA3",
-//         PERSONA4 = "PERSONA4"
-//     }
-// }
+		const float SpeedMultiplier = 100.0f;
 
-namespace Colors {
-	const SDL_Color Red = { 255, 0, 0, 0 };
-}
+		const float JumpForce = -400.0f;
 
-namespace Player {
-	enum State {
-		Idle = 0,
-		Running,
-		JumpingUp,
-		JumpingDown,
-		TOTAL_STATES
-	};
-
-	const float SpeedMultiplier = 100.0f;
-
-	const float JumpForce = -400.0f;
-
-	const SpriteSheetData MisterN(
-	    "assets/img/mister_n_spritesheet.png",
-	    432,
-	    48,
-	    0.1f,
-	    TOTAL_STATES,
-	    {
-	        { Idle, 1 },
-	        { Running, 6 },
-	        { JumpingUp, 1 },
-	        { JumpingDown, 1 },
-	    });
-}
+		const SpriteSheetData MisterN(
+			"assets/img/mister_n_spritesheet.png",
+			432,
+			48,
+			0.1f,
+			TOTAL_STATES,
+			{
+				{ Idle, 1 },
+				{ Running, 6 },
+				{ JumpingUp, 1 },
+				{ JumpingDown, 1 },
+			});
+	}
 
 }
-
-#define W(x) std::cerr << "\033[31m" << #x << "=" << x << "\033[0m" \
-	                   << "\n";
-#define UNUSED(x) (void)x
-#define EQUAL(x, y) fabs(x - y) < Constants::Math::EPS
-#define RAND static_cast<float>(rand()) / static_cast<float>(RAND_MAX) // 0.0 to 1.0

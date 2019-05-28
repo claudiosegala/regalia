@@ -1,8 +1,8 @@
 #pragma once
 
 #include <Rect.h>
-#include "Constants.h"
-#include "Component.h"
+#include <Constants.h>
+#include <Component.h>
 
 class GameObject {
 public:

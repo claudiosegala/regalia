@@ -2,6 +2,7 @@
 #include <Camera.h>
 #include <Game.h>
 #include <GameData.h>
+#include <GameObject.h>
 #include <InputManager.h>
 #include <Logger.h>
 #include <Player.h>

@@ -2,12 +2,13 @@
 #include <Bullet.h>
 #include <Collider.h>
 #include <Constants.h>
+#include <Game.h>
 #include <GameObject.h>
 #include <InputManager.h>
+#include <Number.h>
 #include <Player.h>
 #include <Sprite.h>
 #include <Vec2.h>
-#include "Game.h"
 
 int Player::counter = 0;
 
@@ -77,7 +78,7 @@ void Player::LoadAssets() {
 
 void Player::UpdateState() {
 	if (isOnFloor) {
-		if (EQUAL(speed.x, 0)) {
+		if (Number::Zero(speed.x)) {
 			SetState(Constants::Player::Idle);
 		} else {
 			SetState(Constants::Player::Running, speed.x < 0);
@@ -129,7 +130,7 @@ void Player::Move(float dt) {
 	auto direction = in.GamepadLeftStick(playerId);
 	auto isJumping = false;
 
-	if (direction == Vec2(0.0f, 0.0f)) { // No input from gamepad stick, look for other inputs
+	if (direction.IsOrigin()) { // No input from gamepad stick, look for other inputs
 		const auto keyUp = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, playerId);
 		const auto keyDown = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, playerId);
 		const auto keyLeft = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, playerId);
@@ -169,7 +170,7 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 	auto& pos = this->associated.box;
 	/* try to move diagonaly */
 	auto delta = FindMaxDelta(box, velocity, Constants::Game::Gravity, dt);
-	if (!(EQUAL(delta, 0.0f))) {
+	if (!Number::Zero(delta)) {
 		pos = CalculatePosition(pos, velocity, Constants::Game::Gravity, delta);
 		box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
 	}
@@ -177,23 +178,23 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 	this->speed += Constants::Game::Gravity * delta; // accumulate gravity
 
 	/* try slide horizontaly */
-	if (!(EQUAL(dt, delta))) {
+	if (!Number::Equal(dt, delta)) {
 		auto horizontal = Vec2 { velocity.x, 0.0f };
-		auto delta_slide = FindMaxDelta(box, horizontal, Vec2(0.0f, 0.0f), dt - delta);
-		if (!(EQUAL(delta_slide, 0.0f))) {
+		auto delta_slide = FindMaxDelta(box, horizontal, Vec2(), dt - delta);
+		if (!Number::Zero(delta_slide)) {
 			this->isOnWall = false;
-			pos = CalculatePosition(pos, horizontal, Vec2(0.0f, 0.0f), delta_slide);
-			box = CalculatePosition(box, horizontal, Vec2(0.0f, 0.0f), delta_slide);
+			pos = CalculatePosition(pos, horizontal, Vec2(), delta_slide);
+			box = CalculatePosition(box, horizontal, Vec2(), delta_slide);
 		} else if (!horizontal.IsOrigin()) {
 			this->isOnWall = true;
 		}
 	}
 
 	/* try slide verticaly */
-	if (!(EQUAL(dt, delta))) {
+	if (!Number::Equal(dt, delta)) {
 		auto vertical = Vec2 { 0.0f, velocity.y };
 		auto delta_slide = FindMaxDelta(box, vertical, Constants::Game::Gravity, dt - delta);
-		if (!(EQUAL(delta_slide, 0.0f))) {
+		if (!Number::Zero(delta_slide)) {
 			this->isOnFloor = false;
 			pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta_slide);
 			box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta_slide);
@@ -238,15 +239,15 @@ Rect Player::CalculatePosition(const Rect box, const Vec2 velocity, const Vec2 a
 
 float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 acceleration, const float dt) {
 	const auto collisionSet = GetCollisionSet();
-	const auto rows = collisionSet.size();
-	const auto columns = collisionSet[0].size();
+	const auto rows = int(collisionSet.size());
+	const auto columns = int(collisionSet[0].size());
 
 	auto ans = 0.0f;
 	auto min_delta = 0.0f;
 	auto max_delta = dt;
 
 	for (int i = 0; i < 20; i++) {
-		const auto delta = (max_delta + min_delta) / 2.0f;
+		const auto delta = (max_delta + min_delta) / 2.f;
 		const auto p = CalculatePosition(box, velocity, acceleration, delta);
 		const auto ul = p.GetUpperLeft();
 		const auto dr = p.GetDownRight();

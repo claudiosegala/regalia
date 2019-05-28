@@ -1,8 +1,7 @@
 #include <pch.h>
 #include <Camera.h>
-#include <Component.h>
-#include <Constants.h>
 #include <Game.h>
+#include <Number.h>
 #include <Resources.h>
 #include <Text.h>
 
@@ -60,7 +59,7 @@ void Text::Render() {
 		static_cast<int>(this->associated.box.height)
 	};
 
-	auto err = SDL_RenderCopyEx(game->GetRenderer(), this->texture, &srcRect, &dstRect, (this->associated.angle * 180) / Constants::Math::PI, nullptr, SDL_FLIP_NONE);
+	auto err = SDL_RenderCopyEx(game->GetRenderer(), this->texture, &srcRect, &dstRect, (this->associated.angle * 180) / Number::Pi, nullptr, SDL_FLIP_NONE);
 
 	if (err < 0) {
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";

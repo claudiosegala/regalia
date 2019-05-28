@@ -1,4 +1,4 @@
-#include "pch.h"
-#include "Shape.h"
+#include <pch.h>
+#include <Shape.h>
 
 void Shape::Start() {}

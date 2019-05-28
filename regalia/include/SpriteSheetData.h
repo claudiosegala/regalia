@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Util.h>
 
 class SpriteSheetData {
 public:
@@ -21,17 +22,23 @@ public:
 		return int(animationsRect[animationId].size());
 	}
 
+	inline int GetImageWidth() const {
+		return this->imageWidth;
+	}
+
 	inline int GetFrameWidth() const {
-		return frameWidth;
+		return this->frameWidth;
 	}
 
 	inline int GetFrameHeight() const {
-		return imageHeight;
+		return this->imageHeight;
 	}
 
 	inline void AssertSize(int width, int height) const {
-		assert(width == imageWidth);
-		assert(height == imageHeight);
+		assert(width == this->imageWidth);
+		assert(height == this->imageHeight);
+		UNUSED(width);
+		UNUSED(height);
 	};
 
 private:

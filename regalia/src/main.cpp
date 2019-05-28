@@ -1,14 +1,17 @@
-#include <pch.h>
-#include <Constants.h>
 #include <Game.h>
-#include <Logger.h>
+#include <Number.h>
 #include <MenuState.h>
+#include <Util.h>
 
-int main(int argc, char** argv) {
+void Setup (int argc, char** argv) {
 	UNUSED(argc);
 	UNUSED(argv);
 
-	srand((unsigned int)time(NULL));
+	Number::InitRand();
+}
+
+int main(int argc, char** argv) {
+	Setup(argc, argv);
 
 	auto game = Game::GetInstance();
 
@@ -16,7 +19,7 @@ int main(int argc, char** argv) {
 
 	game->Run();
 
-	game->~Game();
+	delete game;
 
 	return 0;
 }

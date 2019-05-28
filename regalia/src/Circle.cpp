@@ -1,5 +1,6 @@
-#include "pch.h"
-#include "Circle.h"
+#include <pch.h>
+#include <Number.h>
+#include <Circle.h>
 
 Circle::Circle() : radius(0), center() {
 }
@@ -13,9 +14,9 @@ bool Circle::Is(const std::string& type) {
 }
 
 float Circle::Perimeter() {
-	return 2.0f * Constants::Math::PI * this->radius;
+	return 2.0f * Number::Pi * this->radius;
 }
 
 float Circle::Area() {
-	return Constants::Math::PI * this->radius * this->radius;
+	return Number::Pi * this->radius * this->radius;
 }
