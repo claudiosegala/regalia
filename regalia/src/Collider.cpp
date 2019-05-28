@@ -84,9 +84,9 @@ void Collider::RenderBox(const Rect& box, int r, int g, int b) {
 }
 
 void Collider::SetScale(Vec2 scale) {
-	scale = scale;
+	this->scale = scale;
 }
 
 void Collider::SetOffset(Vec2 offset) {
-	offset = offset;
+	this->offset = offset;
 }
