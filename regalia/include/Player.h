@@ -24,7 +24,6 @@ public:
 	int GetPlayerId() const;
 
 private:
-
 	Constants::Player::State state;
 
 	int playerId;
@@ -44,7 +43,7 @@ private:
 	void UpdateState();
 
 	void SetState(Constants::Player::State nextState, Sprite::Direction dirX);
-	
+
 	void Shoot();
 
 	void Move(float dt);

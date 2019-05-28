@@ -12,9 +12,9 @@
 
 Collider::Collider(GameObject& go, Shape* shape, Vec2 scale, Vec2 offset)
     : Component(go)
-	, shape(shape)
-	, scale(scale)
-	, offset(offset) {
+    , shape(shape)
+    , scale(scale)
+    , offset(offset) {
 }
 
 void Collider::Update(float dt) {
@@ -52,7 +52,7 @@ void Collider::Render() {
 	RenderBox(associated.box, 255, 0, 0);
 
 	if (shape->Is("Rect")) {
-		auto rect = (Rect*) shape;
+		auto rect = (Rect*)shape;
 		RenderBox(*rect, 0, 255, 0);
 	}
 #endif // DEBUG

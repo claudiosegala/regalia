@@ -19,7 +19,6 @@
 #include <Vec2.h>
 #include <PlayerAim.h>
 
-
 PlayState::PlayState() {
 	Logger::Info("Initializing Play State");
 

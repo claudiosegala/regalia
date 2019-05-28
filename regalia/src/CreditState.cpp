@@ -36,7 +36,7 @@ void CreditState::Update(float dt) {
 	if (popRequested) {
 		return;
 	}
-	
+
 	quitRequested = InputManager::IsQuitRequested();
 	if (quitRequested) {
 		return;

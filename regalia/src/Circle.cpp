@@ -2,7 +2,9 @@
 #include <Number.h>
 #include <Circle.h>
 
-Circle::Circle() : radius(0), center() {
+Circle::Circle()
+    : radius(0)
+    , center() {
 }
 
 Circle::Circle(float r, Vec2 p)

@@ -129,7 +129,6 @@ void ScoreState::LoadContinueOptions() {
 	// R2 - Quit
 }
 
-
 void ScoreState::LoadFinishedOptions() {
 	//    SCORE
 	// X    v    Y

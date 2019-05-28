@@ -4,7 +4,7 @@
 #include <MenuState.h>
 #include <Util.h>
 
-void Setup (int argc, char** argv) {
+void Setup(int argc, char** argv) {
 	UNUSED(argc);
 	UNUSED(argv);
 

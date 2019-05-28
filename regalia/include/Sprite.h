@@ -5,7 +5,6 @@
 
 class Sprite : public Component {
 public:
-
 	enum class Direction {
 		Original,
 		Flip,
@@ -55,7 +54,7 @@ private:
 
 	std::shared_ptr<SDL_Texture> texture = nullptr;
 
-	SDL_Rect clipRect{};
+	SDL_Rect clipRect {};
 
 	// Animation
 	const SpriteSheetData* spriteSheetData = nullptr;

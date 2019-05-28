@@ -19,5 +19,4 @@ public:
 	float Perimeter();
 
 	float Area();
-
 };
