@@ -112,7 +112,7 @@ void Player::SetState(Constants::Player::State nextState, Sprite::Direction dirX
 void Player::Shoot() {
 	auto& inputManager = InputManager::GetInstance();
 
-	if (inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)) {
+	if (inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, playerId)) {
 		auto angle = inputManager.GamepadRightStick(playerId).GetAngle();
 		auto pos = Vec2(25, 0).GetRotate(angle) + associated.box.Center();
 
@@ -161,6 +161,10 @@ void Player::Move(float dt) {
 		if (keyRight) {
 			direction.x += 1;
 		}
+	}
+
+	if (in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, playerId)) {
+		isJumping = true;
 	}
 
 	this->speed.x = direction.x * Constants::Player::SpeedMultiplier;
