@@ -124,17 +124,17 @@ void PlayState::CreateField() {
 }
 
 void PlayState::CreatePlayers() {
-	CreatePlayer(0);
-	CreatePlayer(1);
+	CreatePlayer();
+	CreatePlayer();
 }
 
-void PlayState::CreatePlayer(int playerId) {
+void PlayState::CreatePlayer() {
 	auto playerGO = new GameObject();
-	playerGO->AddComponent<Player>(playerId);
+	playerGO->AddComponent<Player>();
 	auto player = AddObject(playerGO);
 
 	auto playerAimGO = new GameObject();
-	playerAimGO->AddComponent<PlayerAim>(player, playerId);
+	playerAimGO->AddComponent<PlayerAim>(player);
 	(void)AddObject(playerAimGO);
 }
 
