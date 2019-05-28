@@ -25,5 +25,7 @@ public:
 
 	static PersonaType Persona2;
 
+	static bool WindowFullscreen;
+
 	static void Init();
 };

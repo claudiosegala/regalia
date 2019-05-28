@@ -4,6 +4,7 @@
 #include <InputManager.h>
 #include <Logger.h>
 #include <Resources.h>
+#include "GameData.h"
 
 Game* Game::instance;
 
@@ -130,11 +131,16 @@ void Game::Loop() {
 
 		in.Update();
 
+		if (in.KeyPress(SDLK_f)) {
+			GameData::WindowFullscreen = !GameData::WindowFullscreen;
+			SDL_SetWindowFullscreen(window, GameData::WindowFullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+		}
+
 		state->Update(this->dt);
 		state->Render();
 
 		SDL_RenderPresent(this->renderer);
-		
+
 		SDL_Delay(16);
 	}
 }
@@ -192,7 +198,7 @@ void Game::Init_RDR() {
 	this->renderer = SDL_CreateRenderer(this->window, index, flags);
 
 	if (this->renderer == nullptr) {
-		SDL_GetNumRenderDrivers();
+		SDL_GetNumRenderDrivers(); // TODO: WTF is this?
 
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
 		throw std::runtime_error(msg);
