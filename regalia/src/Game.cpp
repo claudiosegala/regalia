@@ -197,6 +197,12 @@ void Game::Init_RDR() {
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
 		throw std::runtime_error(msg);
 	}
+
+	auto result = SDL_RenderSetLogicalSize(renderer, Constants::Window::Width, Constants::Window::Height);
+	if (result != 0) {
+		auto msg = "SDL_RenderSetLogicalSize: " + std::string(SDL_GetError()) + "\n";
+		throw std::runtime_error(msg);
+	}
 }
 
 void Game::Init_WDW(const std::string& title, int width, int height) {

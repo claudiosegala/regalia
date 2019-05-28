@@ -83,21 +83,6 @@ void InputManager::TreatEvent(SDL_Event& event) {
 		this->mouseUpdate[idx] = this->updateCounter;
 		break;
 	}
-	case SDL_WINDOWEVENT: {
-		if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
-			// Set the dynamic window scale
-			auto game = Game::GetInstance();
-			int windowWidth, windowHeight;
-			SDL_GetWindowSize(game->GetWindow(), &windowWidth, &windowHeight);
-
-			// Calculate the window width to keep the same aspect ratio
-			windowWidth = int(float(windowHeight) * float(Constants::Window::Width) / float(Constants::Window::Height));
-
-			SDL_SetWindowSize(game->GetWindow(), windowWidth, windowHeight);
-			SDL_RenderSetScale(game->GetRenderer(), float(windowWidth) / Constants::Window::Width, float(windowHeight) / Constants::Window::Height);
-		}
-		break;
-	}
 	default:
 		break;
 	}
