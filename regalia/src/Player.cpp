@@ -130,8 +130,7 @@ void Player::Shoot() {
 		bulletGO->box.SetCenter(pos);
 		bulletGO->angle = angle;
 
-		auto state = Game::GetInstance()->GetCurrentState();
-		(void)state->AddObject(bulletGO);
+		void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
 	}
 }
 
@@ -288,8 +287,8 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 			std::cout << "Out of bounds" << std::endl;
 		} else {
 			for (int j = y1; j <= y2; j++) {
-				for (int i = x1; i <= x2; i++) {
-					if (collisionSet[j][i]) {
+				for (int k = x1; k <= x2; k++) {
+					if (collisionSet[j][k]) {
 						conflict = true;
 						//break;
 					}

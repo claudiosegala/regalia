@@ -67,19 +67,18 @@ void Text::Render() {
 	}
 }
 
-void Text::SetText(const std::string& text) {
-	this->text = text;
-
+void Text::SetText(const std::string& _text) {
+	text = _text;
 	Text::RemakeTexture();
 }
 
-void Text::SetColor(SDL_Color color) {
-	color = color;
+void Text::SetColor(SDL_Color _color) {
+	color = _color;
 	RemakeTexture();
 }
 
-void Text::SetStyle(TextStyle style) {
-	style = style;
+void Text::SetStyle(TextStyle _style) {
+	style = _style;
 	RemakeTexture();
 }
 

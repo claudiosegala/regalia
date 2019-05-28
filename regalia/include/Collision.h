@@ -27,7 +27,7 @@ public:
 				return IsColliding(*_a, *_b, angleOfA, angleOfB);
 			} else {
 				auto _b = static_cast<Circle*>(b);
-				return IsColliding(*_a, *_b, angleOfA, angleOfB);
+				return IsColliding(*_a, *_b);
 			}
 		}
 	}
@@ -94,7 +94,7 @@ public:
 		return false;
 	}
 
-	static inline bool IsColliding(Circle& a, Circle& b, float angleOfA, float angleOfB) {
+	static inline bool IsColliding(Circle& a, Circle& b) {
 		return Vec2::Distance(a.center, b.center) < a.radius + b.radius;
 	}
 

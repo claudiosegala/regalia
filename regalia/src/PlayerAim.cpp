@@ -18,8 +18,8 @@ PlayerAim::~PlayerAim() {}
 void PlayerAim::Update(float dt) {
 	UNUSED(dt);
 
-	auto player = this->player.lock();
-	if (!player) {
+	auto currentPlayer = this->player.lock();
+	if (!currentPlayer) {
 		associated.RequestDelete();
 		return;
 	}
@@ -33,7 +33,7 @@ void PlayerAim::Update(float dt) {
 	}
 
 	auto angle = rightStickVec.GetAngle();
-	auto position = Vec2(50, 0).GetRotate(angle) + player->box.Center();
+	auto position = Vec2(50, 0).GetRotate(angle) + currentPlayer->box.Center();
 
 	associated.hide = false;
 	associated.box.SetCenter(position);

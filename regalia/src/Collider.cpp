@@ -79,14 +79,14 @@ void Collider::RenderBox(const Rect& box, int r, int g, int b) {
 
 	points[3] = { (int)point.x, (int)point.y };
 
-	SDL_SetRenderDrawColor(Game::GetInstance()->GetRenderer(), r, g, b, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(Game::GetInstance()->GetRenderer(), Uint8(r), Uint8(g), Uint8(b), SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLines(Game::GetInstance()->GetRenderer(), points, 5);
 }
 
-void Collider::SetScale(Vec2 scale) {
-	this->scale = scale;
+void Collider::SetScale(Vec2 _scale) {
+	scale = _scale;
 }
 
-void Collider::SetOffset(Vec2 offset) {
-	this->offset = offset;
+void Collider::SetOffset(Vec2 _offset) {
+	offset = _offset;
 }
