@@ -63,12 +63,18 @@ void Sprite::SetScale(float x, float y) {
 	SetBox();
 }
 
-void Sprite::SetNextAnimation(int animationId, bool flipAnimation) {
+void Sprite::SetNextAnimation(int animationId, Direction dirX) {
 	if (spriteSheetData == nullptr) {
 		throw std::runtime_error("Trying to set a animation id in a sprite that doesn't have animation");
 	}
+
 	nextAnimationId = animationId;
-	this->flipAnimation = flipAnimation;
+
+	if (dirX == Direction::Original) {
+		flipAnimationX = false;
+	} else if (dirX == Direction::Flip) {
+		flipAnimationX = true;
+	} // else keep previous direction
 }
 
 Vec2 Sprite::GetScale() const {
@@ -122,7 +128,7 @@ void Sprite::Render(int x, int y) {
 
 	auto game = Game::GetInstance();
 	auto srcRect = clipRect;
-	auto flip = flipAnimation ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+	auto flip = flipAnimationX ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
 	SDL_Rect dstRect {
 		x,

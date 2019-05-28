@@ -3,6 +3,7 @@
 #include <Component.h>
 #include <Rect.h>
 #include <Vec2.h>
+#include "Sprite.h"
 
 class Player : public Component {
 public:
@@ -42,7 +43,7 @@ private:
 
 	void UpdateState();
 
-	void SetState(Constants::Player::State nextState, bool flipAnimation = false);
+	void SetState(Constants::Player::State nextState, Sprite::Direction dirX);
 	
 	void Shoot();
 

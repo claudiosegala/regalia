@@ -77,26 +77,36 @@ void Player::LoadAssets() {
 }
 
 void Player::UpdateState() {
+	Sprite::Direction dirX;
+
+	if (speed.x > 0) {
+		dirX = Sprite::Direction::Original;
+	} else if (speed.x < 0) {
+		dirX = Sprite::Direction::Flip;
+	} else {
+		dirX = Sprite::Direction::Keep;
+	}
+
 	if (isOnFloor) {
 		if (Number::Zero(speed.x)) {
-			SetState(Constants::Player::Idle);
+			SetState(Constants::Player::Idle, dirX);
 		} else {
-			SetState(Constants::Player::Running, speed.x < 0);
+			SetState(Constants::Player::Running, dirX);
 		}
 	} else {
 		if (speed.y < 0) {
-			SetState(Constants::Player::Jumping, speed.x < 0);
+			SetState(Constants::Player::Jumping, dirX);
 		} else {
-			SetState(Constants::Player::Falling, speed.x < 0);
+			SetState(Constants::Player::Falling, dirX);
 		}
 	}
 }
 
-void Player::SetState(Constants::Player::State nextState, bool flipAnimation) {
+void Player::SetState(Constants::Player::State nextState, Sprite::Direction dirX) {
 	state = nextState;
 
 	auto sprite = associated.GetComponent<Sprite>();
-	sprite->SetNextAnimation(nextState, flipAnimation);
+	sprite->SetNextAnimation(nextState, dirX);
 }
 
 void Player::Shoot() {
@@ -174,7 +184,7 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 
 	pos = CalculatePosition(pos, velocity, Constants::Game::Gravity, delta);
 	box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
-		
+
 	auto accumulatedGravity = Constants::Game::Gravity.y * delta * delta;
 	this->speed.y += accumulatedGravity;
 	velocity.y += accumulatedGravity;
@@ -207,7 +217,7 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 
 	pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta_slide);
 	box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta_slide);
-	
+
 	this->isOnFloor = !Number::Equal(dt - delta, delta_slide); // is on floor if could not finish the movement
 
 	if (this->isOnFloor) {
@@ -282,15 +292,15 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 				}
 			}
 
-			#ifdef DEBUG
-			/*for (int j = y1; j <= y2; j++) {
+#ifdef DEBUG
+/*for (int j = y1; j <= y2; j++) {
 				for (int i = x1; i <= x2; i++) {
 					std::cout << collisionSet[j][i];
 				}
 				std::cout << '\n';
 			}
 			std::cout << '\n';*/
-			#endif
+#endif
 		}
 
 		if (!conflict) {
