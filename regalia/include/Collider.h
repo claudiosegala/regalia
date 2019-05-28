@@ -9,15 +9,17 @@
 class Collider : public Component {
 public:
 
-	Collider(GameObject&, Shape*, Vec2 scale = { 1, 1 }, Vec2 offset = { 0, 0 });
+	Collider(GameObject& go, Shape* shape, Vec2 scale = { 1, 1 }, Vec2 offset = { 0, 0 });
 
-	void Update(float) override;
+	void Update(float dt) override;
 
 	void Render() override;
-	
-	void SetScale(Vec2);
 
-	void SetOffset(Vec2);
+	void RenderBox(const Rect& box, int r, int g, int b);
+
+	void SetScale(Vec2 scale);
+
+	void SetOffset(Vec2 offset);
 
 private:
 	Shape* shape;

@@ -49,8 +49,16 @@ void Collider::Update(float dt) {
 // Vec2::Rotate( float rad )		- Rotaciona um Vec2 pelo ângulo em radianos passado
 void Collider::Render() {
 #ifdef DEBUG
-	const auto& box = associated.box;
+	RenderBox(this->associated.box, 255, 0, 0);
 
+	if (this->shape->Is("Rect")) {
+		auto rect = (Rect*) shape;
+		RenderBox(*rect, 0, 255, 0);
+	}
+#endif // DEBUG
+}
+
+void Collider::RenderBox(const Rect& box, int r, int g, int b) {
 	const Vec2 center(box.Center());
 	SDL_Point points[5];
 
@@ -71,9 +79,8 @@ void Collider::Render() {
 
 	points[3] = { (int)point.x, (int)point.y };
 
-	SDL_SetRenderDrawColor(Game::GetInstance()->GetRenderer(), 255, 0, 0, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(Game::GetInstance()->GetRenderer(), r, g, b, SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLines(Game::GetInstance()->GetRenderer(), points, 5);
-#endif // DEBUG
 }
 
 void Collider::SetScale(Vec2 scale) {
