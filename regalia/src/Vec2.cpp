@@ -15,7 +15,8 @@ Vec2::Vec2(float xv, float yv)
     , y(yv) {}
 
 Vec2::Vec2(Vec2& start, Vec2& destination) {
-	(*this) = destination - start;
+	this->x = destination.x - start.x;
+	this->y = destination.y - start.y;
 }
 
 bool Vec2::IsOrigin() const {
@@ -135,6 +136,10 @@ Vec2 Vec2::operator+=(const Vec2& V) {
 	y += V.y;
 
 	return (*this);
+}
+
+Vec2 Vec2::operator-(const float x) const {
+	return Vec2(this->x - x, this->y - x);
 }
 
 Vec2 Vec2::operator-(const Vec2& V) const {
