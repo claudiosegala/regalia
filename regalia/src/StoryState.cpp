@@ -32,12 +32,14 @@ void StoryState::LoadAssets() {
 }
 
 void StoryState::Update(float dt) {
-	popRequested = InputManager::IsPopRequested();
+	auto& in = InputManager::GetInstance();
+
+	popRequested = in.PopRequested();
 	if (popRequested > 0) {
 		return;
 	}
 
-	quitRequested = InputManager::IsQuitRequested();
+	quitRequested = in.QuitRequested();
 	if (quitRequested) {
 		return;
 	}

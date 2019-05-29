@@ -46,8 +46,8 @@ Vec2 Camera::GetMovement() {
 	auto up = in.IsKeyDown(Constants::Key::ArrowUp);
 	auto down = in.IsKeyDown(Constants::Key::ArrowDown);
 
-	float x = right ? 1.0f : (left ? -1.0f : 0.0f);
-	float y = down ? 1.0f : (up ? -1.0f : 0.0f);
+	const auto x = right ? 1.0f : (left ? -1.0f : 0.0f);
+	const auto y = down ? 1.0f : (up ? -1.0f : 0.0f);
 
 	return Vec2(x, y);
 }

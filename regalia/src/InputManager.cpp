@@ -27,6 +27,105 @@ void InputManager::Update() {
 	}
 }
 
+bool InputManager::KeyPress(int key) {
+	return keyState[key] && keyUpdate[key] == updateCounter;
+}
+
+bool InputManager::KeyRelease(int key) {
+	return !keyState[key] && keyUpdate[key] == updateCounter;
+}
+
+bool InputManager::IsKeyDown(int key) {
+	return keyState[key];
+}
+
+bool InputManager::MousePress(int button) {
+	return mouseState[button] && mouseUpdate[button] == updateCounter;
+}
+
+bool InputManager::MouseRelease(int button) {
+	return !mouseState[button] && mouseUpdate[button] == updateCounter;
+}
+
+bool InputManager::IsMouseDown(int button) {
+	return mouseState[button];
+}
+
+Vec2 InputManager::GetMouse(Vec2 relative) const {
+	return {
+		float(GetMouseX()) + relative.x,
+		float(GetMouseY()) + relative.y
+	};
+}
+
+int InputManager::GetMouseX() const {
+	return mouseX;
+}
+
+int InputManager::GetMouseY() const {
+	return mouseY;
+}
+
+bool InputManager::GamepadPress(SDL_GameControllerButton button) {
+	for (auto i = 0; i < (int)controllers.size(); i++) {
+		if (GamepadPress(button, i)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool InputManager::GamepadPress(SDL_GameControllerButton button, int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, false);
+	return controllers[controllerNumber].ButtonPressed(button, updateCounter);
+}
+
+bool InputManager::GamepadRelease(SDL_GameControllerButton button) {
+	for (auto i = 0; i < (int)controllers.size(); i++) {
+		if (GamepadRelease(button, i)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool InputManager::GamepadRelease(SDL_GameControllerButton button, int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, false);
+	return controllers[controllerNumber].ButtonReleased(button, updateCounter);
+}
+
+bool InputManager::IsGamepadDown(SDL_GameControllerButton button) {
+	for (auto i = 0; i < (int)controllers.size(); i++) {
+		if (IsGamepadDown(button, i)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool InputManager::IsGamepadDown(SDL_GameControllerButton button, int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, false);
+	return controllers[controllerNumber].IsButtonDown(button);
+}
+
+Vec2 InputManager::GamepadLeftStick(int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, Vec2());
+	return controllers[controllerNumber].GetStickPosition(Gamepad::Left);
+}
+
+Vec2 InputManager::GamepadRightStick(int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, Vec2());
+	return controllers[controllerNumber].GetStickPosition(Gamepad::Right);
+}
+
+bool InputManager::PopRequested() {
+	return KeyPress(Constants::Key::Escape);
+}
+
+bool InputManager::QuitRequested() const {
+	return quitRequested;
+}
+
 void InputManager::Setup() {
 	quitRequested = false;
 	updateCounter++;
@@ -94,107 +193,4 @@ void InputManager::LoadControllers() {
 			controllers.emplace_back(i);
 		}
 	}
-}
-
-bool InputManager::KeyPress(int key) {
-	return keyState[key] && keyUpdate[key] == updateCounter;
-}
-
-bool InputManager::KeyRelease(int key) {
-	return !keyState[key] && keyUpdate[key] == updateCounter;
-}
-
-bool InputManager::IsKeyDown(int key) {
-	return keyState[key];
-}
-
-bool InputManager::MousePress(int button) {
-	return mouseState[button] && mouseUpdate[button] == updateCounter;
-}
-
-bool InputManager::MouseRelease(int button) {
-	return !mouseState[button] && mouseUpdate[button] == updateCounter;
-}
-
-bool InputManager::IsMouseDown(int button) {
-	return mouseState[button];
-}
-
-Vec2 InputManager::GetMouse(Vec2 relative) {
-	return Vec2 {
-		static_cast<float>(GetMouseX()) + relative.x,
-		static_cast<float>(GetMouseY()) + relative.y
-	};
-}
-
-int InputManager::GetMouseX() const {
-	return mouseX;
-}
-
-int InputManager::GetMouseY() const {
-	return mouseY;
-}
-
-bool InputManager::GamepadPress(SDL_GameControllerButton button) {
-	for (auto i = 0; i < (int)controllers.size(); i++) {
-		if (GamepadPress(button, i)) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool InputManager::GamepadPress(SDL_GameControllerButton button, int controllerNumber) {
-	PROTECT_RANGE(controllerNumber, false);
-	return controllers[controllerNumber].ButtonPressed(button, updateCounter);
-}
-
-bool InputManager::GamepadRelease(SDL_GameControllerButton button) {
-	for (auto i = 0; i < (int)controllers.size(); i++) {
-		if (GamepadRelease(button, i)) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool InputManager::GamepadRelease(SDL_GameControllerButton button, int controllerNumber) {
-	PROTECT_RANGE(controllerNumber, false);
-	return controllers[controllerNumber].ButtonReleased(button, updateCounter);
-}
-
-bool InputManager::IsGamepadDown(SDL_GameControllerButton button) {
-	for (auto i = 0; i < (int)controllers.size(); i++) {
-		if (IsGamepadDown(button, i)) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool InputManager::IsGamepadDown(SDL_GameControllerButton button, int controllerNumber) {
-	PROTECT_RANGE(controllerNumber, false);
-	return controllers[controllerNumber].IsButtonDown(button);
-}
-
-Vec2 InputManager::GamepadLeftStick(int controllerNumber) {
-	PROTECT_RANGE(controllerNumber, Vec2());
-	return controllers[controllerNumber].GetStickPosition(Gamepad::Left);
-}
-
-Vec2 InputManager::GamepadRightStick(int controllerNumber) {
-	PROTECT_RANGE(controllerNumber, Vec2());
-	return controllers[controllerNumber].GetStickPosition(Gamepad::Right);
-}
-
-bool InputManager::IsPopRequested() {
-	return GetInstance().KeyPress(Constants::Key::Escape);
-}
-
-bool InputManager::QuitRequested() {
-	return quitRequested;
-}
-
-bool InputManager::IsQuitRequested() {
-	return GetInstance().QuitRequested();
 }

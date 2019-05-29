@@ -4,24 +4,24 @@
 
 class Game {
 public:
-	Game(const std::string&, int, int);
+	Game(const std::string& title, int width, int height);
 
 	~Game();
+
+	void Run();
+
+	void Push(State* state);
 
 	static Game* GetInstance();
 
 	State* GetCurrentState();
 
-	SDL_Renderer* GetRenderer();
+	SDL_Renderer* GetRenderer() const;
 
-	SDL_Window* GetWindow();
+	SDL_Window* GetWindow() const;
 
-	void Run();
-
-	void Push(State*);
-
-	float GetDeltaTime();
-
+	float GetDeltaTime() const;
+	
 private:
 	static Game* instance;
 
@@ -37,23 +37,23 @@ private:
 
 	std::stack<std::unique_ptr<State>> stateStack;
 
-	void CalculateDeltaTime();
-
-	void Init_SDL();
-
-	void Init_IMG();
-
-	void Init_MIX();
-
-	void Init_TTF();
-
-	void Init_WDW(const std::string&, int, int);
-
-	void Init_RDR();
-
 	void Start();
 
 	void Loop();
 
 	void End();
+
+	void CalculateDeltaTime();
+
+	void Init_SDL() const;
+
+	void Init_IMG() const;
+
+	void Init_MIX() const;
+
+	void Init_TTF() const;
+
+	void Init_WDW(const std::string& title, int width, int height);
+
+	void Init_RDR();
 };

@@ -48,17 +48,16 @@ void Collider::Update(float dt) {
 // Vec2::operator-( const Vec2& )	- Subtrai dois Vec2
 // Vec2::Rotate( float rad )		- Rotaciona um Vec2 pelo ângulo em radianos passado
 void Collider::Render() {
-#ifdef DEBUG
 	RenderBox(associated.box, 255, 0, 0);
 
 	if (shape->Is("Rect")) {
 		auto rect = (Rect*)shape;
 		RenderBox(*rect, 0, 255, 0);
 	}
-#endif // DEBUG
 }
 
 void Collider::RenderBox(const Rect& box, int r, int g, int b) {
+	#ifdef DEBUG
 	const Vec2 center(box.Center());
 	SDL_Point points[5];
 
@@ -81,6 +80,7 @@ void Collider::RenderBox(const Rect& box, int r, int g, int b) {
 
 	SDL_SetRenderDrawColor(Game::GetInstance()->GetRenderer(), Uint8(r), Uint8(g), Uint8(b), SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLines(Game::GetInstance()->GetRenderer(), points, 5);
+	#endif // DEBUG
 }
 
 void Collider::SetScale(Vec2 _scale) {

@@ -34,16 +34,16 @@ void MenuState::LoadAssets() {
 }
 
 void MenuState::Update(float dt) {
-	popRequested = InputManager::IsPopRequested();
+	auto& in = InputManager::GetInstance();
+
+	popRequested = in.PopRequested();
 	if (popRequested) {
 		return;
 	}
-	quitRequested = InputManager::IsQuitRequested();
+	quitRequested = in.QuitRequested();
 	if (quitRequested) {
 		return;
 	}
-
-	auto& in = InputManager::GetInstance();
 
 	if (in.KeyPress(Constants::Key::ArrowDown) || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
 		option = (option + 1) % 3; // 0 to 2

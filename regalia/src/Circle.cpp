@@ -15,10 +15,10 @@ bool Circle::Is(const std::string& type) {
 	return (type == "Cicle");
 }
 
-float Circle::Perimeter() {
+float Circle::Perimeter() const {
 	return 2.0f * Number::Pi * radius;
 }
 
-float Circle::Area() {
+float Circle::Area() const {
 	return Number::Pi * radius * radius;
 }

@@ -1,8 +1,8 @@
 #include <pch.h>
+#include <InputManager.h>
 #include <Camera.h>
 #include <Constants.h>
 #include <CreditState.h>
-#include <InputManager.h>
 #include <Logger.h>
 #include <Rect.h>
 #include <Sprite.h>
@@ -32,12 +32,14 @@ void CreditState::LoadAssets() {
 }
 
 void CreditState::Update(float dt) {
-	popRequested = InputManager::IsPopRequested();
+	auto& in = InputManager::GetInstance();
+
+	popRequested = in.PopRequested();
 	if (popRequested) {
 		return;
 	}
 
-	quitRequested = InputManager::IsQuitRequested();
+	quitRequested = in.QuitRequested();
 	if (quitRequested) {
 		return;
 	}

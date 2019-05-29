@@ -56,10 +56,6 @@ Game::~Game() {
 	SDL_Quit();
 }
 
-void Game::Push(State* state) {
-	storedState = state;
-}
-
 void Game::Run() {
 	Logger::Info("Running");
 	if (storedState == nullptr) {
@@ -70,6 +66,35 @@ void Game::Run() {
 	Loop();
 	End();
 }
+
+void Game::Push(State* state) {
+	storedState = state;
+}
+
+Game* Game::GetInstance() {
+	if (Game::instance != nullptr) {
+		return Game::instance;
+	}
+
+	return Game::instance = new Game(Constants::Window::Name, Constants::Window::Width, Constants::Window::Height);
+}
+
+State* Game::GetCurrentState() {
+	return stateStack.top().get();
+}
+
+SDL_Renderer* Game::GetRenderer() const {
+	return renderer;
+}
+
+SDL_Window* Game::GetWindow() const {
+	return window;
+}
+
+float Game::GetDeltaTime() const {
+	return dt;
+}
+
 
 void Game::Start() {
 	Logger::Info("Starting Game");
@@ -162,69 +187,39 @@ void Game::End() {
 	Resources::Prune();
 }
 
-Game* Game::GetInstance() {
-	if (Game::instance != nullptr) {
-		return Game::instance;
-	}
+void Game::CalculateDeltaTime() {
+	auto newFrameStart = (float)SDL_GetTicks();
+	auto oldFrameStart = (float)frameStart;
 
-	return Game::instance = new Game(Constants::Window::Name, Constants::Window::Width, Constants::Window::Height);
+	dt = (newFrameStart - oldFrameStart) / 1000.0f;
+	frameStart = (unsigned int)newFrameStart;
 }
 
-State* Game::GetCurrentState() {
-	return stateStack.top().get();
-}
-
-SDL_Renderer* Game::GetRenderer() {
-	return renderer;
-}
-
-SDL_Window* Game::GetWindow() {
-	return window;
-}
-
-void Game::Init_RDR() {
-	auto index = -1; // SDL will choose the best for us
-
-	/*
-        Available flags:
-        SDL_RENDERER_SOFTWARE
-        SDL_RENDERER_PRESENTVSYNC
-        SDL_RENDERER_ACCELERATED
-        SDL_RENDERER_TARGETTEXTURE
+void Game::Init_SDL() const {
+	/* 
+        Available Flags:
+        SDL_INIT_TIMER
+        SDL_INIT_GAMECONTROLLER,
+        SDL_INIT_AUDIO
+        SDL_INIT_EVENTS
+        SDL_INIT_VIDEO
+        SDL_INIT_EVERYTHING
+        SDL_INIT_JOYSTICK
+        SDL_INIT_NOPARACHUTE
+        SDL_INIT_HAPTIC
     */
-	uint32_t flags = (SDL_RENDERER_ACCELERATED);
+	auto flags = (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK);
 
-	Logger::Info("Creating Renderer");
-	renderer = SDL_CreateRenderer(window, index, flags);
+	Logger::Info("Initing SDL");
+	auto err = SDL_Init(flags);
 
-	if (renderer == nullptr) {
-		SDL_GetNumRenderDrivers(); // TODO: WTF is this?
-
-		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
-		throw std::runtime_error(msg);
-	}
-
-	auto result = SDL_RenderSetLogicalSize(renderer, Constants::Window::Width, Constants::Window::Height);
-	if (result != 0) {
-		auto msg = "SDL_RenderSetLogicalSize: " + std::string(SDL_GetError()) + "\n";
-		throw std::runtime_error(msg);
-	}
-}
-
-void Game::Init_WDW(const std::string& title, int width, int height) {
-	auto pos = SDL_WINDOWPOS_CENTERED;
-	uint32_t flags = SDL_WINDOW_RESIZABLE;
-
-	Logger::Info("Creating Window");
-	window = SDL_CreateWindow(title.c_str(), (int)pos, (int)pos, width, height, flags);
-
-	if (window == nullptr) {
+	if (err < 0) {
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
 		throw std::runtime_error(msg);
 	}
 }
 
-void Game::Init_IMG() {
+void Game::Init_IMG() const {
 	/*
         Available Flags:
         IMG_INIT_JPG
@@ -242,7 +237,7 @@ void Game::Init_IMG() {
 	}
 }
 
-void Game::Init_MIX() {
+void Game::Init_MIX() const {
 	/*
         Available Flags:
         MIX_INIT_FLAC
@@ -279,7 +274,7 @@ void Game::Init_MIX() {
 	}
 }
 
-void Game::Init_TTF() {
+void Game::Init_TTF() const {
 	Logger::Info("Initing TTF");
 	auto res = TTF_Init();
 
@@ -289,38 +284,44 @@ void Game::Init_TTF() {
 	}
 }
 
-void Game::Init_SDL() {
-	/* 
-        Available Flags:
-        SDL_INIT_TIMER
-        SDL_INIT_GAMECONTROLLER,
-        SDL_INIT_AUDIO
-        SDL_INIT_EVENTS
-        SDL_INIT_VIDEO
-        SDL_INIT_EVERYTHING
-        SDL_INIT_JOYSTICK
-        SDL_INIT_NOPARACHUTE
-        SDL_INIT_HAPTIC
-    */
-	auto flags = (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK);
+void Game::Init_WDW(const std::string& title, int width, int height) {
+	auto pos = SDL_WINDOWPOS_CENTERED;
+	uint32_t flags = SDL_WINDOW_RESIZABLE;
 
-	Logger::Info("Initing SDL");
-	auto err = SDL_Init(flags);
+	Logger::Info("Creating Window");
+	window = SDL_CreateWindow(title.c_str(), (int)pos, (int)pos, width, height, flags);
 
-	if (err < 0) {
+	if (window == nullptr) {
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
 		throw std::runtime_error(msg);
 	}
 }
 
-float Game::GetDeltaTime() {
-	return dt;
-}
+void Game::Init_RDR() {
+	auto index = -1; // SDL will choose the best for us
 
-void Game::CalculateDeltaTime() {
-	auto newFrameStart = (float)SDL_GetTicks();
-	auto oldFrameStart = (float)frameStart;
+	/*
+        Available flags:
+        SDL_RENDERER_SOFTWARE
+        SDL_RENDERER_PRESENTVSYNC
+        SDL_RENDERER_ACCELERATED
+        SDL_RENDERER_TARGETTEXTURE
+    */
+	uint32_t flags = (SDL_RENDERER_ACCELERATED);
 
-	dt = (newFrameStart - oldFrameStart) / 1000.0f;
-	frameStart = (unsigned int)newFrameStart;
+	Logger::Info("Creating Renderer");
+	renderer = SDL_CreateRenderer(window, index, flags);
+
+	if (renderer == nullptr) {
+		SDL_GetNumRenderDrivers(); // TODO: WTF is this?
+
+		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
+		throw std::runtime_error(msg);
+	}
+
+	auto result = SDL_RenderSetLogicalSize(renderer, Constants::Window::Width, Constants::Window::Height);
+	if (result != 0) {
+		auto msg = "SDL_RenderSetLogicalSize: " + std::string(SDL_GetError()) + "\n";
+		throw std::runtime_error(msg);
+	}
 }

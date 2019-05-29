@@ -46,12 +46,12 @@ void PlayState::LoadAssets() {
 void PlayState::Update(float dt) {
 	auto& in = InputManager::GetInstance();
 
-	popRequested = InputManager::IsPopRequested() || in.GamepadPress(SDL_CONTROLLER_BUTTON_B);
+	popRequested = in.PopRequested() || in.GamepadPress(SDL_CONTROLLER_BUTTON_B);
 	if (popRequested) {
 		return;
 	}
 
-	quitRequested = InputManager::IsQuitRequested();
+	quitRequested = in.QuitRequested();
 	if (quitRequested) {
 		return;
 	}
