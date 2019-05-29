@@ -68,6 +68,8 @@ public:
 
 	Vec2 operator+=(const Vec2&);
 
+	Vec2 operator-(const float) const;
+
 	Vec2 operator-(const Vec2&) const;
 
 	Vec2 operator-=(const Vec2&);

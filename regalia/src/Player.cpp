@@ -24,7 +24,7 @@ Player::Player(GameObject& go, int playerId)
 	this->state = Constants::Player::Idle;
 
 	// TODO: discover why there is one tile of shift
-	this->associated.box.SetCenter({ 20.0f, 26.0f });
+	this->associated.box.SetCenter({ 48.0f, 232.0f });
 
 	LoadAssets();
 }
@@ -159,9 +159,6 @@ void Player::Move(float dt) {
 		this->speed.y = Constants::Player::JumpForce;
 	}
 
-	W(this->isOnFloor);
-	W(this->isOnWall);
-
 	MoveAndSlide(this->speed, dt);
 }
 
@@ -174,12 +171,14 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 
 	pos = CalculatePosition(pos, velocity, Constants::Game::Gravity, delta);
 	box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
-		
+
 	auto accumulatedGravity = Constants::Game::Gravity.y * delta * delta;
 	this->speed.y += accumulatedGravity;
 	velocity.y += accumulatedGravity;
 
-	if (Number::Equal(dt, delta)) {
+	dt -= delta;
+
+	if (Number::Zero(dt)) {
 		this->isOnWall = false;
 		this->isOnFloor = false;
 		return;
@@ -189,31 +188,33 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 
 	if (!Number::Zero(velocity.x)) {
 		auto horizontal = Vec2 { velocity.x, 0.0f };
-		auto delta_slide = FindMaxDelta(box, horizontal, Vec2(), dt - delta);
 
-		pos = CalculatePosition(pos, horizontal, Vec2(), delta_slide);
-		box = CalculatePosition(box, horizontal, Vec2(), delta_slide);
+		delta = FindMaxDelta(box, horizontal, Vec2(), dt);
+		pos = CalculatePosition(pos, horizontal, Vec2(), delta);
+		box = CalculatePosition(box, horizontal, Vec2(), delta);
 
-		this->isOnWall = !Number::Equal(dt - delta, delta_slide); // is on wall if could not finish the movement
+		this->isOnWall = !Number::Equal(dt, delta); // is on wall if could not finish the movement
 
 		if (this->isOnWall) {
 			this->speed.x = 0.0f;
+			// TODO: slow fall down when it is on wall
+			//this->speed.Limit(Constants::Player::GravityOnWall);
 		}
 	}
 
 	/* try slide verticaly */
 	auto vertical = Vec2 { 0.0f, velocity.y };
-	auto delta_slide = FindMaxDelta(box, vertical, Constants::Game::Gravity, dt - delta);
 
-	pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta_slide);
-	box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta_slide);
-	
-	this->isOnFloor = !Number::Equal(dt - delta, delta_slide); // is on floor if could not finish the movement
+	delta = FindMaxDelta(box, vertical, Constants::Game::Gravity, dt);
+	pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta);
+	box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta);
+
+	this->isOnFloor = !Number::Equal(dt, delta); // is on floor if could not finish the movement
 
 	if (this->isOnFloor) {
 		this->speed.y = 0.0f;
 	} else {
-		this->speed.y += Constants::Game::Gravity.y * delta_slide * delta_slide; // accumulate gravity
+		this->speed.y += Constants::Game::Gravity.y * delta * delta; // accumulate gravity
 	}
 }
 
@@ -241,6 +242,9 @@ std::vector<std::vector<int>> Player::GetCollisionSet() {
 
 // TODO: change to calculate velocity and return a vec2, let the box + v to be in another place
 Rect Player::CalculatePosition(const Rect box, const Vec2 velocity, const Vec2 acceleration, const float dt) {
+	if (Number::Zero(dt)) {
+		return box;
+	}
 	auto v = (velocity + acceleration * dt) * dt;
 
 	v.Limit(Constants::Game::MaxVelocity);
@@ -249,6 +253,10 @@ Rect Player::CalculatePosition(const Rect box, const Vec2 velocity, const Vec2 a
 }
 
 float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 acceleration, const float dt) {
+	if (Number::Zero(dt)) {
+		return dt;
+	}
+
 	const auto collisionSet = GetCollisionSet();
 	const auto rows = int(collisionSet.size());
 	const auto columns = int(collisionSet[0].size());
@@ -262,6 +270,7 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 		const auto p = CalculatePosition(box, velocity, acceleration, delta);
 		const auto ul = p.GetUpperLeft();
 		const auto dr = p.GetDownRight();
+
 		const auto x1 = int(ul.x) / 24;
 		const auto y1 = int(ul.y) / 24;
 		const auto x2 = int(dr.x) / 24;
@@ -271,7 +280,6 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 
 		if (x1 < 0 || x1 >= columns || y1 < 0 || y1 >= rows || x2 < 0 || x2 >= columns || y2 < 0 || y2 >= rows) {
 			conflict = true;
-			std::cout << "Out of bounds" << std::endl;
 		} else {
 			for (int j = y1; j <= y2; j++) {
 				for (int i = x1; i <= x2; i++) {
@@ -281,16 +289,6 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 					}
 				}
 			}
-
-			#ifdef DEBUG
-			/*for (int j = y1; j <= y2; j++) {
-				for (int i = x1; i <= x2; i++) {
-					std::cout << collisionSet[j][i];
-				}
-				std::cout << '\n';
-			}
-			std::cout << '\n';*/
-			#endif
 		}
 
 		if (!conflict) {
