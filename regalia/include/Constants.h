@@ -69,7 +69,7 @@ namespace Credit {
 }
 
 namespace Play {
-	const std::string Music = "assets/audio/stageState.ogg";
+	const std::string Music = "assets/audio/Batalha dos Magos MP3-RSE.mp3";
 
 	const std::vector<BackgroundData> Backgrounds = {
 		{ "assets/img/ocean.jpg" }

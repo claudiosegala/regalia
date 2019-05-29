@@ -3,7 +3,7 @@
 
 class PlayerAim : public Component {
 public:
-	PlayerAim(GameObject& go, std::weak_ptr<GameObject> player, int playerId);
+	PlayerAim(GameObject& go, std::weak_ptr<GameObject> player);
 	~PlayerAim();
 
 	void Update(float dt) override;
@@ -11,8 +11,6 @@ public:
 
 private:
 	std::weak_ptr<GameObject> player;
-
-	int playerId;
 
 	void LoadAssets();
 };

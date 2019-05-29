@@ -44,7 +44,7 @@ private:
 
 	void CreatePlayers();
 
-	void CreatePlayer(int playerId);
+	void CreatePlayer();
 
 	const BackgroundData& GetBackgroundData(int rnd);
 

@@ -12,15 +12,15 @@
 
 int Player::counter = 0;
 
-Player::Player(GameObject& go, int playerId)
+Player::Player(GameObject& go)
     : Component(go)
-    , playerId(playerId)
+    , id(Player::counter++)
     , hp(50)
     , speed({ 0, 0 })
     , collisionBox()
     , isOnFloor(false)
     , isOnWall(false) {
-	id = ++Player::counter;
+
 	state = Constants::Player::Idle;
 
 	// TODO: discover why there is one tile of shift
@@ -67,10 +67,6 @@ void Player::Update(float dt) {
 void Player::Render() {
 }
 
-int Player::GetPlayerId() const {
-	return playerId;
-}
-
 void Player::LoadAssets() {
 	associated.AddComponent<Sprite>(&Constants::Player::MisterN);
 	associated.AddComponent<Collider>(&collisionBox, Vec2(0.48f, 0.8f), Vec2(0.0f, 4.0f));
@@ -112,12 +108,12 @@ void Player::SetState(Constants::Player::State nextState, Sprite::Direction dirX
 void Player::Shoot() {
 	auto& inputManager = InputManager::GetInstance();
 
-	if (inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, playerId)) {
-		auto angle = inputManager.GamepadRightStick(playerId).GetAngle();
+	if (inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id) && inputManager.GamepadRightStick(id).GetLength() != 0) {
+		auto angle = inputManager.GamepadRightStick(id).GetAngle();
 		auto pos = Vec2(25, 0).GetRotate(angle) + associated.box.Center();
 
 		BulletData bulletData = {
-			playerId,
+			id,
 			10,
 			angle,
 			20,
@@ -136,14 +132,14 @@ void Player::Shoot() {
 
 void Player::Move(float dt) {
 	auto& in = InputManager::GetInstance();
-	auto direction = in.GamepadLeftStick(playerId);
+	auto direction = in.GamepadLeftStick(id);
 	auto isJumping = false;
 
 	if (direction.IsOrigin()) { // No input from gamepad stick, look for other inputs
-		const auto keyUp = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, playerId);
-		const auto keyDown = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, playerId);
-		const auto keyLeft = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, playerId);
-		const auto keyRight = in.IsKeyDown(Constants::Key::D) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, playerId);
+		const auto keyUp = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, id);
+		const auto keyDown = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, id);
+		const auto keyLeft = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
+		const auto keyRight = in.IsKeyDown(Constants::Key::D) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, id);
 
 		if (keyUp) {
 			isJumping = true;
@@ -162,7 +158,7 @@ void Player::Move(float dt) {
 		}
 	}
 
-	if (in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, playerId)) {
+	if (in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, id)) {
 		isJumping = true;
 	}
 

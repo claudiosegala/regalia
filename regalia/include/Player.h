@@ -9,9 +9,9 @@ class Player : public Component {
 public:
 	static int counter;
 
-	int id;
+	const int id;
 
-	Player(GameObject& go, int playerId);
+	Player(GameObject& go);
 
 	~Player();
 
@@ -21,12 +21,8 @@ public:
 
 	void Render() override;
 
-	int GetPlayerId() const;
-
 private:
 	Constants::Player::State state;
-
-	int playerId;
 
 	int hp;
 

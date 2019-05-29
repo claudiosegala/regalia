@@ -4,11 +4,12 @@
 #include <GameObject.h>
 #include <Sprite.h>
 #include <Util.h>
+#include <Player.h>
 
-PlayerAim::PlayerAim(GameObject& go, std::weak_ptr<GameObject> player, int playerId)
+
+PlayerAim::PlayerAim(GameObject& go, std::weak_ptr<GameObject> player)
     : Component(go)
-    , player(player)
-    , playerId(playerId) {
+    , player(player) {
 
 	LoadAssets();
 }
@@ -23,6 +24,8 @@ void PlayerAim::Update(float dt) {
 		associated.RequestDelete();
 		return;
 	}
+
+	auto playerId = currentPlayer->GetComponent<Player>()->id;
 
 	auto& in = InputManager::GetInstance();
 	auto rightStickVec = in.GamepadRightStick(playerId);
