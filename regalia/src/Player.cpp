@@ -24,7 +24,7 @@ Player::Player(GameObject& go)
 	state = Constants::Player::Idle;
 
 	// TODO: discover why there is one tile of shift
-	associated.box.SetCenter({ 20.0f, 26.0f });
+	associated.box.SetCenter({ 27.0f, 26.0f });
 
 	LoadAssets();
 }
@@ -54,6 +54,7 @@ void Player::NotifyCollision(GameObject& go) {
 }
 
 void Player::Update(float dt) {
+	W(dt);
 	//Gravity(dt);
 	Move(dt);
 	Shoot();
@@ -172,14 +173,14 @@ void Player::Move(float dt) {
 }
 
 void Player::MoveAndSlide(Vec2 velocity, float dt) {
-	auto box = collisionBox;
+	// auto box = collisionBox;
 	auto& pos = associated.box;
 
 	/* try to move diagonaly */
-	auto delta = FindMaxDelta(box, velocity, Constants::Game::Gravity, dt);
+	auto delta = FindMaxDelta(pos, velocity, Constants::Game::Gravity, dt);
 
 	pos = CalculatePosition(pos, velocity, Constants::Game::Gravity, delta);
-	box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
+	// box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
 
 	auto accumulatedGravity = Constants::Game::Gravity.y * delta * delta;
 	speed.y += accumulatedGravity;
@@ -198,9 +199,9 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 	if (!Number::Zero(velocity.x)) {
 		auto horizontal = Vec2 { velocity.x, 0.0f };
 		
-		delta = FindMaxDelta(box, horizontal, Vec2(), dt);
+		delta = FindMaxDelta(pos, horizontal, Vec2(), dt);
 		pos = CalculatePosition(pos, horizontal, Vec2(), delta);
-		box = CalculatePosition(box, horizontal, Vec2(), delta);
+		// box = CalculatePosition(box, horizontal, Vec2(), delta);
 
 		isOnWall = !Number::Equal(dt, delta); // is on wall if could not finish the movement
 
@@ -212,9 +213,9 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 	/* try slide verticaly */
 	auto vertical = Vec2 { 0.0f, velocity.y };
 	
-	delta = FindMaxDelta(box, vertical, Constants::Game::Gravity, dt);
+	delta = FindMaxDelta(pos, vertical, Constants::Game::Gravity, dt);
 	pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta);
-	box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta);
+	// box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta);
 
 	isOnFloor = !Number::Equal(dt, delta); // is on floor if could not finish the movement
 
@@ -289,24 +290,13 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 					}
 				}
 			}
-
-			#ifdef DEBUG
-			for (int j = y1; j <= y2; j++) {
-				for (int k = x1; k <= x2; k++) {
-					std::cout << collisionSet[j][k];
-				}
-				std::cout << '\n';
-			}
-			std::cout << '\n';
-			#endif
 		}
 
 		if (!conflict) {
-			W(box)
-			printf("> x1 = %d (%.8f)(%d)(%d)\n", x1, ul.x, int(ul.x), int(ul.x) / 24);
-			printf("> y1 = %d (%.8f)(%d)(%d)\n", y1, ul.y, int(ul.y), int(ul.y) / 24);
-			printf("> x2 = %d (%.8f)(%d)(%d)\n", x2, dr.x, int(dr.x), int(dr.x) / 24);
-			printf("> y2 = %d (%.8f)(%d)(%d)\n", y2, dr.y, int(dr.y), int(dr.y) / 24);
+			// printf("> x1 = %d (%.8f)(%d)(%d)\n", x1, ul.x, int(ul.x), int(ul.x) / 24);
+			// printf("> y1 = %d (%.8f)(%d)(%d)\n", y1, ul.y, int(ul.y), int(ul.y) / 24);
+			// printf("> x2 = %d (%.8f)(%d)(%d)\n", x2, dr.x, int(dr.x), int(dr.x) / 24);
+			// printf("> y2 = %d (%.8f)(%d)(%d)\n", y2, dr.y, int(dr.y), int(dr.y) / 24);
 			ans = min_delta = delta;
 		} else {
 			max_delta = delta;
