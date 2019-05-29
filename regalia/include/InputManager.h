@@ -21,29 +21,31 @@ public:
 
 	bool IsMouseDown(int);
 
-	Vec2 GetMouse(Vec2 relative);
+	Vec2 GetMouse(Vec2 relative) const;
 
 	int GetMouseX() const;
 
 	int GetMouseY() const;
 
 	bool GamepadPress(SDL_GameControllerButton button);
+
 	bool GamepadPress(SDL_GameControllerButton button, int controllerNumber);
 
 	bool GamepadRelease(SDL_GameControllerButton button);
+
 	bool GamepadRelease(SDL_GameControllerButton button, int controllerNumber);
 
 	bool IsGamepadDown(SDL_GameControllerButton button);
+
 	bool IsGamepadDown(SDL_GameControllerButton button, int controllerNumber);
 
 	Vec2 GamepadLeftStick(int controllerNumber);
+
 	Vec2 GamepadRightStick(int controllerNumber);
 
-	static bool IsPopRequested();
+	bool PopRequested();
 
-	bool QuitRequested();
-
-	static bool IsQuitRequested();
+	bool QuitRequested() const;
 
 private:
 	int mouseX = 0;
@@ -62,6 +64,8 @@ private:
 
 	std::unordered_map<int, int> keyUpdate;
 
+	std::vector<Gamepad> controllers;
+
 	InputManager();
 
 	~InputManager() = default;
@@ -74,5 +78,4 @@ private:
 
 	void LoadControllers();
 
-	std::vector<Gamepad> controllers;
 };

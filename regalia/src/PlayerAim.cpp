@@ -4,11 +4,12 @@
 #include <GameObject.h>
 #include <Sprite.h>
 #include <Util.h>
+#include <Player.h>
 
-PlayerAim::PlayerAim(GameObject& go, std::weak_ptr<GameObject> player, int playerId)
+
+PlayerAim::PlayerAim(GameObject& go, std::weak_ptr<GameObject> player)
     : Component(go)
-    , player(player)
-    , playerId(playerId) {
+    , player(player) {
 
 	LoadAssets();
 }
@@ -18,11 +19,13 @@ PlayerAim::~PlayerAim() {}
 void PlayerAim::Update(float dt) {
 	UNUSED(dt);
 
-	auto player = this->player.lock();
-	if (!player) {
+	auto currentPlayer = this->player.lock();
+	if (!currentPlayer) {
 		associated.RequestDelete();
 		return;
 	}
+
+	auto playerId = currentPlayer->GetComponent<Player>()->id;
 
 	auto& in = InputManager::GetInstance();
 	auto rightStickVec = in.GamepadRightStick(playerId);
@@ -33,7 +36,7 @@ void PlayerAim::Update(float dt) {
 	}
 
 	auto angle = rightStickVec.GetAngle();
-	auto position = Vec2(50, 0).GetRotate(angle) + player->box.Center();
+	auto position = Vec2(50, 0).GetRotate(angle) + currentPlayer->box.Center();
 
 	associated.hide = false;
 	associated.box.SetCenter(position);

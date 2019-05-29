@@ -19,14 +19,13 @@
 #include <Vec2.h>
 #include <PlayerAim.h>
 
-
 PlayState::PlayState() {
 	Logger::Info("Initializing Play State");
 
-	this->backgroundIdx = 0;
-	this->tileSetIdx = 0;
-	this->tileMapIdx = 0;
-	this->music.Open(Constants::Play::Music);
+	backgroundIdx = 0;
+	tileSetIdx = 0;
+	tileMapIdx = 0;
+	music.Open(Constants::Play::Music);
 
 	if (!GameData::Started || GameData::Finished) {
 		GameData::Init();
@@ -47,13 +46,13 @@ void PlayState::LoadAssets() {
 void PlayState::Update(float dt) {
 	auto& in = InputManager::GetInstance();
 
-	this->popRequested = InputManager::IsPopRequested() || in.GamepadPress(SDL_CONTROLLER_BUTTON_B);
-	if (this->popRequested) {
+	popRequested = in.PopRequested() || in.GamepadPress(SDL_CONTROLLER_BUTTON_B);
+	if (popRequested) {
 		return;
 	}
 
-	this->quitRequested = InputManager::IsQuitRequested();
-	if (this->quitRequested) {
+	quitRequested = in.QuitRequested();
+	if (quitRequested) {
 		return;
 	}
 
@@ -64,10 +63,10 @@ void PlayState::Update(float dt) {
 		return;
 	}*/
 
-	this->timer.Update(dt);
+	timer.Update(dt);
 
 	// TODO: uncomment this when there are two players
-	/*if (Player::counter == 1 || this->timer.Get() > Constants::Game::SetLenght) {
+	/*if (Player::counter == 1 || timer.Get() > Constants::Game::SetLenght) {
 		GameData::Set++;
 		GameData::Finished = (GameData::Set == Constants::Game::Sets);
 		LoadScoreState();
@@ -88,19 +87,19 @@ void PlayState::Start() {
 
 	StartArray();
 
-	this->started = true;
-	this->music.Play();
+	started = true;
+	music.Play();
 }
 
 void PlayState::Pause() {
 	Logger::Info("Pausing Play State");
-	this->music.Stop(0);
+	music.Stop(0);
 }
 
 void PlayState::Resume() {
 	Logger::Info("Resuming Play State");
 	Camera::Reset();
-	this->music.Play();
+	music.Play();
 }
 
 void PlayState::CheckCollision() {
@@ -125,24 +124,24 @@ void PlayState::CreateField() {
 }
 
 void PlayState::CreatePlayers() {
-	CreatePlayer(0);
-	//CreatePlayer(1);
+	CreatePlayer();
+	CreatePlayer();
 }
 
-void PlayState::CreatePlayer(int playerId) {
+void PlayState::CreatePlayer() {
 	auto playerGO = new GameObject();
-	playerGO->AddComponent<Player>(playerId);
+	playerGO->AddComponent<Player>();
 	auto player = AddObject(playerGO);
 
 	auto playerAimGO = new GameObject();
-	playerAimGO->AddComponent<PlayerAim>(player, playerId);
+	playerAimGO->AddComponent<PlayerAim>(player);
 	(void)AddObject(playerAimGO);
 }
 
 const BackgroundData& PlayState::GetBackgroundData(int rnd) {
 	auto& assets = Constants::Play::Backgrounds;
 	const auto idx = rnd % assets.size();
-	this->backgroundIdx = int(idx);
+	backgroundIdx = int(idx);
 
 	return assets[idx];
 }
@@ -150,7 +149,7 @@ const BackgroundData& PlayState::GetBackgroundData(int rnd) {
 const TileSetData& PlayState::GetTileSetData(int rnd) {
 	auto& assets = Constants::Play::TileSets;
 	const auto idx = rnd % assets.size();
-	this->tileSetIdx = int(idx);
+	tileSetIdx = int(idx);
 
 	return assets[idx];
 }
@@ -158,7 +157,7 @@ const TileSetData& PlayState::GetTileSetData(int rnd) {
 const TileMapData& PlayState::GetTileMapData(int rnd) {
 	auto& assets = Constants::Play::TileMaps;
 	const auto idx = rnd % assets.size();
-	this->tileMapIdx = int(idx);
+	tileMapIdx = int(idx);
 
 	return assets[idx];
 }

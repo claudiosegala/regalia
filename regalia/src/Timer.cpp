@@ -2,21 +2,21 @@
 #include <Timer.h>
 
 Timer::Timer() {
-	this->time = 0.0f;
+	time = 0.0f;
 }
 
 void Timer::SetStart(float st) {
-	this->time = st;
+	time = st;
 }
 
 void Timer::Update(float dt) {
-	this->time += dt;
+	time += dt;
 }
 
 void Timer::Restart() {
-	this->time = 0.0f;
+	time = 0.0f;
 }
 
 float Timer::Get() {
-	return this->time;
+	return time;
 }

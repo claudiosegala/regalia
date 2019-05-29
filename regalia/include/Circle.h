@@ -16,8 +16,7 @@ public:
 
 	bool Is(const std::string&) override;
 
-	float Perimeter();
+	float Perimeter() const;
 
-	float Area();
-
+	float Area() const;
 };

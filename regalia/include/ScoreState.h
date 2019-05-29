@@ -35,5 +35,4 @@ private:
 	void LoadContinueOptions();
 
 	void LoadFinishedOptions();
-
 };

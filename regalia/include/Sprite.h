@@ -5,6 +5,12 @@
 
 class Sprite : public Component {
 public:
+	enum class Direction {
+		Original,
+		Flip,
+		Keep
+	};
+
 	Sprite(GameObject& go, const std::string& file);
 
 	Sprite(GameObject& go, const SpriteSheetData* spriteSheetData);
@@ -21,7 +27,7 @@ public:
 
 	void SetScale(float, float);
 
-	void SetNextAnimation(int animationId, bool flipAnimation);
+	void SetNextAnimation(int animationId, Direction dirX);
 
 	Vec2 GetScale() const;
 
@@ -48,7 +54,7 @@ private:
 
 	std::shared_ptr<SDL_Texture> texture = nullptr;
 
-	SDL_Rect clipRect{};
+	SDL_Rect clipRect {};
 
 	// Animation
 	const SpriteSheetData* spriteSheetData = nullptr;
@@ -63,5 +69,5 @@ private:
 
 	int nextAnimationId = 0;
 
-	bool flipAnimation = false;
+	bool flipAnimationX = false;
 };

@@ -27,7 +27,7 @@ public:
 				return IsColliding(*_a, *_b, angleOfA, angleOfB);
 			} else {
 				auto _b = static_cast<Circle*>(b);
-				return IsColliding(*_a, *_b, angleOfA, angleOfB);
+				return IsColliding(*_a, *_b);
 			}
 		}
 	}
@@ -36,17 +36,17 @@ public:
 	// Para usar graus, forneça a sua própria implementação de Rotate,
 	// ou transforme os ângulos no corpo de IsColliding.
 	static inline bool IsColliding(Rect& a, Rect& b, float angleOfA, float angleOfB) {
-		Vec2 A[] = { 
+		Vec2 A[] = {
 			Vec2(a.vector.x, a.vector.y + a.height),
 			Vec2(a.vector.x + a.width, a.vector.y + a.height),
 			Vec2(a.vector.x + a.width, a.vector.y),
-			Vec2(a.vector.x, a.vector.y) 
+			Vec2(a.vector.x, a.vector.y)
 		};
-		Vec2 B[] = { 
+		Vec2 B[] = {
 			Vec2(b.vector.x, b.vector.y + b.height),
 			Vec2(b.vector.x + b.width, b.vector.y + b.height),
 			Vec2(b.vector.x + b.width, b.vector.y),
-			Vec2(b.vector.x, b.vector.y) 
+			Vec2(b.vector.x, b.vector.y)
 		};
 
 		for (auto& v : A) {
@@ -94,7 +94,7 @@ public:
 		return false;
 	}
 
-	static inline bool IsColliding(Circle& a, Circle& b, float angleOfA, float angleOfB) {
+	static inline bool IsColliding(Circle& a, Circle& b) {
 		return Vec2::Distance(a.center, b.center) < a.radius + b.radius;
 	}
 

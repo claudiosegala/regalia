@@ -20,11 +20,11 @@ Vec2::Vec2(Vec2& start, Vec2& destination) {
 }
 
 bool Vec2::IsOrigin() const {
-	return Number::Zero(this->x) && Number::Zero(this->y);
+	return Number::Zero(x) && Number::Zero(y);
 }
 
 void Vec2::Reset() {
-	this->x = this->y = 0;
+	x = y = 0;
 }
 
 void Vec2::Limit(float limit) {
@@ -32,54 +32,54 @@ void Vec2::Limit(float limit) {
 }
 
 void Vec2::Limit(float upperX, float lowerX, float upperY, float lowerY) {
-	if (this->x < lowerX) {
-		this->x = lowerX;
+	if (x < lowerX) {
+		x = lowerX;
 	} else {
-		this->x = fmin(this->x, upperX);
+		x = fmin(x, upperX);
 	}
 
-	if (this->y < lowerY) {
-		this->y = lowerY;
+	if (y < lowerY) {
+		y = lowerY;
 	} else {
-		this->y = fmin(this->y, upperY);
+		y = fmin(y, upperY);
 	}
 }
 
 float Vec2::GetLength() const {
-	return (float)hypot(this->x, this->y);
+	return (float)hypot(x, y);
 }
 
 float Vec2::GetAngle() const {
-	return (float)atan2(this->y, this->x);
+	return (float)atan2(y, x);
 }
 
 float Vec2::GetAngle(const Vec2& V) const {
-	auto ds = this->GetLength() * V.GetLength();
+	auto ds = GetLength() * V.GetLength();
 	auto prod = (*this) ^ V;
 
 	return (float)acos(prod / ds);
 }
 
 void Vec2::Unit() {
-	(*this) /= this->GetLength();
+	(*this) /= GetLength();
 }
 
 Vec2 Vec2::GetUnit() const {
-	return this->GetLength() ? (*this) / this->GetLength() : Vec2(0, 0);
+	return GetLength() ? (*this) / GetLength() : Vec2(0, 0);
 }
 
 void Vec2::Rotate(float angle) {
-	auto xv = cos(angle) * this->x - sin(angle) * this->y;
-	auto yv = sin(angle) * this->x + cos(angle) * this->y;
+	auto xv = cos(angle) * x - sin(angle) * y;
+	auto yv = sin(angle) * x + cos(angle) * y;
 
-	this->x = static_cast<float>(xv);
-	this->y = static_cast<float>(yv);
+	x = static_cast<float>(xv);
+	y = static_cast<float>(yv);
 }
 
 Vec2 Vec2::GetRotate(float angle) const {
 	return Vec2(
-	    static_cast<float>(cos(angle) * this->x - sin(angle) * this->y),
-	    static_cast<float>(sin(angle) * this->x + cos(angle) * this->y));
+	    static_cast<float>(cos(angle) * x - sin(angle) * y),
+	    static_cast<float>(sin(angle) * x + cos(angle) * y));
 }
 
 float Vec2::Distance(const Vec2& V, const Vec2& U) {
@@ -87,8 +87,8 @@ float Vec2::Distance(const Vec2& V, const Vec2& U) {
 }
 
 Vec2 Vec2::operator=(const Vec2& V) {
-	this->x = V.x;
-	this->y = V.y;
+	x = V.x;
+	y = V.y;
 
 	return *this;
 }
@@ -102,38 +102,38 @@ bool Vec2::operator!=(const Vec2& rhs) const {
 }
 
 Vec2 Vec2::operator*(const Vec2& V) {
-	return Vec2(this->x * V.y, this->y * V.x);
+	return Vec2(x * V.y, y * V.x);
 }
 
 float Vec2::operator^(const Vec2& V) const {
-	return this->x * V.x + this->y * V.y;
+	return x * V.x + y * V.y;
 }
 
 Vec2 Vec2::operator*(const float v) const {
-	return Vec2(this->x * v, this->y * v);
+	return Vec2(x * v, y * v);
 }
 
 void Vec2::operator*=(const float v) {
-	this->x *= v;
-	this->y *= v;
+	x *= v;
+	y *= v;
 }
 
 Vec2 Vec2::operator/(const float v) const {
-	return Vec2(this->x / v, this->y / v);
+	return Vec2(x / v, y / v);
 }
 
 void Vec2::operator/=(const float v) {
-	this->x /= v;
-	this->y /= v;
+	x /= v;
+	y /= v;
 }
 
 Vec2 Vec2::operator+(const Vec2& V) const {
-	return Vec2(this->x + V.x, this->y + V.y);
+	return Vec2(x + V.x, y + V.y);
 }
 
 Vec2 Vec2::operator+=(const Vec2& V) {
-	this->x += V.x;
-	this->y += V.y;
+	x += V.x;
+	y += V.y;
 
 	return (*this);
 }
@@ -143,12 +143,12 @@ Vec2 Vec2::operator-(const float x) const {
 }
 
 Vec2 Vec2::operator-(const Vec2& V) const {
-	return Vec2(this->x - V.x, this->y - V.y);
+	return Vec2(x - V.x, y - V.y);
 }
 
 Vec2 Vec2::operator-=(const Vec2& V) {
-	this->x -= V.x;
-	this->y -= V.y;
+	x -= V.x;
+	y -= V.y;
 
 	return (*this);
 }

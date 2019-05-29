@@ -1,8 +1,8 @@
 #include <pch.h>
+#include <InputManager.h>
 #include <Camera.h>
 #include <Constants.h>
 #include <CreditState.h>
-#include <InputManager.h>
 #include <Logger.h>
 #include <Rect.h>
 #include <Sprite.h>
@@ -11,7 +11,7 @@
 CreditState::CreditState() {
 	Logger::Info("Initializing Credit State");
 
-	//this->music.Open(Constants::Credit::Music);
+	//music.Open(Constants::Credit::Music);
 	LoadAssets();
 }
 
@@ -32,13 +32,15 @@ void CreditState::LoadAssets() {
 }
 
 void CreditState::Update(float dt) {
-	this->popRequested = InputManager::IsPopRequested();
-	if (this->popRequested) {
+	auto& in = InputManager::GetInstance();
+
+	popRequested = in.PopRequested();
+	if (popRequested) {
 		return;
 	}
-	
-	this->quitRequested = InputManager::IsQuitRequested();
-	if (this->quitRequested) {
+
+	quitRequested = in.QuitRequested();
+	if (quitRequested) {
 		return;
 	}
 
@@ -55,7 +57,7 @@ void CreditState::Start() {
 
 	StartArray();
 
-	this->started = true;
+	started = true;
 }
 
 void CreditState::Pause() {

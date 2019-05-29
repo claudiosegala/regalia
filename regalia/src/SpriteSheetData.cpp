@@ -5,7 +5,7 @@
 SpriteSheetData::SpriteSheetData(const std::string& file, int imageWidth, int imageHeight, float frameTime, int totalAnimations, const std::map<int, int>& animationsFrames, bool selfDestruct)
     : file(file)
     , frameTime(frameTime)
-	, selfDestruct(selfDestruct)
+    , selfDestruct(selfDestruct)
     , imageWidth(imageWidth)
     , imageHeight(imageHeight) {
 

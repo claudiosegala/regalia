@@ -6,15 +6,15 @@
 TileMap::TileMap(GameObject& go, const std::string& file, TileSet* ts)
     : Component(go)
     , tileSet(ts) {
-	this->mapDepth = 0;
-	this->mapHeight = 0;
-	this->mapWidth = 0;
+	mapDepth = 0;
+	mapHeight = 0;
+	mapWidth = 0;
 
 	Load(file);
 }
 
 TileMap::~TileMap() {
-	delete this->tileSet;
+	delete tileSet;
 }
 
 void TileMap::Load(const std::string& file) {
@@ -35,18 +35,18 @@ void TileMap::Load(const std::string& file) {
 
 	auto n = static_cast<unsigned int>(x * y * z);
 
-	this->tileMatrix.resize(n);
-	this->mapHeight = x;
-	this->mapWidth = y;
-	this->mapDepth = z;
+	tileMatrix.resize(n);
+	mapHeight = x;
+	mapWidth = y;
+	mapDepth = z;
 
-	for (auto layer = 0; layer < this->mapDepth; layer++) {
-		for (auto row = 0; row < this->mapHeight; row++) {
-			for (auto col = 0; col < this->mapWidth; col++) {
+	for (auto layer = 0; layer < mapDepth; layer++) {
+		for (auto row = 0; row < mapHeight; row++) {
+			for (auto col = 0; col < mapWidth; col++) {
 				getline(fs, line, ',');
 				auto idx = Pos(col, row, layer);
-				this->tileMatrix[idx] = std::stoi(line);
-				this->tileMatrix[idx]--;
+				tileMatrix[idx] = std::stoi(line);
+				tileMatrix[idx]--;
 			}
 		}
 	}
@@ -55,20 +55,20 @@ void TileMap::Load(const std::string& file) {
 }
 
 void TileMap::SetTileSet(TileSet* ts) {
-	delete this->tileSet;
-	this->tileSet = ts;
+	delete tileSet;
+	tileSet = ts;
 }
 
 unsigned int TileMap::Pos(int col, int row, int layer) {
-	auto mapSize = (this->mapWidth * this->mapHeight);
-	auto rowSize = (this->mapWidth);
+	auto mapSize = (mapWidth * mapHeight);
+	auto rowSize = (mapWidth);
 
 	return static_cast<unsigned int>(layer * mapSize + row * rowSize + col);
 }
 
 int& TileMap::At(int col, int row, int layer) {
 	auto idx = Pos(col, row, layer);
-	return this->tileMatrix[idx];
+	return tileMatrix[idx];
 }
 
 void TileMap::Update(float dt) {
@@ -76,16 +76,16 @@ void TileMap::Update(float dt) {
 }
 
 void TileMap::Render() {
-	for (int k = 0; k < this->mapDepth; k++) {
+	for (int k = 0; k < mapDepth; k++) {
 		RenderLayer(k, (int)Camera::pos.x, (int)Camera::pos.y);
 	}
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
-	auto tileHeight = this->tileSet->GetTileHeight();
-	auto tileWidth = this->tileSet->GetTileWidth();
-	for (int row = 0; row < this->mapHeight; row++) {
-		for (int col = 0; col < this->mapWidth; col++) {
+	auto tileHeight = tileSet->GetTileHeight();
+	auto tileWidth = tileSet->GetTileWidth();
+	for (int row = 0; row < mapHeight; row++) {
+		for (int col = 0; col < mapWidth; col++) {
 			auto tileSetIdx = (unsigned int)At(col, row, layer);
 			tileSet->RenderTile(tileSetIdx, (float)(col * tileWidth - cameraY), (float)(row * tileHeight - cameraX));
 		}
@@ -93,13 +93,13 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
 }
 
 int TileMap::GetWidth() {
-	return this->mapWidth;
+	return mapWidth;
 }
 
 int TileMap::GetHeight() {
-	return this->mapHeight;
+	return mapHeight;
 }
 
 int TileMap::GetDepth() {
-	return this->mapDepth;
+	return mapDepth;
 }

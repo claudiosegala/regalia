@@ -28,7 +28,6 @@ public:
 	void Resume() override;
 
 private:
-
 	int backgroundIdx;
 
 	int tileSetIdx;
@@ -38,14 +37,14 @@ private:
 	Timer timer;
 
 	Music music;
-	
+
 	void CheckCollision();
 
 	void CreateField();
 
 	void CreatePlayers();
 
-	void CreatePlayer(int playerId);
+	void CreatePlayer();
 
 	const BackgroundData& GetBackgroundData(int rnd);
 
@@ -54,5 +53,4 @@ private:
 	const TileMapData& GetTileMapData(int rnd);
 
 	void LoadScoreState();
-
 };

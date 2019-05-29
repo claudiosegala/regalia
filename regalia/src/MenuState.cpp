@@ -16,7 +16,7 @@ MenuState::MenuState()
     , cursor() {
 	Logger::Info("Initializing Menu State");
 
-	//this->music.Open(Constants::Menu::Music);
+	//music.Open(Constants::Menu::Music);
 	LoadAssets();
 }
 
@@ -30,28 +30,28 @@ void MenuState::LoadAssets() {
 	(void)AddObject(CreateOption("Story", { 0, 75 }));
 	(void)AddObject(CreateOption("Credits", { 0, 150 }));
 
-	this->cursor = AddObject(CreateOption(">", { -75, 0 })); //> points towards first position
+	cursor = AddObject(CreateOption(">", { -75, 0 })); //> points towards first position
 }
 
 void MenuState::Update(float dt) {
-	this->popRequested = InputManager::IsPopRequested();
-	if (this->popRequested) {
-		return;
-	}
-	this->quitRequested = InputManager::IsQuitRequested();
-	if (this->quitRequested) {
-		return;
-	}
-
 	auto& in = InputManager::GetInstance();
 
-	if (in.KeyPress(Constants::Key::ArrowDown) || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
-		this->option = (this->option + 1) % 3; // 0 to 2
+	popRequested = in.PopRequested();
+	if (popRequested) {
+		return;
+	}
+	quitRequested = in.QuitRequested();
+	if (quitRequested) {
+		return;
+	}
 
-		if (auto ptr = this->cursor.lock()) {
+	if (in.KeyPress(Constants::Key::ArrowDown) || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
+		option = (option + 1) % 3; // 0 to 2
+
+		if (auto ptr = cursor.lock()) {
 			const auto pos = Vec2 {
 				Constants::Window::Width / 2 - 75,
-				Constants::Window::Height / 2 + this->option * 75
+				Constants::Window::Height / 2 + option * 75
 			};
 
 			ptr->box.SetCenter(pos);
@@ -59,12 +59,12 @@ void MenuState::Update(float dt) {
 	}
 
 	else if (in.KeyPress(Constants::Key::ArrowUp) || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP)) {
-		this->option = (this->option - 1 + 3) % 3; // 0 to 2
+		option = (option - 1 + 3) % 3; // 0 to 2
 
-		if (auto ptr = this->cursor.lock()) {
+		if (auto ptr = cursor.lock()) {
 			const auto pos = Vec2 {
 				Constants::Window::Width / 2 - 75,
-				Constants::Window::Height / 2 + this->option * 75
+				Constants::Window::Height / 2 + option * 75
 			};
 
 			ptr->box.SetCenter(pos);
@@ -76,9 +76,9 @@ void MenuState::Update(float dt) {
 
 		game->Push(new PlayState());
 
-		// if (this->option == 0) {
+		// if (option == 0) {
 		//     game->Push(new PlayState());
-		// } else if (this->option == 1) {
+		// } else if (option == 1) {
 		//     game->Push(new StoryState());
 		// } else {
 		//     game->Push(new CreditState());
@@ -98,7 +98,7 @@ void MenuState::Start() {
 
 	StartArray();
 
-	this->started = true;
+	started = true;
 }
 
 void MenuState::Pause() {

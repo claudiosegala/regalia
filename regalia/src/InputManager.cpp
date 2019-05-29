@@ -27,90 +27,6 @@ void InputManager::Update() {
 	}
 }
 
-void InputManager::Setup() {
-	this->quitRequested = false;
-	this->updateCounter++;
-}
-
-void InputManager::RetrieveMouse() {
-	SDL_GetMouseState(&this->mouseX, &this->mouseY);
-}
-
-void InputManager::TreatEvent(SDL_Event& event) {
-	switch (event.type) {
-	// Gamepad events
-	case SDL_CONTROLLERAXISMOTION:
-	case SDL_CONTROLLERBUTTONDOWN:
-	case SDL_CONTROLLERBUTTONUP: {
-		controllers[event.cbutton.which].Update(event, updateCounter);
-		break;
-	}
-	case SDL_QUIT: {
-		this->quitRequested = true;
-		break;
-	}
-	case SDL_KEYDOWN: {
-		auto isRepeated = event.key.repeat == 1;
-
-		if (!isRepeated) {
-			auto key = event.key.keysym.sym;
-
-			this->keyState[key] = true;
-			this->keyUpdate[key] = this->updateCounter;
-		}
-		break;
-	}
-	case SDL_KEYUP: {
-		auto isRepeated = event.key.repeat == 1;
-
-		if (!isRepeated) {
-			auto key = event.key.keysym.sym;
-
-			this->keyState[key] = false;
-			this->keyUpdate[key] = this->updateCounter;
-		}
-		break;
-	}
-	case SDL_MOUSEBUTTONDOWN: {
-		auto idx = event.button.button;
-		this->mouseState[idx] = true;
-		this->mouseUpdate[idx] = this->updateCounter;
-		break;
-	}
-	case SDL_MOUSEBUTTONUP: {
-		auto idx = event.button.button;
-		this->mouseState[idx] = false;
-		this->mouseUpdate[idx] = this->updateCounter;
-		break;
-	}
-	case SDL_WINDOWEVENT: {
-		if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
-			// Set the dynamic window scale
-			auto game = Game::GetInstance();
-			int windowWidth, windowHeight;
-			SDL_GetWindowSize(game->GetWindow(), &windowWidth, &windowHeight);
-
-			// Calculate the window width to keep the same aspect ratio
-			windowWidth = int(float(windowHeight) * float(Constants::Window::Width) / float(Constants::Window::Height));
-
-			SDL_SetWindowSize(game->GetWindow(), windowWidth, windowHeight);
-			SDL_RenderSetScale(game->GetRenderer(), float(windowWidth) / Constants::Window::Width, float(windowHeight) / Constants::Window::Height);
-		}
-		break;
-	}
-	default:
-		break;
-	}
-}
-
-void InputManager::LoadControllers() {
-	for (int i = 0; i < SDL_NumJoysticks(); i++) {
-		if (SDL_IsGameController(i)) {
-			controllers.emplace_back(i);
-		}
-	}
-}
-
 bool InputManager::KeyPress(int key) {
 	return keyState[key] && keyUpdate[key] == updateCounter;
 }
@@ -135,10 +51,10 @@ bool InputManager::IsMouseDown(int button) {
 	return mouseState[button];
 }
 
-Vec2 InputManager::GetMouse(Vec2 relative) {
-	return Vec2 {
-		static_cast<float>(GetMouseX()) + relative.x,
-		static_cast<float>(GetMouseY()) + relative.y
+Vec2 InputManager::GetMouse(Vec2 relative) const {
+	return {
+		float(GetMouseX()) + relative.x,
+		float(GetMouseY()) + relative.y
 	};
 }
 
@@ -202,14 +118,79 @@ Vec2 InputManager::GamepadRightStick(int controllerNumber) {
 	return controllers[controllerNumber].GetStickPosition(Gamepad::Right);
 }
 
-bool InputManager::IsPopRequested() {
-	return GetInstance().KeyPress(Constants::Key::Escape);
+bool InputManager::PopRequested() {
+	return KeyPress(Constants::Key::Escape);
 }
 
-bool InputManager::QuitRequested() {
-	return this->quitRequested;
+bool InputManager::QuitRequested() const {
+	return quitRequested;
 }
 
-bool InputManager::IsQuitRequested() {
-	return GetInstance().QuitRequested();
+void InputManager::Setup() {
+	quitRequested = false;
+	updateCounter++;
+}
+
+void InputManager::RetrieveMouse() {
+	SDL_GetMouseState(&mouseX, &mouseY);
+}
+
+void InputManager::TreatEvent(SDL_Event& event) {
+	switch (event.type) {
+	// Gamepad events
+	case SDL_CONTROLLERAXISMOTION:
+	case SDL_CONTROLLERBUTTONDOWN:
+	case SDL_CONTROLLERBUTTONUP: {
+		controllers[event.cbutton.which].Update(event, updateCounter);
+		break;
+	}
+	case SDL_QUIT: {
+		quitRequested = true;
+		break;
+	}
+	case SDL_KEYDOWN: {
+		auto isRepeated = event.key.repeat == 1;
+
+		if (!isRepeated) {
+			auto key = event.key.keysym.sym;
+
+			keyState[key] = true;
+			keyUpdate[key] = updateCounter;
+		}
+		break;
+	}
+	case SDL_KEYUP: {
+		auto isRepeated = event.key.repeat == 1;
+
+		if (!isRepeated) {
+			auto key = event.key.keysym.sym;
+
+			keyState[key] = false;
+			keyUpdate[key] = updateCounter;
+		}
+		break;
+	}
+	case SDL_MOUSEBUTTONDOWN: {
+		auto idx = event.button.button;
+		mouseState[idx] = true;
+		mouseUpdate[idx] = updateCounter;
+		break;
+	}
+	case SDL_MOUSEBUTTONUP: {
+		auto idx = event.button.button;
+		mouseState[idx] = false;
+		mouseUpdate[idx] = updateCounter;
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+void InputManager::LoadControllers() {
+	for (int i = 0; i < SDL_NumJoysticks(); i++) {
+		if (SDL_IsGameController(i)) {
+			controllers.emplace_back(i);
+		}
+	}
 }

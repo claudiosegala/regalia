@@ -9,7 +9,7 @@ CameraFollower::CameraFollower(GameObject& go)
 void CameraFollower::Update(float dt) {
 	UNUSED(dt);
 
-	this->associated.box.vector = Camera::pos;
+	associated.box.vector = Camera::pos;
 }
 
 void CameraFollower::Render() {}

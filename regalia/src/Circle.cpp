@@ -2,7 +2,9 @@
 #include <Number.h>
 #include <Circle.h>
 
-Circle::Circle() : radius(0), center() {
+Circle::Circle()
+    : radius(0)
+    , center() {
 }
 
 Circle::Circle(float r, Vec2 p)
@@ -13,10 +15,10 @@ bool Circle::Is(const std::string& type) {
 	return (type == "Cicle");
 }
 
-float Circle::Perimeter() {
-	return 2.0f * Number::Pi * this->radius;
+float Circle::Perimeter() const {
+	return 2.0f * Number::Pi * radius;
 }
 
-float Circle::Area() {
-	return Number::Pi * this->radius * this->radius;
+float Circle::Area() const {
+	return Number::Pi * radius * radius;
 }

@@ -12,33 +12,33 @@
 
 Collider::Collider(GameObject& go, Shape* shape, Vec2 scale, Vec2 offset)
     : Component(go)
-	, shape(shape)
-	, scale(scale)
-	, offset(offset) {
+    , shape(shape)
+    , scale(scale)
+    , offset(offset) {
 }
 
 void Collider::Update(float dt) {
 	UNUSED(dt);
 
-	if (this->shape == nullptr) {
+	if (shape == nullptr) {
 		return;
 	}
 
-	const auto& box = this->associated.box;
+	const auto& box = associated.box;
 
-	if (this->shape->Is("Rect")) {
-		auto rect = static_cast<Rect*>(this->shape);
+	if (shape->Is("Rect")) {
+		auto rect = static_cast<Rect*>(shape);
 		(*rect) = box;
-		rect->width *= this->scale.x;
-		rect->height *= this->scale.y;
+		rect->width *= scale.x;
+		rect->height *= scale.y;
 		rect->SetCenter(box.Center());
-		(*rect) += this->offset.GetRotate(this->associated.angle);
+		(*rect) += offset.GetRotate(associated.angle);
 	} else {
-		auto circle = static_cast<Circle*>(this->shape);
+		auto circle = static_cast<Circle*>(shape);
 
-		circle->center = box.Center() + this->offset.GetRotate(this->associated.angle);
+		circle->center = box.Center() + offset.GetRotate(associated.angle);
 		// TODO: verify if this is ok
-		circle->radius = box.MaxRadius() * this->scale.x;
+		circle->radius = box.MaxRadius() * scale.x;
 	}
 }
 
@@ -48,17 +48,16 @@ void Collider::Update(float dt) {
 // Vec2::operator-( const Vec2& )	- Subtrai dois Vec2
 // Vec2::Rotate( float rad )		- Rotaciona um Vec2 pelo ângulo em radianos passado
 void Collider::Render() {
-#ifdef DEBUG
-	RenderBox(this->associated.box, 255, 0, 0);
+	RenderBox(associated.box, 255, 0, 0);
 
-	if (this->shape->Is("Rect")) {
-		auto rect = (Rect*) shape;
+	if (shape->Is("Rect")) {
+		auto rect = (Rect*)shape;
 		RenderBox(*rect, 0, 255, 0);
 	}
-#endif // DEBUG
 }
 
 void Collider::RenderBox(const Rect& box, int r, int g, int b) {
+	#ifdef DEBUG
 	const Vec2 center(box.Center());
 	SDL_Point points[5];
 
@@ -79,14 +78,15 @@ void Collider::RenderBox(const Rect& box, int r, int g, int b) {
 
 	points[3] = { (int)point.x, (int)point.y };
 
-	SDL_SetRenderDrawColor(Game::GetInstance()->GetRenderer(), r, g, b, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(Game::GetInstance()->GetRenderer(), Uint8(r), Uint8(g), Uint8(b), SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLines(Game::GetInstance()->GetRenderer(), points, 5);
+	#endif // DEBUG
 }
 
-void Collider::SetScale(Vec2 scale) {
-	this->scale = scale;
+void Collider::SetScale(Vec2 _scale) {
+	scale = _scale;
 }
 
-void Collider::SetOffset(Vec2 offset) {
-	this->offset = offset;
+void Collider::SetOffset(Vec2 _offset) {
+	offset = _offset;
 }

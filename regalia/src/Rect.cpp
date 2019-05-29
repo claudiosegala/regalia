@@ -21,7 +21,7 @@ bool Rect::Is(const std::string& type) {
 }
 
 float Rect::MaxRadius() const {
-	return fmax(this->width, this->height) / 2.0f;
+	return fmax(width, height) / 2.0f;
 }
 
 Vec2 Rect::Center() const {
@@ -33,50 +33,50 @@ Vec2 Rect::Center() const {
 }
 
 float Rect::CenterDistance(const Rect& R) const {
-	auto c1 = this->Center();
+	auto c1 = Center();
 	auto c2 = R.Center();
 
 	return Vec2::Distance(c1, c2);
 }
 
 void Rect::SetCenter(const Vec2& V) {
-	this->vector = V - Vec2(this->width / 2, this->height / 2);
+	vector = V - Vec2(width / 2, height / 2);
 }
 
 bool Rect::IsInside(const Vec2& V) const {
-	return (V.x >= this->vector.x && V.x <= this->vector.x + this->width)
-	    && (V.y >= this->vector.y && V.y <= this->vector.y + this->height);
+	return (V.x >= vector.x && V.x <= vector.x + width)
+	    && (V.y >= vector.y && V.y <= vector.y + height);
 }
 
 std::tuple<Vec2, Vec2> Rect::GetPoints() const {
-	auto u = this->vector; // upper left
-	auto v = u + Vec2(this->width, this->height); // down right
+	auto u = vector; // upper left
+	auto v = u + Vec2(width, height); // down right
 
 	return std::make_tuple(v, u);
 }
 
 Vec2 Rect::GetUpperLeft() const {
-	return this->vector;
+	return vector;
 }
 
 Vec2 Rect::GetDownRight() const {
-	return this->vector + Vec2(this->width, this->height);
+	return vector + Vec2(width, height);
 }
 
 Rect Rect::operator+(const Vec2& V) const {
-	return Rect { this->vector + V, this->width, this->height };
+	return Rect { vector + V, width, height };
 }
 
 void Rect::operator+=(const Vec2& V) {
-	this->vector += V;
+	vector += V;
 }
 
 Rect Rect::operator-(const Vec2& V) const {
-	return Rect { this->vector - V, this->width, this->height };
+	return Rect { vector - V, width, height };
 }
 
 void Rect::operator-=(const Vec2& V) {
-	this->vector -= V;
+	vector -= V;
 }
 
 std::ostream& operator<<(std::ostream& out, const Rect& R) {

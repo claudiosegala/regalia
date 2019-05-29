@@ -15,6 +15,8 @@ GameData::PersonaType GameData::Persona1;
 
 GameData::PersonaType GameData::Persona2;
 
+bool GameData::WindowFullscreen = false;
+
 void GameData::Init() {
 	GameData::Started = true;
 	GameData::Paused = false;

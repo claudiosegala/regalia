@@ -3,51 +3,51 @@
 #include <GameObject.h>
 
 GameObject::GameObject() {
-	this->started = false;
-	this->isDead = false;
-	this->angle = 0.0f;
+	started = false;
+	isDead = false;
+	angle = 0.0f;
 }
 
 GameObject::~GameObject() {
-	this->box.~Rect();
-	this->components.clear();
+	box.~Rect();
+	components.clear();
 }
 
 void GameObject::Start() {
-	for (auto& component : this->components) {
+	for (auto& component : components) {
 		component->Start();
 	}
 
-	this->started = true;
+	started = true;
 }
 
 void GameObject::Update(float dt) {
-	for (auto& component : this->components) {
+	for (auto& component : components) {
 		component->Update(dt);
 	}
 }
 
 void GameObject::Render() {
-	for (auto& component : this->components) {
+	for (auto& component : components) {
 		component->Render();
 	}
 }
 
 bool GameObject::IsDead() {
-	return this->isDead;
+	return isDead;
 }
 
 void GameObject::RequestDelete() {
-	this->isDead = true;
+	isDead = true;
 }
 
 void GameObject::RemoveComponent(const Component* cpt) {
-	auto it = std::remove_if(this->components.begin(), this->components.end(), [&cpt](const std::unique_ptr<Component>& c) {
+	auto it = std::remove_if(components.begin(), components.end(), [&cpt](const std::unique_ptr<Component>& c) {
 		return c.get() == cpt;
 	});
 
 	if (it != components.end()) {
-		this->components.erase(it);
+		components.erase(it);
 	}
 
 	for (auto& component : componentsArray) {
@@ -58,7 +58,7 @@ void GameObject::RemoveComponent(const Component* cpt) {
 }
 
 void GameObject::NotifyCollision(GameObject& other) {
-	for (int i = 0; i < (int)this->components.size(); i++) {
-		this->components[i]->NotifyCollision(other);
+	for (int i = 0; i < (int)components.size(); i++) {
+		components[i]->NotifyCollision(other);
 	}
 }

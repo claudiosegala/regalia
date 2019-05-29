@@ -15,7 +15,7 @@
 ScoreState::ScoreState() {
 	Logger::Info("Initializing Story State");
 
-	//this->music.Open(Constants::Story::Music);
+	//music.Open(Constants::Story::Music);
 
 	LoadAssets();
 }
@@ -38,11 +38,13 @@ void ScoreState::LoadAssets() {
 }
 
 void ScoreState::Update(float dt) {
-	this->popRequested = InputManager::IsPopRequested();
-	if (this->popRequested)
+	auto& in = InputManager::GetInstance();
+
+	popRequested = in.PopRequested();
+	if (popRequested)
 		return;
-	this->quitRequested = InputManager::IsQuitRequested();
-	if (this->quitRequested)
+	quitRequested = in.QuitRequested();
+	if (quitRequested)
 		return;
 
 	//auto& in = InputManager::GetInstance();
@@ -50,25 +52,25 @@ void ScoreState::Update(float dt) {
 	//if (in.GamepadPress(Constants::Gamepad::A)) {
 	//	if (GameData::Paused) {
 	//		GameData::Paused = false;
-	//		this->popRequested = 1;
+	//		popRequested = 1;
 	//		return;
 	//	}
 
 	//	if (!GameData::Finished) { // has next set
 	//		Game::Append(new PlayState());
-	//		this->popRequested = 2;
+	//		popRequested = 2;
 	//		return;
 	//	}
 	//}
 
 	//if (in.GamepadPress(Constants::Gamepad::R1)) { // restart
 	//	Game::Append(new PlayState());
-	//	this->popRequested = 2;
+	//	popRequested = 2;
 	//	return;
 	//}
 
 	//if (in.GamepadPress(Constants::Gamepad::R2)) { // quit
-	//	this->quitRequested = true;
+	//	quitRequested = true;
 	//	return;
 	//}
 
@@ -85,7 +87,7 @@ void ScoreState::Start() {
 
 	StartArray();
 
-	this->started = true;
+	started = true;
 }
 
 void ScoreState::Pause() {
@@ -128,7 +130,6 @@ void ScoreState::LoadContinueOptions() {
 	// R1 - Restart
 	// R2 - Quit
 }
-
 
 void ScoreState::LoadFinishedOptions() {
 	//    SCORE

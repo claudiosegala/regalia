@@ -3,14 +3,15 @@
 #include <Component.h>
 #include <Rect.h>
 #include <Vec2.h>
+#include "Sprite.h"
 
 class Player : public Component {
 public:
 	static int counter;
 
-	int id;
+	const int id;
 
-	Player(GameObject& go, int playerId);
+	Player(GameObject& go);
 
 	~Player();
 
@@ -20,13 +21,8 @@ public:
 
 	void Render() override;
 
-	int GetPlayerId() const;
-
 private:
-
 	Constants::Player::State state;
-
-	int playerId;
 
 	int hp;
 
@@ -42,8 +38,8 @@ private:
 
 	void UpdateState();
 
-	void SetState(Constants::Player::State nextState, bool flipAnimation = false);
-	
+	void SetState(Constants::Player::State nextState, Sprite::Direction dirX);
+
 	void Shoot();
 
 	void Move(float dt);
