@@ -25,7 +25,7 @@ PlayState::PlayState() {
 	backgroundIdx = 0;
 	tileSetIdx = 0;
 	tileMapIdx = 0;
-	music.Open(Constants::Play::Music);
+	//music.Open(Constants::Play::Music);
 
 	if (!GameData::Started || GameData::Finished) {
 		GameData::Init();
