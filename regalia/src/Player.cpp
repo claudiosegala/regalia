@@ -73,7 +73,7 @@ int Player::GetPlayerId() const {
 
 void Player::LoadAssets() {
 	associated.AddComponent<Sprite>(&Constants::Player::MisterN);
-	associated.AddComponent<Collider>(&collisionBox, Vec2(0.5f, 0.8f), Vec2(0.0f, 4.0f));
+	associated.AddComponent<Collider>(&collisionBox, Vec2(0.48f, 0.8f), Vec2(0.0f, 4.0f));
 }
 
 void Player::UpdateState() {
@@ -171,9 +171,6 @@ void Player::Move(float dt) {
 	if ((isOnFloor || isOnWall) && isJumping) {
 		speed.y = Constants::Player::JumpForce;
 	}
-
-	W(isOnFloor);
-	W(isOnWall);
 
 	MoveAndSlide(speed, dt);
 }
@@ -275,16 +272,16 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 		const auto p = CalculatePosition(box, velocity, acceleration, delta);
 		const auto ul = p.GetUpperLeft();
 		const auto dr = p.GetDownRight();
-		const auto x1 = int(ul.x) / 24;
-		const auto y1 = int(ul.y) / 24;
-		const auto x2 = int(dr.x) / 24;
-		const auto y2 = int(dr.y) / 24;
+
+		const auto x1 = int(ul.x / 24.0f);
+		const auto y1 = int(ul.y / 24.0f);
+		const auto x2 = int(dr.x / 24.0f);
+		const auto y2 = int(dr.y / 24.0f);
 
 		auto conflict = false;
 
 		if (x1 < 0 || x1 >= columns || y1 < 0 || y1 >= rows || x2 < 0 || x2 >= columns || y2 < 0 || y2 >= rows) {
 			conflict = true;
-			std::cout << "Out of bounds" << std::endl;
 		} else {
 			for (int j = y1; j <= y2; j++) {
 				for (int k = x1; k <= x2; k++) {
@@ -295,20 +292,24 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 				}
 			}
 
-#ifdef DEBUG
-/*for (int j = y1; j <= y2; j++) {
+			#ifdef DEBUG
+			for (int j = y1; j <= y2; j++) {
 				for (int i = x1; i <= x2; i++) {
 					std::cout << collisionSet[j][i];
 				}
 				std::cout << '\n';
 			}
-			std::cout << '\n';*/
-#endif
+			std::cout << '\n';
+			#endif
 		}
 
 		if (!conflict) {
-			ans = fmax(ans, delta);
-			min_delta = delta;
+			W(box)
+			printf("> x1 = %d (%.8f)(%d)(%d)\n", x1, ul.x, int(ul.x), int(ul.x) / 24);
+			printf("> y1 = %d (%.8f)(%d)(%d)\n", y1, ul.y, int(ul.y), int(ul.y) / 24);
+			printf("> x2 = %d (%.8f)(%d)(%d)\n", x2, dr.x, int(dr.x), int(dr.x) / 24);
+			printf("> y2 = %d (%.8f)(%d)(%d)\n", y2, dr.y, int(dr.y), int(dr.y) / 24);
+			ans = min_delta = delta;
 		} else {
 			max_delta = delta;
 		}
