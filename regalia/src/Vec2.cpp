@@ -138,8 +138,8 @@ Vec2 Vec2::operator+=(const Vec2& V) {
 	return (*this);
 }
 
-Vec2 Vec2::operator-(const float x) const {
-	return Vec2(this->x - x, this->y - x);
+Vec2 Vec2::operator-(const float k) const {
+	return Vec2(x - k, y - k);
 }
 
 Vec2 Vec2::operator-(const Vec2& V) const {
