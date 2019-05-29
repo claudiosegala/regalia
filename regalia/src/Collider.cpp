@@ -18,6 +18,7 @@ Collider::Collider(GameObject& go, Shape* shape, Vec2 scale, Vec2 offset)
 }
 
 void Collider::UpdateFather(float dt) {
+	UNUSED(dt);
 	auto& box = associated.box;
 
 	auto rect = static_cast<Rect*>(shape);

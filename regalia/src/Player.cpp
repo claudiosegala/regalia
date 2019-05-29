@@ -292,8 +292,8 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 
 			#ifdef DEBUG
 			for (int j = y1; j <= y2; j++) {
-				for (int i = x1; i <= x2; i++) {
-					std::cout << collisionSet[j][i];
+				for (int k = x1; k <= x2; k++) {
+					std::cout << collisionSet[j][k];
 				}
 				std::cout << '\n';
 			}

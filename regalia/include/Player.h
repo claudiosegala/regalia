@@ -52,7 +52,5 @@ private:
 
 	float FindMaxDelta(const Rect pos, const Vec2 velocity, const Vec2 acceleration, const float dt);
 
-	void CheckBestDelta(Vec2 velocity, float delta);
-
 	void Die();
 };
