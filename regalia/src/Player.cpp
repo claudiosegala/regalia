@@ -185,7 +185,9 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 	speed.y += accumulatedGravity;
 	velocity.y += accumulatedGravity;
 
-	if (Number::Equal(dt, delta)) {
+	dt -= delta;
+
+	if (Number::Zero(dt)) {
 		isOnWall = false;
 		isOnFloor = false;
 		return;
@@ -195,12 +197,12 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 
 	if (!Number::Zero(velocity.x)) {
 		auto horizontal = Vec2 { velocity.x, 0.0f };
-		auto delta_slide = FindMaxDelta(box, horizontal, Vec2(), dt - delta);
+		
+		delta = FindMaxDelta(box, horizontal, Vec2(), dt);
+		pos = CalculatePosition(pos, horizontal, Vec2(), delta);
+		box = CalculatePosition(box, horizontal, Vec2(), delta);
 
-		pos = CalculatePosition(pos, horizontal, Vec2(), delta_slide);
-		box = CalculatePosition(box, horizontal, Vec2(), delta_slide);
-
-		isOnWall = !Number::Equal(dt - delta, delta_slide); // is on wall if could not finish the movement
+		isOnWall = !Number::Equal(dt, delta); // is on wall if could not finish the movement
 
 		if (isOnWall) {
 			speed.x = 0.0f;
@@ -209,17 +211,17 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 
 	/* try slide verticaly */
 	auto vertical = Vec2 { 0.0f, velocity.y };
-	auto delta_slide = FindMaxDelta(box, vertical, Constants::Game::Gravity, dt - delta);
+	
+	delta = FindMaxDelta(box, vertical, Constants::Game::Gravity, dt);
+	pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta);
+	box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta);
 
-	pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta_slide);
-	box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta_slide);
-
-	isOnFloor = !Number::Equal(dt - delta, delta_slide); // is on floor if could not finish the movement
+	isOnFloor = !Number::Equal(dt, delta); // is on floor if could not finish the movement
 
 	if (isOnFloor) {
 		speed.y = 0.0f;
 	} else {
-		speed.y += Constants::Game::Gravity.y * delta_slide * delta_slide; // accumulate gravity
+		speed.y += Constants::Game::Gravity.y * delta * delta; // accumulate gravity
 	}
 }
 
