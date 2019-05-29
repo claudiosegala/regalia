@@ -12,19 +12,19 @@
 
 int Player::counter = 0;
 
-Player::Player(GameObject& go, int playerId)
+Player::Player(GameObject& go)
     : Component(go)
-    , playerId(playerId)
+    , id(Player::counter++)
     , hp(50)
     , speed({ 0, 0 })
     , collisionBox()
     , isOnFloor(false)
     , isOnWall(false) {
-	this->id = ++Player::counter;
-	this->state = Constants::Player::Idle;
+
+	state = Constants::Player::Idle;
 
 	// TODO: discover why there is one tile of shift
-	this->associated.box.SetCenter({ 48.0f, 232.0f });
+	associated.box.SetCenter({ 27.0f, 26.0f });
 
 	LoadAssets();
 }
@@ -40,13 +40,13 @@ void Player::NotifyCollision(GameObject& go) {
 		return;
 	}
 
-	if (bullet->shooterId != this->id) {
+	if (bullet->shooterId != id) {
 		return; //> you cannot fire yourself
 	}
 
-	this->hp -= bullet->GetDamage();
+	hp -= bullet->GetDamage();
 
-	if (this->hp > 0) {
+	if (hp > 0) {
 		return;
 	}
 
@@ -54,6 +54,7 @@ void Player::NotifyCollision(GameObject& go) {
 }
 
 void Player::Update(float dt) {
+	W(dt);
 	//Gravity(dt);
 	Move(dt);
 	Shoot();
@@ -67,47 +68,53 @@ void Player::Update(float dt) {
 void Player::Render() {
 }
 
-int Player::GetPlayerId() const {
-	return playerId;
-}
-
 void Player::LoadAssets() {
 	associated.AddComponent<Sprite>(&Constants::Player::MisterN);
-	associated.AddComponent<Collider>(&collisionBox, Vec2(0.5f, 0.8f), Vec2(0.0f, 4.0f));
+	associated.AddComponent<Collider>(&collisionBox, Vec2(0.48f, 0.8f), Vec2(0.0f, 4.0f));
 }
 
 void Player::UpdateState() {
+	Sprite::Direction dirX;
+
+	if (speed.x > 0) {
+		dirX = Sprite::Direction::Original;
+	} else if (speed.x < 0) {
+		dirX = Sprite::Direction::Flip;
+	} else {
+		dirX = Sprite::Direction::Keep;
+	}
+
 	if (isOnFloor) {
 		if (Number::Zero(speed.x)) {
-			SetState(Constants::Player::Idle);
+			SetState(Constants::Player::Idle, dirX);
 		} else {
-			SetState(Constants::Player::Running, speed.x < 0);
+			SetState(Constants::Player::Running, dirX);
 		}
 	} else {
 		if (speed.y < 0) {
-			SetState(Constants::Player::JumpingUp, speed.x < 0);
+			SetState(Constants::Player::Jumping, dirX);
 		} else {
-			SetState(Constants::Player::JumpingDown, speed.x < 0);
+			SetState(Constants::Player::Falling, dirX);
 		}
 	}
 }
 
-void Player::SetState(Constants::Player::State nextState, bool flipAnimation) {
+void Player::SetState(Constants::Player::State nextState, Sprite::Direction dirX) {
 	state = nextState;
 
 	auto sprite = associated.GetComponent<Sprite>();
-	sprite->SetNextAnimation(nextState, flipAnimation);
+	sprite->SetNextAnimation(nextState, dirX);
 }
 
 void Player::Shoot() {
 	auto& inputManager = InputManager::GetInstance();
 
-	if (inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)) {
-		auto angle = inputManager.GamepadRightStick(playerId).GetAngle();
+	if (inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id) && inputManager.GamepadRightStick(id).GetLength() != 0) {
+		auto angle = inputManager.GamepadRightStick(id).GetAngle();
 		auto pos = Vec2(25, 0).GetRotate(angle) + associated.box.Center();
 
 		BulletData bulletData = {
-			playerId,
+			id,
 			10,
 			angle,
 			20,
@@ -120,21 +127,20 @@ void Player::Shoot() {
 		bulletGO->box.SetCenter(pos);
 		bulletGO->angle = angle;
 
-		auto state = Game::GetInstance()->GetCurrentState();
-		(void)state->AddObject(bulletGO);
+		void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
 	}
 }
 
 void Player::Move(float dt) {
 	auto& in = InputManager::GetInstance();
-	auto direction = in.GamepadLeftStick(playerId);
+	auto direction = in.GamepadLeftStick(id);
 	auto isJumping = false;
 
 	if (direction.IsOrigin()) { // No input from gamepad stick, look for other inputs
-		const auto keyUp = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, playerId);
-		const auto keyDown = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, playerId);
-		const auto keyLeft = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, playerId);
-		const auto keyRight = in.IsKeyDown(Constants::Key::D) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, playerId);
+		const auto keyUp = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, id);
+		const auto keyDown = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, id);
+		const auto keyLeft = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
+		const auto keyRight = in.IsKeyDown(Constants::Key::D) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, id);
 
 		if (keyUp) {
 			isJumping = true;
@@ -153,34 +159,38 @@ void Player::Move(float dt) {
 		}
 	}
 
-	this->speed.x = direction.x * Constants::Player::SpeedMultiplier;
-
-	if ((this->isOnFloor || this->isOnWall) && isJumping) {
-		this->speed.y = Constants::Player::JumpForce;
+	if (in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, id)) {
+		isJumping = true;
 	}
 
-	MoveAndSlide(this->speed, dt);
+	speed.x = direction.x * Constants::Player::SpeedMultiplier;
+
+	if ((isOnFloor || isOnWall) && isJumping) {
+		speed.y = Constants::Player::JumpForce;
+	}
+
+	MoveAndSlide(speed, dt);
 }
 
 void Player::MoveAndSlide(Vec2 velocity, float dt) {
-	auto box = this->collisionBox;
-	auto& pos = this->associated.box;
+	// auto box = collisionBox;
+	auto& pos = associated.box;
 
 	/* try to move diagonaly */
-	auto delta = FindMaxDelta(box, velocity, Constants::Game::Gravity, dt);
+	auto delta = FindMaxDelta(pos, velocity, Constants::Game::Gravity, dt);
 
 	pos = CalculatePosition(pos, velocity, Constants::Game::Gravity, delta);
-	box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
+	// box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
 
 	auto accumulatedGravity = Constants::Game::Gravity.y * delta * delta;
-	this->speed.y += accumulatedGravity;
+	speed.y += accumulatedGravity;
 	velocity.y += accumulatedGravity;
 
 	dt -= delta;
 
 	if (Number::Zero(dt)) {
-		this->isOnWall = false;
-		this->isOnFloor = false;
+		isOnWall = false;
+		isOnFloor = false;
 		return;
 	}
 
@@ -188,33 +198,31 @@ void Player::MoveAndSlide(Vec2 velocity, float dt) {
 
 	if (!Number::Zero(velocity.x)) {
 		auto horizontal = Vec2 { velocity.x, 0.0f };
-
-		delta = FindMaxDelta(box, horizontal, Vec2(), dt);
+		
+		delta = FindMaxDelta(pos, horizontal, Vec2(), dt);
 		pos = CalculatePosition(pos, horizontal, Vec2(), delta);
-		box = CalculatePosition(box, horizontal, Vec2(), delta);
+		// box = CalculatePosition(box, horizontal, Vec2(), delta);
 
-		this->isOnWall = !Number::Equal(dt, delta); // is on wall if could not finish the movement
+		isOnWall = !Number::Equal(dt, delta); // is on wall if could not finish the movement
 
-		if (this->isOnWall) {
-			this->speed.x = 0.0f;
-			// TODO: slow fall down when it is on wall
-			//this->speed.Limit(Constants::Player::GravityOnWall);
+		if (isOnWall) {
+			speed.x = 0.0f;
 		}
 	}
 
 	/* try slide verticaly */
 	auto vertical = Vec2 { 0.0f, velocity.y };
-
-	delta = FindMaxDelta(box, vertical, Constants::Game::Gravity, dt);
+	
+	delta = FindMaxDelta(pos, vertical, Constants::Game::Gravity, dt);
 	pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta);
-	box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta);
+	// box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta);
 
-	this->isOnFloor = !Number::Equal(dt, delta); // is on floor if could not finish the movement
+	isOnFloor = !Number::Equal(dt, delta); // is on floor if could not finish the movement
 
-	if (this->isOnFloor) {
-		this->speed.y = 0.0f;
+	if (isOnFloor) {
+		speed.y = 0.0f;
 	} else {
-		this->speed.y += Constants::Game::Gravity.y * delta * delta; // accumulate gravity
+		speed.y += Constants::Game::Gravity.y * delta * delta; // accumulate gravity
 	}
 }
 
@@ -242,9 +250,6 @@ std::vector<std::vector<int>> Player::GetCollisionSet() {
 
 // TODO: change to calculate velocity and return a vec2, let the box + v to be in another place
 Rect Player::CalculatePosition(const Rect box, const Vec2 velocity, const Vec2 acceleration, const float dt) {
-	if (Number::Zero(dt)) {
-		return box;
-	}
 	auto v = (velocity + acceleration * dt) * dt;
 
 	v.Limit(Constants::Game::MaxVelocity);
@@ -253,10 +258,6 @@ Rect Player::CalculatePosition(const Rect box, const Vec2 velocity, const Vec2 a
 }
 
 float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 acceleration, const float dt) {
-	if (Number::Zero(dt)) {
-		return dt;
-	}
-
 	const auto collisionSet = GetCollisionSet();
 	const auto rows = int(collisionSet.size());
 	const auto columns = int(collisionSet[0].size());
@@ -271,10 +272,10 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 		const auto ul = p.GetUpperLeft();
 		const auto dr = p.GetDownRight();
 
-		const auto x1 = int(ul.x) / 24;
-		const auto y1 = int(ul.y) / 24;
-		const auto x2 = int(dr.x) / 24;
-		const auto y2 = int(dr.y) / 24;
+		const auto x1 = int(ul.x / 24.0f);
+		const auto y1 = int(ul.y / 24.0f);
+		const auto x2 = int(dr.x / 24.0f);
+		const auto y2 = int(dr.y / 24.0f);
 
 		auto conflict = false;
 
@@ -282,8 +283,8 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 			conflict = true;
 		} else {
 			for (int j = y1; j <= y2; j++) {
-				for (int i = x1; i <= x2; i++) {
-					if (collisionSet[j][i]) {
+				for (int k = x1; k <= x2; k++) {
+					if (collisionSet[j][k]) {
 						conflict = true;
 						//break;
 					}
@@ -292,8 +293,11 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 		}
 
 		if (!conflict) {
-			ans = fmax(ans, delta);
-			min_delta = delta;
+			// printf("> x1 = %d (%.8f)(%d)(%d)\n", x1, ul.x, int(ul.x), int(ul.x) / 24);
+			// printf("> y1 = %d (%.8f)(%d)(%d)\n", y1, ul.y, int(ul.y), int(ul.y) / 24);
+			// printf("> x2 = %d (%.8f)(%d)(%d)\n", x2, dr.x, int(dr.x), int(dr.x) / 24);
+			// printf("> y2 = %d (%.8f)(%d)(%d)\n", y2, dr.y, int(dr.y), int(dr.y) / 24);
+			ans = min_delta = delta;
 		} else {
 			max_delta = delta;
 		}
@@ -303,7 +307,7 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 }
 
 void Player::Die() {
-	this->associated.RequestDelete();
+	associated.RequestDelete();
 
 	// TODO: add animation of death
 }

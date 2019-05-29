@@ -8,7 +8,12 @@
 
 class Collider : public Component {
 public:
+	
+	Shape* shape;
+
 	Collider(GameObject& go, Shape* shape, Vec2 scale = { 1, 1 }, Vec2 offset = { 0, 0 });
+
+	void UpdateFather(float dt);
 
 	void Update(float dt) override;
 
@@ -21,7 +26,6 @@ public:
 	void SetOffset(Vec2 offset);
 
 private:
-	Shape* shape;
 
 	Vec2 scale;
 
