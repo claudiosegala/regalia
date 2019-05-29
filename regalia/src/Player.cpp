@@ -108,7 +108,7 @@ void Player::SetState(Constants::Player::State nextState, Sprite::Direction dirX
 void Player::Shoot() {
 	auto& inputManager = InputManager::GetInstance();
 
-	if (inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
+	if (inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id) && inputManager.GamepadRightStick(id).GetLength() != 0) {
 		auto angle = inputManager.GamepadRightStick(id).GetAngle();
 		auto pos = Vec2(25, 0).GetRotate(angle) + associated.box.Center();
 
