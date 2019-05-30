@@ -34,7 +34,7 @@ public:
 
 	Vec2 GetUpperLeft() const;
 
-	Vec2 GetDownRight() const;
+	Vec2 GetLowerRight() const;
 
 	Rect operator+(const Vec2&) const;
 

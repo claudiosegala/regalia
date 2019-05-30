@@ -14,12 +14,7 @@ int Player::counter = 0;
 
 Player::Player(GameObject& go)
     : Component(go)
-    , id(Player::counter++)
-    , hp(50)
-    , speed({ 0, 0 })
-    , collisionBox()
-    , isOnFloor(false)
-    , isOnWall(false) {
+    , id(counter++) {
 
 	state = Constants::Player::Idle;
 
@@ -41,22 +36,21 @@ void Player::NotifyCollision(GameObject& go) {
 	}
 
 	if (bullet->shooterId != id) {
-		return; //> you cannot fire yourself
+		return; // you cannot shoot yourself
 	}
 
 	hp -= bullet->GetDamage();
 
-	if (hp > 0) {
-		return;
+	if (hp <= 0) {
+		Die();
 	}
-
-	Die();
 }
 
 void Player::Update(float dt) {
 	W(dt);
-	//Gravity(dt);
-	Move(dt);
+
+	UpdateSpeed(dt);
+	MoveAndSlide(dt);
 	Shoot();
 
 	UpdateState();
@@ -109,121 +103,87 @@ void Player::SetState(Constants::Player::State nextState, Sprite::Direction dirX
 void Player::Shoot() {
 	auto& inputManager = InputManager::GetInstance();
 
-	if (inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id) && inputManager.GamepadRightStick(id).GetLength() != 0) {
-		auto angle = inputManager.GamepadRightStick(id).GetAngle();
-		auto pos = Vec2(25, 0).GetRotate(angle) + associated.box.Center();
-
-		BulletData bulletData = {
-			id,
-			10,
-			angle,
-			20,
-			500,
-			&Constants::Bullet::DefaultSpriteSheet
-		};
-
-		auto bulletGO = new GameObject();
-		bulletGO->AddComponent<Bullet>(bulletData);
-		bulletGO->box.SetCenter(pos);
-		bulletGO->angle = angle;
-
-		void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
-	}
-}
-
-void Player::Move(float dt) {
-	auto& in = InputManager::GetInstance();
-	auto direction = in.GamepadLeftStick(id);
-	auto isJumping = false;
-
-	if (direction.IsOrigin()) { // No input from gamepad stick, look for other inputs
-		const auto keyUp = in.IsKeyDown(Constants::Key::W) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, id);
-		const auto keyDown = in.IsKeyDown(Constants::Key::S) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN, id);
-		const auto keyLeft = in.IsKeyDown(Constants::Key::A) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
-		const auto keyRight = in.IsKeyDown(Constants::Key::D) || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, id);
-
-		if (keyUp) {
-			isJumping = true;
-		}
-
-		if (keyDown) {
-			// nothing
-		}
-
-		if (keyLeft) {
-			direction.x -= 1;
-		}
-
-		if (keyRight) {
-			direction.x += 1;
-		}
-	}
-
-	if (in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, id)) {
-		isJumping = true;
-	}
-
-	speed.x = direction.x * Constants::Player::SpeedMultiplier;
-
-	if ((isOnFloor || isOnWall) && isJumping) {
-		speed.y = Constants::Player::JumpForce;
-	}
-
-	MoveAndSlide(speed, dt);
-}
-
-void Player::MoveAndSlide(Vec2 velocity, float dt) {
-	// auto box = collisionBox;
-	auto& pos = associated.box;
-
-	/* try to move diagonaly */
-	auto delta = FindMaxDelta(pos, velocity, Constants::Game::Gravity, dt);
-
-	pos = CalculatePosition(pos, velocity, Constants::Game::Gravity, delta);
-	// box = CalculatePosition(box, velocity, Constants::Game::Gravity, delta);
-
-	auto accumulatedGravity = Constants::Game::Gravity.y * delta * delta;
-	speed.y += accumulatedGravity;
-	velocity.y += accumulatedGravity;
-
-	dt -= delta;
-
-	if (Number::Zero(dt)) {
-		isOnWall = false;
-		isOnFloor = false;
+	if (!inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id) 
+		|| inputManager.GamepadRightStick(id).GetLength() == 0) {
 		return;
 	}
 
-	/* try slide horizontaly */
+	const auto angle = inputManager.GamepadRightStick(id).GetAngle();
+	const auto pos = Vec2(25, 0).GetRotate(angle) + associated.box.Center();
 
-	if (!Number::Zero(velocity.x)) {
-		auto horizontal = Vec2 { velocity.x, 0.0f };
-		
-		delta = FindMaxDelta(pos, horizontal, Vec2(), dt);
-		pos = CalculatePosition(pos, horizontal, Vec2(), delta);
-		// box = CalculatePosition(box, horizontal, Vec2(), delta);
+	BulletData bulletData = {
+		id,
+		10,
+		angle,
+		20,
+		500,
+		&Constants::Bullet::DefaultSpriteSheet
+	};
 
-		isOnWall = !Number::Equal(dt, delta); // is on wall if could not finish the movement
+	auto bulletGO = new GameObject();
+	bulletGO->AddComponent<Bullet>(bulletData);
+	bulletGO->box.SetCenter(pos);
+	bulletGO->angle = angle;
 
-		if (isOnWall) {
-			speed.x = 0.0f;
-		}
+	void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
+}
+
+void Player::UpdateSpeed(float dt) {
+	auto& in = InputManager::GetInstance();
+	auto direction = in.GamepadLeftStick(id);
+
+	const auto jump = in.IsKeyDown(Constants::Key::W)
+		|| in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
+		|| in.GamepadPress(SDL_CONTROLLER_BUTTON_A, id);
+
+	const auto keyLeft = in.IsKeyDown(Constants::Key::A)
+		|| in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
+
+	const auto keyRight = in.IsKeyDown(Constants::Key::D) 
+		|| in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, id);
+
+	if (keyLeft) {
+		direction.x -= 1;
 	}
 
-	/* try slide verticaly */
-	auto vertical = Vec2 { 0.0f, velocity.y };
+	if (keyRight) {
+		direction.x += 1;
+	}
+
+	speed.x = direction.x * Constants::Player::SpeedMultiplier;
+	speed.y += Constants::Game::Gravity * dt;
+
+	// TODO: WallJump should be treated differently
+	if ((isOnFloor || isOnWall) && jump) {
+		speed.y = Constants::Player::JumpSpeed;
+	}
+
+	speed.Limit(Constants::Game::MaxVelocity);
+}
+
+void Player::MoveAndSlide(float dt) {
+	//auto& box = collisionBox;
+	//auto& pos = associated.box;
+	auto& box = collisionBox;
+	auto startingPosition = box.vector;
+
+	// Find maximum vertical movement
+	auto delta = FindMaxDelta(box, { 0.f, speed.y }, dt);
+
+	isOnFloor = !Number::Zero(delta - dt);
+	box.vector.y += speed.y * delta;
+
+	// Find maximum horizontal movement
+	delta = FindMaxDelta(box, { speed.x, 0.f }, dt);
+
+	isOnWall = !Number::Zero(delta - dt);
+	box.vector.x += speed.x * delta;
 	
-	delta = FindMaxDelta(pos, vertical, Constants::Game::Gravity, dt);
-	pos = CalculatePosition(pos, vertical, Constants::Game::Gravity, delta);
-	// box = CalculatePosition(box, vertical, Constants::Game::Gravity, delta);
-
-	isOnFloor = !Number::Equal(dt, delta); // is on floor if could not finish the movement
-
 	if (isOnFloor) {
 		speed.y = 0.0f;
-	} else {
-		speed.y += Constants::Game::Gravity.y * delta * delta; // accumulate gravity
 	}
+
+	associated.box += box.vector - startingPosition;
 }
 
 std::vector<std::vector<int>> Player::GetCollisionSet() {
@@ -248,16 +208,7 @@ std::vector<std::vector<int>> Player::GetCollisionSet() {
 	return collisionSet;
 }
 
-// TODO: change to calculate velocity and return a vec2, let the box + v to be in another place
-Rect Player::CalculatePosition(const Rect box, const Vec2 velocity, const Vec2 acceleration, const float dt) {
-	auto v = (velocity + acceleration * dt) * dt;
-
-	v.Limit(Constants::Game::MaxVelocity);
-
-	return box + v;
-}
-
-float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 acceleration, const float dt) {
+float Player::FindMaxDelta(const Rect& box, const Vec2& velocity, const float dt) {
 	const auto collisionSet = GetCollisionSet();
 	const auto rows = int(collisionSet.size());
 	const auto columns = int(collisionSet[0].size());
@@ -268,35 +219,33 @@ float Player::FindMaxDelta(const Rect box, const Vec2 velocity, const Vec2 accel
 
 	for (int i = 0; i < 20; i++) {
 		const auto delta = (max_delta + min_delta) / 2.f;
-		const auto p = CalculatePosition(box, velocity, acceleration, delta);
+		const auto p = box + velocity * delta;
 		const auto ul = p.GetUpperLeft();
-		const auto dr = p.GetDownRight();
+		const auto dr = p.GetLowerRight();
 
 		const auto x1 = int(ul.x / 24.0f);
 		const auto y1 = int(ul.y / 24.0f);
 		const auto x2 = int(dr.x / 24.0f);
 		const auto y2 = int(dr.y / 24.0f);
 
-		auto conflict = false;
+		auto collision = false;
 
 		if (x1 < 0 || x1 >= columns || y1 < 0 || y1 >= rows || x2 < 0 || x2 >= columns || y2 < 0 || y2 >= rows) {
-			conflict = true;
+			collision = true;
 		} else {
 			for (int j = y1; j <= y2; j++) {
 				for (int k = x1; k <= x2; k++) {
 					if (collisionSet[j][k]) {
-						conflict = true;
-						//break;
+						collision = true;
+						// These assignments cause both loops to terminate
+						j = y2;
+						k = x2;
 					}
 				}
 			}
 		}
 
-		if (!conflict) {
-			// printf("> x1 = %d (%.8f)(%d)(%d)\n", x1, ul.x, int(ul.x), int(ul.x) / 24);
-			// printf("> y1 = %d (%.8f)(%d)(%d)\n", y1, ul.y, int(ul.y), int(ul.y) / 24);
-			// printf("> x2 = %d (%.8f)(%d)(%d)\n", x2, dr.x, int(dr.x), int(dr.x) / 24);
-			// printf("> y2 = %d (%.8f)(%d)(%d)\n", y2, dr.y, int(dr.y), int(dr.y) / 24);
+		if (!collision) {
 			ans = min_delta = delta;
 		} else {
 			max_delta = delta;

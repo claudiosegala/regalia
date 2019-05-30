@@ -24,9 +24,7 @@ Text::~Text() {
 		SDL_DestroyTexture(texture);
 	}
 
-	if (timer != nullptr) {
-		delete timer;
-	}
+	delete timer;
 }
 
 void Text::Update(float dt) {

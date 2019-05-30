@@ -24,15 +24,15 @@ public:
 private:
 	Constants::Player::State state;
 
-	int hp;
+	int hp = Constants::Player::Hp;
 
-	Vec2 speed;
+	Vec2 speed = { 0, 0 };
 
 	Rect collisionBox;
 
-	bool isOnFloor;
+	bool isOnFloor = false;
 
-	bool isOnWall;
+	bool isOnWall = false;
 
 	void LoadAssets();
 
@@ -42,15 +42,13 @@ private:
 
 	void Shoot();
 
-	void Move(float dt);
+	void UpdateSpeed(float dt);
 
-	void MoveAndSlide(Vec2 velocity, float dt);
+	void MoveAndSlide(float dt);
 
 	std::vector<std::vector<int>> GetCollisionSet();
 
-	Rect CalculatePosition(const Rect pos, const Vec2 velocity, const Vec2 acceleration, const float dt);
-
-	float FindMaxDelta(const Rect pos, const Vec2 velocity, const Vec2 acceleration, const float dt);
+	float FindMaxDelta(const Rect& box, const Vec2& velocity, const float dt);
 
 	void Die();
 };

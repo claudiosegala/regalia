@@ -59,7 +59,7 @@ Vec2 Rect::GetUpperLeft() const {
 	return vector;
 }
 
-Vec2 Rect::GetDownRight() const {
+Vec2 Rect::GetLowerRight() const {
 	return vector + Vec2(width, height);
 }
 

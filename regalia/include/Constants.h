@@ -24,7 +24,7 @@ namespace Game {
 	const int Players = 2;
 	const float SetLenght = 45.0f;
 	const float MaxVelocity = 1000.0f;
-	const Vec2 Gravity = { 0.0f, 2000.0f };
+	const float Gravity = 500.0f;
 }
 
 namespace SharedAssets {
@@ -129,25 +129,6 @@ namespace Mouse {
 }
 
 namespace Gamepad {
-	// TODO: replace
-	const int ArrowLeft = SDLK_LEFT;
-	const int ArrowRight = SDLK_RIGHT;
-	const int ArrowUp = SDLK_UP;
-	const int ArrowDown = SDLK_DOWN;
-
-	const int Select = SDLK_ESCAPE;
-	const int Start = SDLK_SPACE;
-
-	const int Cross = SDLK_a;
-	const int Ball = SDLK_d;
-	const int Square = SDLK_w;
-	const int Triangle = SDLK_s;
-
-	const int R1 = SDLK_LEFT;
-	const int R2 = SDLK_RIGHT;
-	const int L1 = SDLK_UP;
-	const int L2 = SDLK_DOWN;
-
 	const int StickDeadZone = 8000;
 	const int TriggerDeadZone = 8000;
 }
@@ -188,7 +169,9 @@ namespace Player {
 
 	const float SpeedMultiplier = 100.0f;
 
-	const float JumpForce = -100.0f;
+	const float JumpSpeed = -300.0f;
+
+	const int Hp = 50;
 
 	const SpriteSheetData MisterN(
 	    "assets/img/mister_n_spritesheet.png",
