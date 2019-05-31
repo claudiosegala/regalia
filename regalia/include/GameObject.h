@@ -16,7 +16,7 @@ public:
 
 	void Render();
 
-	bool IsDead();
+	bool IsDead() const;
 
 	void RequestDelete();
 

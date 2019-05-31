@@ -32,7 +32,7 @@ void GameObject::Render() {
 	}
 }
 
-bool GameObject::IsDead() {
+bool GameObject::IsDead() const {
 	return isDead;
 }
 

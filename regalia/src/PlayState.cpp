@@ -75,6 +75,7 @@ void PlayState::Update(float dt) {
 
 	CheckCollision();
 	UpdateArray(dt);
+	PruneArray();
 }
 
 void PlayState::Render() {
