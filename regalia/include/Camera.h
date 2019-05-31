@@ -11,15 +11,14 @@ public:
 
 	static void Reset();
 
-	static void Follow(GameObject*);
+	static void Follow(GameObject* go);
 
 	static void Unfollow();
 
-	static void Update(float);
+	static void Update(float dt);
 
 private:
-	static float const pace;
-
+	// TODO: change this to a shared_ptr
 	static GameObject* focus;
 
 	static Vec2 GetMovement();

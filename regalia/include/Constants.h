@@ -27,6 +27,10 @@ namespace Game {
 	const float Gravity = 500.0f;
 }
 
+namespace Camera {
+	const int Pace = 1500.0f;
+}
+
 namespace SharedAssets {
 	namespace Music {
 
