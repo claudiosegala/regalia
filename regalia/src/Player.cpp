@@ -58,10 +58,15 @@ void Player::Update(float dt) {
 }
 
 void Player::Render() {
+#ifdef DEBUG
+	collisionBox.Render(0, 255, 0);
+	associated.box.Render(255, 0, 0);
+#endif // DEBUG
 }
 
 void Player::LoadAssets() {
 	associated.AddComponent<Sprite>(&Constants::Player::MisterN);
+	collisionBox = Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 	//associated.AddComponent<Collider>(&collisionBox, Vec2(0.48f, 0.8f), Vec2(0.0f, 4.0f));
 }
 
@@ -160,12 +165,17 @@ void Player::UpdateSpeed(float dt) {
 }
 
 void Player::MoveAndSlide(float dt) {
-	auto& pos = associated.box;
-	Rect box(pos.vector + Vec2(13, 11), 22, 36);
-	auto startingPosition = box.vector;
+	auto& box = collisionBox;
+	const auto startingPosition = box.vector;
+
+	// Find maximum diagonal movement
+	auto delta = FindMaxDelta(box, speed, dt);
+	box += speed * delta;
+
+	dt -= delta;
 
 	// Find maximum vertical movement
-	auto delta = FindMaxDelta(box, { 0.f, speed.y }, dt);
+	delta = FindMaxDelta(box, { 0.f, speed.y }, dt);
 
 	isOnFloor = !Number::Zero(delta - dt);
 	box.vector.y += speed.y * delta;

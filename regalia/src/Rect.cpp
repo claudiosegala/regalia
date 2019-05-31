@@ -1,5 +1,7 @@
 #include <pch.h>
 #include <Rect.h>
+#include "Camera.h"
+#include "Game.h"
 
 Rect::Rect()
     : vector()
@@ -20,6 +22,31 @@ Rect::Rect(const Vec2& upperLeft, const Vec2& bottomRight)
     : vector(upperLeft)
     , width(bottomRight.x - upperLeft.x)
     , height(bottomRight.y - upperLeft.y) {}
+
+void Rect::Render(int r, int g, int b) const {
+	const Vec2 center(Center());
+	SDL_Point points[5];
+
+	Vec2 point = Vec2(vector.x, vector.y) - Camera::pos;
+
+	points[0] = { int(point.x), int(point.y) };
+	points[4] = { int(point.x), int(point.y) };
+
+	point = Vec2(vector.x + width, vector.y) - Camera::pos;
+
+	points[1] = { int(point.x), int(point.y) };
+
+	point = Vec2(vector.x + width, vector.y + height) - Camera::pos;
+
+	points[2] = { int(point.x), int(point.y) };
+
+	point = Vec2(vector.x, vector.y + height) - Camera::pos;
+
+	points[3] = { int(point.x), int(point.y) };
+
+	SDL_SetRenderDrawColor(Game::GetInstance()->GetRenderer(), Uint8(r), Uint8(g), Uint8(b), SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawLines(Game::GetInstance()->GetRenderer(), points, 5);
+}
 
 bool Rect::Is(const std::string& type) {
 	return (type == "Rect");
