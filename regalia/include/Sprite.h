@@ -31,7 +31,7 @@ public:
 
 	Vec2 GetScale() const;
 
-	void Update(float) override;
+	void Update(float dt) override;
 
 	void Render() override;
 

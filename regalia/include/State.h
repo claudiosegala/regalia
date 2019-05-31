@@ -10,7 +10,7 @@ public:
 
 	virtual void LoadAssets() = 0;
 
-	virtual void Update(float) = 0;
+	virtual void Update(float dt) = 0;
 
 	virtual void Render() = 0;
 

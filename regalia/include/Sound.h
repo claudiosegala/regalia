@@ -5,7 +5,7 @@
 
 class Sound : public Component {
 public:
-	Sound(GameObject&);
+	Sound(GameObject& go);
 
 	Sound(GameObject& go, const std::string& file);
 
@@ -19,7 +19,7 @@ public:
 
 	bool IsOpen();
 
-	void Update(float) override;
+	void Update(float dt) override;
 
 	void Render() override;
 

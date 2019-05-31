@@ -6,7 +6,7 @@ public:
 
 	void SetStart(float);
 
-	void Update(float);
+	void Update(float dt);
 
 	void Restart();
 

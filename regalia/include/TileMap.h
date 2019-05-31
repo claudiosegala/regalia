@@ -17,7 +17,7 @@ public:
 
 	int& At(int, int, int z = 0);
 
-	void Update(float) override;
+	void Update(float dt) override;
 
 	void Render() override;
 

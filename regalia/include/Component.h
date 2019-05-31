@@ -5,13 +5,13 @@ class GameObject;
 
 class Component {
 public:
-	Component(GameObject&);
+	Component(GameObject& go);
 
 	virtual ~Component();
 
 	virtual void Start();
 
-	virtual void NotifyCollision(GameObject&);
+	virtual void NotifyCollision(GameObject& go);
 
 	virtual void Update(float dt) = 0;
 

@@ -12,7 +12,7 @@ public:
 
 	void LoadAssets() override;
 
-	void Update(float) override;
+	void Update(float dt) override;
 
 	void Render() override;
 

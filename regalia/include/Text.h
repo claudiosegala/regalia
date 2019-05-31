@@ -16,7 +16,7 @@ public:
 
 	~Text();
 
-	void Update(float) override;
+	void Update(float dt) override;
 
 	void Render() override;
 

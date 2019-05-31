@@ -12,7 +12,7 @@ public:
 
 	void Start();
 
-	void Update(float);
+	void Update(float dt);
 
 	void Render();
 
