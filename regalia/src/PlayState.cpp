@@ -135,7 +135,7 @@ void PlayState::CreateField() {
 
 void PlayState::CreatePlayers() {
 	CreatePlayer();
-	//CreatePlayer();
+	CreatePlayer();
 }
 
 void PlayState::CreatePlayer() {

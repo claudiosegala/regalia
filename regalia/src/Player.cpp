@@ -118,8 +118,8 @@ void Player::Shoot() {
 		id,
 		10,
 		angle,
-		100,
-		500,
+		200,
+		1000,
 		&Constants::Bullet::DefaultSpriteSheet
 	};
 
