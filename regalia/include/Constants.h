@@ -10,8 +10,8 @@ namespace Constants {
 const int NumberOfComponentsTypes = 32;
 
 namespace Window {
-	const int Width = 480;
-	const int Height = 336;
+	const int Width = 960;
+	const int Height = 528;
 	const std::string Name = "Regalia";
 	const Vec2 Center = {
 		float(Width) / 2.0f,
