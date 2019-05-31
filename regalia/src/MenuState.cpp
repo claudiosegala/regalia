@@ -30,7 +30,7 @@ void MenuState::LoadAssets() {
 	(void)AddObject(CreateOption("Story", { 0, 75 }));
 	(void)AddObject(CreateOption("Credits", { 0, 150 }));
 
-	cursor = AddObject(CreateOption(">", { -75, 0 })); //> points towards first position
+	cursor = AddObject(CreateOption("-", { -110, 0 })); //> points towards first position
 }
 
 void MenuState::Update(float dt) {
@@ -50,8 +50,8 @@ void MenuState::Update(float dt) {
 
 		if (auto ptr = cursor.lock()) {
 			const auto pos = Vec2 {
-				Constants::Window::Width / 2 - 75,
-				Constants::Window::Height / 2 + option * 75
+				Constants::Window::Width / 2 - 110,
+				Constants::Window::Height / 4 + option * 75
 			};
 
 			ptr->box.SetCenter(pos);
@@ -63,8 +63,8 @@ void MenuState::Update(float dt) {
 
 		if (auto ptr = cursor.lock()) {
 			const auto pos = Vec2 {
-				Constants::Window::Width / 2 - 75,
-				Constants::Window::Height / 2 + option * 75
+				Constants::Window::Width / 2 - 110,
+				Constants::Window::Height / 4 + option * 75
 			};
 
 			ptr->box.SetCenter(pos);
@@ -126,14 +126,14 @@ GameObject* MenuState::CreateBackground() {
 GameObject* MenuState::CreateOption(const std::string& message, Vec2 shift) {
 	const auto pos = Vec2 {
 		Constants::Window::Width / 2,
-		Constants::Window::Height / 2
+		Constants::Window::Height / 4
 	};
 
-	const auto textAsset = "assets/font/Call me maybe.ttf";
+	const auto textAsset = "assets/font/Dark Crystal.ttf";
 
 	auto go = new GameObject();
 
-	go->AddComponent<Text>(textAsset, Constants::Menu::TextSize, Text::TextStyle::SOLID, message, Constants::Colors::Red);
+	go->AddComponent<Text>(textAsset, Constants::Menu::TextSize, Text::TextStyle::BLENDED, message, Constants::Colors::Red);
 
 	go->box.SetCenter(pos + shift);
 

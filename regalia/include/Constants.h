@@ -46,7 +46,7 @@ namespace SharedAssets {
 }
 
 namespace Menu {
-	const int TextSize = 20;
+	const int TextSize = 48;
 
 	const std::string Music = "assets/audio/opening.ogg";
 	const std::string Background = "assets/img/tileSet_01.png";
