@@ -28,17 +28,20 @@ void PlayerAim::Update(float dt) {
 	auto playerId = currentPlayer->GetComponent<Player>()->id;
 
 	auto& in = InputManager::GetInstance();
-	auto rightStickVec = in.GamepadRightStick(playerId);
+	auto stick = in.GamepadRightStick(playerId);
+	auto show = stick.x != 0 || stick.y != 0;
 
-	if (rightStickVec.x == 0 && rightStickVec.y == 0) {
+	associated.hide = !show;
+
+	if (!show) {
 		associated.hide = true;
 		return;
 	}
 
-	auto angle = rightStickVec.GetAngle();
-	auto position = Vec2(50, 0).GetRotate(angle) + currentPlayer->box.Center();
+	auto angle = stick.GetAngle();
+	auto dist = Constants::Player::ArrowDistance;
+	auto position = dist.GetRotate(angle) + currentPlayer->box.Center();
 
-	associated.hide = false;
 	associated.box.SetCenter(position);
 	associated.angle = angle;
 }

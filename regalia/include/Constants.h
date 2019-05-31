@@ -177,6 +177,8 @@ namespace Player {
 
 	const int Hp = 50;
 
+	const Vec2 ArrowDistance = Vec2(50, 0);
+
 	const SpriteSheetData MisterN(
 	    "assets/img/mister_n_spritesheet.png",
 	    432,
