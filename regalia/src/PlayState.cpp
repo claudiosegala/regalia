@@ -25,7 +25,7 @@ PlayState::PlayState() {
 	backgroundIdx = 0;
 	tileSetIdx = 0;
 	tileMapIdx = 0;
-	//music.Open(Constants::Play::Music);
+	music.Open(Constants::Play::Music);
 
 	if (!GameData::Started || GameData::Finished) {
 		GameData::Init();
@@ -75,6 +75,7 @@ void PlayState::Update(float dt) {
 
 	CheckCollision();
 	UpdateArray(dt);
+	PruneArray();
 }
 
 void PlayState::Render() {
@@ -113,14 +114,23 @@ void PlayState::CreateField() {
 	auto& tileSet = GetTileSetData(rnd);
 	auto& tileMap = GetTileMapData(rnd);
 
-	auto go = new GameObject();
+	auto backgroundGO = new GameObject();
 
-	go->AddComponent<Sprite>(back.file);
-	go->AddComponent<TileMap>(tileMap.file, new TileSet(*go, tileSet.width, tileSet.height, tileSet.file));
+	backgroundGO->AddComponent<Sprite>(back.file);
 
-	go->box.vector = Vec2(0, 0);
+	// TODO: Remove when we have a better background image
+	backgroundGO->box.width = Constants::Window::Width;
+	backgroundGO->box.height = Constants::Window::Height;
 
-	(void)AddObject(go);
+	(void)AddObject(backgroundGO);
+
+	auto tileMapGO = new GameObject();
+
+	tileMapGO->AddComponent<TileMap>(tileMap.file, new TileSet(*tileMapGO, tileSet.width, tileSet.height, tileSet.file));
+
+	tileMapGO->box.vector = Vec2(0, 0);
+
+	(void)AddObject(tileMapGO);
 }
 
 void PlayState::CreatePlayers() {

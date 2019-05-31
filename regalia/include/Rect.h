@@ -18,6 +18,10 @@ public:
 
 	Rect(float x, float y, float w, float h);
 
+	Rect(const Vec2& upperLeft, const Vec2& bottomRight);
+
+	void Render(int r, int g, int b) const;
+
 	bool Is(const std::string& type) override;
 
 	float MaxRadius() const;

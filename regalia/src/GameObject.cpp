@@ -9,7 +9,6 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject() {
-	box.~Rect();
 	components.clear();
 }
 
@@ -22,8 +21,8 @@ void GameObject::Start() {
 }
 
 void GameObject::Update(float dt) {
-	for (auto& component : components) {
-		component->Update(dt);
+	for (auto i = int(components.size() - 1); i >= 0; i--) {
+		components[i]->Update(dt);
 	}
 }
 
@@ -33,7 +32,7 @@ void GameObject::Render() {
 	}
 }
 
-bool GameObject::IsDead() {
+bool GameObject::IsDead() const {
 	return isDead;
 }
 

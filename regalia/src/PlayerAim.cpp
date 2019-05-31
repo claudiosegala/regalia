@@ -49,5 +49,6 @@ void PlayerAim::Update(float dt) {
 void PlayerAim::Render() {}
 
 void PlayerAim::LoadAssets() {
-	associated.AddComponent<Sprite>("assets/img/aim.png");
+	auto sprite = associated.AddComponent<Sprite>("assets/img/aim.png");
+	sprite->SetScale(0.8f, 0.8f);
 }
