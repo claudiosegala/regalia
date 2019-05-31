@@ -14,9 +14,11 @@ public:
 
 	Rect();
 
-	Rect(Vec2, float, float);
+	Rect(Vec2 v, float w, float h);
 
-	Rect(float, float, float, float);
+	Rect(float x, float y, float w, float h);
+
+	Rect(const Vec2& upperLeft, const Vec2& bottomRight);
 
 	bool Is(const std::string&) override;
 

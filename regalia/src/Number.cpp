@@ -5,14 +5,14 @@
 
 const float Number::Pi = 3.141592653589793f;
 const float Number::Tao = 2.0f * Number::Pi;
-const float Number::Eps = 0.00001f;
+const float Number::Eps = FLT_EPSILON;
 
 bool Number::Zero(float x) {
-	return Equal(x, 0.0f);
+	return fabs(x) < Eps;
 }
 
 bool Number::Equal(float x, float y) {
-	return fabs(x - y) < Number::Eps;
+	return fabs(x - y) < Eps;
 }
 
 void Number::InitRand() {
