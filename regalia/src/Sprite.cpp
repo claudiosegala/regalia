@@ -133,8 +133,8 @@ void Sprite::Render(int x, int y) {
 	SDL_Rect dstRect {
 		x,
 		y,
-		int(srcRect.w * scale.x),
-		int(srcRect.h * scale.y)
+		int(associated.box.width * scale.x),
+		int(associated.box.height * scale.y)
 	};
 
 	auto err = SDL_RenderCopyEx(game->GetRenderer(), texture.get(), &srcRect, &dstRect, (associated.angle * 180) / Number::Pi, nullptr, flip);

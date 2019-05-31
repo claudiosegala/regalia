@@ -113,18 +113,23 @@ void PlayState::CreateField() {
 	auto& tileSet = GetTileSetData(rnd);
 	auto& tileMap = GetTileMapData(rnd);
 
-	auto go = new GameObject();
+	auto backgroundGO = new GameObject();
 
-	auto sprite = go->AddComponent<Sprite>(back.file);
+	backgroundGO->AddComponent<Sprite>(back.file);
 
 	// TODO: Remove when we have a better background image
-	sprite->SetScale(float(Constants::Window::Width) / float(sprite->GetWidth()), float(Constants::Window::Height) / float(sprite->GetHeight()));
+	backgroundGO->box.width = Constants::Window::Width;
+	backgroundGO->box.height = Constants::Window::Height;
 
-	go->AddComponent<TileMap>(tileMap.file, new TileSet(*go, tileSet.width, tileSet.height, tileSet.file));
+	(void)AddObject(backgroundGO);
 
-	go->box.vector = Vec2(0, 0);
+	auto tileMapGO = new GameObject();
 
-	(void)AddObject(go);
+	tileMapGO->AddComponent<TileMap>(tileMap.file, new TileSet(*tileMapGO, tileSet.width, tileSet.height, tileSet.file));
+
+	tileMapGO->box.vector = Vec2(0, 0);
+
+	(void)AddObject(tileMapGO);
 }
 
 void PlayState::CreatePlayers() {
