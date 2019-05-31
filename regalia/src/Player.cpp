@@ -25,7 +25,7 @@ Player::Player(GameObject& go)
 }
 
 Player::~Player() {
-	Player::counter--;
+	counter--;
 }
 
 void Player::NotifyCollision(GameObject& go) {
@@ -47,8 +47,6 @@ void Player::NotifyCollision(GameObject& go) {
 }
 
 void Player::Update(float dt) {
-	W(dt);
-
 	UpdateSpeed(dt);
 	MoveAndSlide(dt);
 	Shoot();
@@ -64,7 +62,7 @@ void Player::Render() {
 
 void Player::LoadAssets() {
 	associated.AddComponent<Sprite>(&Constants::Player::MisterN);
-	associated.AddComponent<Collider>(&collisionBox, Vec2(0.48f, 0.8f), Vec2(0.0f, 4.0f));
+	//associated.AddComponent<Collider>(&collisionBox, Vec2(0.48f, 0.8f), Vec2(0.0f, 4.0f));
 }
 
 void Player::UpdateState() {
@@ -103,8 +101,8 @@ void Player::SetState(Constants::Player::State nextState, Sprite::Direction dirX
 void Player::Shoot() {
 	auto& inputManager = InputManager::GetInstance();
 
-	if (!inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id) 
-		|| inputManager.GamepadRightStick(id).GetLength() == 0) {
+	if (!inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)
+	    || inputManager.GamepadRightStick(id).GetLength() == 0) {
 		return;
 	}
 
@@ -132,15 +130,15 @@ void Player::UpdateSpeed(float dt) {
 	auto& in = InputManager::GetInstance();
 	auto direction = in.GamepadLeftStick(id);
 
-	const auto jump = in.IsKeyDown(Constants::Key::W)
-		|| in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
-		|| in.GamepadPress(SDL_CONTROLLER_BUTTON_A, id);
+	const auto jump = in.KeyPress(Constants::Key::W)
+	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
+	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_A, id);
 
 	const auto keyLeft = in.IsKeyDown(Constants::Key::A)
-		|| in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
+	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
 
-	const auto keyRight = in.IsKeyDown(Constants::Key::D) 
-		|| in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, id);
+	const auto keyRight = in.IsKeyDown(Constants::Key::D)
+	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, id);
 
 	if (keyLeft) {
 		direction.x -= 1;
@@ -162,9 +160,8 @@ void Player::UpdateSpeed(float dt) {
 }
 
 void Player::MoveAndSlide(float dt) {
-	//auto& box = collisionBox;
-	//auto& pos = associated.box;
-	auto& box = collisionBox;
+	auto& pos = associated.box;
+	Rect box(pos.vector + Vec2(13, 11), 22, 36);
 	auto startingPosition = box.vector;
 
 	// Find maximum vertical movement
@@ -178,7 +175,7 @@ void Player::MoveAndSlide(float dt) {
 
 	isOnWall = !Number::Zero(delta - dt);
 	box.vector.x += speed.x * delta;
-	
+
 	if (isOnFloor) {
 		speed.y = 0.0f;
 	}
@@ -209,15 +206,19 @@ std::vector<std::vector<int>> Player::GetCollisionSet() {
 }
 
 float Player::FindMaxDelta(const Rect& box, const Vec2& velocity, const float dt) {
+	const auto iterations = 20;
+
 	const auto collisionSet = GetCollisionSet();
 	const auto rows = int(collisionSet.size());
 	const auto columns = int(collisionSet[0].size());
 
 	auto ans = 0.0f;
+	auto previous = 0.0f;
 	auto min_delta = 0.0f;
 	auto max_delta = dt;
 
-	for (int i = 0; i < 20; i++) {
+	bool collision = false;
+	for (int i = 0; i < iterations; i++) {
 		const auto delta = (max_delta + min_delta) / 2.f;
 		const auto p = box + velocity * delta;
 		const auto ul = p.GetUpperLeft();
@@ -228,7 +229,7 @@ float Player::FindMaxDelta(const Rect& box, const Vec2& velocity, const float dt
 		const auto x2 = int(dr.x / 24.0f);
 		const auto y2 = int(dr.y / 24.0f);
 
-		auto collision = false;
+		collision = false;
 
 		if (x1 < 0 || x1 >= columns || y1 < 0 || y1 >= rows || x2 < 0 || x2 >= columns || y2 < 0 || y2 >= rows) {
 			collision = true;
@@ -246,13 +247,23 @@ float Player::FindMaxDelta(const Rect& box, const Vec2& velocity, const float dt
 		}
 
 		if (!collision) {
+			previous = ans;
 			ans = min_delta = delta;
 		} else {
 			max_delta = delta;
 		}
 	}
 
-	return ans;
+	if (collision) {
+		std::cout << Constants::StdColor::Red << "COLLIDING\n"
+		          << Constants::StdColor::Reset;
+	} else {
+		std::cout << Constants::StdColor::Green << "NOT COLLIDING\n"
+		          << Constants::StdColor::Reset;
+	}
+
+	const auto result = collision ? previous : ans;
+	return (dt - result) < (dt / iterations) ? dt : result;
 }
 
 void Player::Die() {

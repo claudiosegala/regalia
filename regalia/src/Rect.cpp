@@ -16,6 +16,11 @@ Rect::Rect(float x, float y, float w, float h)
     , width(w)
     , height(h) {}
 
+Rect::Rect(const Vec2& upperLeft, const Vec2& bottomRight)
+    : vector(upperLeft)
+    , width(bottomRight.x - upperLeft.x)
+    , height(bottomRight.y - upperLeft.y) {}
+
 bool Rect::Is(const std::string& type) {
 	return (type == "Rect");
 }
