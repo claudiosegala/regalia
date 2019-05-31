@@ -30,7 +30,7 @@ void MenuState::LoadAssets() {
 	(void)AddObject(CreateOption("Story", { 0, 75 }));
 	(void)AddObject(CreateOption("Credits", { 0, 150 }));
 
-	cursor = AddObject(CreateOption("-", { -110, 0 })); //> points towards first position
+	cursor = AddObject(CreateOption("-              -", { 0, 0 })); //> points towards first position
 }
 
 void MenuState::Update(float dt) {
@@ -50,7 +50,7 @@ void MenuState::Update(float dt) {
 
 		if (auto ptr = cursor.lock()) {
 			const auto pos = Vec2 {
-				Constants::Window::Width / 2 - 110,
+				Constants::Window::Width / 2,
 				Constants::Window::Height / 4 + option * 75
 			};
 
@@ -63,7 +63,7 @@ void MenuState::Update(float dt) {
 
 		if (auto ptr = cursor.lock()) {
 			const auto pos = Vec2 {
-				Constants::Window::Width / 2 - 110,
+				Constants::Window::Width / 2,
 				Constants::Window::Height / 4 + option * 75
 			};
 

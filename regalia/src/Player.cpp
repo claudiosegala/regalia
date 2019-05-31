@@ -112,19 +112,24 @@ void Player::Shoot() {
 	}
 
 	const auto angle = inputManager.GamepadRightStick(id).GetAngle();
-	const auto pos = Vec2(25, 0).GetRotate(angle) + associated.box.Center();
+	const auto pos = Vec2(10, 0).GetRotate(angle) + associated.box.Center();
 
 	BulletData bulletData = {
 		id,
 		10,
 		angle,
-		20,
+		100,
 		500,
 		&Constants::Bullet::DefaultSpriteSheet
 	};
 
 	auto bulletGO = new GameObject();
 	bulletGO->AddComponent<Bullet>(bulletData);
+
+	// TODO: change when we have a bullet
+	bulletGO->box.width = 10;
+	bulletGO->box.height = 10;
+
 	bulletGO->box.SetCenter(pos);
 	bulletGO->angle = angle;
 

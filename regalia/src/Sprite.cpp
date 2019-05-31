@@ -133,8 +133,8 @@ void Sprite::Render(int x, int y) {
 	SDL_Rect dstRect {
 		x,
 		y,
-		int(associated.box.width * scale.x),
-		int(associated.box.height * scale.y)
+		int(associated.box.width),
+		int(associated.box.height)
 	};
 
 	auto err = SDL_RenderCopyEx(game->GetRenderer(), texture.get(), &srcRect, &dstRect, (associated.angle * 180) / Number::Pi, nullptr, flip);
@@ -147,11 +147,11 @@ void Sprite::Render(int x, int y) {
 
 int Sprite::GetWidth() const {
 	auto frameWidth = spriteSheetData == nullptr ? width : spriteSheetData->GetFrameWidth();
-	return frameWidth * int(scale.x);
+	return int(frameWidth * scale.x);
 }
 
 int Sprite::GetHeight() const {
-	return height * int(scale.y);
+	return int(float(height) * scale.y);
 }
 
 bool Sprite::IsOpen() const {
