@@ -12,9 +12,9 @@ public:
 
 	Circle();
 
-	Circle(float, Vec2);
+	Circle(float r, Vec2 p);
 
-	bool Is(const std::string&) override;
+	bool Is(const std::string& type) override;
 
 	float Perimeter() const;
 

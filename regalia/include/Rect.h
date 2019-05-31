@@ -14,21 +14,21 @@ public:
 
 	Rect();
 
-	Rect(Vec2, float, float);
+	Rect(Vec2 v, float w, float h);
 
-	Rect(float, float, float, float);
+	Rect(float x, float y, float w, float h);
 
-	bool Is(const std::string&) override;
+	bool Is(const std::string& type) override;
 
 	float MaxRadius() const;
 
 	Vec2 Center() const;
 
-	float CenterDistance(const Rect&) const;
+	float CenterDistance(const Rect& R) const;
 
-	void SetCenter(const Vec2&);
+	void SetCenter(const Vec2& V);
 
-	bool IsInside(const Vec2&) const;
+	bool IsInside(const Vec2& V) const;
 
 	std::tuple<Vec2, Vec2> GetPoints() const;
 
@@ -36,15 +36,15 @@ public:
 
 	Vec2 GetLowerRight() const;
 
-	Rect operator+(const Vec2&) const;
+	Rect operator+(const Vec2& V) const;
 
-	void operator+=(const Vec2&);
+	void operator+=(const Vec2& V);
 
-	Rect operator-(const Vec2&) const;
+	Rect operator-(const Vec2& V) const;
 
-	void operator-=(const Vec2&);
+	void operator-=(const Vec2& V);
 
-	friend std::ostream& operator<<(std::ostream& os, const Rect& n);
+	friend std::ostream& operator<<(std::ostream& os, const Rect& R);
 
-	friend std::istream& operator>>(std::istream& is, Rect& n);
+	friend std::istream& operator>>(std::istream& is, Rect& R);
 };

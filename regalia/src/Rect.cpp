@@ -79,12 +79,12 @@ void Rect::operator-=(const Vec2& V) {
 	vector -= V;
 }
 
-std::ostream& operator<<(std::ostream& out, const Rect& R) {
-	out << "Rect: {\n\twidth:" << R.width << ",\n\theight:" << R.height << ",\n\t" << R.vector << " }";
-	return out;
+std::ostream& operator<<(std::ostream& os, const Rect& R) {
+	os << "Rect: {\n\twidth:" << R.width << ",\n\theight:" << R.height << ",\n\t" << R.vector << " }";
+	return os;
 }
 
-std::istream& operator>>(std::istream& in, Rect& R) {
-	in >> R.width >> R.height >> R.vector;
-	return in;
+std::istream& operator>>(std::istream& is, Rect& R) {
+	is >> R.width >> R.height >> R.vector;
+	return is;
 }

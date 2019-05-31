@@ -6,5 +6,5 @@ class Shape {
 public:
 	virtual void Start();
 
-	virtual bool Is(const std::string&) = 0;
+	virtual bool Is(const std::string& type) = 0;
 };
