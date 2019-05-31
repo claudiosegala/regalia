@@ -115,7 +115,11 @@ void PlayState::CreateField() {
 
 	auto go = new GameObject();
 
-	go->AddComponent<Sprite>(back.file);
+	auto sprite = go->AddComponent<Sprite>(back.file);
+
+	// TODO: Remove when we have a better background image
+	sprite->SetScale(float(Constants::Window::Width) / float(sprite->GetWidth()), float(Constants::Window::Height) / float(sprite->GetHeight()));
+
 	go->AddComponent<TileMap>(tileMap.file, new TileSet(*go, tileSet.width, tileSet.height, tileSet.file));
 
 	go->box.vector = Vec2(0, 0);

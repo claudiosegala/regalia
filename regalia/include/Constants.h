@@ -49,7 +49,7 @@ namespace Menu {
 	const int TextSize = 20;
 
 	const std::string Music = "assets/audio/opening.ogg";
-	const std::string Background = "assets/img/ocean.jpg";
+	const std::string Background = "assets/img/tileSet_01.png";
 }
 
 namespace Story {
@@ -59,20 +59,20 @@ namespace Story {
 				and really let the literal span several lines, \
 				without bothering with quoting each line's \
 				content. This works, but you can't indent.";
-	const std::string Background = "assets/img/ocean.jpg";
+	const std::string Background = "assets/img/tileSet_01.png";
 }
 
 namespace Credit {
 	const int TextSize = 15;
 
-	const std::string Background = "assets/img/ocean.jpg";
+	const std::string Background = "assets/img/tileSet_01.png";
 }
 
 namespace Play {
-	const std::string Music = "assets/audio/Batalha dos Magos MP3-RSE.mp3";
+	const std::string Music = "assets/audio/Batalha dos Magos MP3-RSE.ogg";
 
 	const std::vector<BackgroundData> Backgrounds = {
-		{ "assets/img/ocean.jpg" }
+		{ "assets/img/tileSet_01.png" }
 	};
 
 	const std::vector<TileSetData> TileSets = {

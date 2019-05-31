@@ -113,7 +113,10 @@ void MenuState::Resume() {
 GameObject* MenuState::CreateBackground() {
 	auto go = new GameObject();
 
-	go->AddComponent<Sprite>(Constants::Menu::Background);
+	auto sprite = go->AddComponent<Sprite>(Constants::Menu::Background);
+
+	// TODO: Remove when we have a better background image
+	sprite->SetScale(float(Constants::Window::Width) / float(sprite->GetWidth()), float(Constants::Window::Height) / float(sprite->GetHeight()));
 
 	go->box.vector.Reset();
 
