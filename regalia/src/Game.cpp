@@ -158,6 +158,7 @@ void Game::Loop() {
 
 		if (in.KeyPress(SDLK_f)) {
 			GameData::WindowFullscreen = !GameData::WindowFullscreen;
+			SDL_ShowCursor(GameData::WindowFullscreen ? SDL_DISABLE : SDL_ENABLE);
 			SDL_SetWindowFullscreen(window, GameData::WindowFullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
 		}
 
