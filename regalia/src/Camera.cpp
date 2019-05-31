@@ -4,8 +4,6 @@
 #include <Game.h>
 #include <InputManager.h>
 
-float const Camera::pace = 1500.0f;
-
 Vec2 Camera::pos;
 
 Vec2 Camera::speed;
@@ -16,8 +14,8 @@ void Camera::Reset() {
 	Camera::pos.Reset();
 }
 
-void Camera::Follow(GameObject* newFocus) {
-	Camera::focus = newFocus;
+void Camera::Follow(GameObject* go) {
+	focus = go;
 }
 
 void Camera::Unfollow() {
@@ -25,17 +23,16 @@ void Camera::Unfollow() {
 }
 
 void Camera::Update(float dt) {
-	if (focus != nullptr) {
-		// Follows the game object
-		auto center = Camera::focus->box.Center();
-		auto centerWindow = Vec2(Constants::Window::Width, Constants::Window::Height) / 2;
+	if (focus != nullptr) { // Follows the game object
+		auto center = focus->box.Center();
+		auto centerWindow = Constants::Window::Center;
 
-		Camera::pos = center - centerWindow;
+		pos = center - centerWindow;
 		return;
 	}
 
-	Camera::speed = Camera::GetMovement() * dt * Camera::pace;
-	Camera::pos += Camera::speed;
+	speed = GetMovement() * dt * Constants::Camera::Pace;
+	pos += speed;
 }
 
 Vec2 Camera::GetMovement() {
