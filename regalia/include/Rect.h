@@ -20,6 +20,8 @@ public:
 
 	Rect(const Vec2& upperLeft, const Vec2& bottomRight);
 
+	void Render(int r, int g, int b) const;
+
 	bool Is(const std::string&) override;
 
 	float MaxRadius() const;
