@@ -16,10 +16,10 @@ Player::Player(GameObject& go)
     : Component(go)
     , id(counter++) {
 
-	state = Constants::Player::Idle;
-
-	// TODO: discover why there is one tile of shift
 	associated.box.SetCenter({ 27.0f, 26.0f });
+
+	state = Constants::Player::Idle;
+	collisionBox = Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 
 	LoadAssets();
 }
@@ -52,9 +52,6 @@ void Player::Update(float dt) {
 	Shoot();
 
 	UpdateState();
-
-	// change Player State
-	// actions if necessary
 }
 
 void Player::Render() {
@@ -66,7 +63,6 @@ void Player::Render() {
 
 void Player::LoadAssets() {
 	associated.AddComponent<Sprite>(&Constants::Player::MisterN);
-	collisionBox = Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 	//associated.AddComponent<Collider>(&collisionBox, Vec2(0.48f, 0.8f), Vec2(0.0f, 4.0f));
 }
 
