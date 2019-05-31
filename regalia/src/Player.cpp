@@ -49,6 +49,23 @@ void Player::NotifyCollision(GameObject& go) {
 void Player::Update(float dt) {
 	UpdateSpeed(dt);
 	MoveAndSlide(dt);
+
+	// Just for test
+	auto center = associated.box.Center();
+	if (int(center.x) > Constants::Window::Width) {
+		center.x = float(int(center.x) % Constants::Window::Width);
+	} else if (int(center.x) < 0) {
+		center.x = float(int(center.x) + Constants::Window::Width);
+	}
+	
+	if (int(center.y) > Constants::Window::Height) {
+		center.y = float(int(center.y) % Constants::Window::Height);
+	} else if (int(center.y) < 0) {
+		center.y = float(int(center.y) + Constants::Window::Height);
+	}
+
+	associated.box.SetCenter(center);
+
 	Shoot();
 
 	UpdateState();
@@ -220,8 +237,8 @@ std::vector<std::vector<int>> Player::GetCollisionSet() {
 		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
 		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
 		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
+		{ 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00 },
+		{ 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00 },
 		{ 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01 },
 	};
 
@@ -255,11 +272,15 @@ float Player::FindMaxDelta(const Rect& box, const Vec2& velocity, const float dt
 		collision = false;
 
 		if (x1 < 0 || x1 >= columns || y1 < 0 || y1 >= rows || x2 < 0 || x2 >= columns || y2 < 0 || y2 >= rows) {
-			collision = true;
+			//collision = true;
 		} else {
 			for (int j = y1; j <= y2; j++) {
 				for (int k = x1; k <= x2; k++) {
-					if (collisionSet[j][k]) {
+
+					auto j_temp = j < collisionSet.size() ? j : j % collisionSet.size();
+					auto k_temp = k < collisionSet[0].size() ? k : k % collisionSet[0].size();
+
+					if (collisionSet[j_temp][k_temp]) {
 						collision = true;
 						// These assignments cause both loops to terminate
 						j = y2;
