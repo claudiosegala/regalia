@@ -47,8 +47,10 @@ void Player::NotifyCollision(GameObject& go) {
 }
 
 void Player::Update(float dt) {
-	UpdateSpeed(dt);
-	MoveAndSlide(dt);
+	auto delta = (unsigned long)(dt * 1000.0f);
+
+	UpdateSpeed(delta);
+	MoveAndSlide(delta);
 	Shoot();
 
 	UpdateState();
@@ -132,7 +134,7 @@ void Player::Shoot() {
 	void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
 }
 
-void Player::UpdateSpeed(float dt) {
+void Player::UpdateSpeed(unsigned long dt) {
 	auto& in = InputManager::GetInstance();
 	auto direction = in.GamepadLeftStick(id);
 
@@ -155,40 +157,43 @@ void Player::UpdateSpeed(float dt) {
 	}
 
 	speed.x = direction.x * Constants::Player::SpeedMultiplier;
-	speed.y += Constants::Game::Gravity * dt;
+	speed.y += Constants::Game::Gravity * (float)dt / 1000.0f;
 
 	// TODO: WallJump should be treated differently
 	if ((isOnFloor || isOnWall) && jump) {
 		speed.y = Constants::Player::JumpSpeed;
 	}
 
+	// TODO: verify what should be the actual max velocity, 1000 is too big.
 	speed.Limit(Constants::Game::MaxVelocity);
 }
 
-void Player::MoveAndSlide(float dt) {
+void Player::MoveAndSlide(unsigned long dt) {
 	auto& box = collisionBox;
 	const auto startingPosition = box.vector;
 
 	// Find maximum diagonal movement
 	auto delta = FindMaxDelta(box, speed, dt);
-	box += speed * delta;
+	box += speed * (float)delta / 1000.0f;
 
 	dt -= delta;
 
 	// Find maximum vertical movement
 	delta = FindMaxDelta(box, { 0.f, speed.y }, dt);
 
-	isOnFloor = !Number::Zero(delta - dt);
-	box.vector.y += speed.y * delta;
-
-	// Find maximum horizontal movement
-	delta = FindMaxDelta(box, { speed.x, 0.f }, dt);
-
-	isOnWall = !Number::Zero(delta - dt);
-	box.vector.x += speed.x * delta;
-
+	isOnFloor = (delta != dt);
+	box.vector.y += speed.y * (float)delta / 1000.0f;
+	
 	if (isOnFloor) {
 		speed.y = 0.0f;
+	}
+
+	// Find maximum horizontal movement
+	if (!Number::Zero(speed.x)) {
+		delta = FindMaxDelta(box, { speed.x, 0.f }, dt);
+
+		isOnWall = (delta != dt);
+		box.vector.x += speed.x * (float)delta / 1000.0f;
 	}
 
 	associated.box += box.vector - startingPosition;
@@ -224,22 +229,19 @@ std::vector<std::vector<int>> Player::GetCollisionSet() {
 	return collisionSet;
 }
 
-float Player::FindMaxDelta(const Rect& box, const Vec2& velocity, const float dt) {
-	const auto iterations = 20;
-
+unsigned long Player::FindMaxDelta(const Rect& box, const Vec2& velocity, const unsigned long dt) {
 	const auto collisionSet = GetCollisionSet();
 	const auto rows = int(collisionSet.size());
 	const auto columns = int(collisionSet[0].size());
 
-	auto ans = 0.0f;
-	auto previous = 0.0f;
-	auto min_delta = 0.0f;
+	auto ans = (unsigned long) 0;
+	auto min_delta = (unsigned long) 0;
 	auto max_delta = dt;
 
 	bool collision = false;
-	for (int i = 0; i < iterations; i++) {
-		const auto delta = (max_delta + min_delta) / 2.f;
-		const auto p = box + velocity * delta;
+	while (min_delta <= max_delta) {
+		const auto delta = (max_delta + min_delta) / 2;
+		const auto p = box + velocity * (float)delta / 1000.0f;
 		const auto ul = p.GetUpperLeft();
 		const auto dr = p.GetLowerRight();
 
@@ -266,23 +268,14 @@ float Player::FindMaxDelta(const Rect& box, const Vec2& velocity, const float dt
 		}
 
 		if (!collision) {
-			previous = ans;
-			ans = min_delta = delta;
+			ans = delta;
+			min_delta = delta + 1;
 		} else {
-			max_delta = delta;
+			max_delta = delta - 1;
 		}
 	}
 
-	if (collision) {
-		std::cout << Constants::StdColor::Red << "COLLIDING\n"
-		          << Constants::StdColor::Reset;
-	} else {
-		std::cout << Constants::StdColor::Green << "NOT COLLIDING\n"
-		          << Constants::StdColor::Reset;
-	}
-
-	const auto result = collision ? previous : ans;
-	return (dt - result) < (dt / iterations) ? dt : result;
+	return ans;
 }
 
 void Player::Die() {

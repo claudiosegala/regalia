@@ -42,13 +42,13 @@ private:
 
 	void Shoot();
 
-	void UpdateSpeed(float dt);
+	void UpdateSpeed(unsigned long dt);
 
-	void MoveAndSlide(float dt);
+	void MoveAndSlide(unsigned long dt);
 
 	std::vector<std::vector<int>> GetCollisionSet();
 
-	float FindMaxDelta(const Rect& box, const Vec2& velocity, const float dt);
+	unsigned long FindMaxDelta(const Rect& box, const Vec2& velocity, const unsigned long dt);
 
 	void Die();
 };
