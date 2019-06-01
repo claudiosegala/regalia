@@ -3,6 +3,7 @@
 #include <InputManager.h>
 #include <Game.h>
 
+// TODO: q gambiarra é essa
 #define PROTECT_RANGE(number, defaultValue)     \
 	if (unsigned(number) >= controllers.size()) \
 	return (defaultValue)

@@ -39,7 +39,7 @@ protected:
 
 	void StartArray();
 
-	virtual void UpdateArray(float);
+	virtual void UpdateArray(float dt);
 
 	void PruneArray();
 

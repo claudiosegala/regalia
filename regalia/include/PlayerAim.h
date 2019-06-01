@@ -4,9 +4,11 @@
 class PlayerAim : public Component {
 public:
 	PlayerAim(GameObject& go, std::weak_ptr<GameObject> player);
+	
 	~PlayerAim();
 
 	void Update(float dt) override;
+	
 	void Render() override;
 
 private:

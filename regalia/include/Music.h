@@ -4,7 +4,7 @@ class Music {
 public:
 	Music();
 
-	Music(const std::string&);
+	Music(const std::string& file);
 
 	~Music();
 
@@ -12,7 +12,7 @@ public:
 
 	void Stop(int msToStop = 1500);
 
-	void Open(const std::string&);
+	void Open(const std::string& file);
 
 	bool IsOpen();
 

@@ -12,7 +12,7 @@ public:
 		BLENDED
 	};
 
-	Text(GameObject&, const std::string&, int, TextStyle, const std::string&, SDL_Color);
+	Text(GameObject& go, const std::string& file, int size, TextStyle style, const std::string& text, SDL_Color color);
 
 	~Text();
 
@@ -20,17 +20,17 @@ public:
 
 	void Render() override;
 
-	void SetText(const std::string&);
+	void SetText(const std::string& _text);
 
-	void SetColor(SDL_Color);
+	void SetColor(SDL_Color _color);
 
-	void SetStyle(TextStyle);
+	void SetStyle(TextStyle _style);
 
-	void SetFontFile(const std::string&);
+	void SetFontFile(const std::string& file);
 
-	void SetFontSize(int);
+	void SetFontSize(int size);
 
-	void SetFadeOut(float);
+	void SetFadeOut(float t);
 
 private:
 	Timer* timer;

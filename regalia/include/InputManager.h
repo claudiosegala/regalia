@@ -9,17 +9,17 @@ public:
 
 	void Update();
 
-	bool KeyPress(int);
+	bool KeyPress(int key);
 
-	bool KeyRelease(int);
+	bool KeyRelease(int key);
 
-	bool IsKeyDown(int);
+	bool IsKeyDown(int key);
 
-	bool MousePress(int);
+	bool MousePress(int button);
 
-	bool MouseRelease(int);
+	bool MouseRelease(int button);
 
-	bool IsMouseDown(int);
+	bool IsMouseDown(int button);
 
 	Vec2 GetMouse(Vec2 relative) const;
 

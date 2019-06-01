@@ -14,9 +14,9 @@ Vec2::Vec2(float xv, float yv)
     : x(xv)
     , y(yv) {}
 
-Vec2::Vec2(Vec2& start, Vec2& destination) {
-	this->x = destination.x - start.x;
-	this->y = destination.y - start.y;
+Vec2::Vec2(Vec2& u, Vec2& v) {
+	this->x = v.x - u.x;
+	this->y = v.y - u.y;
 }
 
 bool Vec2::IsOrigin() const {
@@ -28,20 +28,20 @@ void Vec2::Reset() {
 }
 
 void Vec2::Limit(float limit) {
-	Limit(limit, -limit, limit, -limit);
+	Limit({ limit, -limit }, { limit, -limit });
 }
 
-void Vec2::Limit(float upperX, float lowerX, float upperY, float lowerY) {
-	if (x < lowerX) {
-		x = lowerX;
+void Vec2::Limit(Vec2 upper, Vec2 lower) {
+	if (x < lower.x) {
+		x = lower.x;
 	} else {
-		x = fmin(x, upperX);
+		x = fmin(x, upper.x);
 	}
 
-	if (y < lowerY) {
-		y = lowerY;
+	if (y < lower.y) {
+		y = lower.y;
 	} else {
-		y = fmin(y, upperY);
+		y = fmin(y, upper.y);
 	}
 }
 
@@ -53,9 +53,9 @@ float Vec2::GetAngle() const {
 	return (float)atan2(y, x);
 }
 
-float Vec2::GetAngle(const Vec2& V) const {
-	auto ds = GetLength() * V.GetLength();
-	auto prod = (*this) ^ V;
+float Vec2::GetAngle(const Vec2& v) const {
+	auto ds = GetLength() * v.GetLength();
+	auto prod = (*this) ^ v;
 
 	return (float)acos(prod / ds);
 }
@@ -82,58 +82,58 @@ Vec2 Vec2::GetRotate(float angle) const {
 	    static_cast<float>(sin(angle) * x + cos(angle) * y));
 }
 
-float Vec2::Distance(const Vec2& V, const Vec2& U) {
-	return (float)hypot(V.x - U.x, V.y - U.y);
+float Vec2::Distance(const Vec2& u, const Vec2& v) {
+	return (float)hypot(v.x - u.x, v.y - u.y);
 }
 
-Vec2 Vec2::operator=(const Vec2& V) {
-	x = V.x;
-	y = V.y;
+Vec2 Vec2::operator=(const Vec2& v) {
+	x = v.x;
+	y = v.y;
 
 	return *this;
 }
 
-bool Vec2::operator==(const Vec2& rhs) const {
-	return x == rhs.x && y == rhs.y;
+bool Vec2::operator==(const Vec2& v) const {
+	return x == v.x && y == v.y;
 }
 
-bool Vec2::operator!=(const Vec2& rhs) const {
-	return !(rhs == *this);
+bool Vec2::operator!=(const Vec2& v) const {
+	return !(v == *this);
 }
 
-Vec2 Vec2::operator*(const Vec2& V) {
-	return Vec2(x * V.y, y * V.x);
+Vec2 Vec2::operator*(const Vec2& v) {
+	return Vec2(x * v.y, y * v.x);
 }
 
-float Vec2::operator^(const Vec2& V) const {
-	return x * V.x + y * V.y;
+float Vec2::operator^(const Vec2& v) const {
+	return x * v.x + y * v.y;
 }
 
-Vec2 Vec2::operator*(const float v) const {
-	return Vec2(x * v, y * v);
+Vec2 Vec2::operator*(const float k) const {
+	return Vec2(x * k, y * k);
 }
 
-void Vec2::operator*=(const float v) {
-	x *= v;
-	y *= v;
+void Vec2::operator*=(const float k) {
+	x *= k;
+	y *= k;
 }
 
-Vec2 Vec2::operator/(const float v) const {
-	return Vec2(x / v, y / v);
+Vec2 Vec2::operator/(const float k) const {
+	return Vec2(x / k, y / k);
 }
 
-void Vec2::operator/=(const float v) {
-	x /= v;
-	y /= v;
+void Vec2::operator/=(const float k) {
+	x /= k;
+	y /= k;
 }
 
-Vec2 Vec2::operator+(const Vec2& V) const {
-	return Vec2(x + V.x, y + V.y);
+Vec2 Vec2::operator+(const Vec2& v) const {
+	return Vec2(x + v.x, y + v.y);
 }
 
-Vec2 Vec2::operator+=(const Vec2& V) {
-	x += V.x;
-	y += V.y;
+Vec2 Vec2::operator+=(const Vec2& v) {
+	x += v.x;
+	y += v.y;
 
 	return (*this);
 }
@@ -142,23 +142,23 @@ Vec2 Vec2::operator-(const float k) const {
 	return Vec2(x - k, y - k);
 }
 
-Vec2 Vec2::operator-(const Vec2& V) const {
-	return Vec2(x - V.x, y - V.y);
+Vec2 Vec2::operator-(const Vec2& v) const {
+	return Vec2(x - v.x, y - v.y);
 }
 
-Vec2 Vec2::operator-=(const Vec2& V) {
-	x -= V.x;
-	y -= V.y;
+Vec2 Vec2::operator-=(const Vec2& v) {
+	x -= v.x;
+	y -= v.y;
 
 	return (*this);
 }
 
-std::ostream& operator<<(std::ostream& out, const Vec2& V) {
-	out << "vector: { x:" << V.x << ", y:" << V.y << " }";
+std::ostream& operator<<(std::ostream& out, const Vec2& v) {
+	out << "vector: { x:" << v.x << ", y:" << v.y << " }";
 	return out;
 }
 
-std::istream& operator>>(std::istream& in, Vec2& V) {
-	in >> V.x >> V.y;
+std::istream& operator>>(std::istream& in, Vec2& v) {
+	in >> v.x >> v.y;
 	return in;
 }

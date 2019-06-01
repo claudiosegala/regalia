@@ -4,9 +4,9 @@
 
 class TileSet {
 public:
-	TileSet(GameObject&, int, int, const std::string&);
+	TileSet(GameObject& go, int width, int height, const std::string& file);
 
-	void RenderTile(unsigned int, float, float);
+	void RenderTile(unsigned int tileSetIndex, float x, float y);
 
 	unsigned int GetQuantityTiles() const;
 
