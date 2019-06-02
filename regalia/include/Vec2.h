@@ -24,7 +24,7 @@ public:
 	void Limit(float limit);
 
 	//> Limit the values of x and y to a range
-	void Limit(Vec2 upper, Vec2 lower);
+	void Limit(const Vec2& upper, const Vec2& lower);
 
 	///> Find magnitude of vector
 	float GetLength() const;

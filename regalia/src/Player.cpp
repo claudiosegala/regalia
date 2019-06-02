@@ -174,7 +174,7 @@ void Player::MoveAndSlide(unsigned long dt) {
 
 	// Find maximum diagonal movement
 	auto delta = FindMaxDelta(box, speed, dt);
-	box += speed * (float)delta / 1000.0f;
+	box += speed * float(delta) / 1000.0f;
 
 	dt -= delta;
 
@@ -182,7 +182,7 @@ void Player::MoveAndSlide(unsigned long dt) {
 	delta = FindMaxDelta(box, { 0.f, speed.y }, dt);
 
 	isOnFloor = (delta != dt);
-	box.vector.y += speed.y * (float)delta / 1000.0f;
+	box.vector.y += speed.y * float(delta) / 1000.0f;
 	
 	if (isOnFloor) {
 		speed.y = 0.0f;
@@ -193,7 +193,7 @@ void Player::MoveAndSlide(unsigned long dt) {
 		delta = FindMaxDelta(box, { speed.x, 0.f }, dt);
 
 		isOnWall = (delta != dt);
-		box.vector.x += speed.x * (float)delta / 1000.0f;
+		box.vector.x += speed.x * float(delta) / 1000.0f;
 	}
 
 	associated.box += box.vector - startingPosition;
@@ -234,14 +234,14 @@ unsigned long Player::FindMaxDelta(const Rect& box, const Vec2& velocity, const 
 	const auto rows = int(collisionSet.size());
 	const auto columns = int(collisionSet[0].size());
 
-	auto ans = (unsigned long) 0;
-	auto min_delta = (unsigned long) 0;
+	unsigned long ans = 0;
+	unsigned long min_delta = 0;
 	auto max_delta = dt;
 
 	bool collision = false;
 	while (min_delta <= max_delta) {
 		const auto delta = (max_delta + min_delta) / 2;
-		const auto p = box + velocity * (float)delta / 1000.0f;
+		const auto p = box + velocity * float(delta) / 1000.0f;
 		const auto ul = p.GetUpperLeft();
 		const auto dr = p.GetLowerRight();
 

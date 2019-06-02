@@ -28,10 +28,10 @@ void Vec2::Reset() {
 }
 
 void Vec2::Limit(float limit) {
-	Limit({ limit, -limit }, { limit, -limit });
+	Limit({ limit, limit }, { -limit, -limit });
 }
 
-void Vec2::Limit(Vec2 upper, Vec2 lower) {
+void Vec2::Limit(const Vec2& upper, const Vec2& lower) {
 	if (x < lower.x) {
 		x = lower.x;
 	} else {

@@ -28,7 +28,7 @@ namespace Game {
 }
 
 namespace Camera {
-	const int Pace = 1500.0f;
+	const int Pace = 1500;
 }
 
 namespace SharedAssets {
