@@ -11,6 +11,8 @@ PlayerAim::PlayerAim(GameObject& go, std::weak_ptr<GameObject> player)
     : Component(go)
     , player(player) {
 
+	associated.hide = true;
+
 	LoadAssets();
 }
 
