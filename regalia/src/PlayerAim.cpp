@@ -34,7 +34,6 @@ void PlayerAim::Update(float dt) {
 	associated.hide = !show;
 
 	if (!show) {
-		associated.hide = true;
 		return;
 	}
 
