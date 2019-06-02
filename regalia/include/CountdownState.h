@@ -28,5 +28,5 @@ private:
 
 	int count;
 
-	Text* text;
+	GameObject* text;
 };

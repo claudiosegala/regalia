@@ -111,12 +111,19 @@ void Text::RemakeTexture() {
 		aux = TTF_RenderText_Solid(font.get(), text.c_str(), color);
 		break;
 	case TextStyle::SHADED:
-		aux = TTF_RenderText_Shaded(font.get(), text.c_str(), color, SDL_Color { 0, 0, 0, 0 });
+		aux = TTF_RenderText_Shaded(font.get(), text.c_str(), color, Constants::Colors::Black);
 		break;
 	case TextStyle::BLENDED:
 		aux = TTF_RenderText_Blended(font.get(), text.c_str(), color);
 		break;
 	}
+
+	if (aux == nullptr) {
+		throw std::runtime_error("TTF_RenderText fail!");
+	}
+
+	associated.box.width = float(aux->w);
+	associated.box.height = float(aux->h);
 
 	texture = SDL_CreateTextureFromSurface(renderer, aux);
 
@@ -124,11 +131,6 @@ void Text::RemakeTexture() {
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
 		throw std::runtime_error(msg);
 	}
-
-	int w, h;
-	std::tie(w, h) = Resources::QueryImage(texture);
-	associated.box.width = static_cast<float>(w);
-	associated.box.height = static_cast<float>(h);
 
 	SDL_FreeSurface(aux);
 }

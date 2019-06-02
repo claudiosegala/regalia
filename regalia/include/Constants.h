@@ -168,6 +168,7 @@ namespace StdColor {
 // }
 
 namespace Colors {
+	const SDL_Color Black = { 0, 0, 0, 0 };
 	const SDL_Color Red = { 255, 0, 0, 0 };
 }
 

@@ -4,7 +4,6 @@
 #include "Game.h"
 #include "InputManager.h"
 
-
 CountdownState::CountdownState(State* playState)
     : playState(playState)
     , count(Constants::Countdown::StartValue) {
@@ -15,13 +14,13 @@ CountdownState::CountdownState(State* playState)
 CountdownState::~CountdownState() {}
 
 void CountdownState::LoadAssets() {
-	auto textGO = new GameObject();
+	text = new GameObject();
 
-	text = textGO->AddComponent<Text>(Constants::Countdown::Font, Constants::Countdown::TextSize, Text::TextStyle::BLENDED, std::to_string(count), Constants::Colors::Red);
+	text->AddComponent<Text>(Constants::Countdown::Font, Constants::Countdown::TextSize, Text::TextStyle::BLENDED, std::to_string(count), Constants::Colors::Red);
 
-	textGO->box.SetCenter({ Constants::Window::Width / 2, Constants::Window::Height / 2 });
+	text->box.SetCenter({ Constants::Window::Width / 2, Constants::Window::Height / 2 });
 
-	AddObject(textGO);
+	AddObject(text);
 }
 
 void CountdownState::Update(float dt) {
@@ -42,12 +41,14 @@ void CountdownState::Update(float dt) {
 		count--;
 
 		if (count > 0) {
-			text->SetText(std::to_string(count));
+			text->GetComponent<Text>()->SetText(std::to_string(count));
 		} else if (count == 0) {
-			text->SetText("Fight!");
+			text->GetComponent<Text>()->SetText("Fight!");
 		} else {
 			popRequested = true;
 		}
+
+		text->box.SetCenter({ Constants::Window::Width / 2, Constants::Window::Height / 2 });
 	}
 }
 
