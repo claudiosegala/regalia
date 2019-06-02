@@ -12,7 +12,7 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 	shooterId = data.shooterId;
 	distanceLeft = data.maxDistance;
 	damage = data.damage;
-	speed = Vec2(-data.speed * cos(data.angle), -data.speed * sin(data.angle));
+	speed = Vec2(data.speed * cos(data.angle), data.speed * sin(data.angle));
 
 	LoadAssets(data);
 }
@@ -30,7 +30,7 @@ void Bullet::Update(unsigned dt) {
 	}
 
 	// Change position
-	associated.box.vector -= dist;
+	associated.box.vector += dist;
 }
 
 void Bullet::Render() {}
