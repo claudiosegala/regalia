@@ -56,6 +56,15 @@ namespace Menu {
 	const std::string Background = "assets/img/tileSet_01.png";
 }
 
+namespace Countdown {
+	const bool Enabled = true; // Change this to enable or disable the countdown
+
+	const int TextSize = 180;
+
+	const std::string Font = "assets/font/Dark Crystal.ttf";
+	const int StartValue = 3;
+}
+
 namespace Story {
 	const int TextSize = 15;
 

@@ -131,7 +131,9 @@ void Game::Loop() {
 			}
 		}
 
-		if (storedState != nullptr) {
+		// Add new states. If the new state adds another state on it's Start(), the most recent added state will be set as the current state
+		// before it's previous state run it's Update() and Render().
+		while (storedState != nullptr) {
 			Logger::Info("Adding State");
 			if (state != nullptr) {
 				state->Pause();

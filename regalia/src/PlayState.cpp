@@ -18,6 +18,8 @@
 #include <TileSet.h>
 #include <Vec2.h>
 #include <PlayerAim.h>
+#include "CountdownState.h"
+#include "../include/CountdownState.h"
 
 PlayState::PlayState() {
 	Logger::Info("Initializing Play State");
@@ -89,7 +91,12 @@ void PlayState::Start() {
 	StartArray();
 
 	started = true;
-	music.Play();
+
+	if (Constants::Countdown::Enabled) {
+		Game::GetInstance()->Push(new CountdownState(this));
+	} else {
+		music.Play();
+	}
 }
 
 void PlayState::Pause() {

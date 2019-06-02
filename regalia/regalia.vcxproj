@@ -176,6 +176,7 @@
     <ClInclude Include="include\ScoreState.h" />
     <ClInclude Include="include\SpriteSheetData.h" />
     <ClInclude Include="include\PlayerAim.h" />
+    <ClInclude Include="include\CountdownState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Number.cpp" />
@@ -219,6 +220,7 @@
     <ClCompile Include="src\TileSet.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Vec2.cpp" />
+    <ClCompile Include="src\CountdownState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -37,6 +37,7 @@
     <ClCompile Include="src\SpriteSheetData.cpp" />
     <ClCompile Include="src\PlayerAim.cpp" />
     <ClCompile Include="src\Number.cpp" />
+    <ClCompile Include="src\CountdownState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
@@ -76,6 +77,7 @@
     <ClInclude Include="include\SpriteSheetData.h" />
     <ClInclude Include="include\PlayerAim.h" />
     <ClInclude Include="include\Number.h" />
+    <ClInclude Include="include\CountdownState.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\img\mister_n_spritesheet.png" />
