@@ -6,7 +6,7 @@
 CameraFollower::CameraFollower(GameObject& go)
     : Component(go) {}
 
-void CameraFollower::Update(float dt) {
+void CameraFollower::Update(unsigned dt) {
 	UNUSED(dt);
 
 	associated.box.vector = Camera::pos;

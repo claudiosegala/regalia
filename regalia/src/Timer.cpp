@@ -1,22 +1,22 @@
 #include <pch.h>
 #include <Timer.h>
 
-Timer::Timer() {
-	time = 0.0f;
+Timer::Timer()
+    : time(0) {
 }
 
-void Timer::SetStart(float st) {
+void Timer::SetStart(unsigned st) {
 	time = st;
 }
 
-void Timer::Update(float dt) {
+void Timer::Update(unsigned dt) {
 	time += dt;
 }
 
 void Timer::Restart() {
-	time = 0.0f;
+	time = 0;
 }
 
-float Timer::Get() {
+unsigned Timer::Get() {
 	return time;
 }

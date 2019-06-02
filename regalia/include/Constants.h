@@ -113,7 +113,7 @@ namespace Bullet {
 	    "assets/img/penguinbullet.png",
 	    120,
 	    29,
-	    0.1f,
+	    100,
 	    1,
 	    {
 	        { 0, 4 },
@@ -193,7 +193,7 @@ namespace Player {
 	    "assets/img/mister_n_spritesheet.png",
 	    432,
 	    48,
-	    0.1f,
+	    100,
 	    TOTAL_STATES,
 	    {
 	        { Idle, 1 },

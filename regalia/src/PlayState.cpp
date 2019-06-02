@@ -44,7 +44,7 @@ void PlayState::LoadAssets() {
 	CreatePlayers();
 }
 
-void PlayState::Update(float dt) {
+void PlayState::Update(unsigned dt) {
 	auto& in = InputManager::GetInstance();
 
 	popRequested = in.PopRequested() || in.GamepadPress(SDL_CONTROLLER_BUTTON_B);

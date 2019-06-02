@@ -13,7 +13,7 @@ public:
 
 	virtual void NotifyCollision(GameObject& go);
 
-	virtual void Update(float dt) = 0;
+	virtual void Update(unsigned dt) = 0;
 
 	virtual void Render() = 0;
 

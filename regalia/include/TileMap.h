@@ -17,7 +17,7 @@ public:
 
 	int& At(int col, int row, int layer = 0);
 
-	void Update(float dt) override;
+	void Update(unsigned dt) override;
 
 	void Render() override;
 

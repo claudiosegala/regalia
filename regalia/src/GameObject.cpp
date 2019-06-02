@@ -20,7 +20,7 @@ void GameObject::Start() {
 	started = true;
 }
 
-void GameObject::Update(float dt) {
+void GameObject::Update(unsigned dt) {
 	for (auto i = int(components.size() - 1); i >= 0; i--) {
 		components[i]->Update(dt);
 	}

@@ -54,7 +54,7 @@ void State::StartArray() {
 	}
 }
 
-void State::UpdateArray(float dt) {
+void State::UpdateArray(unsigned dt) {
 	for (auto i = 0; i < (int)objectArray.size(); i++) {
 		objectArray[i]->Update(dt);
 	}

@@ -15,7 +15,7 @@ public:
 
 	static void Unfollow();
 
-	static void Update(float dt);
+	static void Update(unsigned dt);
 
 private:
 	// TODO: change this to a shared_ptr

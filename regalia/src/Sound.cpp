@@ -44,7 +44,7 @@ bool Sound::IsOpen() {
 	return (chunk == nullptr);
 }
 
-void Sound::Update(float dt) {
+void Sound::Update(unsigned dt) {
 	UNUSED(dt);
 }
 

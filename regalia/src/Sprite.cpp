@@ -81,7 +81,7 @@ Vec2 Sprite::GetScale() const {
 	return scale;
 }
 
-void Sprite::Update(float dt) {
+void Sprite::Update(unsigned dt) {
 	if (spriteSheetData != nullptr) {
 		timeElapsed += dt;
 

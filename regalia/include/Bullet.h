@@ -11,7 +11,7 @@ public:
 
 	Bullet(GameObject& go, BulletData& data);
 
-	void Update(float dt) override;
+	void Update(unsigned dt) override;
 
 	void Render() override;
 

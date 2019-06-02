@@ -4,14 +4,14 @@ class Timer {
 public:
 	Timer();
 
-	void SetStart(float);
+	void SetStart(unsigned st);
 
-	void Update(float dt);
+	void Update(unsigned dt);
 
 	void Restart();
 
-	float Get();
+	unsigned Get();
 
 private:
-	float time;
+	unsigned time;
 };

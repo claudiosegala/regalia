@@ -10,7 +10,7 @@ public:
 
 	virtual void LoadAssets() = 0;
 
-	virtual void Update(float dt) = 0;
+	virtual void Update(unsigned dt) = 0;
 
 	virtual void Render() = 0;
 
@@ -39,7 +39,7 @@ protected:
 
 	void StartArray();
 
-	virtual void UpdateArray(float dt);
+	virtual void UpdateArray(unsigned dt);
 
 	void PruneArray();
 

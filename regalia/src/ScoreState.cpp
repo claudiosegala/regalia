@@ -37,7 +37,7 @@ void ScoreState::LoadAssets() {
 	}
 }
 
-void ScoreState::Update(float dt) {
+void ScoreState::Update(unsigned dt) {
 	auto& in = InputManager::GetInstance();
 
 	popRequested = in.PopRequested();

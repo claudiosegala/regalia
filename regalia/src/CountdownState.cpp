@@ -23,7 +23,7 @@ void CountdownState::LoadAssets() {
 	AddObject(text);
 }
 
-void CountdownState::Update(float dt) {
+void CountdownState::Update(unsigned dt) {
 	auto& in = InputManager::GetInstance();
 
 	quitRequested = in.QuitRequested();
@@ -35,7 +35,7 @@ void CountdownState::Update(float dt) {
 
 	timer.Update(dt);
 
-	if (timer.Get() > 1) {
+	if (timer.Get() > 1000) {
 		timer.Restart();
 
 		count--;

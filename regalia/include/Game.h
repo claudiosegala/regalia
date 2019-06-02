@@ -20,14 +20,14 @@ public:
 
 	SDL_Window* GetWindow() const;
 
-	float GetDeltaTime() const;
+	unsigned GetDeltaTime() const;
 	
 private:
 	static Game* instance;
 
-	float dt;
+	unsigned dt;
 
-	unsigned int frameStart;
+	unsigned frameStart;
 
 	State* storedState;
 

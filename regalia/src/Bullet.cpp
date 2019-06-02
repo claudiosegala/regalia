@@ -17,9 +17,9 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 	LoadAssets(data);
 }
 
-void Bullet::Update(float dt) {
+void Bullet::Update(unsigned dt) {
 	// Reduce the distance left
-	auto dist = speed * dt;
+	auto dist = speed * float(dt);
 
 	distanceLeft -= dist.GetLength();
 

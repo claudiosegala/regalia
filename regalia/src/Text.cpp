@@ -14,7 +14,6 @@ Text::Text(GameObject& go, const std::string& file, int size, TextStyle style, c
     , color(color) {
 	font = Resources::GetText(fontFile, fontSize);
 	texture = nullptr;
-	timer = nullptr;
 
 	RemakeTexture();
 }
@@ -23,18 +22,10 @@ Text::~Text() {
 	if (texture != nullptr) {
 		SDL_DestroyTexture(texture);
 	}
-
-	delete timer;
 }
 
-void Text::Update(float dt) {
-	if (timer != nullptr) {
-		timer->Update(dt);
-
-		if (timer->Get() > 0.0f) {
-			associated.RequestDelete();
-		}
-	}
+void Text::Update(unsigned dt) {
+	UNUSED(dt);
 }
 
 void Text::Render() {
@@ -88,11 +79,6 @@ void Text::SetFontFile(const std::string& file) {
 void Text::SetFontSize(int size) {
 	fontSize = size;
 	RemakeTexture();
-}
-
-void Text::SetFadeOut(float t) {
-	timer = new Timer();
-	timer->SetStart(-t);
 }
 
 void Text::RemakeTexture() {

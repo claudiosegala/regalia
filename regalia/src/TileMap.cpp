@@ -71,7 +71,7 @@ int& TileMap::At(int col, int row, int layer) {
 	return tileMatrix[idx];
 }
 
-void TileMap::Update(float dt) {
+void TileMap::Update(unsigned dt) {
 	UNUSED(dt);
 }
 

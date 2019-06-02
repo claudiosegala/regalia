@@ -31,7 +31,7 @@ void StoryState::LoadAssets() {
 	// TODO: add message to say "Press ESC to return to Menu"
 }
 
-void StoryState::Update(float dt) {
+void StoryState::Update(unsigned dt) {
 	auto& in = InputManager::GetInstance();
 
 	popRequested = in.PopRequested();

@@ -46,11 +46,10 @@ void Player::NotifyCollision(GameObject& go) {
 	}
 }
 
-void Player::Update(float dt) {
-	auto delta = (unsigned long)(dt * 1000.0f);
+void Player::Update(unsigned dt) {
 
-	UpdateSpeed(delta);
-	MoveAndSlide(delta);
+	UpdateSpeed(dt);
+	MoveAndSlide(dt);
 	Shoot();
 
 	UpdateState();
@@ -116,7 +115,7 @@ void Player::Shoot() {
 		id,
 		10,
 		angle,
-		200,
+		0.2f,
 		1000,
 		&Constants::Bullet::DefaultSpriteSheet
 	};
@@ -157,7 +156,7 @@ void Player::UpdateSpeed(unsigned long dt) {
 	}
 
 	speed.x = direction.x * Constants::Player::SpeedMultiplier;
-	speed.y += Constants::Game::Gravity * (float)dt / 1000.0f;
+	speed.y += Constants::Game::Gravity * float(dt) / 1000.0f;
 
 	// TODO: WallJump should be treated differently
 	if ((isOnFloor || isOnWall) && jump) {

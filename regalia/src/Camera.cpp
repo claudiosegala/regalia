@@ -22,7 +22,7 @@ void Camera::Unfollow() {
 	Camera::Follow(nullptr);
 }
 
-void Camera::Update(float dt) {
+void Camera::Update(unsigned dt) {
 	if (focus != nullptr) { // Follows the game object
 		auto center = focus->box.Center();
 		auto centerWindow = Constants::Window::Center;
@@ -31,7 +31,7 @@ void Camera::Update(float dt) {
 		return;
 	}
 
-	speed = GetMovement() * dt * Constants::Camera::Pace;
+	speed = GetMovement() * float(dt) * Constants::Camera::Pace;
 	pos += speed;
 }
 

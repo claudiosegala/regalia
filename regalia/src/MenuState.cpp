@@ -33,7 +33,7 @@ void MenuState::LoadAssets() {
 	cursor = AddObject(CreateOption("-              -", { 0, 0 })); //> points towards first position
 }
 
-void MenuState::Update(float dt) {
+void MenuState::Update(unsigned dt) {
 	auto& in = InputManager::GetInstance();
 
 	popRequested = in.PopRequested();

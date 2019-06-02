@@ -15,7 +15,7 @@ Game::Game(const std::string& title, int width, int height) {
 
 	instance = this;
 	frameStart = 0;
-	dt = 0.0f;
+	dt = 0;
 	storedState = nullptr;
 	window = nullptr;
 	renderer = nullptr;
@@ -91,7 +91,7 @@ SDL_Window* Game::GetWindow() const {
 	return window;
 }
 
-float Game::GetDeltaTime() const {
+unsigned Game::GetDeltaTime() const {
 	return dt;
 }
 
@@ -191,11 +191,9 @@ void Game::End() {
 }
 
 void Game::CalculateDeltaTime() {
-	auto newFrameStart = (float)SDL_GetTicks();
-	auto oldFrameStart = (float)frameStart;
-
-	dt = (newFrameStart - oldFrameStart) / 1000.0f;
-	frameStart = (unsigned int)newFrameStart;
+	auto currentTime = SDL_GetTicks();
+	dt = currentTime - frameStart;
+	frameStart = currentTime;
 }
 
 void Game::Init_SDL() const {

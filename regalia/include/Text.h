@@ -16,7 +16,7 @@ public:
 
 	~Text();
 
-	void Update(float dt) override;
+	void Update(unsigned dt) override;
 
 	void Render() override;
 
@@ -30,11 +30,9 @@ public:
 
 	void SetFontSize(int size);
 
-	void SetFadeOut(float t);
+	void SetFadeOut(unsigned t);
 
 private:
-	Timer* timer;
-
 	std::shared_ptr<TTF_Font> font;
 
 	SDL_Texture* texture;

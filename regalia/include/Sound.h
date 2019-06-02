@@ -19,7 +19,7 @@ public:
 
 	bool IsOpen();
 
-	void Update(float dt) override;
+	void Update(unsigned dt) override;
 
 	void Render() override;
 

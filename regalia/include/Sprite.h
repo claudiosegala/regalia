@@ -31,7 +31,7 @@ public:
 
 	Vec2 GetScale() const;
 
-	void Update(float dt) override;
+	void Update(unsigned dt) override;
 
 	void Render() override;
 
@@ -63,7 +63,7 @@ private:
 
 	int currentFrame = 0;
 
-	float timeElapsed = 0;
+	unsigned timeElapsed = 0;
 
 	int currentAnimationId = 0;
 

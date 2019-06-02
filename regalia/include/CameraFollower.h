@@ -7,7 +7,7 @@ class CameraFollower : public Component {
 public:
 	CameraFollower(GameObject&);
 
-	void Update(float dt) override;
+	void Update(unsigned dt) override;
 
 	void Render() override;
 };

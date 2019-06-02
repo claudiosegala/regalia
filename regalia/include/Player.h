@@ -17,7 +17,7 @@ public:
 
 	void NotifyCollision(GameObject& go) override;
 
-	void Update(float dt) override;
+	void Update(unsigned dt) override;
 
 	void Render() override;
 

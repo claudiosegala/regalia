@@ -17,7 +17,7 @@ Collider::Collider(GameObject& go, Shape* shape, Vec2 scale, Vec2 offset)
     , offset(offset) {
 }
 
-void Collider::UpdateFather(float dt) {
+void Collider::UpdateFather(unsigned dt) {
 	UNUSED(dt);
 	auto& box = associated.box;
 
@@ -28,7 +28,7 @@ void Collider::UpdateFather(float dt) {
 }
 
 // TODO: verify if this is correct
-void Collider::Update(float dt) {
+void Collider::Update(unsigned dt) {
 	UNUSED(dt);
 
 	if (shape == nullptr) {

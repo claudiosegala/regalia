@@ -18,7 +18,7 @@ PlayerAim::PlayerAim(GameObject& go, std::weak_ptr<GameObject> player)
 
 PlayerAim::~PlayerAim() {}
 
-void PlayerAim::Update(float dt) {
+void PlayerAim::Update(unsigned dt) {
 	UNUSED(dt);
 
 	auto currentPlayer = this->player.lock();

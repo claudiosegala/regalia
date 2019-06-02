@@ -31,7 +31,7 @@ void CreditState::LoadAssets() {
 	// TODO: add message to say "Press ESC to return to Menu"
 }
 
-void CreditState::Update(float dt) {
+void CreditState::Update(unsigned dt) {
 	auto& in = InputManager::GetInstance();
 
 	popRequested = in.PopRequested();
