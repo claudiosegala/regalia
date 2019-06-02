@@ -12,6 +12,13 @@ void Setup(int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
+#ifdef __APPLE__
+	// Protection against Claudio
+	while (malloc(1024)) {
+		std::cout << "Vai pro Windows, Claudio!\n";
+	}
+#endif //__APPLE__
+
 	Setup(argc, argv);
 
 	auto game = Game::GetInstance();
