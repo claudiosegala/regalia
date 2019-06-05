@@ -161,7 +161,6 @@ void Player::UpdateSpeed(unsigned long dt) {
 		speed.y = Constants::Player::JumpSpeed;
 	}
 
-	// TODO: verify what should be the actual max velocity, 1000 is too big.
 	speed.Limit(Constants::Game::MaxVelocity);
 }
 
