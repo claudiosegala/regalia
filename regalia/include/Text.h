@@ -33,19 +33,19 @@ public:
 	void SetFadeOut(unsigned t);
 
 private:
+	SDL_Texture* texture = nullptr;
+	
 	std::shared_ptr<TTF_Font> font;
-
-	SDL_Texture* texture;
 
 	std::string text;
 
-	TextStyle style;
-
 	std::string fontFile;
 
-	int fontSize;
-
 	SDL_Color color;
+
+	TextStyle style;
+
+	int fontSize;
 
 	void RemakeTexture();
 };

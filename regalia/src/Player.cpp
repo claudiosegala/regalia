@@ -17,8 +17,6 @@ Player::Player(GameObject& go)
     , id(counter++) {
 
 	associated.box.SetCenter({ 27.0f, 26.0f });
-
-	state = Constants::Player::Idle;
 	collisionBox = Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 
 	LoadAssets();
@@ -47,7 +45,6 @@ void Player::NotifyCollision(GameObject& go) {
 }
 
 void Player::Update(unsigned dt) {
-
 	UpdateSpeed(dt);
 	MoveAndSlide(dt);
 	Shoot();

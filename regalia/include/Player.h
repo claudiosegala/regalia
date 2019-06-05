@@ -22,7 +22,7 @@ public:
 	void Render() override;
 
 private:
-	Constants::Player::State state;
+	Constants::Player::State state = Constants::Player::Idle;
 
 	int hp = Constants::Player::Hp;
 

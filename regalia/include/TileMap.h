@@ -30,11 +30,11 @@ public:
 	int GetDepth();
 
 private:
-	int mapWidth;
+	int mapWidth = 0;
 
-	int mapHeight;
+	int mapHeight = 0;
 
-	int mapDepth;
+	int mapDepth = 0;
 
 	std::vector<int> tileMatrix;
 

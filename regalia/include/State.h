@@ -29,11 +29,11 @@ public:
 	bool QuitRequested();
 
 protected:
-	bool started;
+	bool started = false;
 
-	bool quitRequested;
+	bool quitRequested = false;
 
-	int popRequested;
+	int popRequested = 0;
 
 	virtual void RenderArray();
 

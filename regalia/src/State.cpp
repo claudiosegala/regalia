@@ -3,9 +3,6 @@
 
 State::State()
     : objectArray() {
-	started = false;
-	quitRequested = false;
-	popRequested = 0;
 }
 
 State::~State() {

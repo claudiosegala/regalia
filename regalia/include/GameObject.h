@@ -32,16 +32,19 @@ public:
 
 	Rect box;
 
-	float angle;
+	Rect hitbox;
+
+	float angle = 0.0f;
 
 	bool hide = false;
 
 private:
-	bool started;
+	bool started = false;
 
-	bool isDead;
+	bool isDead = false;
 
 	std::vector<std::unique_ptr<Component>> components;
+
 	std::array<Component*, Constants::NumberOfComponentsTypes> componentsArray {};
 };
 

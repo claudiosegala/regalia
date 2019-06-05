@@ -5,8 +5,7 @@
 #include "InputManager.h"
 
 CountdownState::CountdownState(State* playState)
-    : playState(playState)
-    , count(Constants::Countdown::StartValue) {
+    : playState(playState) {
 
 	LoadAssets();
 }

@@ -8,12 +8,11 @@
 Text::Text(GameObject& go, const std::string& file, int size, TextStyle style, const std::string& text, SDL_Color color)
     : Component(go)
     , text(text)
-    , style(style)
     , fontFile(file)
-    , fontSize(size)
-    , color(color) {
+    , color(color)
+    , style(style)
+    , fontSize(size) {
 	font = Resources::GetText(fontFile, fontSize);
-	texture = nullptr;
 
 	RemakeTexture();
 }

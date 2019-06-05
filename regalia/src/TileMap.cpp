@@ -6,9 +6,6 @@
 TileMap::TileMap(GameObject& go, const std::string& file, TileSet* ts)
     : Component(go)
     , tileSet(ts) {
-	mapDepth = 0;
-	mapHeight = 0;
-	mapWidth = 0;
 
 	Load(file);
 }

@@ -12,8 +12,7 @@
 #include <Vec2.h>
 
 MenuState::MenuState()
-    : option(0)
-    , cursor() {
+    : cursor() {
 	Logger::Info("Initializing Menu State");
 
 	//music.Open(Constants::Menu::Music);
