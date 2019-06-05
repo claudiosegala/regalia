@@ -14,6 +14,9 @@ Game::Game(const std::string& title, int width, int height) {
 	}
 
 	instance = this;
+	renderer = nullptr;
+	window = nullptr;
+	storedState = nullptr;
 
 	Init_SDL();
 	Init_IMG();

@@ -46,9 +46,5 @@ private:
 
 	void MoveAndSlide(unsigned long dt);
 
-	std::vector<std::vector<int>> GetCollisionSet();
-
-	unsigned long FindMaxDelta(const Rect& box, const Vec2& velocity, const unsigned long dt);
-
 	void Die();
 };

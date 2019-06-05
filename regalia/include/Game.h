@@ -29,11 +29,11 @@ private:
 
 	unsigned frameStart = 0;
 
-	State* storedState = nullptr;
+	State* storedState;
 
-	SDL_Window* window = nullptr;
+	SDL_Window* window;
 
-	SDL_Renderer* renderer = nullptr;
+	SDL_Renderer* renderer;
 
 	std::stack<std::unique_ptr<State>> stateStack;
 

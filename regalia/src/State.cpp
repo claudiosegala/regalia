@@ -2,7 +2,10 @@
 #include <State.h>
 
 State::State()
-    : objectArray() {
+    : started(false)
+    , quitRequested(false)
+    , popRequested(0)
+	, objectArray() {
 }
 
 State::~State() {

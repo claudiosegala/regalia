@@ -19,7 +19,7 @@ void CountdownState::LoadAssets() {
 
 	text->box.SetCenter({ Constants::Window::Width / 2, Constants::Window::Height / 2 });
 
-	AddObject(text);
+	(void)AddObject(text);
 }
 
 void CountdownState::Update(unsigned dt) {

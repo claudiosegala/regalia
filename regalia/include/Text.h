@@ -30,8 +30,6 @@ public:
 
 	void SetFontSize(int size);
 
-	void SetFadeOut(unsigned t);
-
 private:
 	SDL_Texture* texture = nullptr;
 	

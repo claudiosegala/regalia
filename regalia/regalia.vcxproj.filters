@@ -38,6 +38,8 @@
     <ClCompile Include="src\PlayerAim.cpp" />
     <ClCompile Include="src\Number.cpp" />
     <ClCompile Include="src\CountdownState.cpp" />
+    <ClCompile Include="src\CollisionMap.cpp" />
+    <ClCompile Include="include\CollisionMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
