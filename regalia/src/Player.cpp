@@ -197,6 +197,5 @@ void Player::MoveAndSlide(unsigned long dt) {
 
 void Player::Die() {
 	associated.RequestDelete();
-
 	// TODO: add animation of death
 }

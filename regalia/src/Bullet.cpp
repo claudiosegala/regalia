@@ -55,13 +55,13 @@ void Bullet::LoadAssets(BulletData& data) {
 }
 
 void Bullet::MoveAndBounce(unsigned long dt) {
+	// TODO: get a collision box
 	while (dt && !Number::Zero(distanceLeft)) {
 		auto delta = CollisionMap::FindMaxDelta(associated.box, speed, dt);
 		auto dist = speed * float(delta) / 1000.0f;
 
 		associated.box += dist;
 		distanceLeft -= dist.GetLength();
-
 		dt -= delta;
 
 		if (dt) {
