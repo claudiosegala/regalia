@@ -179,6 +179,8 @@
     <ClInclude Include="include\CountdownState.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\CollisionMap.h" />
+    <ClCompile Include="src\CollisionMap.cpp" />
     <ClCompile Include="src\Number.cpp" />
     <ClCompile Include="src\PlayerAim.cpp" />
     <ClCompile Include="src\Shape.cpp" />

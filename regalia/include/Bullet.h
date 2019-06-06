@@ -4,6 +4,7 @@
 #include <GameObject.h>
 #include <Interfaces.h>
 #include <Vec2.h>
+#include <Rect.h>
 
 class Bullet : public Component {
 public:
@@ -20,11 +21,16 @@ public:
 	int GetDamage();
 
 private:
+
 	int damage;
 
 	float distanceLeft;
 
+	Rect collisionBox;
+
 	Vec2 speed;
 
 	void LoadAssets(BulletData& data);
+	
+	void MoveAndBounce(unsigned long dt);
 };

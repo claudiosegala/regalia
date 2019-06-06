@@ -22,11 +22,12 @@ public:
 	void Resume() override;
 
 private:
-	State* playState;
 
 	Timer timer;
 
-	int count;
+	int count = Constants::Countdown::StartValue;
 
-	GameObject* text;
+	State* playState = nullptr;
+
+	GameObject* text = nullptr;
 };

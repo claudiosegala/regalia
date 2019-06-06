@@ -25,9 +25,9 @@ public:
 private:
 	static Game* instance;
 
-	unsigned dt;
+	unsigned dt = 0;
 
-	unsigned frameStart;
+	unsigned frameStart = 0;
 
 	State* storedState;
 

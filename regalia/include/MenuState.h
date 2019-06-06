@@ -23,7 +23,7 @@ public:
 	void Resume() override;
 
 private:
-	int option;
+	int option = 0;
 
 	std::weak_ptr<GameObject> cursor;
 

@@ -28,11 +28,11 @@ public:
 	void Resume() override;
 
 private:
-	int backgroundIdx;
+	int backgroundIdx = 0;
 
-	int tileSetIdx;
+	int tileSetIdx = 0;
 
-	int tileMapIdx;
+	int tileMapIdx = 0;
 
 	Timer timer;
 

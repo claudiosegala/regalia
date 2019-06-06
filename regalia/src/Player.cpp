@@ -5,6 +5,7 @@
 #include <Game.h>
 #include <GameObject.h>
 #include <InputManager.h>
+#include <CollisionMap.h>
 #include <Number.h>
 #include <Player.h>
 #include <Sprite.h>
@@ -17,8 +18,6 @@ Player::Player(GameObject& go)
     , id(counter++) {
 
 	associated.box.SetCenter({ 27.0f, 26.0f });
-
-	state = Constants::Player::Idle;
 	collisionBox = Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 
 	LoadAssets();
@@ -47,7 +46,6 @@ void Player::NotifyCollision(GameObject& go) {
 }
 
 void Player::Update(unsigned dt) {
-
 	UpdateSpeed(dt);
 	MoveAndSlide(dt);
 	Shoot();
@@ -163,7 +161,6 @@ void Player::UpdateSpeed(unsigned long dt) {
 		speed.y = Constants::Player::JumpSpeed;
 	}
 
-	// TODO: verify what should be the actual max velocity, 1000 is too big.
 	speed.Limit(Constants::Game::MaxVelocity);
 }
 
@@ -172,13 +169,13 @@ void Player::MoveAndSlide(unsigned long dt) {
 	const auto startingPosition = box.vector;
 
 	// Find maximum diagonal movement
-	auto delta = FindMaxDelta(box, speed, dt);
+	auto delta = CollisionMap::FindMaxDelta(box, speed, dt);
 	box += speed * float(delta) / 1000.0f;
 
 	dt -= delta;
 
 	// Find maximum vertical movement
-	delta = FindMaxDelta(box, { 0.f, speed.y }, dt);
+	delta = CollisionMap::FindMaxDelta(box, { 0.f, speed.y }, dt);
 
 	isOnFloor = (delta != dt);
 	box.vector.y += speed.y * float(delta) / 1000.0f;
@@ -189,7 +186,7 @@ void Player::MoveAndSlide(unsigned long dt) {
 
 	// Find maximum horizontal movement
 	if (!Number::Zero(speed.x)) {
-		delta = FindMaxDelta(box, { speed.x, 0.f }, dt);
+		delta = CollisionMap::FindMaxDelta(box, { speed.x, 0.f }, dt);
 
 		isOnWall = (delta != dt);
 		box.vector.x += speed.x * float(delta) / 1000.0f;
@@ -198,87 +195,7 @@ void Player::MoveAndSlide(unsigned long dt) {
 	associated.box += box.vector - startingPosition;
 }
 
-std::vector<std::vector<int>> Player::GetCollisionSet() {
-	// TODO: PlayState should let this available
-	std::vector<std::vector<int>> collisionSet = {
-		{ 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 01, 01, 01, 01, 01, 01, 01, 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01, 01, 01, 01, 01, 01, 01, 01, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01, 00, 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 01, 01, 01, 01, 01, 01, 00, 00, 00, 01, 01, 01, 01, 01, 01, 00, 00, 00, 01, 01, 01, 01, 01, 01, 00, 00, 00, 00, 01, 01, 01, 01, 01, 01, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01 },
-		{ 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01 },
-	};
-
-	return collisionSet;
-}
-
-unsigned long Player::FindMaxDelta(const Rect& box, const Vec2& velocity, const unsigned long dt) {
-	const auto collisionSet = GetCollisionSet();
-	const auto rows = int(collisionSet.size());
-	const auto columns = int(collisionSet[0].size());
-
-	unsigned long ans = 0;
-	unsigned long min_delta = 0;
-	auto max_delta = dt;
-
-	bool collision = false;
-	while (min_delta <= max_delta) {
-		const auto delta = (max_delta + min_delta) / 2;
-		const auto p = box + velocity * float(delta) / 1000.0f;
-		const auto ul = p.GetUpperLeft();
-		const auto dr = p.GetLowerRight();
-
-		const auto x1 = int(ul.x / 24.0f);
-		const auto y1 = int(ul.y / 24.0f);
-		const auto x2 = int(dr.x / 24.0f);
-		const auto y2 = int(dr.y / 24.0f);
-
-		collision = false;
-
-		if (x1 < 0 || x1 >= columns || y1 < 0 || y1 >= rows || x2 < 0 || x2 >= columns || y2 < 0 || y2 >= rows) {
-			collision = true;
-		} else {
-			for (int j = y1; j <= y2; j++) {
-				for (int k = x1; k <= x2; k++) {
-					if (collisionSet[j][k]) {
-						collision = true;
-						// These assignments cause both loops to terminate
-						j = y2;
-						k = x2;
-					}
-				}
-			}
-		}
-
-		if (!collision) {
-			ans = delta;
-			min_delta = delta + 1;
-		} else {
-			max_delta = delta - 1;
-		}
-	}
-
-	return ans;
-}
-
 void Player::Die() {
 	associated.RequestDelete();
-
 	// TODO: add animation of death
 }

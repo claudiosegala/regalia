@@ -2,11 +2,7 @@
 #include <Component.h>
 #include <GameObject.h>
 
-GameObject::GameObject() {
-	started = false;
-	isDead = false;
-	angle = 0.0f;
-}
+GameObject::GameObject() {}
 
 GameObject::~GameObject() {
 	components.clear();

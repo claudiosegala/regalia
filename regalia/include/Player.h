@@ -22,7 +22,7 @@ public:
 	void Render() override;
 
 private:
-	Constants::Player::State state;
+	Constants::Player::State state = Constants::Player::Idle;
 
 	int hp = Constants::Player::Hp;
 
@@ -45,10 +45,6 @@ private:
 	void UpdateSpeed(unsigned long dt);
 
 	void MoveAndSlide(unsigned long dt);
-
-	std::vector<std::vector<int>> GetCollisionSet();
-
-	unsigned long FindMaxDelta(const Rect& box, const Vec2& velocity, const unsigned long dt);
 
 	void Die();
 };
