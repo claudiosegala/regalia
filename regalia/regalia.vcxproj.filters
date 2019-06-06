@@ -39,7 +39,6 @@
     <ClCompile Include="src\Number.cpp" />
     <ClCompile Include="src\CountdownState.cpp" />
     <ClCompile Include="src\CollisionMap.cpp" />
-    <ClCompile Include="include\CollisionMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
@@ -80,6 +79,7 @@
     <ClInclude Include="include\PlayerAim.h" />
     <ClInclude Include="include\Number.h" />
     <ClInclude Include="include\CountdownState.h" />
+    <ClInclude Include="include\CollisionMap.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\img\mister_n_spritesheet.png" />

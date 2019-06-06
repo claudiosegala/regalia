@@ -145,6 +145,7 @@
     <ClInclude Include="include\Circle.h" />
     <ClInclude Include="include\Collider.h" />
     <ClInclude Include="include\Collision.h" />
+    <ClInclude Include="include\CollisionMap.h" />
     <ClInclude Include="include\Number.h" />
     <ClInclude Include="include\Shape.h" />
     <ClInclude Include="include\Component.h" />
@@ -179,7 +180,6 @@
     <ClInclude Include="include\CountdownState.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\CollisionMap.h" />
     <ClCompile Include="src\CollisionMap.cpp" />
     <ClCompile Include="src\Number.cpp" />
     <ClCompile Include="src\PlayerAim.cpp" />
