@@ -12,7 +12,7 @@ Circle::Circle(float r, Vec2 p)
     , center(p) {}
 
 bool Circle::Is(const std::string& type) {
-	return (type == "Cicle");
+	return (type == "Circle");
 }
 
 float Circle::Perimeter() const {
