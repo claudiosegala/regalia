@@ -1,10 +1,11 @@
 #include <pch.h>
 #include <Bullet.h>
 #include <Circle.h>
-#include <Number.h>
 #include <Collider.h>
 #include <CollisionMap.h>
+#include <Constants.h>
 #include <GameObject.h>
+#include <Number.h>
 #include <Player.h>
 #include <Sprite.h>
 
@@ -38,7 +39,7 @@ void Bullet::NotifyCollision(GameObject& go) {
 		return;
 	}
 
-	if (player->id != shooterId) {
+	if (player->id != shooterId || Constants::Game::FriendlyFire) {
 		associated.RequestDelete();
 		return;
 	}

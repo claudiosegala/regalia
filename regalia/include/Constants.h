@@ -22,6 +22,7 @@ namespace Window {
 namespace Game {
 	const int Sets = 5;
 	const int Players = 2;
+	const bool FriendlyFire = false;
 	const float SetLenght = 45.0f;
 	const float MaxVelocity = 1000.0f;
 	const float Gravity = 500.0f;
