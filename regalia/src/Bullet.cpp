@@ -21,13 +21,13 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 }
 
 void Bullet::Update(unsigned dt) {
-	MoveAndBounce(dt);
-
 	// Destroy if hit the maximum distance
 	if (distanceLeft <= 0) {
 		associated.RequestDelete();
 		return;
 	}
+
+	MoveAndBounce(dt);
 }
 
 void Bullet::Render() {}
