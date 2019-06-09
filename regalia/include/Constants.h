@@ -192,12 +192,12 @@ namespace Player {
 
 	const SpriteSheetData MisterN(
 	    "assets/img/mister_n_spritesheet.png",
-	    432,
+	    672,
 	    48,
 	    100,
 	    TOTAL_STATES,
 	    {
-	        { Idle, 1 },
+	        { Idle, 6 },
 	        { Running, 6 },
 	        { Jumping, 1 },
 	        { Falling, 1 },
