@@ -2,10 +2,14 @@
 #include <Component.h>
 #include <GameObject.h>
 
-GameObject::GameObject() {}
+GameObject::GameObject() {
+	hitbox = nullptr;
+}
 
 GameObject::~GameObject() {
 	components.clear();
+
+	delete hitbox;
 }
 
 void GameObject::Start() {

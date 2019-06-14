@@ -179,7 +179,7 @@ void Player::MoveAndSlide(unsigned long dt) {
 
 	isOnFloor = (delta != dt);
 	box.vector.y += speed.y * float(delta) / 1000.0f;
-	
+
 	if (isOnFloor) {
 		speed.y = 0.0f;
 	}

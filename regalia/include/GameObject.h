@@ -32,7 +32,7 @@ public:
 
 	Rect box;
 
-	Rect hitbox;
+	Rect* hitbox;
 
 	float angle = 0.0f;
 
