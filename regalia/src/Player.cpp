@@ -156,6 +156,10 @@ void Player::UpdateSpeed(unsigned long dt) {
 	speed.x = direction.x * Constants::Player::SpeedMultiplier;
 	speed.y += Constants::Game::Gravity * float(dt) / 1000.0f;
 
+	if (isOnWall && speed.y > 0) {
+		speed.y /= 1.5;
+	}
+
 	// TODO: WallJump should be treated differently
 	if ((isOnFloor || isOnWall) && jump) {
 		speed.y = Constants::Player::JumpSpeed;
@@ -188,7 +192,7 @@ void Player::MoveAndSlide(unsigned long dt) {
 	if (!Number::Zero(speed.x)) {
 		delta = CollisionMap::FindMaxDelta(box, { speed.x, 0.f }, dt);
 
-		isOnWall = (delta != dt);
+		isOnWall = (delta != dt) && !isOnFloor;
 		box.vector.x += speed.x * float(delta) / 1000.0f;
 	}
 
