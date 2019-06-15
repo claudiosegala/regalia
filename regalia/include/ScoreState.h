@@ -30,9 +30,5 @@ private:
 
 	void LoadScore();
 
-	void LoadPausedOptions();
-
-	void LoadContinueOptions();
-
-	void LoadFinishedOptions();
+	void LoadOptions();
 };

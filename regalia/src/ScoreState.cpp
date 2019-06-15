@@ -28,14 +28,7 @@ ScoreState::~ScoreState() {
 void ScoreState::LoadAssets() {
 	LoadBackground();
 	LoadScore();
-
-	if (GameData::Paused) {
-		LoadPausedOptions();
-	} else if (GameData::Finished) {
-		LoadFinishedOptions();
-	} else {
-		LoadContinueOptions();
-	}
+	LoadOptions();
 }
 
 void ScoreState::Update(unsigned dt) {
@@ -115,7 +108,19 @@ void ScoreState::LoadBackground() {
 
 // TODO: improve to be more generic
 void ScoreState::LoadScore() {
-	auto pos = Vec2(20, 100); // sprite frame width, arbitrario
+	auto pos = Vec2(20, 150); // sprite frame width, arbitrario
+
+	{
+		auto go = new GameObject();
+		auto text = GameData::Paused 
+			? std::string("Set ") + std::to_string(GameData::Set) 
+			: std::string("Scoreboard");
+
+		go->AddComponent<Text>(Constants::Game::Font, Constants::Score::VictoriesSize, Text::TextStyle::BLENDED, text, Constants::Colors::White);
+		go->box.SetCenter({ Constants::Window::Width / 2, 50 });
+
+		(void)AddObject(go);
+	}
 
 	for (int i = 0; i < GameData::NumPlayers; i++) {
 		auto victories = 0;
@@ -135,8 +140,9 @@ void ScoreState::LoadScore() {
 
 		{
 			auto go = new GameObject();
-			
-			go->AddComponent<Text>(Constants::Game::Font, Constants::Score::VictoriesSize, Text::TextStyle::BLENDED, std::to_string(victories), Constants::Colors::Red);
+			auto text = std::to_string(victories);
+
+			go->AddComponent<Text>(Constants::Game::Font, Constants::Score::VictoriesSize, Text::TextStyle::BLENDED, text, Constants::Colors::White);
 			go->box.SetCenter(pos + Vec2(187, 72));
 
 			(void)AddObject(go);
@@ -146,28 +152,24 @@ void ScoreState::LoadScore() {
 	}
 }
 
-void ScoreState::LoadPausedOptions() {
-	//    SCORE
-	// X    v    Y
-	//
-	// A - Continue Set
-	// R1 - Restart
-	// L1 - Quit
-}
+void ScoreState::LoadOptions() {
+	std::vector<std::string> options;
 
-void ScoreState::LoadContinueOptions() {
-	//    SCORE
-	// X    v    Y
-	//
-	// A - Continue Match
-	// R1 - Restart
-	// L1 - Quit
-}
+	if (GameData::Paused) {
+		options.emplace_back("A - Continue Match");
+	} else if (!GameData::Finished) {
+		options.emplace_back("A - Continue to Next Set");
+	}
 
-void ScoreState::LoadFinishedOptions() {
-	//    SCORE
-	// X    v    Y
-	//
-	// R1 - Restart
-	// L1 - Quit
+	options.emplace_back("R1 - Restart");
+	options.emplace_back("L1 - Quit");
+
+	for (int i = 0; i < options.size(); i++) {
+		auto go = new GameObject();
+
+		go->AddComponent<Text>(Constants::Game::Font, Constants::Score::OptionSize, Text::TextStyle::BLENDED, options[i], Constants::Colors::White);
+		go->box.SetCenter({ Constants::Window::Width / 2, 350 + 50 * i });
+
+		(void)AddObject(go);
+	}
 }
