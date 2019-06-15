@@ -135,6 +135,7 @@ namespace Key {
 	const int D = SDLK_d;
 	const int W = SDLK_w;
 	const int S = SDLK_s;
+	const int P = SDLK_p;
 }
 
 namespace Mouse {
