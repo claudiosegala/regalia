@@ -68,6 +68,7 @@ namespace Countdown {
 namespace Score {
 	const std::string Background = "assets/img/black.jpeg";
 	const int VictoriesSize = 75;
+	const int OptionSize = 45;
 }
 
 namespace Story {
@@ -175,6 +176,7 @@ namespace StdColor {
 
 namespace Colors {
 	const SDL_Color Black = { 0, 0, 0, 0 };
+	const SDL_Color White = { 255, 255, 255, 0 };
 	const SDL_Color Red = { 255, 0, 0, 0 };
 }
 
