@@ -10,6 +10,7 @@
 #include <Rect.h>
 #include <ScoreState.h>
 #include <Sprite.h>
+#include <Text.h>
 #include <Vec2.h>
 
 ScoreState::ScoreState() {
@@ -53,7 +54,7 @@ void ScoreState::Update(unsigned dt) {
 	auto game = Game::GetInstance();
 
 	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_A) || in.KeyPress(Constants::Key::A)) {
-		if (GameData::Paused) { 
+		if (GameData::Paused) {
 			GameData::Paused = false;
 			popRequested = 1;
 			return;
@@ -112,10 +113,36 @@ void ScoreState::LoadBackground() {
 	(void)AddObject(go);
 }
 
+// TODO: improve to be more generic
 void ScoreState::LoadScore() {
+	auto pos = Vec2(20, 100); // sprite frame width, arbitrario
+
 	for (int i = 0; i < GameData::NumPlayers; i++) {
-		// TODO: load user
-		// TODO: load victories of each user
+		auto victories = 0;
+
+		for (int j = 0; j < Constants::Game::Sets; j++) {
+			victories += (GameData::Result[j] == i);
+		}
+
+		{
+			auto go = new GameObject();
+
+			go->AddComponent<Sprite>(&Constants::Player::MisterN)->SetScale(3.0f, 3.0f);
+			go->box.vector = pos;
+
+			(void)AddObject(go);
+		}
+
+		{
+			auto go = new GameObject();
+			
+			go->AddComponent<Text>(Constants::Game::Font, Constants::Score::VictoriesSize, Text::TextStyle::BLENDED, std::to_string(victories), Constants::Colors::Red);
+			go->box.SetCenter(pos + Vec2(187, 72));
+
+			(void)AddObject(go);
+		}
+
+		pos += Vec2(230, 0);
 	}
 }
 
