@@ -12,7 +12,7 @@
 Bullet::Bullet(GameObject& go, BulletData& data)
     : Component(go) {
 	shooterId = data.shooterId;
-	distanceLeft = data.maxDistance;
+	bouncesLeft = data.maxBounces;
 	damage = data.damage;
 	speed = Vec2(data.speed * cos(data.angle), data.speed * sin(data.angle));
 
@@ -21,7 +21,7 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 
 void Bullet::Update(unsigned dt) {
 	// Destroy if hit the maximum distance
-	if (distanceLeft <= 0) {
+	if (bouncesLeft < 0) {
 		associated.RequestDelete();
 		return;
 	}
@@ -59,7 +59,6 @@ void Bullet::MoveAndBounce(unsigned dt) {
 	auto dist = speed * float(maxDelta) / 1000.0f;
 
 	associated.box += dist;
-	distanceLeft -= dist.GetLength();
 
 	if (maxDelta != dt) {
 		auto remainingDelta = dt - maxDelta;
@@ -80,6 +79,6 @@ void Bullet::MoveAndBounce(unsigned dt) {
 		dist = speed * float(maxDelta) / 1000.0f;
 
 		associated.box += dist;
-		distanceLeft -= dist.GetLength();
+		bouncesLeft--;
 	}
 }
