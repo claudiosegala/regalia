@@ -51,14 +51,13 @@ int Bullet::GetDamage() {
 
 void Bullet::LoadAssets(BulletData& data) {
 	associated.AddComponent<Sprite>(data.spriteSheetData);
-	auto circle = new Circle();
-	associated.AddComponent<Collider>(circle);
+	associated.AddComponent<Collider>(new Rect());
 }
 
 void Bullet::MoveAndBounce(unsigned long dt) {
 	// TODO: get a collision box
 	while (dt && !Number::Zero(distanceLeft)) {
-		auto delta = CollisionMap::FindMaxDelta(associated.box, speed, dt);
+		const auto delta = CollisionMap::FindMaxDelta(associated.box, speed, dt);
 		auto dist = speed * float(delta) / 1000.0f;
 
 		associated.box += dist;

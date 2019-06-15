@@ -10,9 +10,9 @@
 #include <Game.h>
 #endif // DEBUG
 
-Collider::Collider(GameObject& go, Shape* shape, Vec2 scale, Vec2 offset)
+Collider::Collider(GameObject& go, Rect* shape, Vec2 scale, Vec2 offset)
     : Component(go)
-    , shape(shape)
+    , rect(shape)
     , scale(scale)
     , offset(offset) {
 }
@@ -21,7 +21,6 @@ void Collider::UpdateFather(unsigned dt) {
 	UNUSED(dt);
 	auto& box = associated.box;
 
-	auto rect = static_cast<Rect*>(shape);
 	box.width /= scale.x;
 	box.height /= scale.y;
 	box.SetCenter(rect->Center() - offset.GetRotate(associated.angle));
@@ -31,24 +30,15 @@ void Collider::UpdateFather(unsigned dt) {
 void Collider::Update(unsigned dt) {
 	UNUSED(dt);
 
-	if (shape == nullptr) {
+	if (rect == nullptr) {
 		return;
 	}
 
 	const auto& box = associated.box;
 
-	if (shape->Is("Rect")) {
-		auto rect = static_cast<Rect*>(shape);
-		rect->width = associated.box.width * scale.x;
-		rect->height = associated.box.height * scale.y;
-		rect->SetCenter(box.Center() + offset.GetRotate(associated.angle));
-	} else {
-		auto circle = static_cast<Circle*>(shape);
-
-		circle->center = box.Center() + offset.GetRotate(associated.angle);
-		// TODO: verify if this is ok
-		circle->radius = box.MaxRadius() * scale.x;
-	}
+	rect->width = associated.box.width * scale.x;
+	rect->height = associated.box.height * scale.y;
+	rect->SetCenter(box.Center() + offset.GetRotate(associated.angle));
 }
 
 // Copie o conteúdo dessa função para dentro da sua e adapte o nome das funções para as suas.
@@ -59,14 +49,13 @@ void Collider::Update(unsigned dt) {
 void Collider::Render() {
 	RenderBox(associated.box, 255, 0, 0);
 
-	if (shape->Is("Rect")) {
-		auto rect = (Rect*)shape;
+	if (rect->Is("Rect")) {
 		RenderBox(*rect, 0, 255, 0);
 	}
 }
 
 void Collider::RenderBox(const Rect& box, int r, int g, int b) {
-	#ifdef DEBUG
+#ifdef DEBUG
 	const Vec2 center(box.Center());
 	SDL_Point points[5];
 
@@ -89,7 +78,7 @@ void Collider::RenderBox(const Rect& box, int r, int g, int b) {
 
 	SDL_SetRenderDrawColor(Game::GetInstance()->GetRenderer(), Uint8(r), Uint8(g), Uint8(b), SDL_ALPHA_OPAQUE);
 	SDL_RenderDrawLines(Game::GetInstance()->GetRenderer(), points, 5);
-	#endif // DEBUG
+#endif // DEBUG
 }
 
 void Collider::SetScale(Vec2 _scale) {
