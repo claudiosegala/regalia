@@ -15,7 +15,7 @@ CountdownState::~CountdownState() {}
 void CountdownState::LoadAssets() {
 	text = new GameObject();
 
-	text->AddComponent<Text>(Constants::Countdown::Font, Constants::Countdown::TextSize, Text::TextStyle::BLENDED, std::to_string(count), Constants::Colors::Red);
+	text->AddComponent<Text>(Constants::Game::Font, Constants::Countdown::TextSize, Text::TextStyle::BLENDED, std::to_string(count), Constants::Colors::Red);
 
 	text->box.SetCenter({ Constants::Window::Width / 2, Constants::Window::Height / 2 });
 
