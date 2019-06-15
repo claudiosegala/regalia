@@ -26,6 +26,7 @@ namespace Game {
 	const float SetLenght = 45.0f;
 	const float MaxVelocity = 1000.0f;
 	const float Gravity = 500.0f;
+	const std::string Font = "assets/font/Dark Crystal.ttf";
 }
 
 namespace Camera {
@@ -59,15 +60,13 @@ namespace Menu {
 
 namespace Countdown {
 	const bool Enabled = true; // Change this to enable or disable the countdown
-
 	const int TextSize = 180;
-
-	const std::string Font = "assets/font/Dark Crystal.ttf";
 	const int StartValue = 3;
 }
 
 namespace Score {
 	const std::string Background = "assets/img/black.jpeg";
+	const int VictoriesSize = 75;
 }
 
 namespace Story {
@@ -206,7 +205,8 @@ namespace Player {
 	        { Running, 6 },
 	        { Jumping, 1 },
 	        { Falling, 1 },
-	    });
+	    }
+	);
 }
 
 }
