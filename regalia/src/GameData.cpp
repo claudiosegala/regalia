@@ -1,4 +1,5 @@
 #include <pch.h>
+#include <Number.h>
 #include <GameData.h>
 
 bool GameData::Started = false;
@@ -9,25 +10,33 @@ bool GameData::Finished = false;
 
 int GameData::Set = 0;
 
+int GameData::NumPlayers = 0;
+
 int GameData::Result[Constants::Game::Sets] = { 0 };
 
-GameData::PersonaType GameData::Persona1;
-
-GameData::PersonaType GameData::Persona2;
+GameData::PersonaType GameData::Personas[4] = { 
+	GameData::PersonaType::MISTER_N,
+	GameData::PersonaType::GOTICA,
+	GameData::PersonaType::MAIS_OUTRO,
+	GameData::PersonaType::OUTRO
+};
 
 bool GameData::WindowFullscreen = false;
 
-void GameData::Init() {
-	GameData::Started = true;
-	GameData::Paused = false;
-	GameData::Finished = false;
-	GameData::Set = 0;
+void GameData::Init(int numPlayers) {
+	Started = true;
+	Paused = false;
+	Finished = false;
+	Set = 0;
+	NumPlayers = numPlayers;
 
 	for (int i = 0; i < Constants::Game::Sets; i++) {
-		GameData::Result[i] = 0;
+		Result[i] = -1;
 	}
 
-	// TODO: Choose the personas randomly
-	//GameData::Persona1 = ;
-	//GameData::Persona2 = ;
+	int rnd = Number::Rand();
+
+	while (rnd--) {
+		std::next_permutation(Personas, Personas + 4);
+	}
 }
