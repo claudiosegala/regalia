@@ -24,7 +24,7 @@ private:
 
 	int damage;
 
-	float distanceLeft;
+	float bouncesLeft;
 
 	Vec2 speed;
 
