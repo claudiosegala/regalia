@@ -12,8 +12,6 @@ public:
 	void Render() override;
 
 private:
-	
-	Timer gameTimer;
 
 	Timer animationTimer;
 };

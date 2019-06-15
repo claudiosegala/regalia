@@ -14,6 +14,8 @@ int GameData::NumPlayers = 0;
 
 int GameData::Result[Constants::Game::Sets] = { 0 };
 
+Timer GameData::CurrentRoundTimer;
+
 GameData::PersonaType GameData::Personas[4] = { 
 	GameData::PersonaType::MISTER_N,
 	GameData::PersonaType::GOTICA,

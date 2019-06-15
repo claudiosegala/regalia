@@ -34,8 +34,6 @@ private:
 
 	int tileMapIdx = 0;
 
-	Timer timer;
-
 	Music music;
 
 	void CheckCollision();

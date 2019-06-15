@@ -8,6 +8,8 @@
 #include <Number.h>
 #include <Player.h>
 #include <Sprite.h>
+#include "GameData.h"
+
 
 Bullet::Bullet(GameObject& go, BulletData& data)
     : Component(go) {
@@ -21,7 +23,7 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 
 void Bullet::Update(unsigned dt) {
 	// Destroy if hit the maximum distance
-	if (bouncesLeft < 0) {
+	if (bouncesLeft < 0 && GameData::CurrentRoundTimer.Get() < Constants::Game::MilisecondsPerRound) {
 		associated.RequestDelete();
 		return;
 	}

@@ -21,7 +21,6 @@
 #include <CountdownState.h>
 #include "GameTimer.h"
 
-
 PlayState::PlayState() {
 	Logger::Info("Initializing Play State");
 
@@ -62,7 +61,7 @@ void PlayState::Update(unsigned dt) {
 		return;
 	}
 
-	timer.Update(dt);
+	GameData::CurrentRoundTimer.Update(dt);
 
 	// TODO: uncomment this when there are two players
 	/*if (Player::counter == 1 || timer.Get() > Constants::Game::SetLenght) {
@@ -84,6 +83,7 @@ void PlayState::Render() {
 void PlayState::Start() {
 	Logger::Info("Starting Play State");
 	Camera::Reset();
+	GameData::CurrentRoundTimer.Restart();
 
 	StartArray();
 

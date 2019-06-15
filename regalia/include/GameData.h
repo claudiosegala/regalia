@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Constants.h>
+#include "Timer.h"
 
 class GameData {
 public:
@@ -26,6 +27,8 @@ public:
 	static PersonaType Personas[4];
 
 	static bool WindowFullscreen;
+
+	static Timer CurrentRoundTimer;
 
 	static void Init(int numPlayer = 2);
 };

@@ -1,21 +1,23 @@
 ﻿#include "pch.h"
 #include "GameTimer.h"
 #include "Game.h"
+#include "PlayState.h"
+#include "GameData.h"
+
 
 GameTimer::GameTimer(GameObject& go)
     : Component(go) {}
 
 void GameTimer::Update(unsigned dt) {
-	gameTimer.Update(dt);
 	animationTimer.Update(dt);
 }
 
 void GameTimer::Render() {
 	auto renderer = Game::GetInstance()->GetRenderer();
 
-	if (gameTimer.Get() < Constants::Game::SecondsPerRound * 1000) {
+	if (GameData::CurrentRoundTimer.Get() < Constants::Game::MilisecondsPerRound) {
 
-		auto timePercentage = float(gameTimer.Get()) / float(Constants::Game::SecondsPerRound * 1000);
+		auto timePercentage = float(GameData::CurrentRoundTimer.Get()) / float(Constants::Game::MilisecondsPerRound);
 		auto barWidth = Constants::Window::Width - Constants::Window::Width * timePercentage;
 
 		auto red = 255.0f * timePercentage;
