@@ -19,6 +19,8 @@
 #include <Vec2.h>
 #include <PlayerAim.h>
 #include <CountdownState.h>
+#include "GameTimer.h"
+
 
 PlayState::PlayState() {
 	Logger::Info("Initializing Play State");
@@ -133,6 +135,12 @@ void PlayState::CreateField() {
 	tileMapGO->box.vector = Vec2(0, 0);
 
 	(void)AddObject(tileMapGO);
+
+	auto timerGo = new GameObject();
+
+	timerGo->AddComponent<GameTimer>();
+
+	(void)AddObject(timerGo);
 }
 
 void PlayState::CreatePlayers() {
