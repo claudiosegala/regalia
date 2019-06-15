@@ -66,6 +66,10 @@ namespace Countdown {
 	const int StartValue = 3;
 }
 
+namespace Score {
+	const std::string Background = "assets/img/black.jpeg";
+}
+
 namespace Story {
 	const int TextSize = 15;
 
