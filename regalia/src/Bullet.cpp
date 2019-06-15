@@ -1,7 +1,6 @@
 #include <pch.h>
 #include <Bullet.h>
 #include <Circle.h>
-#include <Collider.h>
 #include <CollisionMap.h>
 #include <Constants.h>
 #include <GameObject.h>
@@ -19,6 +18,7 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 	speed = Vec2(data.speed * cos(data.angle), data.speed * sin(data.angle));
 
 	LoadAssets(data);
+	associated.hitbox = new Rect(associated.box);
 }
 
 void Bullet::Update(unsigned dt) {
@@ -36,13 +36,8 @@ void Bullet::Render() {}
 void Bullet::NotifyCollision(GameObject& go) {
 	auto player = go.GetComponent<Player>();
 
-	if (player == nullptr) {
-		return;
-	}
-
-	if (player->id != shooterId || Constants::Game::FriendlyFire) {
+	if (player != nullptr && (player->id != shooterId || Constants::Game::FriendlyFire)) {
 		associated.RequestDelete();
-		return;
 	}
 }
 
@@ -52,21 +47,22 @@ int Bullet::GetDamage() {
 
 void Bullet::LoadAssets(BulletData& data) {
 	associated.AddComponent<Sprite>(data.spriteSheetData);
-	associated.AddComponent<Collider>(new Rect());
 }
 
 void Bullet::MoveAndBounce(unsigned dt) {
-	auto maxDelta = CollisionMap::FindMaxDelta(associated.box, speed, dt);
+	auto& box = *associated.hitbox = associated.box;
+	const auto startingPosition = box.vector;
+	auto maxDelta = CollisionMap::FindMaxDelta(box, speed, dt);
 
 	auto dist = speed * float(maxDelta) / 1000.0f;
 
-	associated.box += dist;
+	box += dist;
 
 	if (maxDelta != dt) {
 		auto remainingDelta = dt - maxDelta;
 
-		auto maxDeltaX = CollisionMap::FindMaxDelta(associated.box, { speed.x, 0.0f }, remainingDelta);
-		auto maxDeltaY = CollisionMap::FindMaxDelta(associated.box, { 0.0f, speed.y }, remainingDelta);
+		auto maxDeltaX = CollisionMap::FindMaxDelta(box, { speed.x, 0.0f }, remainingDelta);
+		auto maxDeltaY = CollisionMap::FindMaxDelta(box, { 0.0f, speed.y }, remainingDelta);
 
 		if (maxDeltaX > maxDeltaY) {
 			speed.y *= -1;
@@ -76,11 +72,13 @@ void Bullet::MoveAndBounce(unsigned dt) {
 
 		associated.angle = speed.GetAngle();
 
-		maxDelta = CollisionMap::FindMaxDelta(associated.box, speed, remainingDelta);
+		maxDelta = CollisionMap::FindMaxDelta(box, speed, remainingDelta);
 
 		dist = speed * float(maxDelta) / 1000.0f;
 
-		associated.box += dist;
+		box += dist;
 		bouncesLeft--;
 	}
+
+	associated.box += box.vector - startingPosition;
 }

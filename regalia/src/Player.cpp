@@ -1,6 +1,5 @@
 #include <pch.h>
 #include <Bullet.h>
-#include <Collider.h>
 #include <Constants.h>
 #include <Game.h>
 #include <GameObject.h>
@@ -18,7 +17,7 @@ Player::Player(GameObject& go)
     , id(counter++) {
 
 	associated.box.SetCenter({ 27.0f, 26.0f });
-	collisionBox = Rect(associated.box.vector + Vec2(13, 11), 22, 36);
+	associated.hitbox = new Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 
 	LoadAssets();
 }
@@ -30,11 +29,7 @@ Player::~Player() {
 void Player::NotifyCollision(GameObject& go) {
 	auto bullet = go.GetComponent<Bullet>();
 
-	if (bullet == nullptr) {
-		return;
-	}
-
-	if (bullet->shooterId != id) {
+	if (bullet == nullptr || (bullet->shooterId == id && !Constants::Game::FriendlyFire)) {
 		return; // you cannot shoot yourself
 	}
 
@@ -55,7 +50,7 @@ void Player::Update(unsigned dt) {
 
 void Player::Render() {
 #ifdef DEBUG
-	collisionBox.Render(0, 255, 0);
+	associated.hitbox->Render(0, 255, 0);
 	associated.box.Render(255, 0, 0);
 #endif // DEBUG
 }
@@ -111,9 +106,9 @@ void Player::Shoot() {
 
 	BulletData bulletData = {
 		id,
-		10,
+		Constants::Bullet::DefaultDamage,
 		angle,
-		100,
+		Constants::Bullet::DefaultSpeed,
 		3,
 		&Constants::Bullet::DefaultSpriteSheet
 	};
@@ -169,7 +164,7 @@ void Player::UpdateSpeed(unsigned long dt) {
 }
 
 void Player::MoveAndSlide(unsigned long dt) {
-	auto& box = collisionBox;
+	auto& box = *associated.hitbox;
 	const auto startingPosition = box.vector;
 
 	// Find maximum diagonal movement

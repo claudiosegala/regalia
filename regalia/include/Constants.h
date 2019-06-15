@@ -109,9 +109,9 @@ namespace Play {
 }
 
 namespace Bullet {
-	const int DefaultDamage = 10;
+	const int DefaultDamage = 50;
 
-	const float DefaultSpeed = 100.0f;
+	const float DefaultSpeed = 200.0f;
 
 	const float DefaultMaxDistance = 400.0f;
 

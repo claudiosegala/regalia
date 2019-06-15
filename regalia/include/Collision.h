@@ -8,30 +8,6 @@
 
 class Collision {
 public:
-	static inline bool IsColliding(Shape* a, Shape* b, float angleOfA, float angleOfB) {
-		if (a->Is("Rect")) {
-			auto _a = static_cast<Rect*>(a);
-
-			if (b->Is("Rect")) {
-				auto _b = static_cast<Rect*>(b);
-				return IsColliding(*_a, *_b, angleOfA, angleOfB);
-			} else {
-				auto _b = static_cast<Circle*>(b);
-				return IsColliding(*_a, *_b, angleOfA, angleOfB);
-			}
-		} else {
-			auto _a = static_cast<Circle*>(a);
-
-			if (b->Is("Rect")) {
-				auto _b = static_cast<Rect*>(b);
-				return IsColliding(*_a, *_b, angleOfA, angleOfB);
-			} else {
-				auto _b = static_cast<Circle*>(b);
-				return IsColliding(*_a, *_b);
-			}
-		}
-	}
-
 	// Observação: IsColliding espera ângulos em radianos!
 	// Para usar graus, forneça a sua própria implementação de Rotate,
 	// ou transforme os ângulos no corpo de IsColliding.
@@ -79,23 +55,6 @@ public:
 		}
 
 		return true;
-	}
-
-	static inline bool IsColliding(Rect& a, Circle& b, float angleOfA, float angleOfB) {
-		return IsColliding(b, a, angleOfB, angleOfA);
-	}
-
-	static inline bool IsColliding(Circle& a, Rect& b, float angleOfA, float angleOfB) {
-		// TODO: implement
-		UNUSED(a);
-		UNUSED(b);
-		UNUSED(angleOfA);
-		UNUSED(angleOfB);
-		return false;
-	}
-
-	static inline bool IsColliding(Circle& a, Circle& b) {
-		return Vec2::Distance(a.center, b.center) < a.radius + b.radius;
 	}
 
 private:

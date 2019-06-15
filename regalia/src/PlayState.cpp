@@ -1,5 +1,4 @@
 #include <pch.h>
-#include <Collider.h>
 #include <Collision.h>
 #include <Camera.h>
 #include <Constants.h>
@@ -108,7 +107,26 @@ void PlayState::Resume() {
 }
 
 void PlayState::CheckCollision() {
-	// TODO: implement
+	std::vector<int> goIdxs;
+
+	for (size_t i = 0; i < objectArray.size(); i++) {
+		if (objectArray[i]->hitbox != nullptr) {
+			goIdxs.push_back(i);
+		}
+	}
+
+	for (size_t i = 0; i < goIdxs.size(); i++) {
+		auto go1 = objectArray[goIdxs[i]];
+
+		for (size_t j = i + 1; j < goIdxs.size(); j++) {
+			auto go2 = objectArray[goIdxs[j]];
+
+			if (Collision::IsColliding(*(go1->hitbox), *(go2->hitbox), go1->angle, go2->angle)) {
+				go1->NotifyCollision(*go2);
+				go2->NotifyCollision(*go1);
+			}
+		}
+	}
 }
 
 void PlayState::CreateField() {

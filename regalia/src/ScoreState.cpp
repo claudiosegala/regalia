@@ -164,11 +164,11 @@ void ScoreState::LoadOptions() {
 	options.emplace_back("R1 - Restart");
 	options.emplace_back("L1 - Quit");
 
-	for (int i = 0; i < options.size(); i++) {
+	for (size_t i = 0; i < options.size(); i++) {
 		auto go = new GameObject();
 
 		go->AddComponent<Text>(Constants::Game::Font, Constants::Score::OptionSize, Text::TextStyle::BLENDED, options[i], Constants::Colors::White);
-		go->box.SetCenter({ Constants::Window::Width / 2, 350 + 50 * i });
+		go->box.SetCenter({ Constants::Window::Width / 2, 350 + 50 * int(i) });
 
 		(void)AddObject(go);
 	}
