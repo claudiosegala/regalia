@@ -13,8 +13,6 @@ public:
 
 	Collider(GameObject& go, Rect* shape, Vec2 scale = { 1, 1 }, Vec2 offset = { 0, 0 });
 
-	void UpdateFather(unsigned dt);
-
 	void Update(unsigned dt) override;
 
 	void Render() override;

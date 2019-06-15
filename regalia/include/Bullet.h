@@ -26,11 +26,9 @@ private:
 
 	float distanceLeft;
 
-	Rect collisionBox;
-
 	Vec2 speed;
 
 	void LoadAssets(BulletData& data);
 	
-	void MoveAndBounce(unsigned long dt);
+	void MoveAndBounce(unsigned dt);
 };

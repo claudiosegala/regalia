@@ -17,15 +17,6 @@ Collider::Collider(GameObject& go, Rect* shape, Vec2 scale, Vec2 offset)
     , offset(offset) {
 }
 
-void Collider::UpdateFather(unsigned dt) {
-	UNUSED(dt);
-	auto& box = associated.box;
-
-	box.width /= scale.x;
-	box.height /= scale.y;
-	box.SetCenter(rect->Center() - offset.GetRotate(associated.angle));
-}
-
 // TODO: verify if this is correct
 void Collider::Update(unsigned dt) {
 	UNUSED(dt);

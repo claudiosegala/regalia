@@ -15,7 +15,6 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 	distanceLeft = data.maxDistance;
 	damage = data.damage;
 	speed = Vec2(data.speed * cos(data.angle), data.speed * sin(data.angle));
-	collisionBox = associated.box;
 
 	LoadAssets(data);
 }
@@ -54,22 +53,33 @@ void Bullet::LoadAssets(BulletData& data) {
 	associated.AddComponent<Collider>(new Rect());
 }
 
-void Bullet::MoveAndBounce(unsigned long dt) {
-	// TODO: get a collision box
-	while (dt && !Number::Zero(distanceLeft)) {
-		const auto delta = CollisionMap::FindMaxDelta(associated.box, speed, dt);
-		auto dist = speed * float(delta) / 1000.0f;
+void Bullet::MoveAndBounce(unsigned dt) {
+	auto maxDelta = CollisionMap::FindMaxDelta(associated.box, speed, dt);
+
+	auto dist = speed * float(maxDelta) / 1000.0f;
+
+	associated.box += dist;
+	distanceLeft -= dist.GetLength();
+
+	if (maxDelta != dt) {
+		auto remainingDelta = dt - maxDelta;
+
+		auto maxDeltaX = CollisionMap::FindMaxDelta(associated.box, { speed.x, 0.0f }, remainingDelta);
+		auto maxDeltaY = CollisionMap::FindMaxDelta(associated.box, { 0.0f, speed.y }, remainingDelta);
+
+		if (maxDeltaX > maxDeltaY) {
+			speed.y *= -1;
+		} else  {
+			speed.x *= -1;
+		}
+
+		associated.angle = speed.GetAngle();
+
+		maxDelta = CollisionMap::FindMaxDelta(associated.box, speed, remainingDelta);
+
+		dist = speed * float(maxDelta) / 1000.0f;
 
 		associated.box += dist;
 		distanceLeft -= dist.GetLength();
-		dt -= delta;
-
-		if (dt) {
-			if (Number::Zero(speed.x)) {
-				speed.y *= -1;
-			} else {
-				speed.x *= -1;
-			}
-		}
 	}
 }
