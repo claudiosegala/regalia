@@ -54,12 +54,11 @@ void PlayState::Update(unsigned dt) {
 		return;
 	}
 
-	// TODO: uncomment this when constant is ok
-	/*if (in.GamepadPress(Constants::Gamepad::Menu)) {
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_START) || in.KeyPress(Constants::Key::P)) {
 		GameData::Paused = true;
 		LoadScoreState();
 		return;
-	}*/
+	}
 
 	timer.Update(dt);
 

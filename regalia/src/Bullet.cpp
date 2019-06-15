@@ -50,8 +50,7 @@ int Bullet::GetDamage() {
 
 void Bullet::LoadAssets(BulletData& data) {
 	associated.AddComponent<Sprite>(data.spriteSheetData);
-	auto circle = new Circle();
-	associated.AddComponent<Collider>(circle);
+	associated.AddComponent<Collider>(new Rect());
 }
 
 void Bullet::MoveAndBounce(unsigned dt) {

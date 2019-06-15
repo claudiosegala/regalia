@@ -9,9 +9,9 @@
 class Collider : public Component {
 public:
 	
-	Shape* shape;
+	Rect* rect;
 
-	Collider(GameObject& go, Shape* shape, Vec2 scale = { 1, 1 }, Vec2 offset = { 0, 0 });
+	Collider(GameObject& go, Rect* shape, Vec2 scale = { 1, 1 }, Vec2 offset = { 0, 0 });
 
 	void Update(unsigned dt) override;
 

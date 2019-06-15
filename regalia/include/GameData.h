@@ -12,6 +12,8 @@ public:
 
 	static int Set;
 
+	static int NumPlayers;
+
 	static int Result[Constants::Game::Sets]; //> holds the id of the winner
 
 	enum class PersonaType {
@@ -21,11 +23,9 @@ public:
 		MAIS_OUTRO
 	};
 
-	static PersonaType Persona1;
-
-	static PersonaType Persona2;
+	static PersonaType Personas[4];
 
 	static bool WindowFullscreen;
 
-	static void Init();
+	static void Init(int numPlayer = 2);
 };

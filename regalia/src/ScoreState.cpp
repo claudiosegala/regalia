@@ -41,38 +41,41 @@ void ScoreState::Update(unsigned dt) {
 	auto& in = InputManager::GetInstance();
 
 	popRequested = in.PopRequested();
-	if (popRequested)
+	if (popRequested) {
 		return;
+	}
+
 	quitRequested = in.QuitRequested();
-	if (quitRequested)
+	if (quitRequested) {
 		return;
+	}
 
-	//auto& in = InputManager::GetInstance();
+	auto game = Game::GetInstance();
 
-	//if (in.GamepadPress(Constants::Gamepad::A)) {
-	//	if (GameData::Paused) {
-	//		GameData::Paused = false;
-	//		popRequested = 1;
-	//		return;
-	//	}
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_A) || in.KeyPress(Constants::Key::A)) {
+		if (GameData::Paused) { 
+			GameData::Paused = false;
+			popRequested = 1;
+			return;
+		}
 
-	//	if (!GameData::Finished) { // has next set
-	//		Game::Append(new PlayState());
-	//		popRequested = 2;
-	//		return;
-	//	}
-	//}
+		if (!GameData::Finished) { // has next set
+			game->Push(new PlayState());
+			popRequested = 2;
+			return;
+		}
+	}
 
-	//if (in.GamepadPress(Constants::Gamepad::R1)) { // restart
-	//	Game::Append(new PlayState());
-	//	popRequested = 2;
-	//	return;
-	//}
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) || in.KeyPress(Constants::Key::S)) { // restart
+		game->Push(new PlayState());
+		popRequested = 2;
+		return;
+	}
 
-	//if (in.GamepadPress(Constants::Gamepad::R2)) { // quit
-	//	quitRequested = true;
-	//	return;
-	//}
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) || in.KeyPress(Constants::Key::D)) { // quit
+		quitRequested = true;
+		return;
+	}
 
 	UpdateArray(dt);
 }
@@ -102,7 +105,7 @@ void ScoreState::Resume() {
 void ScoreState::LoadBackground() {
 	auto go = new GameObject();
 
-	go->AddComponent<Sprite>(Constants::Story::Background);
+	go->AddComponent<Sprite>(Constants::Score::Background);
 
 	go->box.SetCenter(Constants::Window::Center);
 
@@ -110,7 +113,10 @@ void ScoreState::LoadBackground() {
 }
 
 void ScoreState::LoadScore() {
-	// TODO: load score in a cool way
+	for (int i = 0; i < GameData::NumPlayers; i++) {
+		// TODO: load user
+		// TODO: load victories of each user
+	}
 }
 
 void ScoreState::LoadPausedOptions() {
@@ -119,7 +125,7 @@ void ScoreState::LoadPausedOptions() {
 	//
 	// A - Continue Set
 	// R1 - Restart
-	// R2 - Quit
+	// L1 - Quit
 }
 
 void ScoreState::LoadContinueOptions() {
@@ -128,7 +134,7 @@ void ScoreState::LoadContinueOptions() {
 	//
 	// A - Continue Match
 	// R1 - Restart
-	// R2 - Quit
+	// L1 - Quit
 }
 
 void ScoreState::LoadFinishedOptions() {
@@ -136,5 +142,5 @@ void ScoreState::LoadFinishedOptions() {
 	// X    v    Y
 	//
 	// R1 - Restart
-	// R2 - Quit
+	// L1 - Quit
 }

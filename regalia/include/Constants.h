@@ -66,6 +66,10 @@ namespace Countdown {
 	const int StartValue = 3;
 }
 
+namespace Score {
+	const std::string Background = "assets/img/black.jpeg";
+}
+
 namespace Story {
 	const int TextSize = 15;
 
@@ -135,6 +139,7 @@ namespace Key {
 	const int D = SDLK_d;
 	const int W = SDLK_w;
 	const int S = SDLK_s;
+	const int P = SDLK_p;
 }
 
 namespace Mouse {
