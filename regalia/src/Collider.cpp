@@ -17,16 +17,6 @@ Collider::Collider(GameObject& go, Shape* shape, Vec2 scale, Vec2 offset)
     , offset(offset) {
 }
 
-void Collider::UpdateFather(unsigned dt) {
-	UNUSED(dt);
-	auto& box = associated.box;
-
-	auto rect = static_cast<Rect*>(shape);
-	box.width /= scale.x;
-	box.height /= scale.y;
-	box.SetCenter(rect->Center() - offset.GetRotate(associated.angle));
-}
-
 // TODO: verify if this is correct
 void Collider::Update(unsigned dt) {
 	UNUSED(dt);
@@ -41,7 +31,6 @@ void Collider::Update(unsigned dt) {
 		auto rect = static_cast<Rect*>(shape);
 		rect->width = associated.box.width * scale.x;
 		rect->height = associated.box.height * scale.y;
-		rect->SetCenter(box.Center() + offset.GetRotate(associated.angle));
 	} else {
 		auto circle = static_cast<Circle*>(shape);
 

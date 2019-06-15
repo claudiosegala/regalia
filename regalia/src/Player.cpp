@@ -107,7 +107,7 @@ void Player::Shoot() {
 	}
 
 	const auto angle = inputManager.GamepadRightStick(id).GetAngle();
-	const auto pos = Vec2(10, 0).GetRotate(angle) + associated.box.Center();
+	const auto pos = associated.box.Center();
 
 	BulletData bulletData = {
 		id,

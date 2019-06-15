@@ -27,16 +27,16 @@ unsigned long CollisionMap::FindMaxDelta(const Rect& box, const Vec2& velocity, 
 		if (x1 < 0 || x1 >= columns || y1 < 0 || y1 >= rows || x2 < 0 || x2 >= columns || y2 < 0 || y2 >= rows) {
 			collision = true;
 		} else {
-			for (int j = y1; j <= y2; j++) {
-				for (int k = x1; k <= x2; k++) {
-					if (collisionSet[j][k]) {
-						collision = true;
-						// These assignments cause both loops to terminate
-						j = y2;
-						k = x2;
+			collision = [&]() {
+				for (int j = y1; j <= y2; j++) {
+					for (int k = x1; k <= x2; k++) {
+						if (collisionSet[j][k]) {
+							return true;
+						}
 					}
 				}
-			}
+				return false;
+			}();
 		}
 
 		if (!collision) {
