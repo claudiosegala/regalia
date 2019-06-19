@@ -23,7 +23,7 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 
 void Bullet::Update(unsigned dt) {
 	// Destroy if hit the maximum distance
-	if (bouncesLeft < 0 && GameData::CurrentRoundTimer.Get() < Constants::Game::MilisecondsPerRound) {
+	if (bouncesLeft < 0 && GameData::CurrentRoundTimer.Get() < Constants::Game::MillisecondsPerRound) {
 		associated.RequestDelete();
 		return;
 	}

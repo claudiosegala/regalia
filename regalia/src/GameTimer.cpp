@@ -15,9 +15,9 @@ void GameTimer::Update(unsigned dt) {
 void GameTimer::Render() {
 	auto renderer = Game::GetInstance()->GetRenderer();
 
-	if (GameData::CurrentRoundTimer.Get() < Constants::Game::MilisecondsPerRound) {
+	if (GameData::CurrentRoundTimer.Get() < Constants::Game::MillisecondsPerRound) {
 
-		auto timePercentage = float(GameData::CurrentRoundTimer.Get()) / float(Constants::Game::MilisecondsPerRound);
+		auto timePercentage = float(GameData::CurrentRoundTimer.Get()) / float(Constants::Game::MillisecondsPerRound);
 		auto barWidth = Constants::Window::Width - Constants::Window::Width * timePercentage;
 
 		auto red = 255.0f * timePercentage;

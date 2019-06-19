@@ -23,10 +23,10 @@ namespace Game {
 	const int Sets = 5;
 	const int Players = 2;
 	const bool FriendlyFire = false;
-	const float SetLenght = 45.0f;
+	const float SetLength = 45.0f;
 	const float MaxVelocity = 1000.0f;
 	const float Gravity = 500.0f;
-	const int MilisecondsPerRound = 10000;
+	const int MillisecondsPerRound = 10000;
 	const std::string Font = "assets/font/Dark Crystal.ttf";
 }
 
