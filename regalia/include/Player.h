@@ -22,6 +22,16 @@ public:
 	void Render() override;
 
 private:
+	enum Sides: int {
+		None = 0,
+		Top = 1 << 0,
+		Bottom = 1 << 1,
+		Left = 1 << 2,
+		Right = 1 << 3
+	};
+
+	int collisions = None;
+
 	Constants::Player::State state = Constants::Player::Idle;
 
 	int hp = Constants::Player::Hp;
@@ -29,10 +39,6 @@ private:
 	Vec2 speed = { 0, 0 };
 
 	Rect collisionBox;
-
-	bool isOnFloor = false;
-
-	bool isOnWall = false;
 
 	void LoadAssets();
 

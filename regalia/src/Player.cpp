@@ -44,7 +44,6 @@ void Player::Update(unsigned dt) {
 	UpdateSpeed(dt);
 	MoveAndSlide(dt);
 	Shoot();
-
 	UpdateState();
 }
 
@@ -71,14 +70,14 @@ void Player::UpdateState() {
 		dirX = Sprite::Direction::Keep;
 	}
 
-	if (isOnFloor) {
+	if (collisions & Bottom) {
 		if (Number::Zero(speed.x)) {
 			SetState(Constants::Player::Idle, dirX);
 		} else {
 			SetState(Constants::Player::Running, dirX);
 		}
 	} else {
-		if (speed.y < 0) {
+		if (speed.y <= 0) {
 			SetState(Constants::Player::Jumping, dirX);
 		} else {
 			SetState(Constants::Player::Falling, dirX);
@@ -151,12 +150,12 @@ void Player::UpdateSpeed(unsigned long dt) {
 	speed.x = direction.x * Constants::Player::SpeedMultiplier;
 	speed.y += Constants::Game::Gravity * float(dt) / 1000.0f;
 
-	if (isOnWall && speed.y > 0) {
+	if ((collisions & (Left | Right)) && speed.y > 0) {
 		speed.y /= 1.5;
 	}
 
 	// TODO: WallJump should be treated differently
-	if ((isOnFloor || isOnWall) && jump) {
+	if ((collisions != None) && jump) {
 		speed.y = Constants::Player::JumpSpeed;
 	}
 
@@ -166,6 +165,7 @@ void Player::UpdateSpeed(unsigned long dt) {
 void Player::MoveAndSlide(unsigned long dt) {
 	auto& box = *associated.hitbox;
 	const auto startingPosition = box.vector;
+	collisions = None;
 
 	// Find maximum diagonal movement
 	auto delta = CollisionMap::FindMaxDelta(box, speed, dt);
@@ -175,23 +175,24 @@ void Player::MoveAndSlide(unsigned long dt) {
 
 	// Find maximum vertical movement
 	delta = CollisionMap::FindMaxDelta(box, { 0.f, speed.y }, dt);
-
-	isOnFloor = (delta != dt);
 	box.vector.y += speed.y * float(delta) / 1000.0f;
 
-	if (isOnFloor) {
+	if (delta != dt) {
+		collisions |= speed.y > 0 ? Bottom : Top;
 		speed.y = 0.0f;
 	}
 
 	// Find maximum horizontal movement
 	if (!Number::Zero(speed.x)) {
 		delta = CollisionMap::FindMaxDelta(box, { speed.x, 0.f }, dt);
-
-		isOnWall = (delta != dt) && !isOnFloor;
+		if (delta != dt) {
+			collisions |= speed.x > 0 ? Right : Left;
+		}
 		box.vector.x += speed.x * float(delta) / 1000.0f;
 	}
 
 	associated.box += box.vector - startingPosition;
+	//W(collisions);
 }
 
 void Player::Die() {
