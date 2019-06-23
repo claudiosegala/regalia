@@ -23,7 +23,6 @@ void TileSet::RenderTile(unsigned int tileSetIndex, float x, float y) {
 }
 
 unsigned int TileSet::GetQuantityTiles() const {
-	// TODO: verify this
 	return static_cast<unsigned int>(rows * columns);
 }
 

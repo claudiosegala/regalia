@@ -44,6 +44,8 @@ private:
 
 	void CreatePlayer();
 
+	void CreateGameTimer();
+
 	const BackgroundData& GetBackgroundData(int rnd);
 
 	const TileSetData& GetTileSetData(int rnd);

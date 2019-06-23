@@ -39,6 +39,7 @@ PlayState::~PlayState() {
 void PlayState::LoadAssets() {
 	CreateField();
 	CreatePlayers();
+	CreateGameTimer();
 }
 
 void PlayState::Update(unsigned dt) {
@@ -130,50 +131,49 @@ void PlayState::CheckCollision() {
 }
 
 void PlayState::CreateField() {
+	GameObject* go;
 	const auto rnd = Number::Rand();
+	
+	const auto& back = GetBackgroundData(rnd);
 
-	auto& back = GetBackgroundData(rnd);
-	auto& tileSet = GetTileSetData(rnd);
-	auto& tileMap = GetTileMapData(rnd);
+	go = new GameObject();
+	go->AddComponent<Sprite>(back.file);
+	go->box.vector = Vec2(0, 0);
+	(void)AddObject(go);
 
-	auto backgroundGO = new GameObject();
+	const auto& tileSet = GetTileSetData(rnd);
+	const auto& tileMap = GetTileMapData(rnd);
 
-	backgroundGO->AddComponent<Sprite>(back.file);
+	go = new GameObject();
+	go->AddComponent<TileMap>(tileMap.file, new TileSet(*go, tileSet.width, tileSet.height, tileSet.file));
+	go->box.vector = Vec2(0, 0);
+	(void)AddObject(go);
+}
 
-	// TODO: Remove when we have a better background image
-	backgroundGO->box.width = Constants::Window::Width;
-	backgroundGO->box.height = Constants::Window::Height;
+void PlayState::CreateGameTimer() {
+	auto go = new GameObject();
 
-	(void)AddObject(backgroundGO);
+	go->AddComponent<GameTimer>();
 
-	auto tileMapGO = new GameObject();
-
-	tileMapGO->AddComponent<TileMap>(tileMap.file, new TileSet(*tileMapGO, tileSet.width, tileSet.height, tileSet.file));
-
-	tileMapGO->box.vector = Vec2(0, 0);
-
-	(void)AddObject(tileMapGO);
-
-	auto timerGo = new GameObject();
-
-	timerGo->AddComponent<GameTimer>();
-
-	(void)AddObject(timerGo);
+	(void)AddObject(go);
 }
 
 void PlayState::CreatePlayers() {
-	CreatePlayer();
-	CreatePlayer();
+	for (int i = 0; i < GameData::NumPlayers; i++) {
+		CreatePlayer();
+	}
 }
 
 void PlayState::CreatePlayer() {
-	auto playerGO = new GameObject();
-	playerGO->AddComponent<Player>();
-	auto player = AddObject(playerGO);
+	GameObject* go;
 
-	auto playerAimGO = new GameObject();
-	playerAimGO->AddComponent<PlayerAim>(player);
-	(void)AddObject(playerAimGO);
+	go = new GameObject();
+	go->AddComponent<Player>();
+	auto player = AddObject(go);
+
+	go = new GameObject();
+	go->AddComponent<PlayerAim>(player);
+	(void)AddObject(go);
 }
 
 const BackgroundData& PlayState::GetBackgroundData(int rnd) {
