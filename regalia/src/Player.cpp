@@ -194,7 +194,6 @@ void Player::MoveAndSlide(unsigned long dt) {
 	}
 
 	associated.box += box.vector - startingPosition;
-	//W(collisions);
 }
 
 void Player::Die() {

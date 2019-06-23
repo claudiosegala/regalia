@@ -67,11 +67,4 @@ void CollisionMap::SetMap(std::vector<int> _map, int _rows, int _cols) {
 			map[i][j] = (_map[i * cols + j] > 0);
 		}
 	}
-
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			std::cout << map[i][j] << " ";
-		}
-		std::cout << std::endl;
-	}
 }
