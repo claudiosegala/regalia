@@ -12,7 +12,13 @@ SpriteSheetData::SpriteSheetData(const std::string& file, int imageWidth, int im
 	// Check if there is a missing animation
 	assert(animationsFrames.size() == totalAnimations);
 
-	auto totalFrames = std::accumulate(animationsFrames.begin(), animationsFrames.end(), 0, [](int acc, const std::map<int, int>::value_type& i) { return acc + i.second; });
+	const auto totalFrames = std::accumulate(
+	    animationsFrames.begin(),
+	    animationsFrames.end(),
+	    0,
+	    [](int acc, const std::map<int, int>::value_type& i) {
+		    return acc + i.second;
+	    });
 
 	animationsRect.resize(totalAnimations);
 	frameWidth = imageWidth / totalFrames;

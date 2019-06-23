@@ -186,6 +186,7 @@ namespace Player {
 		Running,
 		Jumping,
 		Falling,
+		Sliding,
 		TOTAL_STATES
 	};
 
@@ -203,13 +204,13 @@ namespace Player {
 	    48,
 	    100,
 	    TOTAL_STATES,
-	    {
-	        { Idle, 6 },
+	    { 
+	    	{ Idle, 6 },
 	        { Running, 6 },
 	        { Jumping, 1 },
 	        { Falling, 1 },
-	    }
-	);
+	        { Sliding, 0 },
+	    });
 }
 
 }

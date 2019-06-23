@@ -60,6 +60,8 @@ void Player::LoadAssets() {
 }
 
 void Player::UpdateState() {
+	using namespace Constants::Player;
+
 	Sprite::Direction dirX;
 
 	if (speed.x > 0) {
@@ -70,19 +72,19 @@ void Player::UpdateState() {
 		dirX = Sprite::Direction::Keep;
 	}
 
+	Constants::Player::State nextState;
+
 	if (collisions & Bottom) {
-		if (Number::Zero(speed.x)) {
-			SetState(Constants::Player::Idle, dirX);
-		} else {
-			SetState(Constants::Player::Running, dirX);
-		}
+		nextState = Number::Zero(speed.x) ? Idle : Running;
 	} else {
 		if (speed.y <= 0) {
-			SetState(Constants::Player::Jumping, dirX);
+			nextState = Jumping;
 		} else {
-			SetState(Constants::Player::Falling, dirX);
+			nextState = (collisions & (Left | Right)) ? Sliding : Falling;
 		}
 	}
+
+	SetState(nextState, dirX);
 }
 
 void Player::SetState(Constants::Player::State nextState, Sprite::Direction dirX) {
