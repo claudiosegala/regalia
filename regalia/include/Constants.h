@@ -91,20 +91,20 @@ namespace Play {
 	const std::string Music = "assets/audio/Batalha dos Magos MP3-RSE.ogg";
 
 	const std::vector<BackgroundData> Backgrounds = {
-		{ "assets/img/tileSet_01.png" }
+		{ "assets/img/backgrounds/play_state_01.png" }
 	};
 
 	const std::vector<TileSetData> TileSets = {
-		{ 24, 24, "assets/img/tileSetSample.png" }
+		{ 24, 24, "assets/img/tile_sets/01.png" }
 	};
 
 	const std::vector<TileMapData> TileMaps = {
-		{ "assets/map/00.txt" },
-		/*{ "assets/map/01.txt" },
-			{ "assets/map/02.txt" },
-			{ "assets/map/03.txt" },
-			{ "assets/map/04.txt" },
-			{ "assets/map/05.txt" }*/
+		{ "assets/map/01.txt" },
+		//{ "assets/map/02.txt" },
+		//{ "assets/map/03.txt" },
+		//{ "assets/map/04.txt" },
+		//{ "assets/map/05.txt" }
+		//{ "assets/map/06.txt" }
 	};
 }
 
