@@ -39,4 +39,6 @@ private:
 	std::vector<int> tileMatrix;
 
 	TileSet* tileSet;
+
+	void SetCollisionMap();
 };

@@ -2,12 +2,14 @@
 #include <Camera.h>
 #include <Util.h>
 #include <TileMap.h>
+#include <CollisionMap.h>
 
 TileMap::TileMap(GameObject& go, const std::string& file, TileSet* ts)
     : Component(go)
     , tileSet(ts) {
 
 	Load(file);
+	SetCollisionMap();
 }
 
 TileMap::~TileMap() {
@@ -51,11 +53,16 @@ void TileMap::Load(const std::string& file) {
 	fs.close();
 }
 
+void TileMap::SetCollisionMap() {
+	CollisionMap::SetMap(tileMatrix, mapHeight, mapWidth);
+}
+
 void TileMap::SetTileSet(TileSet* ts) {
 	delete tileSet;
 	tileSet = ts;
 }
 
+// TODO: redo this, this is wrong in so many levels
 unsigned int TileMap::Pos(int col, int row, int layer) {
 	auto mapSize = (mapWidth * mapHeight);
 	auto rowSize = (mapWidth);

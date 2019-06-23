@@ -131,18 +131,17 @@ void PlayState::CheckCollision() {
 }
 
 void PlayState::CreateField() {
-	GameObject* go;
-	const auto rnd = Number::Rand();
+	field_index = Number::Rand();
 	
-	const auto& back = GetBackgroundData(rnd);
+	GameObject* go;
+	const auto& back = GetBackgroundData(field_index);
+	const auto& tileSet = GetTileSetData(field_index);
+	const auto& tileMap = GetTileMapData(field_index);
 
 	go = new GameObject();
 	go->AddComponent<Sprite>(back.file);
 	go->box.vector = Vec2(0, 0);
 	(void)AddObject(go);
-
-	const auto& tileSet = GetTileSetData(rnd);
-	const auto& tileMap = GetTileMapData(rnd);
 
 	go = new GameObject();
 	go->AddComponent<TileMap>(tileMap.file, new TileSet(*go, tileSet.width, tileSet.height, tileSet.file));
@@ -176,28 +175,22 @@ void PlayState::CreatePlayer() {
 	(void)AddObject(go);
 }
 
-const BackgroundData& PlayState::GetBackgroundData(int rnd) {
+const BackgroundData& PlayState::GetBackgroundData(int idx) {
 	auto& assets = Constants::Play::Backgrounds;
-	const auto idx = rnd % assets.size();
-	backgroundIdx = int(idx);
 
-	return assets[idx];
+	return assets[idx % assets.size()];
 }
 
-const TileSetData& PlayState::GetTileSetData(int rnd) {
+const TileSetData& PlayState::GetTileSetData(int idx) {
 	auto& assets = Constants::Play::TileSets;
-	const auto idx = rnd % assets.size();
-	tileSetIdx = int(idx);
 
-	return assets[idx];
+	return assets[idx % assets.size()];
 }
 
-const TileMapData& PlayState::GetTileMapData(int rnd) {
+const TileMapData& PlayState::GetTileMapData(int idx) {
 	auto& assets = Constants::Play::TileMaps;
-	const auto idx = rnd % assets.size();
-	tileMapIdx = int(idx);
 
-	return assets[idx];
+	return assets[idx % assets.size()];
 }
 
 void PlayState::LoadScoreState() {

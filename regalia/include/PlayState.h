@@ -28,11 +28,7 @@ public:
 	void Resume() override;
 
 private:
-	int backgroundIdx = 0;
-
-	int tileSetIdx = 0;
-
-	int tileMapIdx = 0;
+	int field_index = 0;
 
 	Music music;
 
