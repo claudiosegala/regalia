@@ -31,6 +31,10 @@ void Vec2::Limit(float limit) {
 	Limit({ limit, limit }, { -limit, -limit });
 }
 
+void Vec2::Limit(const Vec2& limit) {
+	Limit(limit, -limit);
+}
+
 void Vec2::Limit(const Vec2& upper, const Vec2& lower) {
 	if (x < lower.x) {
 		x = lower.x;
@@ -144,6 +148,10 @@ Vec2 Vec2::operator-(const float k) const {
 
 Vec2 Vec2::operator-(const Vec2& v) const {
 	return Vec2(x - v.x, y - v.y);
+}
+
+Vec2 Vec2::operator-() const {
+	return Vec2(-x, -y);
 }
 
 Vec2 Vec2::operator-=(const Vec2& v) {

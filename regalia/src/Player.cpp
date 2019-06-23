@@ -141,6 +141,10 @@ void Player::UpdateSpeed(unsigned long dt) {
 	const auto keyRight = in.IsKeyDown(Constants::Key::D)
 	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, id);
 
+#ifdef DEBUG
+	// We only want to allow this while debugging. Otherwise it could be used
+	// as an exploit to increase the player's movement speed
+
 	if (keyLeft) {
 		direction.x -= 1;
 	}
@@ -148,17 +152,40 @@ void Player::UpdateSpeed(unsigned long dt) {
 	if (keyRight) {
 		direction.x += 1;
 	}
+#endif // DEBUG
 
-	speed.x = direction.x * Constants::Player::SpeedMultiplier;
+	// Sideways movement
+	if (state == Constants::Player::Jumping || state == Constants::Player::Falling) {
+		// When moving mid-air, the player behaves like he has some inertia.
+		// Here, the gamepad input acts as a force applied to the player
+		speed.x += direction.x * Constants::Player::LateralForce;
+	} else {
+		// When on the ground, the player has direct control over movement speed,
+		// being able to change the speed instantly (without inertia)
+		speed.x = direction.x * Constants::Player::SpeedMultiplier;
+	}
+
+	// Gravity
 	speed.y += Constants::Game::Gravity * float(dt) / 1000.0f;
 
+	// Wall slide
 	if ((collisions & (Left | Right)) && speed.y > 0) {
 		speed.y /= 1.5;
 	}
 
-	// TODO: WallJump should be treated differently
-	if ((collisions != None) && jump) {
-		speed.y = Constants::Player::JumpSpeed;
+	// Jumping
+	if (jump) {
+		// Ground jump
+		if (collisions & Bottom) {
+			speed.y = Constants::Player::JumpSpeed;
+		}
+
+		// Wall jump
+		else if (collisions & (Left | Right)) {
+			const auto angle = speed.x < 0 ? 45.0f : -45.0f;
+			speed = { 0.0f, Constants::Player::WallJumpSpeed };
+			speed.Rotate(angle);
+		}
 	}
 
 	speed.Limit(Constants::Game::MaxVelocity);

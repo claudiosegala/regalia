@@ -24,7 +24,7 @@ namespace Game {
 	const int Players = 2;
 	const bool FriendlyFire = false;
 	const float SetLength = 45.0f;
-	const float MaxVelocity = 1000.0f;
+	const Vec2 MaxVelocity = { 100.0f, 1000.0f };
 	const float Gravity = 500.0f;
 	const int MillisecondsPerRound = 10000;
 	const std::string Font = "assets/font/Dark Crystal.ttf";
@@ -190,9 +190,13 @@ namespace Player {
 		TOTAL_STATES
 	};
 
+	const float LateralForce = 10.0f;
+
 	const float SpeedMultiplier = 100.0f;
 
 	const float JumpSpeed = -300.0f;
+
+	const float WallJumpSpeed = -450.0f;
 
 	const int Hp = 50;
 

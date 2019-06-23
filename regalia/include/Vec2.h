@@ -24,6 +24,9 @@ public:
 	void Limit(float limit);
 
 	//> Limit the values of x and y to a range
+	void Limit(const Vec2& limit);
+
+	//> Limit the values of x and y to a range
 	void Limit(const Vec2& upper, const Vec2& lower);
 
 	///> Find magnitude of vector
@@ -71,6 +74,8 @@ public:
 	Vec2 operator-(const float k) const;
 
 	Vec2 operator-(const Vec2& v) const;
+
+	Vec2 operator-() const;
 
 	Vec2 operator-=(const Vec2& v);
 
