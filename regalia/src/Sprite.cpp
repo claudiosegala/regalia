@@ -4,6 +4,7 @@
 #include <Number.h>
 #include <Resources.h>
 #include <Sprite.h>
+#include <utility>
 
 Sprite::Sprite(GameObject& go, const std::string& file)
     : Component(go) {
@@ -77,31 +78,52 @@ void Sprite::SetNextAnimation(int animationId, Direction dirX) {
 	} // else keep previous direction
 }
 
+void Sprite::RunAnimation(int animationId, std::function<void()> callback) {
+	animationOnce = animationId;
+	animationFinishedCallback = std::move(callback);
+}
+
 Vec2 Sprite::GetScale() const {
 	return scale;
 }
 
 void Sprite::Update(unsigned dt) {
-	if (spriteSheetData != nullptr) {
-		timeElapsed += dt;
+	if (spriteSheetData == nullptr) {
+		return;
+	}
 
-		if (nextAnimationId != currentAnimationId) {
-			currentAnimationId = nextAnimationId;
-			currentFrame = 0;
-			frameCount = spriteSheetData->GetNumberOfFrames(currentAnimationId);
-			timeElapsed = spriteSheetData->frameTime; // Force the sprite to be updated now
+	timeElapsed += dt;
+
+	if (animationOnce != -1) {
+		if (animationOnce != currentAnimationId) {
+			SetNextAnimation(animationOnce, Direction::Keep);
+		}
+	}
+
+	if (nextAnimationId != currentAnimationId) {
+		currentAnimationId = nextAnimationId;
+		currentFrame = 0;
+		frameCount = spriteSheetData->GetNumberOfFrames(currentAnimationId);
+		timeElapsed = spriteSheetData->frameTime; // Force the sprite to be updated now
+	}
+
+	if (timeElapsed >= spriteSheetData->frameTime) {
+		timeElapsed = 0;
+
+		if (spriteSheetData->selfDestruct && currentFrame == frameCount) {
+			associated.RequestDelete();
+			return;
 		}
 
-		if (timeElapsed >= spriteSheetData->frameTime) {
-			timeElapsed = 0;
+		currentFrame = (currentFrame + 1) % frameCount;
 
-			if (spriteSheetData->selfDestruct && currentFrame == frameCount) {
-				associated.RequestDelete();
-				return;
+		if (currentFrame == 0 && animationOnce != -1) {
+			animationOnce = -1;
+			if (animationFinishedCallback != nullptr) {
+				animationFinishedCallback();
+				animationFinishedCallback = nullptr;
 			}
-
-			currentFrame = (currentFrame + 1) % frameCount;
-
+		} else {
 			SetClip();
 		}
 	}

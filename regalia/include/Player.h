@@ -32,6 +32,8 @@ private:
 
 	int collisions = None;
 
+	std::weak_ptr<GameObject> animationObject;
+
 	Constants::Player::State state = Constants::Player::Idle;
 
 	int hp = Constants::Player::Hp;
@@ -45,6 +47,10 @@ private:
 	void UpdateState();
 
 	void SetState(Constants::Player::State nextState, Sprite::Direction dirX);
+
+	void RunAnimation(Constants::Player::State animationState);
+
+	void RunAnimation(Constants::Player::State animationState, Constants::Player::State nextState);
 
 	void Shoot();
 

@@ -72,6 +72,10 @@ void Player::UpdateState() {
 		dirX = Sprite::Direction::Keep;
 	}
 
+	if (state == Dying) {
+		return;
+	}
+
 	Constants::Player::State nextState;
 
 	if (collisions & Bottom) {
@@ -128,6 +132,11 @@ void Player::Shoot() {
 }
 
 void Player::UpdateSpeed(unsigned long dt) {
+	if (state == Constants::Player::Dying) {
+		speed = { 0, 0 };
+		return;
+	}
+
 	auto& in = InputManager::GetInstance();
 	auto direction = in.GamepadLeftStick(id);
 
@@ -158,7 +167,7 @@ void Player::UpdateSpeed(unsigned long dt) {
 	if (state == Constants::Player::Jumping || state == Constants::Player::Falling) {
 		// When moving mid-air, the player behaves like he has some inertia.
 		// Here, the gamepad input acts as a force applied to the player
-		speed.x += direction.x * Constants::Player::LateralForce;
+		speed.x += direction.x * Constants::Player::LateralForce * float(dt) / 1000.0f;
 	} else {
 		// When on the ground, the player has direct control over movement speed,
 		// being able to change the speed instantly (without inertia)
@@ -224,6 +233,6 @@ void Player::MoveAndSlide(unsigned long dt) {
 }
 
 void Player::Die() {
-	associated.RequestDelete();
-	// TODO: add animation of death
+	SetState(Constants::Player::Dying, Sprite::Direction::Keep);
+	associated.GetComponent<Sprite>()->RunAnimation(state, [&]() { associated.RequestDelete(); });
 }

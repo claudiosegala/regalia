@@ -2,6 +2,7 @@
 
 #include <Component.h>
 #include <Vec2.h>
+#include <functional>
 
 class Sprite : public Component {
 public:
@@ -28,6 +29,9 @@ public:
 	void SetScale(float, float);
 
 	void SetNextAnimation(int animationId, Direction dirX);
+
+	// Run the selected animation once, then calls the callback function
+	void RunAnimation(int animationId, std::function<void()> callback = nullptr);
 
 	Vec2 GetScale() const;
 
@@ -58,6 +62,10 @@ private:
 
 	// Animation
 	const SpriteSheetData* spriteSheetData = nullptr;
+
+	int animationOnce = -1;
+
+	std::function<void()> animationFinishedCallback = nullptr;
 
 	int frameCount = 1;
 

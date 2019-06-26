@@ -190,10 +190,17 @@ namespace Player {
 		Jumping,
 		Falling,
 		Sliding,
+		Loading,
+		ShootingUp,
+		ShootingDiagUp,
+		ShootingHorizontal,
+		ShootingDiagDown,
+		ShootingDown,
+		Dying,
 		TOTAL_STATES
 	};
 
-	const float LateralForce = 10.0f;
+	const float LateralForce = 450.0f;
 
 	const float SpeedMultiplier = 100.0f;
 
@@ -207,16 +214,23 @@ namespace Player {
 
 	const SpriteSheetData MisterN(
 	    "assets/img/mister_n_spritesheet.png",
-	    672,
+	    2112,
 	    48,
 	    100,
 	    TOTAL_STATES,
-	    { 
-	    	{ Idle, 6 },
+	    {
+	        { Idle, 6 },
 	        { Running, 6 },
-	        { Jumping, 1 },
-	        { Falling, 1 },
-	        { Sliding, 0 },
+	        { Jumping, 2 },
+	        { Falling, 3 },
+	        { Sliding, 2 },
+	        { Loading, 2 },
+	    	{ ShootingUp, 3 },
+	        { ShootingDiagUp, 3 },
+	        { ShootingHorizontal, 3 },
+	        { ShootingDiagDown, 3 },
+	        { ShootingDown, 3 },
+	        { Dying, 8 },
 	    });
 }
 
