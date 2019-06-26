@@ -45,7 +45,6 @@ void TileMap::Load(const std::string& file) {
 				getline(fs, line, ',');
 				auto idx = Pos(col, row, layer);
 				tileMatrix[idx] = std::stoi(line);
-				tileMatrix[idx]--;
 			}
 		}
 	}
