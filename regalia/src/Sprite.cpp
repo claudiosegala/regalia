@@ -64,13 +64,18 @@ void Sprite::SetScale(float x, float y) {
 	SetBox();
 }
 
-void Sprite::SetNextAnimation(int animationId, Direction dirX) {
+void Sprite::SetAnimation(int animationId) {
 	if (spriteSheetData == nullptr) {
 		throw std::runtime_error("Trying to set a animation id in a sprite that doesn't have animation");
 	}
 
-	nextAnimationId = animationId;
+	currentAnimationId = animationId;
+	currentFrame = 0;
+	frameCount = spriteSheetData->GetNumberOfFrames(currentAnimationId);
+	timeElapsed = spriteSheetData->frameTime; // Force the sprite to be updated now
+}
 
+void Sprite::SetAnimationDirX(Direction dirX) {
 	if (dirX == Direction::Original) {
 		flipAnimationX = false;
 	} else if (dirX == Direction::Flip) {
@@ -96,15 +101,9 @@ void Sprite::Update(unsigned dt) {
 
 	if (animationOnce != -1) {
 		if (animationOnce != currentAnimationId) {
-			SetNextAnimation(animationOnce, Direction::Keep);
+			SetAnimation(animationOnce);
+			animationOnce = -1;
 		}
-	}
-
-	if (nextAnimationId != currentAnimationId) {
-		currentAnimationId = nextAnimationId;
-		currentFrame = 0;
-		frameCount = spriteSheetData->GetNumberOfFrames(currentAnimationId);
-		timeElapsed = spriteSheetData->frameTime; // Force the sprite to be updated now
 	}
 
 	if (timeElapsed >= spriteSheetData->frameTime) {
@@ -117,15 +116,12 @@ void Sprite::Update(unsigned dt) {
 
 		currentFrame = (currentFrame + 1) % frameCount;
 
-		if (currentFrame == 0 && animationOnce != -1) {
-			animationOnce = -1;
-			if (animationFinishedCallback != nullptr) {
-				animationFinishedCallback();
-				animationFinishedCallback = nullptr;
-			}
-		} else {
-			SetClip();
+		if (animationFinishedCallback != nullptr) {
+			animationFinishedCallback();
+			animationFinishedCallback = nullptr;
 		}
+
+		SetClip();
 	}
 }
 

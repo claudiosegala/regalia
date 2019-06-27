@@ -28,7 +28,9 @@ public:
 
 	void SetScale(float, float);
 
-	void SetNextAnimation(int animationId, Direction dirX);
+	void SetAnimation(int animationId);
+
+	void SetAnimationDirX(Direction dirX);
 
 	// Run the selected animation once, then calls the callback function
 	void RunAnimation(int animationId, std::function<void()> callback = nullptr);
@@ -74,8 +76,6 @@ private:
 	unsigned timeElapsed = 0;
 
 	int currentAnimationId = 0;
-
-	int nextAnimationId = 0;
 
 	bool flipAnimationX = false;
 };

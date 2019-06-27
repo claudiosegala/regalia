@@ -4,6 +4,7 @@
 #include <Rect.h>
 #include <Vec2.h>
 #include "Sprite.h"
+#include "Timer.h"
 
 class Player : public Component {
 public:
@@ -40,9 +41,15 @@ private:
 
 	int collisions = None;
 
+	int playerState = Idle;
+
 	Constants::Player::AnimationState animationState = Constants::Player::IdleAnimation;
 
-	int playerState = Idle;
+	Timer currentAnimationTimer;
+
+	unsigned currentAnimationHoldTime = 0;
+
+	Sprite* associatedSprite = nullptr;
 
 	int hp = Constants::Player::Hp;
 

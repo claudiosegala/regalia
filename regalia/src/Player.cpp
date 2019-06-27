@@ -45,6 +45,8 @@ void Player::Update(unsigned dt) {
 		return;
 	}
 
+	currentAnimationTimer.Update(dt);
+
 	UpdateSpeed(dt);
 	MoveAndSlide(dt);
 	LoadAndShoot();
@@ -59,35 +61,52 @@ void Player::Render() {
 }
 
 void Player::LoadAssets() {
-	associated.AddComponent<Sprite>(&Constants::Player::MisterN);
+	associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN);
 	//associated.AddComponent<Collider>(&collisionBox, Vec2(0.48f, 0.8f), Vec2(0.0f, 4.0f));
 }
 
 void Player::UpdateAnimationState() {
 	using namespace Constants::Player;
 
-	Sprite::Direction dirX;
+	Sprite::Direction nextDirX;
+	AnimationState nextAnimation;
+	unsigned nextAnimationHoldTime = 0;
 
 	if (speed.x > 0) {
-		dirX = Sprite::Direction::Original;
+		nextDirX = Sprite::Direction::Original;
 	} else if (speed.x < 0) {
-		dirX = Sprite::Direction::Flip;
+		nextDirX = Sprite::Direction::Flip;
 	} else {
-		dirX = Sprite::Direction::Keep;
+		nextDirX = Sprite::Direction::Keep;
 	}
 
 	if (collisions & Bottom) {
-		animationState = Number::Zero(speed.x) ? IdleAnimation : RunningAnimation;
+		nextAnimation = Number::Zero(speed.x) ? IdleAnimation : RunningAnimation;
 	} else {
 		if (speed.y <= 0) {
-			animationState = JumpingAnimation;
+			nextAnimation = JumpingAnimation;
 		} else {
-			animationState = (collisions & (Left | Right)) ? SlidingAnimation : FallingAnimation;
+			if (collisions & (Left | Right)) {
+				nextAnimation = SlidingAnimation;
+			} else {
+				if (animationState != StartFallingAnimation && animationState != FallingAnimation) {
+					nextAnimation = StartFallingAnimation;
+					nextAnimationHoldTime = 100;
+				} else {
+					nextAnimation = FallingAnimation;
+				}
+			}
 		}
 	}
 
-	auto sprite = associated.GetComponent<Sprite>();
-	sprite->SetNextAnimation(animationState, dirX);
+	if (nextAnimation != animationState && currentAnimationTimer.Get() > currentAnimationHoldTime) {
+		animationState = nextAnimation;
+		currentAnimationHoldTime = nextAnimationHoldTime;
+		currentAnimationTimer.Restart();
+		associatedSprite->SetAnimation(animationState);
+	}
+
+	associatedSprite->SetAnimationDirX(nextDirX);
 }
 
 void Player::LoadAndShoot() {
