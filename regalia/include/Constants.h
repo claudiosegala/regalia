@@ -184,20 +184,20 @@ namespace Colors {
 }
 
 namespace Player {
-	enum State {
-		Idle = 0,
-		Running,
-		Jumping,
-		Falling,
-		Sliding,
-		Loading,
-		ShootingUp,
-		ShootingDiagUp,
-		ShootingHorizontal,
-		ShootingDiagDown,
-		ShootingDown,
-		Dying,
-		TOTAL_STATES
+	enum AnimationState {
+		IdleAnimation = 0,
+		RunningAnimation,
+		JumpingAnimation,
+		FallingAnimation,
+		SlidingAnimation,
+		LoadingAnimation,
+		ShootingUpAnimation,
+		ShootingDiagUpAnimation,
+		ShootingHorizontalAnimation,
+		ShootingDiagDownAnimation,
+		ShootingDownAnimation,
+		DyingAnimation,
+		TOTAL_ANIMATION_STATES
 	};
 
 	const float LateralForce = 450.0f;
@@ -217,20 +217,20 @@ namespace Player {
 	    2112,
 	    48,
 	    100,
-	    TOTAL_STATES,
+	    TOTAL_ANIMATION_STATES,
 	    {
-	        { Idle, 6 },
-	        { Running, 6 },
-	        { Jumping, 2 },
-	        { Falling, 3 },
-	        { Sliding, 2 },
-	        { Loading, 2 },
-	    	{ ShootingUp, 3 },
-	        { ShootingDiagUp, 3 },
-	        { ShootingHorizontal, 3 },
-	        { ShootingDiagDown, 3 },
-	        { ShootingDown, 3 },
-	        { Dying, 8 },
+	        { IdleAnimation, 6 },
+	        { RunningAnimation, 6 },
+	        { JumpingAnimation, 2 },
+	        { FallingAnimation, 3 },
+	        { SlidingAnimation, 2 },
+	        { LoadingAnimation, 2 },
+	    	{ ShootingUpAnimation, 3 },
+	        { ShootingDiagUpAnimation, 3 },
+	        { ShootingHorizontalAnimation, 3 },
+	        { ShootingDiagDownAnimation, 3 },
+	        { ShootingDownAnimation, 3 },
+	        { DyingAnimation, 8 },
 	    });
 }
 

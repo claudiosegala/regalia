@@ -22,7 +22,7 @@ public:
 	void Render() override;
 
 private:
-	enum Sides: int {
+	enum Sides : int {
 		None = 0,
 		Top = 1 << 0,
 		Bottom = 1 << 1,
@@ -30,11 +30,19 @@ private:
 		Right = 1 << 3
 	};
 
+	enum PlayerState : int {
+		Idle = 0,
+		IsDying = 1 << 0,
+		IsMidAir = 1 << 1,
+		IsLoading = 1 << 2,
+		IsShooting = 1 << 3
+	};
+
 	int collisions = None;
 
-	std::weak_ptr<GameObject> animationObject;
+	Constants::Player::AnimationState animationState = Constants::Player::IdleAnimation;
 
-	Constants::Player::State state = Constants::Player::Idle;
+	int playerState = Idle;
 
 	int hp = Constants::Player::Hp;
 
@@ -44,15 +52,11 @@ private:
 
 	void LoadAssets();
 
-	void UpdateState();
+	void UpdateAnimationState();
 
-	void SetState(Constants::Player::State nextState, Sprite::Direction dirX);
+	void SetState(Constants::Player::AnimationState nextState, Sprite::Direction dirX);
 
-	void RunAnimation(Constants::Player::State animationState);
-
-	void RunAnimation(Constants::Player::State animationState, Constants::Player::State nextState);
-
-	void Shoot();
+	void LoadAndShoot();
 
 	void UpdateSpeed(unsigned long dt);
 

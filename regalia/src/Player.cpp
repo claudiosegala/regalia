@@ -41,10 +41,14 @@ void Player::NotifyCollision(GameObject& go) {
 }
 
 void Player::Update(unsigned dt) {
+	if (playerState & IsDying) {
+		return;
+	}
+
 	UpdateSpeed(dt);
 	MoveAndSlide(dt);
-	Shoot();
-	UpdateState();
+	LoadAndShoot();
+	UpdateAnimationState();
 }
 
 void Player::Render() {
@@ -59,7 +63,7 @@ void Player::LoadAssets() {
 	//associated.AddComponent<Collider>(&collisionBox, Vec2(0.48f, 0.8f), Vec2(0.0f, 4.0f));
 }
 
-void Player::UpdateState() {
+void Player::UpdateAnimationState() {
 	using namespace Constants::Player;
 
 	Sprite::Direction dirX;
@@ -72,33 +76,21 @@ void Player::UpdateState() {
 		dirX = Sprite::Direction::Keep;
 	}
 
-	if (state == Dying) {
-		return;
-	}
-
-	Constants::Player::State nextState;
-
 	if (collisions & Bottom) {
-		nextState = Number::Zero(speed.x) ? Idle : Running;
+		animationState = Number::Zero(speed.x) ? IdleAnimation : RunningAnimation;
 	} else {
 		if (speed.y <= 0) {
-			nextState = Jumping;
+			animationState = JumpingAnimation;
 		} else {
-			nextState = (collisions & (Left | Right)) ? Sliding : Falling;
+			animationState = (collisions & (Left | Right)) ? SlidingAnimation : FallingAnimation;
 		}
 	}
 
-	SetState(nextState, dirX);
-}
-
-void Player::SetState(Constants::Player::State nextState, Sprite::Direction dirX) {
-	state = nextState;
-
 	auto sprite = associated.GetComponent<Sprite>();
-	sprite->SetNextAnimation(nextState, dirX);
+	sprite->SetNextAnimation(animationState, dirX);
 }
 
-void Player::Shoot() {
+void Player::LoadAndShoot() {
 	auto& inputManager = InputManager::GetInstance();
 
 	if (!inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)
@@ -132,11 +124,6 @@ void Player::Shoot() {
 }
 
 void Player::UpdateSpeed(unsigned long dt) {
-	if (state == Constants::Player::Dying) {
-		speed = { 0, 0 };
-		return;
-	}
-
 	auto& in = InputManager::GetInstance();
 	auto direction = in.GamepadLeftStick(id);
 
@@ -164,7 +151,7 @@ void Player::UpdateSpeed(unsigned long dt) {
 #endif // DEBUG
 
 	// Sideways movement
-	if (state == Constants::Player::Jumping || state == Constants::Player::Falling) {
+	if (playerState & IsMidAir) {
 		// When moving mid-air, the player behaves like he has some inertia.
 		// Here, the gamepad input acts as a force applied to the player
 		speed.x += direction.x * Constants::Player::LateralForce * float(dt) / 1000.0f;
@@ -230,9 +217,15 @@ void Player::MoveAndSlide(unsigned long dt) {
 	}
 
 	associated.box += box.vector - startingPosition;
+
+	if (collisions & Bottom) {
+		playerState &= ~IsMidAir;
+	} else {
+		playerState |= IsMidAir;
+	}
 }
 
 void Player::Die() {
-	SetState(Constants::Player::Dying, Sprite::Direction::Keep);
-	associated.GetComponent<Sprite>()->RunAnimation(state, [&]() { associated.RequestDelete(); });
+	playerState |= IsDying;
+	associated.GetComponent<Sprite>()->RunAnimation(Constants::Player::DyingAnimation, [&]() { associated.RequestDelete(); });
 }
