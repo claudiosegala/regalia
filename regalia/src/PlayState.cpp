@@ -112,7 +112,7 @@ void PlayState::CheckCollision() {
 
 	for (size_t i = 0; i < objectArray.size(); i++) {
 		if (objectArray[i]->hitbox != nullptr) {
-			goIdxs.push_back(i);
+			goIdxs.push_back(int(i));
 		}
 	}
 
