@@ -56,7 +56,7 @@ namespace Menu {
 	const int TextSize = 48;
 
 	const std::string Music = "assets/audio/Menu.ogg";
-	const std::string Background = "assets/img/tileSet_01.png";
+	const std::string Background = "assets/img/menu_livro_aberto.png";
 }
 
 namespace Countdown {

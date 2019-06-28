@@ -32,4 +32,6 @@ private:
 	GameObject* CreateBackground();
 
 	GameObject* CreateOption(const std::string&, Vec2 shift = { 0, 0 });
+
+	void PositionCursor(int position);
 };
