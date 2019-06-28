@@ -116,7 +116,7 @@ void Sprite::Update(unsigned dt) {
 
 		currentFrame = (currentFrame + 1) % frameCount;
 
-		if (animationFinishedCallback != nullptr) {
+		if (currentFrame == 0 && animationFinishedCallback != nullptr) {
 			animationFinishedCallback();
 			animationFinishedCallback = nullptr;
 		}
