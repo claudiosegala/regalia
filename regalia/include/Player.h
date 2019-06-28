@@ -49,6 +49,8 @@ private:
 
 	unsigned currentAnimationHoldTime = 0;
 
+	float bulletAngle = 0;
+
 	Sprite* associatedSprite = nullptr;
 
 	int hp = Constants::Player::Hp;
@@ -60,8 +62,6 @@ private:
 	void LoadAssets();
 
 	void UpdateAnimationState();
-
-	void SetState(Constants::Player::AnimationState nextState, Sprite::Direction dirX);
 
 	void LoadAndShoot();
 

@@ -80,9 +80,30 @@ void Player::UpdateAnimationState() {
 		nextDirX = Sprite::Direction::Keep;
 	}
 
-	if (collisions & Bottom) {
-		nextAnimation = Number::Zero(speed.x) ? IdleAnimation : RunningAnimation;
-	} else {
+	if (playerState & IsShooting) {
+
+		const float bulletAngleAbs = abs(bulletAngle);
+		const float pi_8 = Number::Pi / 8;
+		nextAnimationHoldTime = 300;
+
+		if (bulletAngleAbs < pi_8) {
+			nextAnimation = ShootingHorizontalAnimation;
+			nextDirX = Sprite::Direction::Original;
+		} else if (bulletAngleAbs < 3 * pi_8) {
+			nextAnimation = bulletAngle < 0 ? ShootingDiagUpAnimation : ShootingDiagDownAnimation;
+			nextDirX = Sprite::Direction::Original;
+		} else if (bulletAngleAbs < 5 * pi_8) {
+			nextAnimation = bulletAngle < 0 ? ShootingUpAnimation : ShootingDownAnimation;
+		} else if (bulletAngleAbs < 7 * pi_8) {
+			nextAnimation = bulletAngle < 0 ? ShootingDiagUpAnimation : ShootingDiagDownAnimation;
+			nextDirX = Sprite::Direction::Flip;
+		} else {
+			nextAnimation = ShootingHorizontalAnimation;
+			nextDirX = Sprite::Direction::Flip;
+		}
+
+	} else if (playerState & IsMidAir) {
+
 		if (speed.y <= 0) {
 			nextAnimation = JumpingAnimation;
 		} else {
@@ -97,49 +118,60 @@ void Player::UpdateAnimationState() {
 				}
 			}
 		}
+
+	} else {
+		nextAnimation = Number::Zero(speed.x) ? IdleAnimation : RunningAnimation;
 	}
 
-	if (nextAnimation != animationState && currentAnimationTimer.Get() > currentAnimationHoldTime) {
-		animationState = nextAnimation;
-		currentAnimationHoldTime = nextAnimationHoldTime;
-		currentAnimationTimer.Restart();
-		associatedSprite->SetAnimation(animationState);
-	}
+	if (currentAnimationTimer.Get() > currentAnimationHoldTime) {
+		if (nextAnimation != animationState) {
+			animationState = nextAnimation;
+			currentAnimationHoldTime = nextAnimationHoldTime;
+			currentAnimationTimer.Restart();
+			associatedSprite->SetAnimation(animationState);
+		}
 
-	associatedSprite->SetAnimationDirX(nextDirX);
+		associatedSprite->SetAnimationDirX(nextDirX);
+	}
 }
 
 void Player::LoadAndShoot() {
 	auto& inputManager = InputManager::GetInstance();
 
-	if (!inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)
-	    || inputManager.GamepadRightStick(id).GetLength() == 0) {
-		return;
+	playerState &= ~IsLoading & ~IsShooting;
+
+	if (inputManager.IsGamepadDown(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
+
+		playerState |= IsLoading;
+
+	} else if (inputManager.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
+
+		playerState |= IsShooting;
+
+		bulletAngle = inputManager.GamepadRightStick(id).GetAngle();
+		const auto pos = associated.box.Center();
+
+		BulletData bulletData = {
+			id,
+			Constants::Bullet::DefaultDamage,
+			bulletAngle,
+			Constants::Bullet::DefaultSpeed,
+			3,
+			&Constants::Bullet::DefaultSpriteSheet
+		};
+
+		auto bulletGO = new GameObject();
+		bulletGO->AddComponent<Bullet>(bulletData);
+
+		// TODO: change when we have a bullet
+		bulletGO->box.width = 10;
+		bulletGO->box.height = 10;
+
+		bulletGO->box.SetCenter(pos);
+		bulletGO->angle = bulletAngle;
+
+		void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
 	}
-
-	const auto angle = inputManager.GamepadRightStick(id).GetAngle();
-	const auto pos = associated.box.Center();
-
-	BulletData bulletData = {
-		id,
-		Constants::Bullet::DefaultDamage,
-		angle,
-		Constants::Bullet::DefaultSpeed,
-		3,
-		&Constants::Bullet::DefaultSpriteSheet
-	};
-
-	auto bulletGO = new GameObject();
-	bulletGO->AddComponent<Bullet>(bulletData);
-
-	// TODO: change when we have a bullet
-	bulletGO->box.width = 10;
-	bulletGO->box.height = 10;
-
-	bulletGO->box.SetCenter(pos);
-	bulletGO->angle = angle;
-
-	void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
 }
 
 void Player::UpdateSpeed(unsigned long dt) {
