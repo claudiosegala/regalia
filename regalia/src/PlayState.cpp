@@ -12,7 +12,6 @@
 #include <Rect.h>
 #include <ScoreState.h>
 #include <Sprite.h>
-#include <StoryState.h>
 #include <TileMap.h>
 #include <TileSet.h>
 #include <Vec2.h>

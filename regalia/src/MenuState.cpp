@@ -11,11 +11,10 @@
 #include <Text.h>
 #include <Vec2.h>
 
-MenuState::MenuState()
-    : cursor() {
+MenuState::MenuState() {
 	Logger::Info("Initializing Menu State");
 
-	//music.Open(Constants::Menu::Music);
+	music.Open(Constants::Menu::Music);
 	LoadAssets();
 }
 
@@ -94,7 +93,7 @@ void MenuState::Render() {
 void MenuState::Start() {
 	Logger::Info("Starting Menu State");
 	Camera::Reset();
-
+	music.Play();
 	StartArray();
 
 	started = true;
@@ -102,11 +101,13 @@ void MenuState::Start() {
 
 void MenuState::Pause() {
 	Logger::Info("Pausing Title State");
+	music.Stop(0);
 }
 
 void MenuState::Resume() {
 	Logger::Info("Resuming Title State");
 	Camera::Reset();
+	music.Play();
 }
 
 GameObject* MenuState::CreateBackground() {

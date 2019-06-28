@@ -42,11 +42,11 @@ private:
 
 	void CreateGameTimer();
 
-	const BackgroundData& GetBackgroundData(int rnd);
+	const BackgroundData& GetBackgroundData(int idx);
 
-	const TileSetData& GetTileSetData(int rnd);
+	const TileSetData& GetTileSetData(int idx);
 
-	const TileMapData& GetTileMapData(int rnd);
+	const TileMapData& GetTileMapData(int idx);
 
 	void LoadScoreState();
 };
