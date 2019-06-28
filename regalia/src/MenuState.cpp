@@ -26,6 +26,7 @@ void MenuState::LoadAssets() {
 	const auto horizontalOffset = Constants::Window::Width * 0.2f;
 
 	(void)AddObject(CreateBackground());
+	(void)AddObject(CreateOption("Regalia", { -horizontalOffset, 75.f }));
 	(void)AddObject(CreateOption("Play", { horizontalOffset, 0.f }));
 	(void)AddObject(CreateOption("Story", { horizontalOffset, 75.f }));
 	(void)AddObject(CreateOption("Credits", { horizontalOffset, 150.f }));
