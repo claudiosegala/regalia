@@ -107,20 +107,26 @@ void Player::UpdateAnimationState() {
 		if (speed.y <= 0) {
 			nextAnimation = JumpingAnimation;
 		} else {
-			if (collisions & (Left | Right)) {
-				nextAnimation = SlidingAnimation;
+			if (animationState != StartFallingAnimation && animationState != FallingAnimation) {
+				nextAnimation = StartFallingAnimation;
+				nextAnimationHoldTime = 100;
 			} else {
-				if (animationState != StartFallingAnimation && animationState != FallingAnimation) {
-					nextAnimation = StartFallingAnimation;
-					nextAnimationHoldTime = 100;
-				} else {
-					nextAnimation = FallingAnimation;
-				}
+				nextAnimation = FallingAnimation;
 			}
 		}
 
 	} else {
-		nextAnimation = Number::Zero(speed.x) ? IdleAnimation : RunningAnimation;
+		if (collisions & (Left | Right)) {
+			if (speed.y > 0) {
+				nextAnimation = SlidingAnimation;
+			} else if (speed.y < 0) {
+				nextAnimation = JumpingAnimation;
+			} else {
+				nextAnimation = RunningAnimation;
+			}
+		} else {
+			nextAnimation = Number::Zero(speed.x) ? IdleAnimation : RunningAnimation;
+		}
 	}
 
 	if (currentAnimationTimer.Get() > currentAnimationHoldTime) {
@@ -269,7 +275,7 @@ void Player::MoveAndSlide(unsigned long dt) {
 
 	associated.box += box.vector - startingPosition;
 
-	if (collisions & Bottom) {
+	if (collisions & (Bottom | Left | Right)) {
 		playerState &= ~IsMidAir;
 	} else {
 		playerState |= IsMidAir;
