@@ -26,6 +26,7 @@ namespace Game {
 	const float SetLength = 45.0f;
 	const Vec2 MaxVelocity = { 100.0f, 1000.0f };
 	const float Gravity = 500.0f;
+	const float LongJumpGravity = 350.0f;
 	const int MillisecondsPerRound = 10000;
 	const std::string Font = "assets/font/Dark Crystal.ttf";
 }

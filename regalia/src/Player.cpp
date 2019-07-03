@@ -188,6 +188,10 @@ void Player::UpdateSpeed(unsigned long dt) {
 	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
 	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_A, id);
 
+	const auto jumpHold = in.IsKeyDown(Constants::Key::W)
+	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
+	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, id);
+
 	const auto keyLeft = in.IsKeyDown(Constants::Key::A)
 	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
 
@@ -206,20 +210,25 @@ void Player::UpdateSpeed(unsigned long dt) {
 		direction.x += 1;
 	}
 #endif // DEBUG
-
-	// Sideways movement
+	float gravity = Constants::Game::Gravity;
+	// Sideways movement and gravity
 	if (playerState & IsMidAir) {
 		// When moving mid-air, the player behaves like he has some inertia.
 		// Here, the gamepad input acts as a force applied to the player
 		speed.x += direction.x * Constants::Player::LateralForce * float(dt) / 1000.0f;
+		
+		if (speed.y < 0 && jumpHold) { // Moving up and falling slowly
+			gravity = Constants::Game::LongJumpGravity;
+		}
+
 	} else {
 		// When on the ground, the player has direct control over movement speed,
 		// being able to change the speed instantly (without inertia)
 		speed.x = direction.x * Constants::Player::SpeedMultiplier;
 	}
 
-	// Gravity
-	speed.y += Constants::Game::Gravity * float(dt) / 1000.0f;
+	// Vertical movement
+	speed.y += gravity * float(dt) / 1000.0f;
 
 	// Wall slide
 	if ((collisions & (Left | Right)) && speed.y > 0) {
