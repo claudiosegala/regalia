@@ -53,8 +53,6 @@ void GameTimer::Render() {
 
 		SDL_SetRenderDrawColor(renderer, Uint8(red), 0, 0, 255);
 
-		std::cout << red << std::endl;
-
 		SDL_RenderFillRect(renderer, &topBar);
 	}
 }
