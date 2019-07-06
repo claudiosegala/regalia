@@ -54,7 +54,7 @@ void PlayState::Update(unsigned dt) {
 		return;
 	}
 
-	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_START) || in.KeyPress(Constants::Key::P)) {
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_START)) {
 		GameData::Paused = true;
 		LoadScoreState();
 		return;

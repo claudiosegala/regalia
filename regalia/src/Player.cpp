@@ -48,12 +48,14 @@ void Player::Update(unsigned dt) {
 		return;
 	}
 
+	auto& in = InputManager::GetInstance();
+
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id)) {
+		in.GamepadRumble(id, 0.5, 1000);
+	}
+
 	shootingCoolDown.Update(dt);
 	currentAnimationTimer.Update(dt);
-	auto& manager = InputManager::GetInstance();
-	if (manager.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id)) {
-		manager.GamepadRumble(id, 0.5, 1000);
-	}
 
 	UpdateSpeed(dt);
 	MoveAndSlide(dt);
@@ -149,22 +151,22 @@ void Player::UpdateAnimationState() {
 }
 
 void Player::LoadAndShoot() {
-	auto& inputManager = InputManager::GetInstance();
+	auto& in = InputManager::GetInstance();
 
 	playerState &= ~IsLoading & ~IsShooting;
-	canShoot |= shootingCoolDown.IsTimeUp() && inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id);
+	canShoot |= shootingCoolDown.IsTimeUp() && in.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id);
 	
 	if (!canShoot) {
 		return;
 	}
 
-	if (inputManager.IsGamepadDown(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
+	if (in.IsGamepadDown(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
 
 		playerState |= IsLoading;
 
-	} else if (inputManager.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
+	} else if (in.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
 
-		auto rightStick = inputManager.GamepadRightStick(id);
+		auto rightStick = in.GamepadRightStick(id);
 
 		// Only shoot when aiming
 		if (rightStick.GetLength() != 0) {
@@ -205,19 +207,15 @@ void Player::UpdateSpeed(unsigned long dt) {
 	auto& in = InputManager::GetInstance();
 	auto direction = in.GamepadLeftStick(id);
 
-	const auto jump = in.KeyPress(Constants::Key::W)
-	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
+	const auto jump = in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
 	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_A, id);
 
-	const auto jumpHold = in.IsKeyDown(Constants::Key::W)
-	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
+	const auto jumpHold = in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
 	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, id);
 
-	const auto keyLeft = in.IsKeyDown(Constants::Key::A)
-	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
+	const auto keyLeft = in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
 
-	const auto keyRight = in.IsKeyDown(Constants::Key::D)
-	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, id);
+	const auto keyRight = in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT, id);
 
 #ifdef DEBUG
 	// We only want to allow this while debugging. Otherwise it could be used

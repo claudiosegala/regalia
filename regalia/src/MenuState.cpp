@@ -5,6 +5,8 @@
 #include <InputManager.h>
 #include <Logger.h>
 #include <MenuState.h>
+#include <StoryState.h>
+#include <CreditState.h>
 #include <PlayState.h>
 #include <Rect.h>
 #include <Sprite.h>
@@ -46,28 +48,26 @@ void MenuState::Update(unsigned dt) {
 		return;
 	}
 
-	if (in.KeyPress(Constants::Key::ArrowDown) || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
 		option = (option + 1) % 3; // 0 to 2
 		PositionCursor(option);
 	}
 
-	else if (in.KeyPress(Constants::Key::ArrowUp) || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP)) {
+	else if (in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP)) {
 		option = (option - 1 + 3) % 3; // 0 to 2
 		PositionCursor(option);
 	}
 
-	else if (in.KeyPress(Constants::Key::Space) || in.GamepadPress(SDL_CONTROLLER_BUTTON_A, 0)) {
+	else if (in.GamepadPress(SDL_CONTROLLER_BUTTON_A, 0)) {
 		auto game = Game::GetInstance();
 
-		game->Push(new PlayState());
-
-		// if (option == 0) {
-		//     game->Push(new PlayState());
-		// } else if (option == 1) {
-		//     game->Push(new StoryState());
-		// } else {
-		//     game->Push(new CreditState());
-		// }
+		if (option == 0) {
+			game->Push(new PlayState());
+		} else if (option == 1) {
+			game->Push(new StoryState());
+		} else {
+			game->Push(new CreditState());
+		}
 	}
 
 	UpdateArray(dt);
