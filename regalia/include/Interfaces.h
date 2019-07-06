@@ -10,14 +10,14 @@ public:
 	    , damage(damage)
 	    , angle(angle)
 	    , speed(speed)
-	    , maxBounces(maxBounces)
+	    , level(maxBounces)
 	    , spriteSheetData(spriteSheetData) {}
 
 	int shooterId;
 	int damage;
 	float angle;
 	float speed;
-	float maxBounces;
+	float level;
 	const SpriteSheetData* spriteSheetData;
 };
 

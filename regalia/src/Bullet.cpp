@@ -9,21 +9,23 @@
 #include <Sprite.h>
 #include "GameData.h"
 
-
 Bullet::Bullet(GameObject& go, BulletData& data)
     : Component(go) {
+	data.speed += data.level * Constants::Bullet::LevelSpeedIncrease;
+
 	shooterId = data.shooterId;
-	bouncesLeft = data.maxBounces;
+	level = data.level;
 	damage = data.damage;
 	speed = Vec2(data.speed * cos(data.angle), data.speed * sin(data.angle));
+	invencible = GameData::IsTimeUp();
+
 
 	LoadAssets(data);
 	associated.hitbox = new Rect(associated.box);
 }
 
 void Bullet::Update(unsigned dt) {
-	// Destroy if hit the maximum distance
-	if (bouncesLeft < 0 && GameData::CurrentRoundTimer.Get() < Constants::Game::MillisecondsPerRound) {
+	if (level < 0) {
 		associated.RequestDelete();
 		return;
 	}
@@ -66,7 +68,7 @@ void Bullet::MoveAndBounce(unsigned dt) {
 
 		if (maxDeltaX > maxDeltaY) {
 			speed.y *= -1;
-		} else  {
+		} else {
 			speed.x *= -1;
 		}
 
@@ -77,7 +79,11 @@ void Bullet::MoveAndBounce(unsigned dt) {
 		dist = speed * float(maxDelta) / 1000.0f;
 
 		box += dist;
-		bouncesLeft--;
+
+		if (!invencible) {
+			level--;
+			speed -= Vec2(Constants::Bullet::LevelSpeedIncrease, Constants::Bullet::LevelSpeedIncrease);
+		}
 	}
 
 	associated.box += box.vector - startingPosition;

@@ -31,4 +31,6 @@ public:
 	static Timer CurrentRoundTimer;
 
 	static void Init(int numPlayer = 2);
+
+	static bool IsTimeUp();
 };

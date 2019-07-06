@@ -42,3 +42,7 @@ void GameData::Init(int numPlayers) {
 		std::next_permutation(Personas, Personas + 4);
 	}
 }
+
+bool GameData::IsTimeUp() {
+	return GameData::CurrentRoundTimer.Get() < Constants::Game::MillisecondsPerRound;
+}

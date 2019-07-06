@@ -24,9 +24,11 @@ private:
 
 	int damage;
 
-	float bouncesLeft;
+	float level;
 
 	Vec2 speed;
+
+	bool invencible;
 
 	void LoadAssets(BulletData& data);
 	
