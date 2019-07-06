@@ -113,9 +113,11 @@ namespace Play {
 }
 
 namespace Bullet {
+	const float LevelSpeedIncrease = 75.0f;
+
 	const int DefaultDamage = 50;
 
-	const float DefaultSpeed = 200.0f;
+	const float DefaultSpeed = 350.0f;
 
 	const float DefaultMaxDistance = 400.0f;
 
@@ -202,7 +204,7 @@ namespace Player {
 		TOTAL_ANIMATION_STATES
 	};
 
-	const unsigned ShootingCoolDown = 10000u; 
+	const unsigned ShootingCoolDown = 1000u; 
 
 	const float LateralForce = 450.0f;
 
