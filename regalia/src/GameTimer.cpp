@@ -4,7 +4,6 @@
 #include "PlayState.h"
 #include "GameData.h"
 
-
 GameTimer::GameTimer(GameObject& go)
     : Component(go) {}
 
@@ -15,65 +14,47 @@ void GameTimer::Update(unsigned dt) {
 void GameTimer::Render() {
 	auto renderer = Game::GetInstance()->GetRenderer();
 
+	SDL_Rect topBar = {
+		0,
+		0,
+		Constants::Window::Width,
+		5
+	};
+
 	if (GameData::CurrentRoundTimer.Get() < Constants::Game::MillisecondsPerRound) {
 
 		auto timePercentage = float(GameData::CurrentRoundTimer.Get()) / float(Constants::Game::MillisecondsPerRound);
 		auto barWidth = Constants::Window::Width - Constants::Window::Width * timePercentage;
 
-		auto red = 255.0f * timePercentage;
-		auto green = 255 - 255.0f * timePercentage;
-		SDL_SetRenderDrawColor(renderer, Uint8(red), Uint8(green), 0, 255);
-
-		SDL_Rect rect = {
+		SDL_Rect timeBar = {
 			(Constants::Window::Width - int(barWidth)) / 2,
 			0,
 			int(barWidth),
 			5
 		};
 
-		SDL_RenderFillRect(renderer, &rect);
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_RenderFillRect(renderer, &topBar);
+
+		auto red = 255.0f * timePercentage;
+		auto green = 255 - 255.0f * timePercentage;
+		SDL_SetRenderDrawColor(renderer, Uint8(red), Uint8(green), 0, 255);
+		SDL_RenderFillRect(renderer, &timeBar);
 
 	} else {
 
-		if (animationTimer.Get() > 1000) {
+		const static int animationTime = 1000;
+
+		if (animationTimer.Get() > animationTime) {
 			animationTimer.Restart();
 		}
 
-		auto barSize = int(10.0f * float(animationTimer.Get()) / 1000.0f);
+		auto red = abs(255 * float(int(animationTimer.Get()) - (animationTime / 2)) / (animationTime / 2));
 
-		SDL_Rect rectTop = {
-			0,
-			0,
-			Constants::Window::Width,
-			barSize
-		};
+		SDL_SetRenderDrawColor(renderer, Uint8(red), 0, 0, 255);
 
-		SDL_Rect rectLeft = {
-			0,
-			0,
-			barSize,
-			Constants::Window::Height
-		};
+		std::cout << red << std::endl;
 
-		SDL_Rect rectRight = {
-			Constants::Window::Width - barSize,
-			0,
-			barSize,
-			Constants::Window::Height
-		};
-
-		SDL_Rect rectBottom = {
-			0,
-			Constants::Window::Height - barSize,
-			Constants::Window::Width,
-			barSize
-		};
-
-		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-
-		SDL_RenderFillRect(renderer, &rectTop);
-		SDL_RenderFillRect(renderer, &rectLeft);
-		SDL_RenderFillRect(renderer, &rectRight);
-		SDL_RenderFillRect(renderer, &rectBottom);
+		SDL_RenderFillRect(renderer, &topBar);
 	}
 }
