@@ -44,5 +44,5 @@ void GameData::Init(int numPlayers) {
 }
 
 bool GameData::IsTimeUp() {
-	return GameData::CurrentRoundTimer.Get() < Constants::Game::MillisecondsPerRound;
+	return GameData::CurrentRoundTimer.Get() >= Constants::Game::MillisecondsPerRound;
 }
