@@ -43,6 +43,8 @@ public:
 
 	Vec2 GamepadRightStick(int controllerNumber);
 
+	void GamepadRumble(int controllerNumber, float intensity, unsigned int duration);
+
 	bool PopRequested();
 
 	bool QuitRequested() const;

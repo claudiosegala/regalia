@@ -3,7 +3,11 @@
 #include <Constants.h>
 
 Gamepad::Gamepad(int index)
-    : controller(SDL_GameControllerOpen(index)) {
+    : controller(SDL_GameControllerOpen(index))
+    , haptic(SDL_HapticOpen(index)) {
+	if (haptic) {
+		SDL_HapticRumbleInit(haptic);
+	}
 }
 
 void Gamepad::Update(const SDL_Event& event, int counter) {
@@ -34,6 +38,10 @@ bool Gamepad::ButtonPressed(SDL_GameControllerButton button, int counter) {
 
 bool Gamepad::ButtonReleased(SDL_GameControllerButton button, int counter) {
 	return !buttonState[button] && buttonUpdate[button] == counter;
+}
+
+void Gamepad::Rumble(float intensity, unsigned int duration) {
+	SDL_HapticRumblePlay(haptic, intensity, duration);
 }
 
 Vec2 Gamepad::GetStickPosition(Stick side) {

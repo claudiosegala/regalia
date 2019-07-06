@@ -22,11 +22,15 @@ public:
 	bool ButtonPressed(SDL_GameControllerButton button, int counter);
 	
 	bool ButtonReleased(SDL_GameControllerButton button, int counter);
+
+	void Rumble(float intensity, unsigned int duration);
 	
 	Vec2 GetStickPosition(Stick side);
 
 private:
 	SDL_GameController* controller = nullptr;
+
+	SDL_Haptic* haptic = nullptr;
 	
 	bool buttonState[16] = { false };
 	
