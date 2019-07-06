@@ -310,7 +310,7 @@ void Player::createBullet() {
 
 	switch (personaType) {
 		case Constants::Player::PersonaType::MISTER_N:
-			spriteSheetData = &Constants::Bullet::DefaultSpriteSheet; // TODO
+			spriteSheetData = &Constants::Bullet::Rabbit;
 			break;
 
 		case Constants::Player::PersonaType::GOTICA:
@@ -333,10 +333,6 @@ void Player::createBullet() {
 
 	auto bulletGO = new GameObject();
 	bulletGO->AddComponent<Bullet>(bulletData);
-
-	// TODO: change when we have a bullet
-	bulletGO->box.width = 10;
-	bulletGO->box.height = 10;
 
 	bulletGO->box.SetCenter(associated.box.Center());
 	bulletGO->angle = bulletAngle;

@@ -121,6 +121,16 @@ namespace Bullet {
 
 	const float DefaultMaxDistance = 400.0f;
 
+	const SpriteSheetData Rabbit(
+	    "assets/img/rabbit.png",
+	    64,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 4 },
+	    });
+
 	const SpriteSheetData DefaultSpriteSheet(
 	    "assets/img/penguinbullet.png",
 	    120,
@@ -130,6 +140,7 @@ namespace Bullet {
 	    {
 	        { 0, 4 },
 	    });
+
 }
 
 namespace Key {
