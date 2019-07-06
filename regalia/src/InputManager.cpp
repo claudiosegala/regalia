@@ -3,7 +3,6 @@
 #include <InputManager.h>
 #include <Game.h>
 
-// TODO: q gambiarra é essa
 #define PROTECT_RANGE(number, defaultValue)     \
 	if (unsigned(number) >= controllers.size()) \
 	return (defaultValue)
@@ -117,6 +116,11 @@ Vec2 InputManager::GamepadLeftStick(int controllerNumber) {
 Vec2 InputManager::GamepadRightStick(int controllerNumber) {
 	PROTECT_RANGE(controllerNumber, Vec2());
 	return controllers[controllerNumber].GetStickPosition(Gamepad::Right);
+}
+
+void InputManager::GamepadRumble(int controllerNumber, float intensity, unsigned duration) {
+	PROTECT_RANGE(controllerNumber, void());
+	return controllers[controllerNumber].Rumble(intensity, duration);
 }
 
 bool InputManager::PopRequested() {

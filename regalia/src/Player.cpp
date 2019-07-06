@@ -21,6 +21,8 @@ Player::Player(GameObject& go)
 	associated.hitbox = new Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 
 	LoadAssets();
+
+	
 }
 
 Player::~Player() {
@@ -48,6 +50,10 @@ void Player::Update(unsigned dt) {
 
 	shootingCoolDown.Update(dt);
 	currentAnimationTimer.Update(dt);
+	auto& manager = InputManager::GetInstance();
+	if (manager.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id)) {
+		manager.GamepadRumble(id, 0.5, 1000);
+	}
 
 	UpdateSpeed(dt);
 	MoveAndSlide(dt);
@@ -252,6 +258,7 @@ void Player::UpdateSpeed(unsigned long dt) {
 
 	// Jumping
 	if (jump) {
+
 		// Ground jump
 		if (collisions & Bottom) {
 			speed.y = Constants::Player::JumpSpeed;
