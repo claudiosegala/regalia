@@ -57,12 +57,11 @@ void Player::Render() {
 #ifdef DEBUG
 	associated.hitbox->Render(0, 255, 0);
 	associated.box.Render(255, 0, 0);
-#endif // DEBUG
+#endif
 }
 
 void Player::LoadAssets() {
 	associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN);
-	//associated.AddComponent<Collider>(&collisionBox, Vec2(0.48f, 0.8f), Vec2(0.0f, 4.0f));
 }
 
 void Player::UpdateAnimationState() {
