@@ -166,6 +166,7 @@
     <ClInclude Include="include\Sound.h" />
     <ClInclude Include="include\Sprite.h" />
     <ClInclude Include="include\State.h" />
+    <ClInclude Include="include\StopWatch.h" />
     <ClInclude Include="include\StoryState.h" />
     <ClInclude Include="include\Text.h" />
     <ClInclude Include="include\TileMap.h" />
@@ -216,6 +217,7 @@
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\SpriteSheetData.cpp" />
     <ClCompile Include="src\State.cpp" />
+    <ClCompile Include="src\StopWatch.cpp" />
     <ClCompile Include="src\StoryState.cpp" />
     <ClCompile Include="src\Text.cpp" />
     <ClCompile Include="src\TileMap.cpp" />
