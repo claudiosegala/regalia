@@ -151,31 +151,37 @@ void Player::LoadAndShoot() {
 
 	} else if (inputManager.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
 
-		playerState |= IsShooting;
+		auto rightStick = inputManager.GamepadRightStick(id);
 
-		bulletAngle = inputManager.GamepadRightStick(id).GetAngle();
-		const auto pos = associated.box.Center();
+		// Only shoot when aiming
+		if (rightStick.GetLength() != 0) {
 
-		BulletData bulletData = {
-			id,
-			Constants::Bullet::DefaultDamage,
-			bulletAngle,
-			Constants::Bullet::DefaultSpeed,
-			3,
-			&Constants::Bullet::DefaultSpriteSheet
-		};
+			playerState |= IsShooting;
 
-		auto bulletGO = new GameObject();
-		bulletGO->AddComponent<Bullet>(bulletData);
+			bulletAngle = rightStick.GetAngle();
+			const auto pos = associated.box.Center();
 
-		// TODO: change when we have a bullet
-		bulletGO->box.width = 10;
-		bulletGO->box.height = 10;
+			BulletData bulletData = {
+				id,
+				Constants::Bullet::DefaultDamage,
+				bulletAngle,
+				Constants::Bullet::DefaultSpeed,
+				3,
+				&Constants::Bullet::DefaultSpriteSheet
+			};
 
-		bulletGO->box.SetCenter(pos);
-		bulletGO->angle = bulletAngle;
+			auto bulletGO = new GameObject();
+			bulletGO->AddComponent<Bullet>(bulletData);
 
-		void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
+			// TODO: change when we have a bullet
+			bulletGO->box.width = 10;
+			bulletGO->box.height = 10;
+
+			bulletGO->box.SetCenter(pos);
+			bulletGO->angle = bulletAngle;
+
+			void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
+		}
 	}
 }
 
@@ -215,7 +221,7 @@ void Player::UpdateSpeed(unsigned long dt) {
 		// When moving mid-air, the player behaves like he has some inertia.
 		// Here, the gamepad input acts as a force applied to the player
 		speed.x += direction.x * Constants::Player::LateralForce * float(dt) / 1000.0f;
-		
+
 		if (speed.y < 0 && jumpHold) { // Moving up and falling slowly
 			gravity = Constants::Game::LongJumpGravity;
 		}
