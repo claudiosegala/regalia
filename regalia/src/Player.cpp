@@ -14,7 +14,8 @@ int Player::counter = 0;
 
 Player::Player(GameObject& go)
     : Component(go)
-    , id(counter++) {
+    , id(counter++)
+    , shootingCoolDown() {
 
 	associated.box.SetCenter({ 27.0f, 26.0f });
 	associated.hitbox = new Rect(associated.box.vector + Vec2(13, 11), 22, 36);
@@ -45,6 +46,7 @@ void Player::Update(unsigned dt) {
 		return;
 	}
 
+	shootingCoolDown.Update(dt);
 	currentAnimationTimer.Update(dt);
 
 	UpdateSpeed(dt);
@@ -144,6 +146,11 @@ void Player::LoadAndShoot() {
 	auto& inputManager = InputManager::GetInstance();
 
 	playerState &= ~IsLoading & ~IsShooting;
+	canShoot |= shootingCoolDown.IsTimeUp() && inputManager.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id);
+	
+	if (!canShoot) {
+		return;
+	}
 
 	if (inputManager.IsGamepadDown(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
 
@@ -181,6 +188,9 @@ void Player::LoadAndShoot() {
 			bulletGO->angle = bulletAngle;
 
 			void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
+
+			canShoot = false;
+			shootingCoolDown.Start(Constants::Player::ShootingCoolDown);
 		}
 	}
 }

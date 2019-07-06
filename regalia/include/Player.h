@@ -3,8 +3,9 @@
 #include <Component.h>
 #include <Rect.h>
 #include <Vec2.h>
-#include "Sprite.h"
-#include "Timer.h"
+#include <Sprite.h>
+#include <Timer.h>
+#include <StopWatch.h>
 
 class Player : public Component {
 public:
@@ -43,9 +44,13 @@ private:
 
 	int playerState = Idle;
 
+	bool canShoot = false;
+
 	Constants::Player::AnimationState animationState = Constants::Player::IdleAnimation;
 
 	Timer currentAnimationTimer;
+
+	StopWatch shootingCoolDown;
 
 	unsigned currentAnimationHoldTime = 0;
 

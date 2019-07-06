@@ -202,6 +202,8 @@ namespace Player {
 		TOTAL_ANIMATION_STATES
 	};
 
+	const unsigned ShootingCoolDown = 10000u; 
+
 	const float LateralForce = 450.0f;
 
 	const float SpeedMultiplier = 100.0f;
