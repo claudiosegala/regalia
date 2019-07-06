@@ -187,6 +187,14 @@ namespace Colors {
 }
 
 namespace Player {
+
+	enum class PersonaType {
+		MISTER_N,
+		GOTICA,
+		OUTRO,
+		MAIS_OUTRO
+	};
+
 	enum AnimationState {
 		IdleAnimation = 0,
 		RunningAnimation,
@@ -203,7 +211,7 @@ namespace Player {
 		TOTAL_ANIMATION_STATES
 	};
 
-	const unsigned ShootingCoolDown = 1000u; 
+	const unsigned ShootingCoolDown = 1000u;
 
 	const float LateralForce = 450.0f;
 
@@ -230,7 +238,7 @@ namespace Player {
 	        { StartFallingAnimation, 1 },
 	        { FallingAnimation, 2 },
 	        { SlidingAnimation, 2 },
-	    	{ ShootingUpAnimation, 4 },
+	        { ShootingUpAnimation, 4 },
 	        { ShootingDiagUpAnimation, 4 },
 	        { ShootingHorizontalAnimation, 4 },
 	        { ShootingDiagDownAnimation, 4 },

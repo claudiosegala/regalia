@@ -17,14 +17,7 @@ public:
 
 	static int Result[Constants::Game::Sets]; //> holds the id of the winner
 
-	enum class PersonaType {
-		MISTER_N,
-		GOTICA,
-		OUTRO,
-		MAIS_OUTRO
-	};
-
-	static PersonaType Personas[4];
+	//static PersonaType Personas[4];
 
 	static bool WindowFullscreen;
 

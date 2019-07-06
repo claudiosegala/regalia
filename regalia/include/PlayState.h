@@ -38,7 +38,7 @@ private:
 
 	void CreatePlayers();
 
-	void CreatePlayer();
+	void CreatePlayer(Constants::Player::PersonaType persona);
 
 	void CreateGameTimer();
 

@@ -131,7 +131,7 @@ void PlayState::CheckCollision() {
 
 void PlayState::CreateField() {
 	field_index = Number::Rand();
-	
+
 	GameObject* go;
 	const auto& back = GetBackgroundData(field_index);
 	const auto& tileSet = GetTileSetData(field_index);
@@ -157,16 +157,17 @@ void PlayState::CreateGameTimer() {
 }
 
 void PlayState::CreatePlayers() {
-	for (int i = 0; i < GameData::NumPlayers; i++) {
-		CreatePlayer();
-	}
+	//for (int i = 0; i < GameData::NumPlayers; i++) {
+	//	CreatePlayer();
+	//}
+
+	CreatePlayer(Constants::Player::PersonaType::MISTER_N);
+	CreatePlayer(Constants::Player::PersonaType::GOTICA);
 }
 
-void PlayState::CreatePlayer() {
-	GameObject* go;
-
-	go = new GameObject();
-	go->AddComponent<Player>();
+void PlayState::CreatePlayer(Constants::Player::PersonaType persona) {
+	auto go = new GameObject();
+	go->AddComponent<Player>(persona);
 	auto player = AddObject(go);
 
 	go = new GameObject();
