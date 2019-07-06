@@ -194,7 +194,6 @@ namespace Player {
 		StartFallingAnimation,
 		FallingAnimation,
 		SlidingAnimation,
-		LoadingAnimation,
 		ShootingUpAnimation,
 		ShootingDiagUpAnimation,
 		ShootingHorizontalAnimation,
@@ -220,7 +219,7 @@ namespace Player {
 
 	const SpriteSheetData MisterN(
 	    "assets/img/mister_n_spritesheet.png",
-	    2112,
+	    2448,
 	    48,
 	    100,
 	    TOTAL_ANIMATION_STATES,
@@ -231,13 +230,12 @@ namespace Player {
 	        { StartFallingAnimation, 1 },
 	        { FallingAnimation, 2 },
 	        { SlidingAnimation, 2 },
-	        { LoadingAnimation, 2 },
-	    	{ ShootingUpAnimation, 3 },
-	        { ShootingDiagUpAnimation, 3 },
-	        { ShootingHorizontalAnimation, 3 },
-	        { ShootingDiagDownAnimation, 3 },
-	        { ShootingDownAnimation, 3 },
-	        { DyingAnimation, 8 },
+	    	{ ShootingUpAnimation, 4 },
+	        { ShootingDiagUpAnimation, 4 },
+	        { ShootingHorizontalAnimation, 4 },
+	        { ShootingDiagDownAnimation, 4 },
+	        { ShootingDownAnimation, 4 },
+	        { DyingAnimation, 12 },
 	    });
 }
 
