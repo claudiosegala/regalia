@@ -193,7 +193,7 @@ void InputManager::TreatEvent(SDL_Event& event) {
 }
 
 void InputManager::LoadControllers() {
-	for (int i = 0; i < SDL_NumJoysticks(); i++) {
+	for (int i = SDL_NumJoysticks() - 1; i >= 0; i--) {
 		if (SDL_IsGameController(i)) {
 			controllers.emplace_back(i);
 		}
