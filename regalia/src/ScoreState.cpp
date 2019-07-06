@@ -46,7 +46,7 @@ void ScoreState::Update(unsigned dt) {
 
 	auto game = Game::GetInstance();
 
-	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_A) || in.KeyPress(Constants::Key::A)) {
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_A)) {
 		if (GameData::Paused) {
 			GameData::Paused = false;
 			popRequested = 1;
@@ -60,13 +60,13 @@ void ScoreState::Update(unsigned dt) {
 		}
 	}
 
-	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) || in.KeyPress(Constants::Key::S)) { // restart
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)) { // restart
 		game->Push(new PlayState());
 		popRequested = 2;
 		return;
 	}
 
-	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) || in.KeyPress(Constants::Key::D)) { // quit
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER)) { // quit
 		quitRequested = true;
 		return;
 	}
