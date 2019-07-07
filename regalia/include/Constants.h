@@ -44,6 +44,10 @@ namespace Camera {
 }
 
 namespace SharedAssets {
+	namespace Sounds {
+		const std::string Shot = "assets/audio/Tiro Gótica.ogg";
+	}
+
 	namespace Music {
 
 	}

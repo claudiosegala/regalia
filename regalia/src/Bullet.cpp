@@ -6,6 +6,7 @@
 #include <Player.h>
 #include <Sprite.h>
 #include "GameData.h"
+#include "Sound.h"
 
 Bullet::Bullet(GameObject& go, BulletData& data)
     : Component(go)
@@ -25,6 +26,9 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 
 	LoadAssets(data);
 	associated.hitbox = new Rect(associated.box);
+
+	auto sound = associated.AddComponent<Sound>(Constants::SharedAssets::Sounds::Shot);
+	sound->Play();
 }
 
 void Bullet::Update(unsigned dt) {
