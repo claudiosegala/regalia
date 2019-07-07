@@ -60,8 +60,8 @@ void Player::Update(unsigned dt) {
 
 	if (chargeTimer.Get() > Constants::Player::ChargeTimeMax) {
 		chargeTimer.Reset();
-		W(chargeTimer.Get());
 		shootingCoolDown.Start(Constants::Player::ShootingCoolDown);
+		canShoot = false;
 	}
 
 	UpdateSpeed(dt);
@@ -84,7 +84,7 @@ void Player::LoadAssets() {
 			break;
 
 		case Constants::Player::PersonaType::GOTICA:
-			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN); // TODO
+			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::Gotica);
 			break;
 
 		default:
@@ -183,7 +183,6 @@ void Player::LoadAndShoot() {
 
 		playerState |= IsLoading;
 		chargeTimer.Continue();
-		//W(chargeTimer.Get());
 
 	} else if (in.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
 		auto rightStick = in.GamepadRightStick(id);
@@ -359,7 +358,6 @@ void Player::CreateBullet(int bulletLevel) {
 		id,
 		Constants::Bullet::DefaultDamage,
 		bulletAngle,
-		Constants::Bullet::DefaultSpeed,
 		bulletLevel,
 		spriteSheetData
 	};
