@@ -97,7 +97,6 @@ void Player::LoadAssets() {
 
 		default:
 			throw std::runtime_error("Invalid persona type");
-			break;
 	}
 }
 
@@ -195,9 +194,9 @@ void Player::LoadAndShoot() {
 	} else if (in.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
 		auto rightStick = in.GamepadRightStick(id);
 		auto bulletLevel = GetBulletLevel();
-		
+
 		chargeTimer.Reset();
-		
+
 		if (rightStick.GetLength() == 0) { // Only shoot when aiming
 			return;
 		}
@@ -350,12 +349,23 @@ void Player::CreateBullet(int bulletLevel) {
 
 	switch (personaType) {
 		case Constants::PersonaType::MISTER_N:
-			spriteSheetData = &Constants::Bullet::Rabbit;
+			spriteSheetData = &Constants::Bullet::MisterN;
+			break;
+
+		case Constants::PersonaType::GOTICA:
+			spriteSheetData = &Constants::Bullet::Gotica;
+			break;
+
+		case Constants::PersonaType::ALQUIMISTA:
+			spriteSheetData = &Constants::Bullet::Alquimista;
+			break;
+
+		case Constants::PersonaType::MONGE:
+			spriteSheetData = &Constants::Bullet::Monge;
 			break;
 
 		default:
-			spriteSheetData = &Constants::Bullet::DefaultSpriteSheet; // TODO
-			break;
+			throw std::runtime_error("Invalid persona type");
 	}
 
 	BulletData bulletData = {

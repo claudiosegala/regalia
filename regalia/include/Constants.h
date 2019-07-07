@@ -133,8 +133,8 @@ namespace Bullet {
 
 	const float DefaultMaxDistance = 400.0f;
 
-	const SpriteSheetData Rabbit(
-	    "assets/img/rabbit.png",
+	const SpriteSheetData MisterN(
+	    "assets/img/mister_n_bullet_spritesheet.png",
 	    64,
 	    16,
 	    100,
@@ -143,10 +143,30 @@ namespace Bullet {
 	        { 0, 4 },
 	    });
 
-	const SpriteSheetData DefaultSpriteSheet(
-	    "assets/img/penguinbullet.png",
-	    120,
-	    29,
+	const SpriteSheetData Gotica(
+	    "assets/img/gotica_bullet_spritesheet.png",
+	    64,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 4 },
+	    });
+
+	const SpriteSheetData Alquimista(
+	    "assets/img/alquimista_bullet_spritesheet.png",
+	    64,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 4 },
+	    });
+
+	const SpriteSheetData Monge(
+	    "assets/img/monge_bullet_spritesheet.png",
+	    64,
+	    16,
 	    100,
 	    1,
 	    {
