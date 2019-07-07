@@ -20,6 +20,8 @@ Player::Player(GameObject& go, Constants::Player::PersonaType persona)
 	associated.box.SetCenter({ 27.0f, 26.0f });
 	associated.hitbox = new Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 
+	chargeTimer.Pause();
+
 	LoadAssets();
 }
 
@@ -58,6 +60,7 @@ void Player::Update(unsigned dt) {
 
 	if (chargeTimer.Get() > Constants::Player::ChargeTimeMax) {
 		chargeTimer.Reset();
+		W(chargeTimer.Get());
 		shootingCoolDown.Start(Constants::Player::ShootingCoolDown);
 	}
 
@@ -180,22 +183,25 @@ void Player::LoadAndShoot() {
 
 		playerState |= IsLoading;
 		chargeTimer.Continue();
+		//W(chargeTimer.Get());
 
 	} else if (in.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
 		auto rightStick = in.GamepadRightStick(id);
-
-		// Only shoot when aiming
-		if (rightStick.GetLength() != 0) {
-			playerState |= IsShooting;
-
-			bulletAngle = rightStick.GetAngle();
-
-			CreateBullet();
-
-			canShoot = false;
-			shootingCoolDown.Start(Constants::Player::ShootingCoolDown);
-			chargeTimer.Reset();
+		auto bulletLevel = GetBulletLevel();
+		
+		chargeTimer.Reset();
+		
+		if (rightStick.GetLength() == 0) { // Only shoot when aiming
+			return;
 		}
+
+		playerState |= IsShooting;
+		bulletAngle = rightStick.GetAngle();
+
+		CreateBullet(bulletLevel);
+
+		canShoot = false;
+		shootingCoolDown.Start(Constants::Player::ShootingCoolDown);
 	}
 }
 
@@ -332,7 +338,7 @@ void Player::Die() {
 	associated.GetComponent<Sprite>()->RunAnimation(Constants::Player::DyingAnimation, [&]() { associated.RequestDelete(); });
 }
 
-void Player::CreateBullet() {
+void Player::CreateBullet(int bulletLevel) {
 	const SpriteSheetData* spriteSheetData;
 
 	switch (personaType) {
@@ -343,7 +349,7 @@ void Player::CreateBullet() {
 		case Constants::Player::PersonaType::GOTICA:
 			spriteSheetData = &Constants::Bullet::DefaultSpriteSheet; // TODO
 			break;
-		
+
 		default:
 			spriteSheetData = &Constants::Bullet::DefaultSpriteSheet;
 			break;
@@ -354,7 +360,7 @@ void Player::CreateBullet() {
 		Constants::Bullet::DefaultDamage,
 		bulletAngle,
 		Constants::Bullet::DefaultSpeed,
-		GetBulletLevel(),
+		bulletLevel,
 		spriteSheetData
 	};
 
