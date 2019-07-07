@@ -8,18 +8,20 @@
 #include "GameData.h"
 #include "Sound.h"
 
-Bullet::Bullet(GameObject& go, BulletData& data, const Vec2& speed)
+Bullet::Bullet(GameObject& go, BulletData& data)
     : Component(go)
     , shooterId(data.shooterId)
     , damage(data.damage)
     , level(data.level) {
 
-	assert(level >= 0 && level < 3);
+	if (level <= 0 || level > 3) {
+		throw std::runtime_error("Invalid bullet level");
+	}
 
 	shooterId = data.shooterId;
 	level = data.level;
 	damage = data.damage;
-	this->speed = Vec2(Constants::Bullet::LevelSpeed[level - 1] * cos(data.angle), Constants::Bullet::LevelSpeed[level - 1] * sin(data.angle)) + speed;
+	speed = Vec2(Constants::Bullet::LevelSpeed[level - 1] * cos(data.angle), Constants::Bullet::LevelSpeed[level - 1] * sin(data.angle));
 	invincible = GameData::IsTimeUp();
 
 	LoadAssets(data);

@@ -10,7 +10,7 @@ class Bullet : public Component {
 public:
 	int shooterId;
 
-	Bullet(GameObject& go, BulletData& data, const Vec2& speed);
+	Bullet(GameObject& go, BulletData& data);
 
 	void Update(unsigned dt) override;
 
