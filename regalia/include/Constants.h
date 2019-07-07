@@ -74,6 +74,7 @@ namespace Menu {
 
 namespace Countdown {
 	const bool Enabled = true; // Change this to enable or disable the countdown
+	const std::string Sound = "assets/audio/Som de batalha (Regalia).ogg";
 	const int TextSize = 180;
 	const int StartValue = 3;
 }
@@ -101,7 +102,7 @@ namespace Credit {
 }
 
 namespace Play {
-	const std::string Music = "assets/audio/Batalha dos Magos MP3-RSE.ogg";
+	const std::string Music = "assets/audio/Batalha I Loop.ogg";
 
 	const std::vector<BackgroundData> Backgrounds = {
 		{ "assets/img/backgrounds/play_state_01.png" },
