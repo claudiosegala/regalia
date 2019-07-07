@@ -10,4 +10,5 @@ Standard: Cpp11
 TabWidth: '4'
 UseTab: ForIndentation
 SortIncludes: 'false'
+IndentCaseLabels: 'true'
 ...

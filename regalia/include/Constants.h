@@ -121,6 +121,16 @@ namespace Bullet {
 
 	const float DefaultMaxDistance = 400.0f;
 
+	const SpriteSheetData Rabbit(
+	    "assets/img/rabbit.png",
+	    64,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 4 },
+	    });
+
 	const SpriteSheetData DefaultSpriteSheet(
 	    "assets/img/penguinbullet.png",
 	    120,
@@ -130,6 +140,7 @@ namespace Bullet {
 	    {
 	        { 0, 4 },
 	    });
+
 }
 
 namespace Key {
@@ -187,6 +198,14 @@ namespace Colors {
 }
 
 namespace Player {
+
+	enum class PersonaType {
+		MISTER_N,
+		GOTICA,
+		OUTRO,
+		MAIS_OUTRO
+	};
+
 	enum AnimationState {
 		IdleAnimation = 0,
 		RunningAnimation,
@@ -194,7 +213,6 @@ namespace Player {
 		StartFallingAnimation,
 		FallingAnimation,
 		SlidingAnimation,
-		LoadingAnimation,
 		ShootingUpAnimation,
 		ShootingDiagUpAnimation,
 		ShootingHorizontalAnimation,
@@ -212,7 +230,7 @@ namespace Player {
 
 	const unsigned ChargeTimeMax = ChargeTimeLevelOne + ChargeTimeLevelTwo + ChargeTimeLevelThree;
 
-	const unsigned ShootingCoolDown = 1000u; 
+	const unsigned ShootingCoolDown = 1000u;
 
 	const float LateralForce = 450.0f;
 
@@ -228,7 +246,7 @@ namespace Player {
 
 	const SpriteSheetData MisterN(
 	    "assets/img/mister_n_spritesheet.png",
-	    2112,
+	    2448,
 	    48,
 	    100,
 	    TOTAL_ANIMATION_STATES,
@@ -239,13 +257,12 @@ namespace Player {
 	        { StartFallingAnimation, 1 },
 	        { FallingAnimation, 2 },
 	        { SlidingAnimation, 2 },
-	        { LoadingAnimation, 2 },
-	    	{ ShootingUpAnimation, 3 },
-	        { ShootingDiagUpAnimation, 3 },
-	        { ShootingHorizontalAnimation, 3 },
-	        { ShootingDiagDownAnimation, 3 },
-	        { ShootingDownAnimation, 3 },
-	        { DyingAnimation, 8 },
+	        { ShootingUpAnimation, 4 },
+	        { ShootingDiagUpAnimation, 4 },
+	        { ShootingHorizontalAnimation, 4 },
+	        { ShootingDiagDownAnimation, 4 },
+	        { ShootingDownAnimation, 4 },
+	        { DyingAnimation, 12 },
 	    });
 }
 

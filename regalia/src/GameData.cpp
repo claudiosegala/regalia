@@ -16,12 +16,12 @@ int GameData::Result[Constants::Game::Sets] = { 0 };
 
 Timer GameData::CurrentRoundTimer;
 
-GameData::PersonaType GameData::Personas[4] = { 
-	GameData::PersonaType::MISTER_N,
-	GameData::PersonaType::GOTICA,
-	GameData::PersonaType::MAIS_OUTRO,
-	GameData::PersonaType::OUTRO
-};
+//GameData::PersonaType GameData::Personas[4] = { 
+//	PersonaType::MISTER_N,
+//	PersonaType::GOTICA,
+//	PersonaType::MAIS_OUTRO,
+//	PersonaType::OUTRO
+//};
 
 bool GameData::WindowFullscreen = false;
 
@@ -36,11 +36,11 @@ void GameData::Init(int numPlayers) {
 		Result[i] = -1;
 	}
 
-	int rnd = Number::Rand();
+	//int rnd = Number::Rand();
 
-	while (rnd--) {
-		std::next_permutation(Personas, Personas + 4);
-	}
+	//while (rnd--) {
+	//	std::next_permutation(Personas, Personas + 4);
+	//}
 }
 
 bool GameData::IsTimeUp() {

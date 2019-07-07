@@ -12,10 +12,10 @@
 
 int Player::counter = 0;
 
-Player::Player(GameObject& go)
+Player::Player(GameObject& go, Constants::Player::PersonaType persona)
     : Component(go)
     , id(counter++)
-    , shootingCoolDown() {
+    , personaType(persona) {
 
 	associated.box.SetCenter({ 27.0f, 26.0f });
 	associated.hitbox = new Rect(associated.box.vector + Vec2(13, 11), 22, 36);
@@ -75,7 +75,19 @@ void Player::Render() {
 }
 
 void Player::LoadAssets() {
-	associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN);
+	switch (personaType) {
+		case Constants::Player::PersonaType::MISTER_N:
+			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN);
+			break;
+
+		case Constants::Player::PersonaType::GOTICA:
+			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN); // TODO
+			break;
+
+		default:
+			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN);
+			break;
+	}
 }
 
 void Player::UpdateAnimationState() {
@@ -174,33 +186,11 @@ void Player::LoadAndShoot() {
 
 		// Only shoot when aiming
 		if (rightStick.GetLength() != 0) {
-
 			playerState |= IsShooting;
 
 			bulletAngle = rightStick.GetAngle();
-			const auto bulletLevel = GetBulletLevel();
-			const auto pos = associated.box.Center();
 
-			BulletData bulletData = {
-				id,
-				Constants::Bullet::DefaultDamage,
-				bulletAngle,
-				Constants::Bullet::DefaultSpeed,
-				bulletLevel,
-				&Constants::Bullet::DefaultSpriteSheet
-			};
-
-			auto bulletGO = new GameObject();
-			bulletGO->AddComponent<Bullet>(bulletData);
-
-			// TODO: change when we have a bullet
-			bulletGO->box.width = 10;
-			bulletGO->box.height = 10;
-
-			bulletGO->box.SetCenter(pos);
-			bulletGO->angle = bulletAngle;
-
-			void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
+			CreateBullet();
 
 			canShoot = false;
 			shootingCoolDown.Start(Constants::Player::ShootingCoolDown);
@@ -340,4 +330,39 @@ void Player::MoveAndSlide(unsigned long dt) {
 void Player::Die() {
 	playerState |= IsDying;
 	associated.GetComponent<Sprite>()->RunAnimation(Constants::Player::DyingAnimation, [&]() { associated.RequestDelete(); });
+}
+
+void Player::CreateBullet() {
+	const SpriteSheetData* spriteSheetData;
+
+	switch (personaType) {
+		case Constants::Player::PersonaType::MISTER_N:
+			spriteSheetData = &Constants::Bullet::Rabbit;
+			break;
+
+		case Constants::Player::PersonaType::GOTICA:
+			spriteSheetData = &Constants::Bullet::DefaultSpriteSheet; // TODO
+			break;
+		
+		default:
+			spriteSheetData = &Constants::Bullet::DefaultSpriteSheet;
+			break;
+	}
+
+	BulletData bulletData = {
+		id,
+		Constants::Bullet::DefaultDamage,
+		bulletAngle,
+		Constants::Bullet::DefaultSpeed,
+		GetBulletLevel(),
+		spriteSheetData
+	};
+
+	auto bulletGO = new GameObject();
+	bulletGO->AddComponent<Bullet>(bulletData);
+
+	bulletGO->box.SetCenter(associated.box.Center());
+	bulletGO->angle = bulletAngle;
+
+	void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
 }

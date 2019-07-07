@@ -13,7 +13,7 @@ public:
 
 	const int id;
 
-	Player(GameObject& go);
+	Player(GameObject& go, Constants::Player::PersonaType persona);
 
 	~Player();
 
@@ -66,6 +66,8 @@ private:
 
 	Rect collisionBox;
 
+	Constants::Player::PersonaType personaType;
+
 	void LoadAssets();
 
 	void UpdateAnimationState();
@@ -79,4 +81,6 @@ private:
 	void MoveAndSlide(unsigned long dt);
 
 	void Die();
+
+	void CreateBullet();
 };
