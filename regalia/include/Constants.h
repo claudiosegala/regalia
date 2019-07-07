@@ -234,7 +234,7 @@ namespace Player {
 
 	const unsigned ChargeTimeMax = ChargeTimeLevelOne + ChargeTimeLevelTwo + ChargeTimeLevelThree;
 
-	const unsigned ShootingCoolDown = 1000u;
+	const unsigned ShootingCoolDown = 500u;
 
 	const float LateralForce = 450.0f;
 
