@@ -70,6 +70,8 @@ namespace Menu {
 
 	const std::string Music = "assets/audio/Menu.ogg";
 	const std::string Background = "assets/img/menu_livro_aberto.png";
+	const std::string Sound = "assets/audio/Mudança de opção no menu (Regalia).ogg";
+	const std::string ConfirmSound = "assets/audio/Clique em menu (regalia).ogg";
 }
 
 namespace Countdown {

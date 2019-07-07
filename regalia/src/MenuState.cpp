@@ -13,6 +13,7 @@
 #include <Text.h>
 #include <Vec2.h>
 #include <SelectPersonaState.h>
+#include "Sound.h"
 
 
 MenuState::MenuState() {
@@ -31,11 +32,13 @@ void MenuState::LoadAssets() {
 
 	(void)AddObject(CreateBackground());
 	(void)AddObject(CreateOption("Regalia", { -horizontalOffset, 75.f }));
-	(void)AddObject(CreateOption("Play", { horizontalOffset, 0.f }));
-	(void)AddObject(CreateOption("Story", { horizontalOffset, 75.f }));
-	(void)AddObject(CreateOption("Credits", { horizontalOffset, 150.f }));
+	options.push_back(AddObject(CreateOption("Play", { horizontalOffset, 0.f })));
+	options.push_back(AddObject(CreateOption("Story", { horizontalOffset, 75.f })));
+	options.push_back(AddObject(CreateOption("Credits", { horizontalOffset, 150.f })));
 
 	cursor = AddObject(CreateOption("-              -", { horizontalOffset, 0.f })); //> points towards first position
+
+	cursor.lock()->AddComponent<Sound>(Constants::Menu::Sound);
 }
 
 void MenuState::Update(unsigned dt) {
@@ -62,6 +65,8 @@ void MenuState::Update(unsigned dt) {
 
 	else if (in.GamepadPress(SDL_CONTROLLER_BUTTON_A, 0)) {
 		auto game = Game::GetInstance();
+
+		options[option].lock()->GetComponent<Sound>()->Play();
 
 		if (option == 0) {
 			game->Push(new SelectPersonaState());
@@ -124,9 +129,8 @@ GameObject* MenuState::CreateOption(const std::string& message, Vec2 shift) {
 	auto go = new GameObject();
 
 	go->AddComponent<Text>(textAsset, Constants::Menu::TextSize, Text::TextStyle::BLENDED, message, Constants::Colors::Red);
-
+	go->AddComponent<Sound>(Constants::Menu::ConfirmSound);
 	go->box.SetCenter(pos + shift);
-
 	return go;
 }
 
@@ -138,5 +142,6 @@ void MenuState::PositionCursor(int position) {
 		};
 
 		ptr->box.SetCenter(pos);
+		ptr->GetComponent<Sound>()->Play();
 	}
 }
