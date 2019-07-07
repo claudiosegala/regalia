@@ -8,10 +8,18 @@ public:
 
 	void Update(unsigned dt);
 
+	void Reset();
+
 	void Restart();
+
+	void Pause();
+
+	void Continue();
 
 	unsigned Get();
 
 private:
+	bool paused;
+
 	unsigned time;
 };
