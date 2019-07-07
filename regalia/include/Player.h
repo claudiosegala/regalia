@@ -82,5 +82,5 @@ private:
 
 	void Die();
 
-	void CreateBullet();
+	void CreateBullet(int bulletLevel);
 };
