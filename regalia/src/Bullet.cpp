@@ -10,8 +10,8 @@
 Bullet::Bullet(GameObject& go, BulletData& data)
     : Component(go)
     , shooterId(data.shooterId)
-    , level(data.level)
-    , damage(data.damage) {
+    , damage(data.damage)
+    , level(data.level) {
 
 	if (level <= 0 || level > 3) {
 		throw std::runtime_error("Invalid bullet level");

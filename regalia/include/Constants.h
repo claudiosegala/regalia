@@ -9,6 +9,13 @@ namespace Constants {
 // TODO: This is the size of the components array on a GameObject optimal size will be the exact number of components type we have
 const int NumberOfComponentsTypes = 32;
 
+enum class PersonaType {
+	MISTER_N,
+	GOTICA,
+	MONGE,
+	ALQUIMISTA
+};
+
 namespace Window {
 	const int Width = 960;
 	const int Height = 528;
@@ -113,7 +120,7 @@ namespace Play {
 }
 
 namespace Bullet {
-	const float LevelSpeed[] = {100, 200, 300};
+	const float LevelSpeed[] = { 100, 200, 300 };
 
 	const int DefaultDamage = 50;
 
@@ -180,17 +187,6 @@ namespace StdColor {
 	const std::string Reset = "\x1b[0m";
 }
 
-// namespace Persona {
-//     // Pode ser feito usando o valor do enum como índice para array.
-//     // Será usado para carregar os assets de cada persona.
-//     const enum {
-//         PERSONA1 = "PERSONA1",
-//         PERSONA2 = "PERSONA2",
-//         PERSONA3 = "PERSONA3",
-//         PERSONA4 = "PERSONA4"
-//     }
-// }
-
 namespace Colors {
 	const SDL_Color Black = { 0, 0, 0, 0 };
 	const SDL_Color White = { 255, 255, 255, 0 };
@@ -198,13 +194,6 @@ namespace Colors {
 }
 
 namespace Player {
-
-	enum class PersonaType {
-		MISTER_N,
-		GOTICA,
-		OUTRO,
-		MAIS_OUTRO
-	};
 
 	enum AnimationState {
 		IdleAnimation = 0,
@@ -225,7 +214,7 @@ namespace Player {
 	const unsigned ChargeTimeLevelOne = 1000u;
 
 	const unsigned ChargeTimeLevelTwo = 1000u;
-	
+
 	const unsigned ChargeTimeLevelThree = 1000u;
 
 	const unsigned ChargeTimeMax = ChargeTimeLevelOne + ChargeTimeLevelTwo + ChargeTimeLevelThree;
@@ -267,6 +256,48 @@ namespace Player {
 
 	const SpriteSheetData Gotica(
 	    "assets/img/gotica_spritesheet.png",
+	    2448,
+	    48,
+	    100,
+	    TOTAL_ANIMATION_STATES,
+	    {
+	        { IdleAnimation, 6 },
+	        { RunningAnimation, 6 },
+	        { JumpingAnimation, 2 },
+	        { StartFallingAnimation, 1 },
+	        { FallingAnimation, 2 },
+	        { SlidingAnimation, 2 },
+	        { ShootingUpAnimation, 4 },
+	        { ShootingDiagUpAnimation, 4 },
+	        { ShootingHorizontalAnimation, 4 },
+	        { ShootingDiagDownAnimation, 4 },
+	        { ShootingDownAnimation, 4 },
+	        { DyingAnimation, 12 },
+	    });
+
+	const SpriteSheetData Monge(
+	    "assets/img/monge.png",
+	    2448,
+	    48,
+	    100,
+	    TOTAL_ANIMATION_STATES,
+	    {
+	        { IdleAnimation, 6 },
+	        { RunningAnimation, 6 },
+	        { JumpingAnimation, 2 },
+	        { StartFallingAnimation, 1 },
+	        { FallingAnimation, 2 },
+	        { SlidingAnimation, 2 },
+	        { ShootingUpAnimation, 4 },
+	        { ShootingDiagUpAnimation, 4 },
+	        { ShootingHorizontalAnimation, 4 },
+	        { ShootingDiagDownAnimation, 4 },
+	        { ShootingDownAnimation, 4 },
+	        { DyingAnimation, 12 },
+	    });
+
+	const SpriteSheetData Alquimista(
+	    "assets/img/alquimista_spritesheet.png",
 	    2448,
 	    48,
 	    100,

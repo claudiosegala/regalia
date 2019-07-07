@@ -161,11 +161,11 @@ void PlayState::CreatePlayers() {
 	//	CreatePlayer();
 	//}
 
-	CreatePlayer(Constants::Player::PersonaType::MISTER_N);
-	CreatePlayer(Constants::Player::PersonaType::GOTICA);
+	CreatePlayer(Constants::PersonaType::MISTER_N);
+	CreatePlayer(Constants::PersonaType::GOTICA);
 }
 
-void PlayState::CreatePlayer(Constants::Player::PersonaType persona) {
+void PlayState::CreatePlayer(Constants::PersonaType persona) {
 	auto go = new GameObject();
 	go->AddComponent<Player>(persona);
 	auto player = AddObject(go);

@@ -12,7 +12,7 @@
 
 int Player::counter = 0;
 
-Player::Player(GameObject& go, Constants::Player::PersonaType persona)
+Player::Player(GameObject& go, Constants::PersonaType persona)
     : Component(go)
     , id(counter++)
     , personaType(persona) {
@@ -76,16 +76,24 @@ void Player::Render() {
 
 void Player::LoadAssets() {
 	switch (personaType) {
-		case Constants::Player::PersonaType::MISTER_N:
+		case Constants::PersonaType::MISTER_N:
 			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN);
 			break;
 
-		case Constants::Player::PersonaType::GOTICA:
+		case Constants::PersonaType::GOTICA:
 			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::Gotica);
 			break;
 
+		case Constants::PersonaType::MONGE:
+			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::Monge);
+			break;
+
+		case Constants::PersonaType::ALQUIMISTA:
+			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::Alquimista);
+			break;
+
 		default:
-			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN);
+			throw std::runtime_error("Invalid persona type");
 			break;
 	}
 }
@@ -216,7 +224,7 @@ int Player::GetBulletLevel() {
 		return 3;
 	}
 
-	throw new std::runtime_error("Something went wrong");
+	throw std::runtime_error("Something went wrong");
 }
 
 void Player::UpdateSpeed(unsigned long dt) {
@@ -336,16 +344,12 @@ void Player::CreateBullet() {
 	const SpriteSheetData* spriteSheetData;
 
 	switch (personaType) {
-		case Constants::Player::PersonaType::MISTER_N:
+		case Constants::PersonaType::MISTER_N:
 			spriteSheetData = &Constants::Bullet::Rabbit;
 			break;
 
-		case Constants::Player::PersonaType::GOTICA:
-			spriteSheetData = &Constants::Bullet::DefaultSpriteSheet; // TODO
-			break;
-		
 		default:
-			spriteSheetData = &Constants::Bullet::DefaultSpriteSheet;
+			spriteSheetData = &Constants::Bullet::DefaultSpriteSheet; // TODO
 			break;
 	}
 

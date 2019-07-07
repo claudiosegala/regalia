@@ -13,7 +13,7 @@ public:
 
 	const int id;
 
-	Player(GameObject& go, Constants::Player::PersonaType persona);
+	Player(GameObject& go, Constants::PersonaType persona);
 
 	~Player();
 
@@ -66,7 +66,7 @@ private:
 
 	Rect collisionBox;
 
-	Constants::Player::PersonaType personaType;
+	Constants::PersonaType personaType;
 
 	void LoadAssets();
 
