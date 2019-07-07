@@ -2,7 +2,8 @@
 #include <Timer.h>
 
 Timer::Timer()
-    : time(0) {
+    : time(0)
+	, paused(false) {
 }
 
 void Timer::SetStart(unsigned st) {
@@ -10,11 +11,27 @@ void Timer::SetStart(unsigned st) {
 }
 
 void Timer::Update(unsigned dt) {
-	time += dt;
+	if (!paused) {
+		time += dt;
+	}
+}
+
+void Timer::Reset() {
+	time = 0;
+	paused = true;
 }
 
 void Timer::Restart() {
 	time = 0;
+	paused = false;
+}
+
+void Timer::Pause() {
+	paused = true;
+}
+
+void Timer::Continue() {
+	paused = false;
 }
 
 unsigned Timer::Get() {
