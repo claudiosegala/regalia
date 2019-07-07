@@ -35,12 +35,17 @@ void StoryState::Update(unsigned dt) {
 	auto& in = InputManager::GetInstance();
 
 	popRequested = in.PopRequested();
-	if (popRequested > 0) {
+	if (popRequested) {
 		return;
 	}
 
 	quitRequested = in.QuitRequested();
 	if (quitRequested) {
+		return;
+	}
+
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_B)) {
+		popRequested = true;
 		return;
 	}
 
