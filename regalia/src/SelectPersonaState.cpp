@@ -11,9 +11,10 @@ SelectPersonaState::SelectPersonaState() {
 
 	Logger::Info("Initializing Menu State");
 
+	// TODO: do not allow play if there is less than 2 controllers
 	auto& in = InputManager::GetInstance();
 
-	GameData::NumPlayers = in.NumberOfControllers() > 4 ? 4 : in.NumberOfControllers();
+	GameData::NumPlayers = std::min(in.NumberOfControllers(), 4);
 
 	LoadAssets();
 }
