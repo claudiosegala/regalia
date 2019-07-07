@@ -15,15 +15,15 @@ public:
 
 	static int NumPlayers;
 
-	static int Result[Constants::Game::Sets]; //> holds the id of the winner
+	static Constants::PersonaType personas[4];
 
-	//static PersonaType Personas[4];
+	static int Result[Constants::Game::Sets]; //> holds the id of the winner
 
 	static bool WindowFullscreen;
 
 	static Timer CurrentRoundTimer;
 
-	static void Init(int numPlayer = 2);
+	static void Init();
 
 	static bool IsTimeUp();
 };

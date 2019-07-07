@@ -157,12 +157,9 @@ void PlayState::CreateGameTimer() {
 }
 
 void PlayState::CreatePlayers() {
-	//for (int i = 0; i < GameData::NumPlayers; i++) {
-	//	CreatePlayer();
-	//}
-
-	CreatePlayer(Constants::PersonaType::MISTER_N);
-	CreatePlayer(Constants::PersonaType::GOTICA);
+	for (int i = 0; i < GameData::NumPlayers; i++) {
+		CreatePlayer(GameData::personas[i]);
+	}
 }
 
 void PlayState::CreatePlayer(Constants::PersonaType persona) {

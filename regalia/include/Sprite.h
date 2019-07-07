@@ -20,6 +20,8 @@ public:
 
 	void Open(const std::string& file);
 
+	void Open(const SpriteSheetData* _spriteSheetData);
+
 	void SetClip(int, int, int, int);
 
 	void SetClip();

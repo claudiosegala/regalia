@@ -34,6 +34,18 @@ void Sprite::Open(const std::string& file) {
 	SetBox();
 }
 
+
+void Sprite::Open(const SpriteSheetData* _spriteSheetData) {
+	this->spriteSheetData = _spriteSheetData;
+
+	Open(spriteSheetData->file);
+
+	frameCount = spriteSheetData->GetNumberOfFrames(currentAnimationId);
+
+	spriteSheetData->AssertSize(width, height);
+}
+
+
 void Sprite::SetClip(int x, int y, int w, int h) {
 	clipRect = { x, y, w, h };
 }

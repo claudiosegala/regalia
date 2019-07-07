@@ -12,6 +12,8 @@
 #include <Sprite.h>
 #include <Text.h>
 #include <Vec2.h>
+#include <SelectPersonaState.h>
+
 
 MenuState::MenuState() {
 	Logger::Info("Initializing Menu State");
@@ -62,7 +64,7 @@ void MenuState::Update(unsigned dt) {
 		auto game = Game::GetInstance();
 
 		if (option == 0) {
-			game->Push(new PlayState());
+			game->Push(new SelectPersonaState());
 		} else if (option == 1) {
 			game->Push(new StoryState());
 		} else {

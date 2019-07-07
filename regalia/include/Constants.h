@@ -10,10 +10,11 @@ namespace Constants {
 const int NumberOfComponentsTypes = 32;
 
 enum class PersonaType {
-	MISTER_N,
+	MISTER_N = 0,
 	GOTICA,
 	MONGE,
-	ALQUIMISTA
+	ALQUIMISTA,
+	MAX_VALUE
 };
 
 namespace Window {
@@ -276,7 +277,7 @@ namespace Player {
 	    });
 
 	const SpriteSheetData Monge(
-	    "assets/img/monge.png",
+	    "assets/img/monge_spritesheet.png",
 	    2448,
 	    48,
 	    100,

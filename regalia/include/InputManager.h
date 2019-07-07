@@ -49,6 +49,8 @@ public:
 
 	bool QuitRequested() const;
 
+	int NumberOfControllers() const;
+
 private:
 	int mouseX = 0;
 

@@ -131,6 +131,12 @@ bool InputManager::QuitRequested() const {
 	return quitRequested;
 }
 
+
+int InputManager::NumberOfControllers() const {
+	return int(controllers.size());
+}
+
+
 void InputManager::Setup() {
 	quitRequested = false;
 	updateCounter++;
