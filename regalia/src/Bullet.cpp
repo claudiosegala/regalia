@@ -1,31 +1,34 @@
 #include <pch.h>
 #include <Bullet.h>
-#include <Circle.h>
 #include <CollisionMap.h>
 #include <Constants.h>
 #include <GameObject.h>
-#include <Number.h>
 #include <Player.h>
 #include <Sprite.h>
 #include "GameData.h"
 
 Bullet::Bullet(GameObject& go, BulletData& data)
-    : Component(go) {
-	data.speed += data.level * Constants::Bullet::LevelSpeedIncrease;
+    : Component(go)
+    , shooterId(data.shooterId)
+    , level(data.level)
+    , damage(data.damage) {
+
+	if (level <= 0 || level > 3) {
+		throw std::runtime_error("Invalid bullet level");
+	}
 
 	shooterId = data.shooterId;
 	level = data.level;
 	damage = data.damage;
-	speed = Vec2(data.speed * cos(data.angle), data.speed * sin(data.angle));
+	speed = Vec2(Constants::Bullet::LevelSpeed[level - 1] * cos(data.angle), Constants::Bullet::LevelSpeed[level - 1] * sin(data.angle));
 	invencible = GameData::IsTimeUp();
-
 
 	LoadAssets(data);
 	associated.hitbox = new Rect(associated.box);
 }
 
 void Bullet::Update(unsigned dt) {
-	if (level < 0) {
+	if (level <= 0) {
 		associated.RequestDelete();
 		return;
 	}
@@ -82,7 +85,10 @@ void Bullet::MoveAndBounce(unsigned dt) {
 
 		if (!invencible) {
 			level--;
-			speed -= Vec2(Constants::Bullet::LevelSpeedIncrease, Constants::Bullet::LevelSpeedIncrease);
+
+			if (level > 0) {
+				speed = speed.GetUnit() * Constants::Bullet::LevelSpeed[level - 1];
+			}
 		}
 	}
 

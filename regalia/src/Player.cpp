@@ -326,7 +326,6 @@ void Player::createBullet() {
 		id,
 		Constants::Bullet::DefaultDamage,
 		bulletAngle,
-		Constants::Bullet::DefaultSpeed,
 		3,
 		spriteSheetData
 	};

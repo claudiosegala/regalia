@@ -24,7 +24,7 @@ private:
 
 	int damage;
 
-	float level;
+	int level;
 
 	Vec2 speed;
 

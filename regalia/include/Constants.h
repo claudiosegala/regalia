@@ -113,7 +113,7 @@ namespace Play {
 }
 
 namespace Bullet {
-	const float LevelSpeedIncrease = 75.0f;
+	const float LevelSpeed[] = {100, 200, 300};
 
 	const int DefaultDamage = 50;
 
