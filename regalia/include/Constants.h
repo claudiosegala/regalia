@@ -74,6 +74,7 @@ namespace Menu {
 
 namespace Countdown {
 	const bool Enabled = true; // Change this to enable or disable the countdown
+	const std::string Sound = "assets/audio/Som de batalha (Regalia).ogg";
 	const int TextSize = 180;
 	const int StartValue = 3;
 }

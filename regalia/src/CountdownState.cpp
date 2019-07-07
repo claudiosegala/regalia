@@ -3,6 +3,7 @@
 #include "Text.h"
 #include "Game.h"
 #include "InputManager.h"
+#include "Sound.h"
 
 CountdownState::CountdownState(State* playState)
     : playState(playState) {
@@ -20,6 +21,8 @@ void CountdownState::LoadAssets() {
 	text->box.SetCenter({ Constants::Window::Width / 2, Constants::Window::Height / 2 });
 
 	(void)AddObject(text);
+
+	text->AddComponent<Sound>(Constants::Countdown::Sound);
 }
 
 void CountdownState::Update(unsigned dt) {
@@ -36,6 +39,8 @@ void CountdownState::Update(unsigned dt) {
 
 	if (timer.Get() > 1000) {
 		timer.Restart();
+
+		text->GetComponent<Sound>()->Play();
 
 		count--;
 
@@ -60,6 +65,7 @@ void CountdownState::Render() {
 
 void CountdownState::Start() {
 	StartArray();
+	text->GetComponent<Sound>()->Play();
 	started = true;
 }
 
