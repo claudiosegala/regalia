@@ -48,6 +48,8 @@ private:
 
 	Constants::Player::AnimationState animationState = Constants::Player::IdleAnimation;
 
+	Timer chargeTimer;
+
 	Timer currentAnimationTimer;
 
 	StopWatch shootingCoolDown;
@@ -69,6 +71,8 @@ private:
 	void UpdateAnimationState();
 
 	void LoadAndShoot();
+
+	int GetBulletLevel();
 
 	void UpdateSpeed(unsigned long dt);
 

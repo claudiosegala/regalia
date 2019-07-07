@@ -5,19 +5,19 @@
 
 class BulletData {
 public:
-	BulletData(int shooterId, int damage, float angle, float speed, float maxBounces, const SpriteSheetData* spriteSheetData)
+	BulletData(int shooterId, int damage, float angle, float speed, int level, const SpriteSheetData* spriteSheetData)
 	    : shooterId(shooterId)
 	    , damage(damage)
 	    , angle(angle)
 	    , speed(speed)
-	    , level(maxBounces)
+	    , level(level)
 	    , spriteSheetData(spriteSheetData) {}
 
 	int shooterId;
 	int damage;
 	float angle;
 	float speed;
-	float level;
+	int level;
 	const SpriteSheetData* spriteSheetData;
 };
 

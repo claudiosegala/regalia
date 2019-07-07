@@ -21,8 +21,6 @@ Player::Player(GameObject& go)
 	associated.hitbox = new Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 
 	LoadAssets();
-
-	
 }
 
 Player::~Player() {
@@ -54,8 +52,14 @@ void Player::Update(unsigned dt) {
 		in.GamepadRumble(id, 0.5, 1000);
 	}
 
+	chargeTimer.Update(dt);
 	shootingCoolDown.Update(dt);
 	currentAnimationTimer.Update(dt);
+
+	if (chargeTimer.Get() > Constants::Player::ChargeTimeMax) {
+		chargeTimer.Reset();
+		shootingCoolDown.Start(Constants::Player::ShootingCoolDown);
+	}
 
 	UpdateSpeed(dt);
 	MoveAndSlide(dt);
@@ -155,7 +159,7 @@ void Player::LoadAndShoot() {
 
 	playerState &= ~IsLoading & ~IsShooting;
 	canShoot |= shootingCoolDown.IsTimeUp() && in.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id);
-	
+
 	if (!canShoot) {
 		return;
 	}
@@ -163,9 +167,9 @@ void Player::LoadAndShoot() {
 	if (in.IsGamepadDown(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
 
 		playerState |= IsLoading;
+		chargeTimer.Continue();
 
 	} else if (in.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
-
 		auto rightStick = in.GamepadRightStick(id);
 
 		// Only shoot when aiming
@@ -174,6 +178,7 @@ void Player::LoadAndShoot() {
 			playerState |= IsShooting;
 
 			bulletAngle = rightStick.GetAngle();
+			const auto bulletLevel = GetBulletLevel();
 			const auto pos = associated.box.Center();
 
 			BulletData bulletData = {
@@ -181,7 +186,7 @@ void Player::LoadAndShoot() {
 				Constants::Bullet::DefaultDamage,
 				bulletAngle,
 				Constants::Bullet::DefaultSpeed,
-				3,
+				bulletLevel,
 				&Constants::Bullet::DefaultSpriteSheet
 			};
 
@@ -199,8 +204,29 @@ void Player::LoadAndShoot() {
 
 			canShoot = false;
 			shootingCoolDown.Start(Constants::Player::ShootingCoolDown);
+			chargeTimer.Reset();
 		}
 	}
+}
+
+int Player::GetBulletLevel() {
+	using namespace Constants::Player;
+
+	auto dt = chargeTimer.Get();
+
+	if (dt < ChargeTimeLevelOne) {
+		return 1;
+	}
+
+	if (dt < ChargeTimeLevelTwo + ChargeTimeLevelOne) {
+		return 2;
+	}
+
+	if (dt < ChargeTimeLevelThree + ChargeTimeLevelTwo + ChargeTimeLevelOne) {
+		return 3;
+	}
+
+	throw new std::runtime_error("Something went wrong");
 }
 
 void Player::UpdateSpeed(unsigned long dt) {

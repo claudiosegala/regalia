@@ -204,6 +204,14 @@ namespace Player {
 		TOTAL_ANIMATION_STATES
 	};
 
+	const unsigned ChargeTimeLevelOne = 1000u;
+
+	const unsigned ChargeTimeLevelTwo = 1000u;
+	
+	const unsigned ChargeTimeLevelThree = 1000u;
+
+	const unsigned ChargeTimeMax = ChargeTimeLevelOne + ChargeTimeLevelTwo + ChargeTimeLevelThree;
+
 	const unsigned ShootingCoolDown = 1000u; 
 
 	const float LateralForce = 450.0f;
