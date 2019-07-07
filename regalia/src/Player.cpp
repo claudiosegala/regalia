@@ -75,7 +75,7 @@ void Player::LoadAssets() {
 			break;
 
 		case Constants::Player::PersonaType::GOTICA:
-			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN); // TODO
+			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::Gotica);
 			break;
 
 		default:

@@ -256,6 +256,28 @@ namespace Player {
 	        { ShootingDownAnimation, 4 },
 	        { DyingAnimation, 12 },
 	    });
+
+	const SpriteSheetData Gotica(
+	    "assets/img/gotica_spritesheet.png",
+	    2448,
+	    48,
+	    100,
+	    TOTAL_ANIMATION_STATES,
+	    {
+	        { IdleAnimation, 6 },
+	        { RunningAnimation, 6 },
+	        { JumpingAnimation, 2 },
+	        { StartFallingAnimation, 1 },
+	        { FallingAnimation, 2 },
+	        { SlidingAnimation, 2 },
+	        { ShootingUpAnimation, 4 },
+	        { ShootingDiagUpAnimation, 4 },
+	        { ShootingHorizontalAnimation, 4 },
+	        { ShootingDiagDownAnimation, 4 },
+	        { ShootingDownAnimation, 4 },
+	        { DyingAnimation, 12 },
+	    });
+
 }
 
 }
