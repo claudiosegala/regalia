@@ -116,7 +116,9 @@ void Game::Loop() {
 			break;
 		}
 
-		if (state->PopRequested()) {
+		int pops = state->PopRequested();
+		
+		while (pops--) {
 			Logger::Info("Popping State");
 			stateStack.pop();
 
