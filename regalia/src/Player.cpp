@@ -377,7 +377,7 @@ void Player::CreateBullet(int bulletLevel) {
 	};
 
 	auto bulletGO = new GameObject();
-	bulletGO->AddComponent<Bullet>(bulletData);
+	bulletGO->AddComponent<Bullet>(bulletData, speed);
 
 	bulletGO->box.SetCenter(associated.box.Center());
 	bulletGO->angle = bulletAngle;

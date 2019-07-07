@@ -70,6 +70,8 @@ namespace Menu {
 
 	const std::string Music = "assets/audio/Menu.ogg";
 	const std::string Background = "assets/img/menu_livro_aberto.png";
+	const std::string Sound = "assets/audio/Mudança de opção no menu (Regalia).ogg";
+	const std::string ConfirmSound = "assets/audio/Clique em menu (regalia).ogg";
 }
 
 namespace Countdown {
@@ -282,7 +284,7 @@ namespace Player {
 
 	const SpriteSheetData Gotica(
 	    "assets/img/gotica_spritesheet.png",
-	    2448,
+	    2640,
 	    48,
 	    100,
 	    TOTAL_ANIMATION_STATES,
@@ -293,12 +295,12 @@ namespace Player {
 	        { StartFallingAnimation, 1 },
 	        { FallingAnimation, 2 },
 	        { SlidingAnimation, 2 },
-	        { ShootingUpAnimation, 4 },
-	        { ShootingDiagUpAnimation, 4 },
-	        { ShootingHorizontalAnimation, 4 },
-	        { ShootingDiagDownAnimation, 4 },
-	        { ShootingDownAnimation, 4 },
-	        { DyingAnimation, 12 },
+	        { ShootingUpAnimation, 5 },
+	        { ShootingDiagUpAnimation, 5 },
+	        { ShootingHorizontalAnimation, 5 },
+	        { ShootingDiagDownAnimation, 5 },
+	        { ShootingDownAnimation, 5 },
+	        { DyingAnimation, 11 },
 	    });
 
 	const SpriteSheetData Monge(

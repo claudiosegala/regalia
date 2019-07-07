@@ -27,6 +27,8 @@ private:
 
 	std::weak_ptr<GameObject> cursor;
 
+	std::vector<std::weak_ptr<GameObject>> options;
+
 	Music music;
 
 	GameObject* CreateBackground();
