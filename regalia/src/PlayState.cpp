@@ -62,10 +62,10 @@ void PlayState::Update(unsigned dt) {
 
 	GameData::CurrentRoundTimer.Update(dt);
 
-	if (Player::counter <= 1) {
+	// TODO: change to Player::counter < 2
+	if (Player::counter == 0) {
 		GameData::Set++;
 		GameData::Finished = (GameData::Set == Constants::Game::Sets);
-		popRequested = true;
 		LoadScoreState();
 		return;
 	}
