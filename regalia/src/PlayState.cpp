@@ -62,13 +62,13 @@ void PlayState::Update(unsigned dt) {
 
 	GameData::CurrentRoundTimer.Update(dt);
 
-	// TODO: uncomment this when there are two players
-	/*if (Player::counter == 1 || timer.Get() > Constants::Game::SetLength) {
+	if (Player::counter <= 1) {
 		GameData::Set++;
 		GameData::Finished = (GameData::Set == Constants::Game::Sets);
+		popRequested = true;
 		LoadScoreState();
 		return;
-	}*/
+	}
 
 	CheckCollision();
 	UpdateArray(dt);
