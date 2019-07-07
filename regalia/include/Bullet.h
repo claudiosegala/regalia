@@ -28,7 +28,7 @@ private:
 
 	Vec2 speed;
 
-	bool invencible;
+	bool invincible;
 
 	void LoadAssets(BulletData& data);
 	

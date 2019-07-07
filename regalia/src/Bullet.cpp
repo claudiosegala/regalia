@@ -20,7 +20,7 @@ Bullet::Bullet(GameObject& go, BulletData& data, const Vec2& speed)
 	level = data.level;
 	damage = data.damage;
 	this->speed = Vec2(Constants::Bullet::LevelSpeed[level - 1] * cos(data.angle), Constants::Bullet::LevelSpeed[level - 1] * sin(data.angle)) + speed;
-	invencible = GameData::IsTimeUp();
+	invincible = GameData::IsTimeUp();
 
 	LoadAssets(data);
 	associated.hitbox = new Rect(associated.box);
@@ -85,7 +85,7 @@ void Bullet::MoveAndBounce(unsigned dt) {
 
 		box += dist;
 
-		if (!invencible) {
+		if (!invincible) {
 			level--;
 
 			if (level > 0) {
