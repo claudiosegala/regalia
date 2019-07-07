@@ -14,7 +14,6 @@
 #include <Vec2.h>
 #include <SelectPersonaState.h>
 
-
 MenuState::MenuState() {
 	Logger::Info("Initializing Menu State");
 
@@ -90,13 +89,13 @@ void MenuState::Start() {
 
 void MenuState::Pause() {
 	Logger::Info("Pausing Title State");
-	music.Stop(0);
 }
 
 void MenuState::Resume() {
 	Logger::Info("Resuming Title State");
-	Camera::Reset();
-	music.Play();
+	if (option == 0) {
+		music.Stop(0);
+	}
 }
 
 GameObject* MenuState::CreateBackground() {

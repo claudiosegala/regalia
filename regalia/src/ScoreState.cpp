@@ -9,6 +9,7 @@
 #include <PlayState.h>
 #include <Rect.h>
 #include <ScoreState.h>
+#include <MenuState.h>
 #include <Sprite.h>
 #include <Text.h>
 #include <Vec2.h>
@@ -66,8 +67,9 @@ void ScoreState::Update(unsigned dt) {
 		return;
 	}
 
-	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER)) { // quit
-		quitRequested = true;
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER)) { // go back to menu
+		game->Push(new MenuState());
+		popRequested = 3;
 		return;
 	}
 
@@ -162,7 +164,7 @@ void ScoreState::LoadOptions() {
 	}
 
 	options.emplace_back("R1 - Restart");
-	options.emplace_back("L1 - Quit");
+	options.emplace_back("L1 - Return to Main Menu");
 
 	for (size_t i = 0; i < options.size(); i++) {
 		auto go = new GameObject();
