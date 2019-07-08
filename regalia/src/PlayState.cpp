@@ -27,8 +27,6 @@ PlayState::PlayState() {
 	if (!GameData::Started || GameData::Finished) {
 		GameData::Init();
 	}
-
-	PlayState::LoadAssets();
 }
 
 PlayState::~PlayState() {
@@ -83,7 +81,8 @@ void PlayState::Start() {
 	Logger::Info("Starting Play State");
 	Camera::Reset();
 	GameData::CurrentRoundTimer.Restart();
-
+	
+	LoadAssets();
 	StartArray();
 
 	started = true;
