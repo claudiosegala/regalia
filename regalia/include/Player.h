@@ -6,6 +6,7 @@
 #include <Sprite.h>
 #include <Timer.h>
 #include <StopWatch.h>
+#include <Charge.h>
 
 class Player : public Component {
 public:
@@ -46,8 +47,6 @@ private:
 
 	Constants::Player::AnimationState animationState = Constants::Player::IdleAnimation;
 
-	Timer chargeTimer;
-
 	Timer currentAnimationTimer;
 
 	StopWatch shootingCoolDown;
@@ -56,7 +55,9 @@ private:
 
 	float bulletAngle = 0;
 
-	Sprite* associatedSprite = nullptr;
+	Charge* charge = nullptr;
+
+	Sprite* sprite = nullptr;
 
 	int hp = Constants::Player::Hp;
 
@@ -72,13 +73,13 @@ private:
 
 	void LoadAndShoot();
 
-	int GetBulletLevel();
-
 	void UpdateSpeed(unsigned long dt);
 
 	void MoveAndSlide(unsigned long dt);
 
 	void Die();
 
-	void CreateBullet(int bulletLevel);
+	void CreateBullet(BulletData data);
+
+	void CreateChargingAnimation(GameObject* playerGO);
 };

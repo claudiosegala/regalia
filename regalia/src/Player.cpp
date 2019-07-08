@@ -9,18 +9,17 @@
 #include <Player.h>
 #include <Sprite.h>
 #include <Vec2.h>
-#include "PlayState.h"
+#include <Charge.h>
+#include <PlayState.h>
 
 Player::Player(GameObject& go, int id, Constants::PersonaType persona)
     : Component(go)
     , id(id)
     , personaType(persona) {
-
 	associated.box.SetCenter({ 27.0f, 26.0f });
 	associated.hitbox = new Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 
-	chargeTimer.Pause();
-
+	CreateChargingAnimation(&associated);
 	LoadAssets();
 }
 
@@ -56,12 +55,11 @@ void Player::Update(unsigned dt) {
 		in.GamepadRumble(id, 0.5, 1000);
 	}
 
-	chargeTimer.Update(dt);
 	shootingCoolDown.Update(dt);
 	currentAnimationTimer.Update(dt);
 
-	if (chargeTimer.Get() > Constants::Player::ChargeTimeMax) {
-		chargeTimer.Reset();
+	if (charge->Overload()) {
+		charge->Unload();
 		shootingCoolDown.Start(Constants::Player::ShootingCoolDown);
 		canShoot = false;
 	}
@@ -82,19 +80,19 @@ void Player::Render() {
 void Player::LoadAssets() {
 	switch (personaType) {
 		case Constants::PersonaType::MISTER_N:
-			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN);
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN);
 			break;
 
 		case Constants::PersonaType::GOTICA:
-			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::Gotica);
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::Gotica);
 			break;
 
 		case Constants::PersonaType::MONGE:
-			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::Monge);
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::Monge);
 			break;
 
 		case Constants::PersonaType::ALQUIMISTA:
-			associatedSprite = associated.AddComponent<Sprite>(&Constants::Player::Alquimista);
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::Alquimista);
 			break;
 
 		default:
@@ -171,10 +169,10 @@ void Player::UpdateAnimationState() {
 			animationState = nextAnimation;
 			currentAnimationHoldTime = nextAnimationHoldTime;
 			currentAnimationTimer.Restart();
-			associatedSprite->SetAnimation(animationState);
+			sprite->SetAnimation(animationState);
 		}
 
-		associatedSprite->SetAnimationDirX(nextDirX);
+		sprite->SetAnimationDirX(nextDirX);
 	}
 }
 
@@ -191,46 +189,56 @@ void Player::LoadAndShoot() {
 	if (in.IsGamepadDown(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
 
 		playerState |= IsLoading;
-		chargeTimer.Continue();
+		charge->Load();
 
 	} else if (in.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
 		auto rightStick = in.GamepadRightStick(id);
-		auto bulletLevel = GetBulletLevel();
+		auto bulletLevel = charge->GetLevel();
 
-		chargeTimer.Reset();
+		charge->Unload();
 
 		if (rightStick.GetLength() == 0) { // Only shoot when aiming
 			return;
 		}
 
+		canShoot = false;
 		playerState |= IsShooting;
 		bulletAngle = rightStick.GetAngle();
-
-		CreateBullet(bulletLevel);
-
-		canShoot = false;
 		shootingCoolDown.Start(Constants::Player::ShootingCoolDown);
+
+		const SpriteSheetData* spriteSheetData;
+
+		switch (personaType) {
+			case Constants::PersonaType::MISTER_N:
+				spriteSheetData = &Constants::Bullet::MisterN;
+				break;
+
+			case Constants::PersonaType::GOTICA:
+				spriteSheetData = &Constants::Bullet::Gotica;
+				break;
+
+			case Constants::PersonaType::ALQUIMISTA:
+				spriteSheetData = &Constants::Bullet::Alquimista;
+				break;
+
+			case Constants::PersonaType::MONGE:
+				spriteSheetData = &Constants::Bullet::Monge;
+				break;
+
+			default:
+				throw std::runtime_error("Invalid persona type");
+		}
+
+		BulletData bulletData = {
+			id,
+			Constants::Bullet::DefaultDamage,
+			bulletAngle,
+			bulletLevel,
+			spriteSheetData
+		};
+
+		CreateBullet(bulletData);
 	}
-}
-
-int Player::GetBulletLevel() {
-	using namespace Constants::Player;
-
-	auto dt = chargeTimer.Get();
-
-	if (dt < ChargeTimeLevelOne) {
-		return 1;
-	}
-
-	if (dt < ChargeTimeLevelTwo + ChargeTimeLevelOne) {
-		return 2;
-	}
-
-	if (dt < ChargeTimeLevelThree + ChargeTimeLevelTwo + ChargeTimeLevelOne) {
-		return 3;
-	}
-
-	throw std::runtime_error("Something went wrong");
 }
 
 void Player::UpdateSpeed(unsigned long dt) {
@@ -346,43 +354,27 @@ void Player::Die() {
 	associated.GetComponent<Sprite>()->RunAnimation(Constants::Player::DyingAnimation, [&]() { associated.RequestDelete(); });
 }
 
-void Player::CreateBullet(int bulletLevel) {
-	const SpriteSheetData* spriteSheetData;
+void Player::CreateBullet(BulletData data) {
+	auto go = new GameObject();
+	
+	(void)go->AddComponent<Bullet>(data);
 
-	switch (personaType) {
-		case Constants::PersonaType::MISTER_N:
-			spriteSheetData = &Constants::Bullet::MisterN;
-			break;
+	go->box.SetCenter(associated.box.Center());
+	go->angle = bulletAngle;
 
-		case Constants::PersonaType::GOTICA:
-			spriteSheetData = &Constants::Bullet::Gotica;
-			break;
+	auto game = Game::GetInstance();
+	auto state = game->GetCurrentState();
 
-		case Constants::PersonaType::ALQUIMISTA:
-			spriteSheetData = &Constants::Bullet::Alquimista;
-			break;
+	(void)state->AddObject(go);
+}
 
-		case Constants::PersonaType::MONGE:
-			spriteSheetData = &Constants::Bullet::Monge;
-			break;
+void Player::CreateChargingAnimation(GameObject* playerGO) {
+	auto go = new GameObject();
+	
+	charge = go->AddComponent<Charge>(playerGO);
 
-		default:
-			throw std::runtime_error("Invalid persona type");
-	}
+	auto game = Game::GetInstance();
+	auto state = game->GetCurrentState();
 
-	BulletData bulletData = {
-		id,
-		Constants::Bullet::DefaultDamage,
-		bulletAngle,
-		bulletLevel,
-		spriteSheetData
-	};
-
-	auto bulletGO = new GameObject();
-	bulletGO->AddComponent<Bullet>(bulletData);
-
-	bulletGO->box.SetCenter(associated.box.Center());
-	bulletGO->angle = bulletAngle;
-
-	void(Game::GetInstance()->GetCurrentState()->AddObject(bulletGO));
+	(void)state->AddObject(go);
 }
