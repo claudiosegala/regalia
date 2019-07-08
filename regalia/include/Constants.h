@@ -107,7 +107,6 @@ namespace Play {
 	const std::string Music = "assets/audio/Batalha I Loop.ogg";
 
 	const std::vector<BackgroundData> Backgrounds = {
-		{ "assets/img/backgrounds/play_state_01.png" },
 		{ "assets/img/backgrounds/catacombs_01.png" },
 		{ "assets/img/backgrounds/catacombs_02.png" },
 	};
