@@ -14,7 +14,7 @@ int GameData::NumPlayers = 0;
 
 Constants::PersonaType GameData::personas[4];
 
-int GameData::Result[Constants::Game::Sets] = { 0 };
+int GameData::Result[Constants::Game::Sets] = { -1 };
 
 Timer GameData::CurrentRoundTimer;
 

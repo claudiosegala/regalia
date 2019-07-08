@@ -44,6 +44,11 @@ void CreditState::Update(unsigned dt) {
 		return;
 	}
 
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_B)) {
+		popRequested = true;
+		return;
+	}
+
 	UpdateArray(dt);
 }
 

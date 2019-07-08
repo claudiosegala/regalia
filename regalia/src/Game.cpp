@@ -93,7 +93,6 @@ unsigned Game::GetDeltaTime() const {
 	return dt;
 }
 
-
 void Game::Start() {
 	Logger::Info("Starting Game");
 
@@ -128,6 +127,8 @@ void Game::Loop() {
 				Logger::Info("Changing State");
 				state = stateStack.top().get();
 				state->Resume();
+			} else {
+				state = nullptr;
 			}
 		}
 
