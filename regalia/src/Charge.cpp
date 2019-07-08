@@ -2,6 +2,7 @@
 #include <Charge.h>
 #include <Rect.h>
 #include <Vec2.h>
+#include <Sprite.h>
 
 Charge::Charge(GameObject& go, GameObject* playerGO)
     : Component(go)
@@ -13,12 +14,21 @@ Charge::Charge(GameObject& go, GameObject* playerGO)
 }
 
 void Charge::Update(unsigned dt) {
-	timer.Update(dt);
-	W(timer.Get());
-
 	associated.box.SetCenter(player->box.Center());
+	timer.Update(dt);
 
-	// TODO: update the animation
+	if (timer.Get() > Constants::Player::ChargeTimeMax) {
+		overload = true;
+	}
+
+	auto sprite = associated.GetComponent<Sprite>();
+
+	if (overload) {
+		sprite->SetAnimation(0);
+	} else {
+		auto level = GetLevel();
+		sprite->SetAnimation(level);
+	}
 }
 
 void Charge::Render() {}
@@ -29,18 +39,17 @@ void Charge::Load() {
 
 void Charge::Unload() {
 	timer.Reset();
+	overload = false;
 }
 
 bool Charge::Overload() {
-	return timer.Get() > Constants::Player::ChargeTimeMax;
+	return overload;
 }
 
 int Charge::GetLevel() {
 	using namespace Constants::Player;
 
 	auto dt = timer.Get();
-
-	W(dt);
 
 	if (dt < ChargeTimeLevelOne) {
 		return 1;
@@ -58,5 +67,5 @@ int Charge::GetLevel() {
 }
 
 void Charge::LoadAssets() {
-	// TODO: load charge 
+	associated.AddComponent<Sprite>(&Constants::Player::Gotica);
 }

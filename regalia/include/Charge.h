@@ -21,6 +21,8 @@ public:
 	int GetLevel();
 
 private:
+	int overload = false;
+
 	Timer timer;
 
 	GameObject* player;
