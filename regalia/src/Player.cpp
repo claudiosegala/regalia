@@ -9,12 +9,11 @@
 #include <Player.h>
 #include <Sprite.h>
 #include <Vec2.h>
+#include "PlayState.h"
 
-int Player::counter = 0;
-
-Player::Player(GameObject& go, Constants::PersonaType persona)
+Player::Player(GameObject& go, int id, Constants::PersonaType persona)
     : Component(go)
-    , id(counter++)
+    , id(id)
     , personaType(persona) {
 
 	associated.box.SetCenter({ 27.0f, 26.0f });
@@ -26,7 +25,10 @@ Player::Player(GameObject& go, Constants::PersonaType persona)
 }
 
 Player::~Player() {
-	counter--;
+	const auto state = dynamic_cast<PlayState*>(Game::GetInstance()->GetCurrentState());
+	if (state != nullptr) {
+		state->player_count--;
+	}
 }
 
 void Player::NotifyCollision(GameObject& go) {

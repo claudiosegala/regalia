@@ -9,11 +9,9 @@
 
 class Player : public Component {
 public:
-	static int counter;
-
 	const int id;
 
-	Player(GameObject& go, Constants::PersonaType persona);
+	Player(GameObject& go, int id, Constants::PersonaType persona);
 
 	~Player();
 

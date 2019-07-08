@@ -27,6 +27,8 @@ public:
 
 	void Resume() override;
 
+	int player_count = 0;
+
 private:
 	int field_index = 0;
 

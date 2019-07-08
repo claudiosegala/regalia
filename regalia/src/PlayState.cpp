@@ -164,7 +164,7 @@ void PlayState::CreatePlayers() {
 
 void PlayState::CreatePlayer(Constants::PersonaType persona) {
 	auto go = new GameObject();
-	go->AddComponent<Player>(persona);
+	go->AddComponent<Player>(player_count++ , persona);
 	auto player = AddObject(go);
 
 	go = new GameObject();
