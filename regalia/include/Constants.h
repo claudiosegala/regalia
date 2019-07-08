@@ -148,12 +148,12 @@ namespace Bullet {
 
 	const SpriteSheetData Gotica(
 	    "assets/img/gotica_bullet_spritesheet.png",
-	    64,
+	    128,
 	    16,
 	    100,
 	    1,
 	    {
-	        { 0, 4 },
+	        { 0, 8 },
 	    });
 
 	const SpriteSheetData Alquimista(
