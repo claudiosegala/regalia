@@ -182,6 +182,7 @@
     <ClInclude Include="include\SelectPersonaState.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Charge.cpp" />
     <ClCompile Include="src\CollisionMap.cpp" />
     <ClCompile Include="src\GameTimer.cpp" />
     <ClCompile Include="src\Number.cpp" />

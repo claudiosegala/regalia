@@ -41,6 +41,7 @@
     <ClCompile Include="src\GameTimer.cpp" />
     <ClCompile Include="src\StopWatch.cpp" />
     <ClCompile Include="src\SelectPersonaState.cpp" />
+    <ClCompile Include="src\Charge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
