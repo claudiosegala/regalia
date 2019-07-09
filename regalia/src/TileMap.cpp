@@ -30,6 +30,16 @@ void TileMap::Load(const std::string& file) {
 	    >> mapHeight >> ignore
 	    >> mapDepth >> ignore;
 
+	for (int i = 0; i < 4; ++i) {
+		int x, y;
+
+		fileStream >> x >> ignore
+		    >> y >> ignore;
+
+		initialPositions[i].x = float(x * 24);
+		initialPositions[i].y = float(y * 24);
+	}
+
 	while (fileStream >> tileValue >> ignore) {
 		tileMatrix.push_back(tileValue);
 	}
@@ -95,4 +105,8 @@ int TileMap::GetHeight() {
 
 int TileMap::GetDepth() {
 	return mapDepth;
+}
+
+Vec2 TileMap::GetPlayerInitialPosition(int id) {
+	return initialPositions[id];
 }

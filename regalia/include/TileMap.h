@@ -29,6 +29,8 @@ public:
 
 	int GetDepth();
 
+	Vec2 GetPlayerInitialPosition(int id);
+
 private:
 	int mapWidth = 0;
 
@@ -41,4 +43,6 @@ private:
 	TileSet* tileSet;
 
 	void SetCollisionMap();
+
+	Vec2 initialPositions[4];
 };

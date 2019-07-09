@@ -134,7 +134,7 @@ void PlayState::CreateField() {
 	GameObject* go;
 	const auto& back = GetBackgroundData(field_index);
 	const auto& tileSet = GetTileSetData(field_index);
-	const auto& tileMap = GetTileMapData(field_index);
+	const auto& tileMapData = GetTileMapData(field_index);
 
 	go = new GameObject();
 	go->AddComponent<Sprite>(back.file);
@@ -142,7 +142,9 @@ void PlayState::CreateField() {
 	(void)AddObject(go);
 
 	go = new GameObject();
-	go->AddComponent<TileMap>(tileMap.file, new TileSet(*go, tileSet.width, tileSet.height, tileSet.file));
+	tileMap = go->AddComponent<TileMap>(tileMapData.file, new TileSet(*go, tileSet.width, tileSet.height, tileSet.file));
+
+
 	go->box.vector = Vec2(0, 0);
 	(void)AddObject(go);
 }
@@ -162,8 +164,10 @@ void PlayState::CreatePlayers() {
 }
 
 void PlayState::CreatePlayer(Constants::PersonaType persona) {
+	int playerId = player_count++;
+
 	auto go = new GameObject();
-	go->AddComponent<Player>(player_count++ , persona);
+	go->AddComponent<Player>(playerId, persona, tileMap->GetPlayerInitialPosition(playerId));
 	auto player = AddObject(go);
 
 	go = new GameObject();

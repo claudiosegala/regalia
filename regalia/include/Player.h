@@ -12,7 +12,7 @@ class Player : public Component {
 public:
 	const int id;
 
-	Player(GameObject& go, int id, Constants::PersonaType persona);
+	Player(GameObject& go, int id, Constants::PersonaType persona, Vec2 initialPosition);
 
 	~Player();
 

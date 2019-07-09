@@ -12,11 +12,12 @@
 #include <Charge.h>
 #include <PlayState.h>
 
-Player::Player(GameObject& go, int id, Constants::PersonaType persona)
+Player::Player(GameObject& go, int id, Constants::PersonaType persona, Vec2 initialPosition)
     : Component(go)
     , id(id)
     , personaType(persona) {
-	associated.box.SetCenter({ 27.0f, 26.0f });
+
+	associated.box.SetCenter(initialPosition);
 	associated.hitbox = new Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 
 	CreateChargingAnimation(&associated);

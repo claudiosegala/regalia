@@ -34,6 +34,8 @@ private:
 
 	Music music;
 
+	TileMap* tileMap;
+
 	void CheckCollision();
 
 	void CreateField();
