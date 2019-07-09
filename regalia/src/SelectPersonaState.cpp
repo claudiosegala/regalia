@@ -109,7 +109,7 @@ void SelectPersonaState::Update(unsigned dt) {
 
 	if (std::all_of(personaConfirmed.begin(), personaConfirmed.end(), [](bool b) { return b; })) {
 		for (int i = 0; i < GameData::NumPlayers; ++i) {
-			GameData::personas[i] = currentPersona[i];
+			GameData::Personas[i] = currentPersona[i];
 		}
 
 		auto game = Game::GetInstance();

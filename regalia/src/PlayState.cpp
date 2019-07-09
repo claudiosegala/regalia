@@ -159,7 +159,7 @@ void PlayState::CreateGameTimer() {
 
 void PlayState::CreatePlayers() {
 	for (int i = 0; i < GameData::NumPlayers; i++) {
-		CreatePlayer(GameData::personas[i]);
+		CreatePlayer(GameData::Personas[i]);
 	}
 }
 

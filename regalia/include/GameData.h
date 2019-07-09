@@ -15,7 +15,7 @@ public:
 
 	static int NumPlayers;
 
-	static Constants::PersonaType personas[4];
+	static Constants::PersonaType Personas[4];
 
 	static int Result[Constants::Game::Sets]; //> holds the id of the winner
 

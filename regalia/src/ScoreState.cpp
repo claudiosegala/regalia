@@ -114,9 +114,9 @@ void ScoreState::LoadScore() {
 
 	{
 		auto go = new GameObject();
-		auto text = GameData::Paused 
-			? std::string("Set ") + std::to_string(GameData::Set) 
-			: std::string("Scoreboard");
+		auto text = GameData::Paused
+		    ? std::string("Set ") + std::to_string(GameData::Set)
+		    : std::string("Scoreboard");
 
 		go->AddComponent<Text>(Constants::Game::Font, Constants::Score::VictoriesSize, Text::TextStyle::BLENDED, text, Constants::Colors::White);
 		go->box.SetCenter({ Constants::Window::Width / 2, 50 });
@@ -134,7 +134,27 @@ void ScoreState::LoadScore() {
 		{
 			auto go = new GameObject();
 
-			go->AddComponent<Sprite>(&Constants::Player::MisterN)->SetScale(3.0f, 3.0f);
+			switch (GameData::Personas[i]) {
+				case Constants::PersonaType::MISTER_N:
+					go->AddComponent<Sprite>(&Constants::Player::MisterN)->SetScale(3.0f, 3.0f);
+					break;
+				
+				case Constants::PersonaType::GOTICA:
+					go->AddComponent<Sprite>(&Constants::Player::Gotica)->SetScale(3.0f, 3.0f);
+					break;
+				
+				case Constants::PersonaType::MONGE:
+					go->AddComponent<Sprite>(&Constants::Player::Monge)->SetScale(3.0f, 3.0f);
+					break;
+
+				case Constants::PersonaType::ALQUIMISTA:
+					go->AddComponent<Sprite>(&Constants::Player::Alquimista)->SetScale(3.0f, 3.0f);
+					break;
+
+				default:
+					throw std::runtime_error("Invalid persona type");
+			}
+
 			go->box.vector = pos;
 
 			(void)AddObject(go);

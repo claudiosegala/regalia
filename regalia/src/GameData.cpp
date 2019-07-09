@@ -12,7 +12,7 @@ int GameData::Set = 0;
 
 int GameData::NumPlayers = 0;
 
-Constants::PersonaType GameData::personas[4];
+Constants::PersonaType GameData::Personas[4];
 
 int GameData::Result[Constants::Game::Sets] = { -1 };
 
