@@ -94,6 +94,10 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="assets\map\map2.csv" />
+    <None Include="assets\map\map3.csv" />
+    <None Include="assets\map\map4.csv" />
+    <None Include="assets\map\map5.csv" />
+    <None Include="assets\map\map6.csv" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\map\00.txt" />

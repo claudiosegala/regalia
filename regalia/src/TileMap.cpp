@@ -36,7 +36,7 @@ void TileMap::Load(const std::string& file) {
 		fileStream >> x >> ignore
 		    >> y >> ignore;
 
-		initialPositions[i].x = float(x * 24);
+		initialPositions[i].x = float(x * 24) - 12; // Start centralized at the tile x
 		initialPositions[i].y = float(y * 24);
 	}
 
