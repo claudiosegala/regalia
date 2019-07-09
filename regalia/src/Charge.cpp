@@ -67,5 +67,5 @@ int Charge::GetLevel() {
 }
 
 void Charge::LoadAssets() {
-	associated.AddComponent<Sprite>(&Constants::Player::Gotica);
+	associated.AddComponent<Sprite>(&Constants::Player::Charge);
 }

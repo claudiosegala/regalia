@@ -237,6 +237,20 @@ namespace Player {
 		TOTAL_ANIMATION_STATES
 	};
 
+	const SpriteSheetData Charge (
+	    "assets/img/charge.png",
+	    1776,
+	    48,
+	    100,
+	    4,
+	    {
+	        { 0, 1 },
+	        { 1, 12 },
+	        { 2, 12 },
+	        { 3, 12 }
+	    }
+	);
+
 	const unsigned ChargeTimeLevelOne = 1000u;
 
 	const unsigned ChargeTimeLevelTwo = 1000u;
