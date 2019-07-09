@@ -97,11 +97,5 @@
   <ItemGroup>
     <Text Include="assets\map\00.txt" />
     <Text Include="assets\map\01.txt" />
-    <Text Include="assets\map\02.txt" />
-    <Text Include="assets\map\03.txt" />
-    <Text Include="assets\map\04.txt" />
-    <Text Include="assets\map\05.txt" />
-    <Text Include="assets\map\06.txt" />
-    <Text Include="assets\map\07.txt" />
   </ItemGroup>
 </Project>

@@ -17,39 +17,29 @@ TileMap::~TileMap() {
 }
 
 void TileMap::Load(const std::string& file) {
-	std::string line;
-	std::ifstream fs(file);
+	std::ifstream fileStream(file);
 
-	if (!fs.is_open()) {
-		auto msg = std::string("Could not open file created file\n");
-		throw std::runtime_error(msg);
+	if (!fileStream.is_open()) {
+		throw std::runtime_error("Can't open file " + file);
 	}
 
-	getline(fs, line, ',');
-	auto x = std::stoi(line);
-	getline(fs, line, ',');
-	auto y = std::stoi(line);
-	getline(fs, line, ',');
-	auto z = std::stoi(line);
+	char ignore;
+	int tileValue;
 
-	auto n = static_cast<unsigned int>(x * y * z);
+	fileStream >> mapWidth >> ignore
+	    >> mapHeight >> ignore
+	    >> mapDepth >> ignore;
 
-	tileMatrix.resize(n);
-	mapHeight = x;
-	mapWidth = y;
-	mapDepth = z;
-
-	for (auto layer = 0; layer < mapDepth; layer++) {
-		for (auto row = 0; row < mapHeight; row++) {
-			for (auto col = 0; col < mapWidth; col++) {
-				getline(fs, line, ',');
-				auto idx = Pos(col, row, layer);
-				tileMatrix[idx] = std::stoi(line);
-			}
-		}
+	while (fileStream >> tileValue >> ignore) {
+		tileMatrix.push_back(tileValue);
 	}
 
-	fs.close();
+	auto expectedSize = mapWidth * mapHeight * mapDepth;
+	if (tileMatrix.size() != expectedSize) {
+		throw std::runtime_error("Invalid tile matrix size");
+	}
+
+	fileStream.close();
 }
 
 void TileMap::SetCollisionMap() {
