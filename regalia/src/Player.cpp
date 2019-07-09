@@ -22,6 +22,11 @@ Player::Player(GameObject& go, int id, Constants::PersonaType persona, Vec2 init
 
 	CreateChargingAnimation(&associated);
 	LoadAssets();
+
+	// Make all players start the game facing the center of the map
+	if (initialPosition.x > Constants::Window::Center.x) {
+		sprite->SetAnimationDirX(Sprite::Direction::Flip);
+	}
 }
 
 Player::~Player() {
