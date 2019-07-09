@@ -19,7 +19,7 @@ public:
 	unsigned Get();
 
 private:
-	bool paused;
-
 	unsigned time;
+
+	bool paused;
 };
