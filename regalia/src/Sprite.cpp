@@ -81,6 +81,10 @@ void Sprite::SetAnimation(int animationId) {
 		throw std::runtime_error("Trying to set a animation id in a sprite that doesn't have animation");
 	}
 
+	if (animationId == currentAnimationId) {
+		return;
+	}
+
 	currentAnimationId = animationId;
 	currentFrame = 0;
 	frameCount = spriteSheetData->GetNumberOfFrames(currentAnimationId);

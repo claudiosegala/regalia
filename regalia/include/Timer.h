@@ -16,6 +16,8 @@ public:
 
 	void Continue();
 
+	bool IsPaused() const;
+
 	unsigned Get();
 
 private:

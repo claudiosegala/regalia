@@ -241,7 +241,7 @@ namespace Player {
 	    "assets/img/charge.png",
 	    1776,
 	    48,
-	    100,
+	    80,
 	    4,
 	    {
 	        { 0, 1 },

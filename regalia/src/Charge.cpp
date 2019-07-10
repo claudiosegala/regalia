@@ -23,10 +23,10 @@ void Charge::Update(unsigned dt) {
 
 	auto sprite = associated.GetComponent<Sprite>();
 
-	if (overload) {
+	if (overload || timer.IsPaused()) {
 		sprite->SetAnimation(0);
 	} else {
-		auto level = GetLevel();
+		const auto level = GetLevel();
 		sprite->SetAnimation(level);
 	}
 }

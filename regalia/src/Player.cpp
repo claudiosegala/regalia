@@ -20,7 +20,6 @@ Player::Player(GameObject& go, int id, Constants::PersonaType persona, Vec2 init
 	associated.box.SetCenter(initialPosition);
 	associated.hitbox = new Rect(associated.box.vector + Vec2(13, 11), 22, 36);
 
-	CreateChargingAnimation(&associated);
 	LoadAssets();
 
 	// Make all players start the game facing the center of the map
@@ -34,6 +33,10 @@ Player::~Player() {
 	if (state != nullptr) {
 		state->player_count--;
 	}
+}
+
+void Player::Start() {
+	CreateChargingAnimation(&associated);
 }
 
 void Player::NotifyCollision(GameObject& go) {

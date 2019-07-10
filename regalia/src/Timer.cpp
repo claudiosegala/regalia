@@ -34,6 +34,10 @@ void Timer::Continue() {
 	paused = false;
 }
 
+bool Timer::IsPaused() const {
+	return paused;
+}
+
 unsigned Timer::Get() {
 	return time;
 }

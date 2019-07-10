@@ -16,6 +16,8 @@ public:
 
 	~Player();
 
+	void Start() override;
+
 	void NotifyCollision(GameObject& go) override;
 
 	void Update(unsigned dt) override;
