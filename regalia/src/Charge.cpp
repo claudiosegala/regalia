@@ -17,7 +17,7 @@ void Charge::Update(unsigned dt) {
 	associated.box.SetCenter(player->box.Center());
 	timer.Update(dt);
 
-	if (timer.Get() > Constants::Player::ChargeTimeMax) {
+	if (timer.Get() >= Constants::Player::ChargeTimeMax) {
 		overload = true;
 	}
 
