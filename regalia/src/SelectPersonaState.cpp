@@ -26,6 +26,7 @@ SelectPersonaState::~SelectPersonaState() {
 void SelectPersonaState::LoadAssets() {
 	auto background = new GameObject();
 	background->AddComponent<Sprite>(Constants::Menu::Background);
+	background->GetComponent<Sprite>()->SetScale(2.0f, 2.0f);
 	(void)AddObject(background);
 
 	for (int i = 0; i < GameData::NumPlayers; ++i) {

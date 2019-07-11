@@ -1,8 +1,10 @@
 #pragma once
 
-#include <GameObject.h>
-#include <Music.h>
 #include <State.h>
+#include "Sprite.h"
+#include "Music.h"
+#include "Timer.h"
+#include "Sound.h"
 
 class MenuState : public State {
 public:
@@ -23,17 +25,25 @@ public:
 	void Resume() override;
 
 private:
-	int option = 0;
+	enum {
+		Play,
+		History,
+		Credits,
+		Exit,
+		MAX_OPTION
+	};
 
-	std::weak_ptr<GameObject> cursor;
+	int SelectedOption = Play;
 
-	std::vector<std::weak_ptr<GameObject>> options;
+	std::map<int, Sprite*> OptionSprite;
 
 	Music music;
 
-	GameObject* CreateBackground();
+	Sound* sound;
 
-	GameObject* CreateOption(const std::string&, Vec2 shift = { 0, 0 });
+	void CreateBackground();
+	
+	void CreateOption(int option, const SpriteSheetData* spriteSheetData, Vec2 position);
 
-	void PositionCursor(int position);
+	void CreateSound();
 };

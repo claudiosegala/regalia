@@ -69,9 +69,54 @@ namespace Menu {
 	const int TextSize = 48;
 
 	const std::string Music = "assets/audio/Menu.ogg";
-	const std::string Background = "assets/img/menu_livro_aberto.png";
+	const std::string Background = "assets/img/menu/livro_fundo.png";
 	const std::string Sound = "assets/audio/Mudança de opção no menu (Regalia).ogg";
 	const std::string ConfirmSound = "assets/audio/Clique em menu (regalia).ogg";
+
+	const SpriteSheetData Credits(
+	    "assets/img/menu/botao_creditos_spritesheet.png",
+	    222,
+	    36,
+	    100,
+	    2,
+	    {
+	        { 0, 1 },
+	        { 1, 1 },
+	    });
+
+	const SpriteSheetData History(
+	    "assets/img/menu/botao_historia_spritesheet.png",
+	    222,
+	    36,
+	    100,
+	    2,
+	    {
+	        { 0, 1 },
+	        { 1, 1 },
+	    });
+
+	const SpriteSheetData Exit(
+	    "assets/img/menu/botao_sair_spritesheet.png",
+	    222,
+	    36,
+	    100,
+	    2,
+	    {
+	        { 0, 1 },
+	        { 1, 1 },
+	    });
+
+	const SpriteSheetData Play(
+	    "assets/img/menu/botao_jogar_spritesheet.png",
+	    236,
+	    148,
+	    100,
+	    2,
+	    {
+	        { 0, 1 },
+	        { 1, 1 },
+	    });
+
 }
 
 namespace Countdown {
@@ -237,7 +282,7 @@ namespace Player {
 		TOTAL_ANIMATION_STATES
 	};
 
-	const SpriteSheetData Charge (
+	const SpriteSheetData Charge(
 	    "assets/img/charge_spritesheet.png",
 	    2368,
 	    64,
@@ -247,9 +292,8 @@ namespace Player {
 	        { 0, 1 },
 	        { 1, 12 },
 	        { 2, 12 },
-	        { 3, 12 }
-	    }
-	);
+	        { 3, 12 },
+	    });
 
 	const unsigned ChargeTimeLevelOne = 1000u;
 

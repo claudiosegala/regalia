@@ -18,7 +18,6 @@
 MenuState::MenuState() {
 	Logger::Info("Initializing Menu State");
 
-	music.Open(Constants::Menu::Music);
 	LoadAssets();
 }
 
@@ -29,15 +28,16 @@ MenuState::~MenuState() {
 void MenuState::LoadAssets() {
 	const auto horizontalOffset = Constants::Window::Width * 0.2f;
 
-	(void)AddObject(CreateBackground());
-	(void)AddObject(CreateOption("Regalia", { -horizontalOffset, 75.f }));
-	options.push_back(AddObject(CreateOption("Play", { horizontalOffset, 0.f })));
-	options.push_back(AddObject(CreateOption("Story", { horizontalOffset, 75.f })));
-	options.push_back(AddObject(CreateOption("Credits", { horizontalOffset, 150.f })));
+	CreateBackground();
 
-	cursor = AddObject(CreateOption("-              -", { horizontalOffset, 0.f })); //> points towards first position
+	CreateOption(Play, &Constants::Menu::Play, { 650, 230 });
+	CreateOption(History, &Constants::Menu::History, { 320, 130 });
+	CreateOption(Credits, &Constants::Menu::Credits, { 320, 230 });
+	CreateOption(Exit, &Constants::Menu::Exit, { 320, 330 });
 
-	cursor.lock()->AddComponent<Sound>(Constants::Menu::Sound);
+	CreateSound();
+
+	music.Open(Constants::Menu::Music);
 }
 
 void MenuState::Update(unsigned dt) {
@@ -47,33 +47,45 @@ void MenuState::Update(unsigned dt) {
 	if (popRequested) {
 		return;
 	}
+
 	quitRequested = in.QuitRequested();
 	if (quitRequested) {
 		return;
 	}
 
 	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
-		option = (option + 1) % 3; // 0 to 2
-		PositionCursor(option);
+		SelectedOption = (SelectedOption + 1) % MAX_OPTION;
+		sound->Play();
+	} else if (in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP)) {
+		SelectedOption--;
+		if (SelectedOption < 0) {
+			SelectedOption = MAX_OPTION - 1;
+		}
+		sound->Play();
+	} else if (in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_LEFT) || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_RIGHT)) {
+		SelectedOption = SelectedOption == Play ? History : Play;
+		sound->Play();
 	}
 
-	else if (in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP)) {
-		option = (option - 1 + 3) % 3; // 0 to 2
-		PositionCursor(option);
-	}
-
-	else if (in.GamepadPress(SDL_CONTROLLER_BUTTON_A, 0)) {
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_A)) {
 		auto game = Game::GetInstance();
 
-		options[option].lock()->GetComponent<Sound>()->Play();
+		sound->Open(Constants::Menu::ConfirmSound);
+		sound->Play();
 
-		if (option == 0) {
+		if (SelectedOption == 0) {
 			game->Push(new SelectPersonaState());
-		} else if (option == 1) {
+		} else if (SelectedOption == 1) {
 			game->Push(new StoryState());
-		} else {
+		} else if (SelectedOption == 2) {
 			game->Push(new CreditState());
+		} else {
+			quitRequested = true;
 		}
+	}
+
+	for (auto& sprite : OptionSprite) {
+		sprite.second->SetAnimation(sprite.first == SelectedOption ? 1 : 0);
 	}
 
 	UpdateArray(dt);
@@ -98,49 +110,39 @@ void MenuState::Pause() {
 
 void MenuState::Resume() {
 	Logger::Info("Resuming Title State");
-	if (option == 0) {
-		music.Stop(0);
-	}
+	music.Play();
 }
 
-GameObject* MenuState::CreateBackground() {
+void MenuState::CreateBackground() {
 	auto go = new GameObject();
 
 	go->AddComponent<Sprite>(Constants::Menu::Background);
 
-	// TODO: Remove when we have a better background image
 	go->box.width = Constants::Window::Width;
 	go->box.height = Constants::Window::Height;
+	go->GetComponent<Sprite>()->SetScale(2.0f, 2.0f);
 
 	go->box.vector.Reset();
 
-	return go;
+	(void)AddObject(go);
 }
 
-GameObject* MenuState::CreateOption(const std::string& message, Vec2 shift) {
-	const auto pos = Vec2 {
-		Constants::Window::Width / 2,
-		Constants::Window::Height / 4
-	};
-
-	const auto textAsset = "assets/font/Dark Crystal.ttf";
-
+void MenuState::CreateOption(int option, const SpriteSheetData* spriteSheetData, Vec2 position) {
 	auto go = new GameObject();
 
-	go->AddComponent<Text>(textAsset, Constants::Menu::TextSize, Text::TextStyle::BLENDED, message, Constants::Colors::Red);
-	go->AddComponent<Sound>(Constants::Menu::ConfirmSound);
-	go->box.SetCenter(pos + shift);
-	return go;
+	OptionSprite[option] = go->AddComponent<Sprite>(spriteSheetData);
+
+	go->box.width = Constants::Window::Width;
+	go->box.height = Constants::Window::Height;
+	go->GetComponent<Sprite>()->SetScale(2.0f, 2.0f);
+
+	go->box.SetCenter(position);
+
+	(void)AddObject(go);
 }
 
-void MenuState::PositionCursor(int position) {
-	if (auto ptr = cursor.lock()) {
-		const auto pos = Vec2 {
-			ptr->box.Center().x,
-			float(Constants::Window::Height / 4 + position * 75)
-		};
-
-		ptr->box.SetCenter(pos);
-		ptr->GetComponent<Sound>()->Play();
-	}
+void MenuState::CreateSound() {
+	auto go = new GameObject();
+	sound = go->AddComponent<Sound>(Constants::Menu::Sound);
+	(void)AddObject(go);
 }
