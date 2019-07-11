@@ -238,9 +238,9 @@ namespace Player {
 	};
 
 	const SpriteSheetData Charge (
-	    "assets/img/charge.png",
-	    1776,
-	    48,
+	    "assets/img/charge_spritesheet.png",
+	    2368,
+	    64,
 	    80,
 	    4,
 	    {
