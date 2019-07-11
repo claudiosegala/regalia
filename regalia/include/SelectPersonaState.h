@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <State.h>
 #include "Sprite.h"
@@ -27,7 +27,7 @@ private:
 	Constants::PersonaType previousPersona(Constants::PersonaType persona);
 
 	struct PersonaInfo {
-		bool isAvaiable;
+		bool isAvailable;
 		const SpriteSheetData* spriteSheetData;
 	};
 

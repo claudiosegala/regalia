@@ -76,11 +76,11 @@ void SelectPersonaState::Update(unsigned dt) {
 		if (personaConfirmed[i] && in.GamepadPress(SDL_CONTROLLER_BUTTON_B, i)) {
 
 			personaConfirmed[i] = false;
-			personas[currentPersona[i]].isAvaiable = true;
+			personas[currentPersona[i]].isAvailable = true;
 
 		} else if (!personaConfirmed[i]) {
 
-			if (!personas[currentPersona[i]].isAvaiable) {
+			if (!personas[currentPersona[i]].isAvailable) {
 
 				currentPersona[i] = nextPersona(currentPersona[i]);
 				players[i]->GetComponent<Sprite>()->Open(personas[currentPersona[i]].spriteSheetData);
@@ -88,7 +88,7 @@ void SelectPersonaState::Update(unsigned dt) {
 			} else if (in.GamepadPress(SDL_CONTROLLER_BUTTON_A, i)) {
 
 				personaConfirmed[i] = true;
-				personas[currentPersona[i]].isAvaiable = false;
+				personas[currentPersona[i]].isAvailable = false;
 
 			} else if (timers[i].Get() > 300) {
 				auto leftStickX = in.GamepadLeftStick(i).x;
@@ -96,7 +96,7 @@ void SelectPersonaState::Update(unsigned dt) {
 				if (leftStickX != 0) {
 					do {
 						currentPersona[i] = leftStickX > 0 ? nextPersona(currentPersona[i]) : previousPersona(currentPersona[i]);
-					} while (!personas[currentPersona[i]].isAvaiable);
+					} while (!personas[currentPersona[i]].isAvailable);
 
 					players[i]->GetComponent<Sprite>()->Open(personas[currentPersona[i]].spriteSheetData);
 					timers[i].Restart();
