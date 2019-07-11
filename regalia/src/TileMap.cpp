@@ -30,6 +30,7 @@ void TileMap::Load(const std::string& file) {
 	    >> mapHeight >> ignore
 	    >> mapDepth >> ignore;
 
+	// Read the initial positions on this tile map
 	for (int i = 0; i < 4; ++i) {
 		int x, y;
 
@@ -39,6 +40,9 @@ void TileMap::Load(const std::string& file) {
 		initialPositions[i].x = float(x * 24) - 12; // Start centralized at the tile x
 		initialPositions[i].y = float(y * 24);
 	}
+
+	// Randomize the initial positions
+	ShuffleArray(initialPositions, 4);
 
 	while (fileStream >> tileValue >> ignore) {
 		tileMatrix.push_back(tileValue);

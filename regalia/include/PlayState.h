@@ -34,7 +34,7 @@ private:
 
 	Music music;
 
-	TileMap* tileMap;
+	TileMap* tileMap = nullptr;
 
 	void CheckCollision();
 
