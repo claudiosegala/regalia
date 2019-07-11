@@ -62,13 +62,7 @@ void PlayState::Update(unsigned dt) {
 
 	// TODO: change to Player::counter == 1
 	if (player_count == 0) {
-		auto go = std::find_if(objectArray.begin(), objectArray.end(), [&](std::shared_ptr<GameObject>& ptr) {
-			return ptr != nullptr && ptr->GetComponent<Player>() != nullptr;
-		});
-
-		auto player = (*go)->GetComponent<Player>();
-	
-		GameData::Result[GameData::Set] = player->id;
+		GameData::Result[GameData::Set] = GetWinnerId();
 		GameData::Set++;
 		GameData::Finished = (GameData::Set == Constants::Game::Sets);
 		LoadScoreState();
@@ -198,6 +192,18 @@ const TileMapData& PlayState::GetTileMapData(int idx) {
 	auto& assets = Constants::Play::TileMaps;
 
 	return assets[idx % assets.size()];
+}
+
+const int PlayState::GetWinnerId() {
+	auto getPlayer = [&](std::shared_ptr<GameObject>& ptr) {
+		return ptr != nullptr && ptr->GetComponent<Player>() != nullptr;
+	};
+
+	auto go = std::find_if(objectArray.begin(), objectArray.end(), getPlayer);
+
+	auto player = (*go)->GetComponent<Player>();
+
+	return player->id;
 }
 
 void PlayState::LoadScoreState() {

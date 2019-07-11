@@ -52,5 +52,7 @@ private:
 
 	const TileMapData& GetTileMapData(int idx);
 
+	const int GetWinnerId();
+
 	void LoadScoreState();
 };
