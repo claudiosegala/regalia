@@ -14,7 +14,7 @@ public:
 
 	Sprite(GameObject& go, const std::string& file);
 
-	Sprite(GameObject& go, const SpriteSheetData* spriteSheetData);
+	Sprite(GameObject& go, const SpriteSheetData* spriteSheetData, int initialAnimationId = 0);
 
 	~Sprite();
 

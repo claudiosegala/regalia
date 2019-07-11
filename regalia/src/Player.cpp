@@ -89,19 +89,19 @@ void Player::Render() {
 void Player::LoadAssets() {
 	switch (personaType) {
 		case Constants::PersonaType::MISTER_N_RED:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterNRed);
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterNRed, Constants::Player::StartFallingAnimation);
 			break;
 
 		case Constants::PersonaType::MISTER_N_BLUE:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterNBlue);
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterNBlue, Constants::Player::StartFallingAnimation);
 			break;
 
 		case Constants::PersonaType::GOTICA_RED:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaRed);
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaRed, Constants::Player::StartFallingAnimation);
 			break;
 
 		case Constants::PersonaType::GOTICA_PURPLE:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaPurple);
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaPurple, Constants::Player::StartFallingAnimation);
 			break;
 
 		default:

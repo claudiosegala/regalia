@@ -42,6 +42,7 @@
     <ClCompile Include="src\StopWatch.cpp" />
     <ClCompile Include="src\SelectPersonaState.cpp" />
     <ClCompile Include="src\Charge.cpp" />
+    <ClCompile Include="src\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
@@ -85,6 +86,8 @@
     <ClInclude Include="include\GameTimer.h" />
     <ClInclude Include="include\StopWatch.h" />
     <ClInclude Include="include\SelectPersonaState.h" />
+    <ClInclude Include="include\Charge.h" />
+    <ClInclude Include="include\Util.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\img\mister_n_spritesheet.png" />

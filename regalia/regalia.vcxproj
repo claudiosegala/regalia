@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Charge.h" />
     <ClInclude Include="include\GameTimer.h" />
     <ClInclude Include="include\Bullet.h" />
     <ClInclude Include="include\Camera.h" />
@@ -173,6 +174,7 @@
     <ClInclude Include="include\TileSet.h" />
     <ClInclude Include="include\Interfaces.h" />
     <ClInclude Include="include\Timer.h" />
+    <ClInclude Include="include\Util.h" />
     <ClInclude Include="include\Vec2.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\ScoreState.h" />
@@ -182,6 +184,7 @@
     <ClInclude Include="include\SelectPersonaState.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\Charge.cpp" />
     <ClCompile Include="src\CollisionMap.cpp" />
     <ClCompile Include="src\GameTimer.cpp" />

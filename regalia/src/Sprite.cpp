@@ -12,9 +12,10 @@ Sprite::Sprite(GameObject& go, const std::string& file)
 	Open(file);
 }
 
-Sprite::Sprite(GameObject& go, const SpriteSheetData* spriteSheetData)
+Sprite::Sprite(GameObject& go, const SpriteSheetData* spriteSheetData, int initialAnimationId)
     : Component(go)
-    , spriteSheetData(spriteSheetData) {
+    , spriteSheetData(spriteSheetData)
+    , currentAnimationId(initialAnimationId) {
 
 	Open(spriteSheetData->file);
 
@@ -34,7 +35,6 @@ void Sprite::Open(const std::string& file) {
 	SetBox();
 }
 
-
 void Sprite::Open(const SpriteSheetData* _spriteSheetData) {
 	this->spriteSheetData = _spriteSheetData;
 
@@ -44,7 +44,6 @@ void Sprite::Open(const SpriteSheetData* _spriteSheetData) {
 
 	spriteSheetData->AssertSize(width, height);
 }
-
 
 void Sprite::SetClip(int x, int y, int w, int h) {
 	clipRect = { x, y, w, h };
