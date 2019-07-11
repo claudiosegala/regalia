@@ -135,22 +135,22 @@ void ScoreState::LoadScore() {
 			auto go = new GameObject();
 
 			switch (GameData::Personas[i]) {
-				case Constants::PersonaType::MISTER_N:
+				case Constants::PersonaType::MISTER_N_RED:
 					go->AddComponent<Sprite>(&Constants::Player::MisterNRed)->SetScale(3.0f, 3.0f);
 					break;
-				
-				case Constants::PersonaType::GOTICA:
-					go->AddComponent<Sprite>(&Constants::Player::Gotica)->SetScale(3.0f, 3.0f);
+
+				case Constants::PersonaType::MISTER_N_BLUE:
+					go->AddComponent<Sprite>(&Constants::Player::MisterNBlue)->SetScale(3.0f, 3.0f);
 					break;
 				
-				case Constants::PersonaType::MONGE:
-					go->AddComponent<Sprite>(&Constants::Player::Monge)->SetScale(3.0f, 3.0f);
+				case Constants::PersonaType::GOTICA_RED:
+					go->AddComponent<Sprite>(&Constants::Player::GoticaRed)->SetScale(3.0f, 3.0f);
 					break;
 
-				case Constants::PersonaType::ALQUIMISTA:
-					go->AddComponent<Sprite>(&Constants::Player::Alquimista)->SetScale(3.0f, 3.0f);
+				case Constants::PersonaType::GOTICA_PURPLE:
+					go->AddComponent<Sprite>(&Constants::Player::GoticaPurple)->SetScale(3.0f, 3.0f);
 					break;
-
+				
 				default:
 					throw std::runtime_error("Invalid persona type");
 			}

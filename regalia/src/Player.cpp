@@ -88,20 +88,20 @@ void Player::Render() {
 
 void Player::LoadAssets() {
 	switch (personaType) {
-		case Constants::PersonaType::MISTER_N:
+		case Constants::PersonaType::MISTER_N_RED:
 			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterNRed);
 			break;
 
-		case Constants::PersonaType::GOTICA:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::Gotica);
+		case Constants::PersonaType::MISTER_N_BLUE:
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterNBlue);
 			break;
 
-		case Constants::PersonaType::MONGE:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::Monge);
+		case Constants::PersonaType::GOTICA_RED:
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaRed);
 			break;
 
-		case Constants::PersonaType::ALQUIMISTA:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::Alquimista);
+		case Constants::PersonaType::GOTICA_PURPLE:
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaPurple);
 			break;
 
 		default:
@@ -218,20 +218,14 @@ void Player::LoadAndShoot() {
 		const SpriteSheetData* spriteSheetData;
 
 		switch (personaType) {
-			case Constants::PersonaType::MISTER_N:
+			case Constants::PersonaType::MISTER_N_RED:
+			case Constants::PersonaType::MISTER_N_BLUE:
 				spriteSheetData = &Constants::Bullet::MisterN;
 				break;
 
-			case Constants::PersonaType::GOTICA:
+			case Constants::PersonaType::GOTICA_RED:
+			case Constants::PersonaType::GOTICA_PURPLE:
 				spriteSheetData = &Constants::Bullet::Gotica;
-				break;
-
-			case Constants::PersonaType::ALQUIMISTA:
-				spriteSheetData = &Constants::Bullet::Alquimista;
-				break;
-
-			case Constants::PersonaType::MONGE:
-				spriteSheetData = &Constants::Bullet::Monge;
 				break;
 
 			default:
