@@ -89,7 +89,7 @@ void Player::Render() {
 void Player::LoadAssets() {
 	switch (personaType) {
 		case Constants::PersonaType::MISTER_N:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterN);
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterNRed);
 			break;
 
 		case Constants::PersonaType::GOTICA:

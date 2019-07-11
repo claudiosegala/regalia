@@ -136,7 +136,7 @@ void ScoreState::LoadScore() {
 
 			switch (GameData::Personas[i]) {
 				case Constants::PersonaType::MISTER_N:
-					go->AddComponent<Sprite>(&Constants::Player::MisterN)->SetScale(3.0f, 3.0f);
+					go->AddComponent<Sprite>(&Constants::Player::MisterNRed)->SetScale(3.0f, 3.0f);
 					break;
 				
 				case Constants::PersonaType::GOTICA:

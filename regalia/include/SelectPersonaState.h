@@ -32,10 +32,10 @@ private:
 	};
 
 	std::map<Constants::PersonaType, PersonaInfo> personas = {
-		{ Constants::PersonaType::MISTER_N, { true, &Constants::Player::MisterN } },
-		{ Constants::PersonaType::ALQUIMISTA, { true, &Constants::Player::Alquimista } },
+		{ Constants::PersonaType::MISTER_N, { true, &Constants::Player::MisterNRed } },
+		{ Constants::PersonaType::ALQUIMISTA, { true, &Constants::Player::MisterNBlue } },
+		{ Constants::PersonaType::MONGE, { true, &Constants::Player::MisterNPurple } },
 		{ Constants::PersonaType::GOTICA, { true, &Constants::Player::Gotica } },
-		{ Constants::PersonaType::MONGE, { true, &Constants::Player::Monge } }
 	};
 
 	std::vector<bool> personaConfirmed;

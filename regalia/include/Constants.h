@@ -273,8 +273,71 @@ namespace Player {
 
 	const Vec2 ArrowDistance = Vec2(50, 0);
 
-	const SpriteSheetData MisterN(
-	    "assets/img/mister_n_spritesheet.png",
+	const SpriteSheetData MisterNRed(
+	    "assets/img/spritesheets/mister_n_spritesheet_0.png",
+	    2448,
+	    48,
+	    100,
+	    TOTAL_ANIMATION_STATES,
+	    {
+	        { IdleAnimation, 6 },
+	        { RunningAnimation, 6 },
+	        { JumpingAnimation, 2 },
+	        { StartFallingAnimation, 1 },
+	        { FallingAnimation, 2 },
+	        { SlidingAnimation, 2 },
+	        { ShootingUpAnimation, 4 },
+	        { ShootingDiagUpAnimation, 4 },
+	        { ShootingHorizontalAnimation, 4 },
+	        { ShootingDiagDownAnimation, 4 },
+	        { ShootingDownAnimation, 4 },
+	        { DyingAnimation, 12 },
+	    });
+
+	const SpriteSheetData MisterNBlue(
+	    "assets/img/spritesheets/mister_n_spritesheet_1.png",
+	    2448,
+	    48,
+	    100,
+	    TOTAL_ANIMATION_STATES,
+	    {
+	        { IdleAnimation, 6 },
+	        { RunningAnimation, 6 },
+	        { JumpingAnimation, 2 },
+	        { StartFallingAnimation, 1 },
+	        { FallingAnimation, 2 },
+	        { SlidingAnimation, 2 },
+	        { ShootingUpAnimation, 4 },
+	        { ShootingDiagUpAnimation, 4 },
+	        { ShootingHorizontalAnimation, 4 },
+	        { ShootingDiagDownAnimation, 4 },
+	        { ShootingDownAnimation, 4 },
+	        { DyingAnimation, 12 },
+	    });
+
+	const SpriteSheetData MisterNPurple(
+	    "assets/img/spritesheets/mister_n_spritesheet_2.png",
+	    2448,
+	    48,
+	    100,
+	    TOTAL_ANIMATION_STATES,
+	    {
+	        { IdleAnimation, 6 },
+	        { RunningAnimation, 6 },
+	        { JumpingAnimation, 2 },
+	        { StartFallingAnimation, 1 },
+	        { FallingAnimation, 2 },
+	        { SlidingAnimation, 2 },
+	        { ShootingUpAnimation, 4 },
+	        { ShootingDiagUpAnimation, 4 },
+	        { ShootingHorizontalAnimation, 4 },
+	        { ShootingDiagDownAnimation, 4 },
+	        { ShootingDownAnimation, 4 },
+	        { DyingAnimation, 12 },
+	    });
+
+	const SpriteSheetData MisterNBrown(
+	    "assets/img/spritesheets/mister_n_spritesheet_3.png",
 	    2448,
 	    48,
 	    100,
