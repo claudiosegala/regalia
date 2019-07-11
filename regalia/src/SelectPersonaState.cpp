@@ -30,11 +30,11 @@ void SelectPersonaState::LoadAssets() {
 
 	for (int i = 0; i < GameData::NumPlayers; ++i) {
 		personaConfirmed.push_back(false);
-		currentPersona.push_back(Constants::PersonaType::MISTER_N);
+		currentPersona.push_back(Constants::PersonaType::MISTER_N_RED);
 		timers.push_back(Timer());
 
 		auto playerGo = new GameObject();
-		auto sprite = playerGo->AddComponent<Sprite>(personas[Constants::PersonaType::MISTER_N].spriteSheetData);
+		auto sprite = playerGo->AddComponent<Sprite>(personas[Constants::PersonaType::MISTER_N_RED].spriteSheetData);
 		sprite->SetScale(3.0f, 3.0f);
 		playerGo->box.SetCenter(positions[i]);
 		(void)AddObject(playerGo);

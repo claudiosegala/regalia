@@ -10,10 +10,10 @@ namespace Constants {
 const int NumberOfComponentsTypes = 32;
 
 enum class PersonaType {
-	MISTER_N = 0,
-	GOTICA,
-	MONGE,
-	ALQUIMISTA,
+	MISTER_N_RED = 0,
+	MISTER_N_BLUE,
+	GOTICA_PURPLE,
+	GOTICA_RED,
 	MAX_VALUE
 };
 
@@ -274,7 +274,7 @@ namespace Player {
 	const Vec2 ArrowDistance = Vec2(50, 0);
 
 	const SpriteSheetData MisterNRed(
-	    "assets/img/spritesheets/mister_n_spritesheet_0.png",
+	    "assets/img/spritesheets/mister_n_spritesheet_red.png",
 	    2448,
 	    48,
 	    100,
@@ -295,7 +295,7 @@ namespace Player {
 	    });
 
 	const SpriteSheetData MisterNBlue(
-	    "assets/img/spritesheets/mister_n_spritesheet_1.png",
+	    "assets/img/spritesheets/mister_n_spritesheet_blue.png",
 	    2448,
 	    48,
 	    100,
@@ -315,50 +315,8 @@ namespace Player {
 	        { DyingAnimation, 12 },
 	    });
 
-	const SpriteSheetData MisterNPurple(
-	    "assets/img/spritesheets/mister_n_spritesheet_2.png",
-	    2448,
-	    48,
-	    100,
-	    TOTAL_ANIMATION_STATES,
-	    {
-	        { IdleAnimation, 6 },
-	        { RunningAnimation, 6 },
-	        { JumpingAnimation, 2 },
-	        { StartFallingAnimation, 1 },
-	        { FallingAnimation, 2 },
-	        { SlidingAnimation, 2 },
-	        { ShootingUpAnimation, 4 },
-	        { ShootingDiagUpAnimation, 4 },
-	        { ShootingHorizontalAnimation, 4 },
-	        { ShootingDiagDownAnimation, 4 },
-	        { ShootingDownAnimation, 4 },
-	        { DyingAnimation, 12 },
-	    });
-
-	const SpriteSheetData MisterNBrown(
-	    "assets/img/spritesheets/mister_n_spritesheet_3.png",
-	    2448,
-	    48,
-	    100,
-	    TOTAL_ANIMATION_STATES,
-	    {
-	        { IdleAnimation, 6 },
-	        { RunningAnimation, 6 },
-	        { JumpingAnimation, 2 },
-	        { StartFallingAnimation, 1 },
-	        { FallingAnimation, 2 },
-	        { SlidingAnimation, 2 },
-	        { ShootingUpAnimation, 4 },
-	        { ShootingDiagUpAnimation, 4 },
-	        { ShootingHorizontalAnimation, 4 },
-	        { ShootingDiagDownAnimation, 4 },
-	        { ShootingDownAnimation, 4 },
-	        { DyingAnimation, 12 },
-	    });
-
-	const SpriteSheetData Gotica(
-	    "assets/img/gotica_spritesheet.png",
+	const SpriteSheetData GoticaPurple(
+	    "assets/img/spritesheets/goth_spritesheet_purple.png",
 	    2640,
 	    48,
 	    100,
@@ -378,9 +336,9 @@ namespace Player {
 	        { DyingAnimation, 11 },
 	    });
 
-	const SpriteSheetData Monge(
-	    "assets/img/monge_spritesheet.png",
-	    2448,
+	const SpriteSheetData GoticaRed(
+	    "assets/img/spritesheets/goth_spritesheet_red.png",
+	    2640,
 	    48,
 	    100,
 	    TOTAL_ANIMATION_STATES,
@@ -391,33 +349,12 @@ namespace Player {
 	        { StartFallingAnimation, 1 },
 	        { FallingAnimation, 2 },
 	        { SlidingAnimation, 2 },
-	        { ShootingUpAnimation, 4 },
-	        { ShootingDiagUpAnimation, 4 },
-	        { ShootingHorizontalAnimation, 4 },
-	        { ShootingDiagDownAnimation, 4 },
-	        { ShootingDownAnimation, 4 },
-	        { DyingAnimation, 12 },
-	    });
-
-	const SpriteSheetData Alquimista(
-	    "assets/img/alquimista_spritesheet.png",
-	    2448,
-	    48,
-	    100,
-	    TOTAL_ANIMATION_STATES,
-	    {
-	        { IdleAnimation, 6 },
-	        { RunningAnimation, 6 },
-	        { JumpingAnimation, 2 },
-	        { StartFallingAnimation, 1 },
-	        { FallingAnimation, 2 },
-	        { SlidingAnimation, 2 },
-	        { ShootingUpAnimation, 4 },
-	        { ShootingDiagUpAnimation, 4 },
-	        { ShootingHorizontalAnimation, 4 },
-	        { ShootingDiagDownAnimation, 4 },
-	        { ShootingDownAnimation, 4 },
-	        { DyingAnimation, 12 },
+	        { ShootingUpAnimation, 5 },
+	        { ShootingDiagUpAnimation, 5 },
+	        { ShootingHorizontalAnimation, 5 },
+	        { ShootingDiagDownAnimation, 5 },
+	        { ShootingDownAnimation, 5 },
+	        { DyingAnimation, 11 },
 	    });
 
 }

@@ -88,20 +88,20 @@ void Player::Render() {
 
 void Player::LoadAssets() {
 	switch (personaType) {
-		case Constants::PersonaType::MISTER_N:
+		case Constants::PersonaType::MISTER_N_RED:
 			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterNRed, Constants::Player::StartFallingAnimation);
 			break;
 
-		case Constants::PersonaType::GOTICA:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::Gotica, Constants::Player::StartFallingAnimation);
+		case Constants::PersonaType::MISTER_N_BLUE:
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterNBlue, Constants::Player::StartFallingAnimation);
 			break;
 
-		case Constants::PersonaType::MONGE:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::Monge, Constants::Player::StartFallingAnimation);
+		case Constants::PersonaType::GOTICA_RED:
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaRed, Constants::Player::StartFallingAnimation);
 			break;
 
-		case Constants::PersonaType::ALQUIMISTA:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::Alquimista, Constants::Player::StartFallingAnimation);
+		case Constants::PersonaType::GOTICA_PURPLE:
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaPurple, Constants::Player::StartFallingAnimation);
 			break;
 
 		default:
@@ -218,20 +218,14 @@ void Player::LoadAndShoot() {
 		const SpriteSheetData* spriteSheetData;
 
 		switch (personaType) {
-			case Constants::PersonaType::MISTER_N:
+			case Constants::PersonaType::MISTER_N_RED:
+			case Constants::PersonaType::MISTER_N_BLUE:
 				spriteSheetData = &Constants::Bullet::MisterN;
 				break;
 
-			case Constants::PersonaType::GOTICA:
+			case Constants::PersonaType::GOTICA_RED:
+			case Constants::PersonaType::GOTICA_PURPLE:
 				spriteSheetData = &Constants::Bullet::Gotica;
-				break;
-
-			case Constants::PersonaType::ALQUIMISTA:
-				spriteSheetData = &Constants::Bullet::Alquimista;
-				break;
-
-			case Constants::PersonaType::MONGE:
-				spriteSheetData = &Constants::Bullet::Monge;
 				break;
 
 			default:
