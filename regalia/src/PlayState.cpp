@@ -60,8 +60,15 @@ void PlayState::Update(unsigned dt) {
 
 	GameData::CurrentRoundTimer.Update(dt);
 
-	// TODO: change to Player::counter < 2
+	// TODO: change to Player::counter == 1
 	if (player_count == 0) {
+		auto go = std::find_if(objectArray.begin(), objectArray.end(), [&](std::shared_ptr<GameObject>& ptr) {
+			return ptr != nullptr && ptr->GetComponent<Player>() != nullptr;
+		});
+
+		auto player = (*go)->GetComponent<Player>();
+	
+		GameData::Result[GameData::Set] = player->id;
 		GameData::Set++;
 		GameData::Finished = (GameData::Set == Constants::Game::Sets);
 		LoadScoreState();
