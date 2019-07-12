@@ -324,13 +324,13 @@ namespace Play {
 	const std::vector<BackgroundAnimationData> CatacombsBackground = {
 		{ // Background
 		    new SpriteSheetData(
-		        "assets/img/backgrounds/catacombs_02.png",
-		        960,
+		        "assets/img/backgrounds/catacumba_4frames_200ms.png",
+		        3840,
 		        528,
-		        300,
+		        200,
 		        1,
 		        {
-		            { 0, 1 },
+		            { 0, 4 },
 		        }),
 		    { 0, 0 },
 		    {} },
