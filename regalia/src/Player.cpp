@@ -322,7 +322,7 @@ void Player::UpdateSpeed(unsigned long dt) {
 		}
 	}
 
-	speed.Limit(Constants::Game::MaxVelocity);
+	speed.Limit(Constants::Player::MaxVelocity);
 }
 
 void Player::MoveAndSlide(unsigned long dt) {

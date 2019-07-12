@@ -31,10 +31,9 @@ namespace Game {
 	const int Sets = 9;
 	const bool FriendlyFire = false;
 	const float SetLength = 45.0f;
-	const Vec2 MaxVelocity = { 100.0f, 1000.0f };
-	const float Gravity = 500.0f;
-	const float LongJumpGravity = 350.0f;
-	const int MillisecondsPerRound = 10000;
+	const float Gravity = 700.0f;
+	const float LongJumpGravity = 420.0f;
+	const int MillisecondsPerRound = 45000;
 	const int MinNumPlayers = 1; // TODO: change to 2
 	const std::string Font = "assets/font/Dark Crystal.ttf";
 }
@@ -170,11 +169,9 @@ namespace Play {
 }
 
 namespace Bullet {
-	const float LevelSpeed[] = { 100, 200, 300 };
+	const float LevelSpeed[] = { 200, 400, 600 };
 
 	const int DefaultDamage = 50;
-
-	const float DefaultSpeed = 350.0f;
 
 	const float DefaultMaxDistance = 400.0f;
 
@@ -298,11 +295,13 @@ namespace Player {
 
 	const float LateralForce = 450.0f;
 
-	const float SpeedMultiplier = 100.0f;
+	const float SpeedMultiplier = 120.0f;
+
+	const Vec2 MaxVelocity = { SpeedMultiplier, 1000.0f };
 
 	const float JumpSpeed = -300.0f;
 
-	const float WallJumpSpeed = -450.0f;
+	const float WallJumpSpeed = -350.0f;
 
 	const int Hp = 50;
 
