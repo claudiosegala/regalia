@@ -357,14 +357,24 @@ namespace Bullet {
 
 	const float Size = 16.0f;
 
-	const SpriteSheetData MisterN(
-	    "assets/img/mister_n_bullet_spritesheet.png",
-	    64,
+	const SpriteSheetData MisterNRed(
+	    "assets/img/spritesheets/wand_red.png",
+	    128,
 	    16,
 	    100,
 	    1,
 	    {
-	        { 0, 4 },
+	        { 0, 8 },
+	    });
+
+	const SpriteSheetData MisterNBlue(
+	    "assets/img/spritesheets/wand_blue.png",
+	    128,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 8 },
 	    });
 
 	const SpriteSheetData GoticaPurple(
