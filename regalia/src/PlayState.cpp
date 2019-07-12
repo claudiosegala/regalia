@@ -110,32 +110,32 @@ void PlayState::CreateField() {
 
 	// Background
 	go = new GameObject();
-	go->AddComponent<Sprite>(&Constants::Play::CityBackground::Background);
-	go->box.vector = Vec2(0, 0);
+	go->AddComponent<Sprite>(Constants::Play::CityBackground::Background.SpriteSheet);
+	go->box.vector = Constants::Play::CityBackground::Background.InitialPosition;
 	(void)AddObject(go);
 
 	// Cars 1
 	go = new GameObject();
-	go->AddComponent<Sprite>(&Constants::Play::CityBackground::Cars1);
-	go->box.vector = { 162, 270 };
+	go->AddComponent<Sprite>(Constants::Play::CityBackground::Cars1.SpriteSheet);
+	go->box.vector = Constants::Play::CityBackground::Cars1.InitialPosition;
 	(void)AddObject(go);
 
 	// Cars 2
 	go = new GameObject();
-	go->AddComponent<Sprite>(&Constants::Play::CityBackground::Cars2);
-	go->box.vector = { 162, 270 };
+	go->AddComponent<Sprite>(Constants::Play::CityBackground::Cars2.SpriteSheet);
+	go->box.vector = Constants::Play::CityBackground::Cars2.InitialPosition;
 	(void)AddObject(go);
 
 	// Crane
 	go = new GameObject();
-	go->AddComponent<Sprite>(&Constants::Play::CityBackground::Crane);
-	go->box.vector = { 305, 161 };
+	go->AddComponent<Sprite>(Constants::Play::CityBackground::Crane.SpriteSheet);
+	go->box.vector = Constants::Play::CityBackground::Crane.InitialPosition;
 	(void)AddObject(go);
 
 	// Subway
 	go = new GameObject();
-	go->AddComponent<Sprite>(&Constants::Play::CityBackground::Subway);
-	go->box.vector = { 252, 371 };
+	go->AddComponent<Sprite>(Constants::Play::CityBackground::Subway.SpriteSheet);
+	go->box.vector = Constants::Play::CityBackground::Subway.InitialPosition;
 	(void)AddObject(go);
 
 	go = new GameObject();
