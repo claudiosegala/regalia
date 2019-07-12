@@ -11,7 +11,6 @@
 CreditState::CreditState() {
 	Logger::Info("Initializing Credit State");
 
-	//music.Open(Constants::Credit::Music);
 	LoadAssets();
 }
 

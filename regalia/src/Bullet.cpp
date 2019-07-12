@@ -34,7 +34,7 @@ Bullet::Bullet(GameObject& go, BulletData& data, PlayState* play_state)
 }
 
 void Bullet::Update(unsigned dt) {
-	if (level <= 0 || play_state->alive_player_count == 1) {
+	if (level <= 0/* || play_state->alive_player_count == 1*/) {
 		Die();
 		return;
 	}
