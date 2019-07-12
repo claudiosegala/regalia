@@ -136,9 +136,12 @@ void SelectPersonaState::Update(unsigned dt) {
 			} else if (timers[i].Get() > 300) {
 				auto leftStickX = in.GamepadLeftStick(i).x;
 
-				if (leftStickX != 0) {
+				auto selectNext = leftStickX > 0 || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+				auto selectPrevious = leftStickX < 0 || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+
+				if (selectNext || selectPrevious) {
 					do {
-						currentPersona[i] = leftStickX > 0 ? nextPersona(currentPersona[i]) : previousPersona(currentPersona[i]);
+						currentPersona[i] = selectNext ? nextPersona(currentPersona[i]) : previousPersona(currentPersona[i]);
 					} while (!personas[currentPersona[i]].isAvailable);
 
 					players[i]->GetComponent<Sprite>()->Open(personas[currentPersona[i]].spriteSheetData);
