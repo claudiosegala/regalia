@@ -7,10 +7,12 @@
 #include <Sprite.h>
 #include "GameData.h"
 #include "Sound.h"
+#include "PlayState.h"
 
-Bullet::Bullet(GameObject& go, BulletData& data)
+Bullet::Bullet(GameObject& go, BulletData& data, PlayState* play_state)
     : Component(go)
     , shooterId(data.shooterId)
+    , play_state(play_state)
     , damage(data.damage)
     , level(data.level) {
 
@@ -32,8 +34,8 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 }
 
 void Bullet::Update(unsigned dt) {
-	if (level <= 0) {
-		associated.RequestDelete();
+	if (level <= 0 || play_state->alive_player_count == 1) {
+		Die();
 		return;
 	}
 
@@ -97,4 +99,8 @@ void Bullet::MoveAndBounce(unsigned dt) {
 	}
 
 	associated.box += box.vector - startingPosition;
+}
+
+void Bullet::Die() {
+	associated.RequestDelete();
 }

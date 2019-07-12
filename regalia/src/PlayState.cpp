@@ -175,7 +175,7 @@ void PlayState::CreatePlayer(Constants::PersonaType persona) {
 	alive_player_count++;
 
 	auto go = new GameObject();
-	go->AddComponent<Player>(playerId, persona, tileMap->GetPlayerInitialPosition(playerId));
+	go->AddComponent<Player>(playerId, persona, tileMap->GetPlayerInitialPosition(playerId), this);
 	auto player = AddObject(go);
 
 	go = new GameObject();

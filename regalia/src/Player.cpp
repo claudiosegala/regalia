@@ -12,9 +12,10 @@
 #include <Charge.h>
 #include <PlayState.h>
 
-Player::Player(GameObject& go, int id, Constants::PersonaType persona, Vec2 initialPosition)
+Player::Player(GameObject& go, int id, Constants::PersonaType persona, Vec2 initialPosition, PlayState* play_state)
     : Component(go)
     , id(id)
+    , play_state(play_state)
     , personaType(persona) {
 
 	associated.box.SetCenter(initialPosition);
@@ -29,9 +30,8 @@ Player::Player(GameObject& go, int id, Constants::PersonaType persona, Vec2 init
 }
 
 Player::~Player() {
-	const auto state = dynamic_cast<PlayState*>(Game::GetInstance()->GetCurrentState());
-	if (state != nullptr) {
-		state->player_count--;
+	if (play_state != nullptr) {
+		play_state->player_count--;
 	}
 }
 
@@ -40,6 +40,10 @@ void Player::Start() {
 }
 
 void Player::NotifyCollision(GameObject& go) {
+	if (play_state != nullptr && play_state->alive_player_count == 1) {
+		return; // Don't die when you're the only one left alive
+	}
+
 	auto bullet = go.GetComponent<Bullet>();
 
 	if (bullet == nullptr || (bullet->shooterId == id && !Constants::Game::FriendlyFire)) {
@@ -354,13 +358,18 @@ void Player::MoveAndSlide(unsigned long dt) {
 
 void Player::Die() {
 	playerState |= IsDying;
+
+	if (play_state != nullptr) {
+		play_state->alive_player_count--;
+	}
+
 	associated.GetComponent<Sprite>()->RunAnimation(Constants::Player::DyingAnimation, [&]() { associated.RequestDelete(); });
 }
 
 void Player::CreateBullet(BulletData data) {
 	auto go = new GameObject();
 	
-	(void)go->AddComponent<Bullet>(data);
+	(void)go->AddComponent<Bullet>(data, play_state);
 
 	go->box.SetCenter(associated.box.Center());
 	go->angle = bulletAngle;
