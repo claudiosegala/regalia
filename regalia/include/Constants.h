@@ -35,7 +35,7 @@ namespace Game {
 	const float Gravity = 600.0f;
 	const float LongJumpGravity = 420.0f;
 	const int MillisecondsPerRound = 45000;
-	const int MinNumPlayers = 1; // TODO: change to 2
+	const int MinNumPlayers = 2; // TODO: change to 2
 	const int MaxNumPlayers = 4;
 	const int VictoriesToWin = 3;
 	const std::string Font = "assets/font/Dark Crystal.ttf";
