@@ -6,13 +6,13 @@ public:
 	static const float Tao;
 	static const float Eps;
 
-	static bool Zero(float x);
+	static const bool Zero(float x);
 
-	static bool Equal(float x, float y);
+	static const bool Equal(float x, float y);
 
-	static void InitRand();
+	static const void InitRand();
 
-	static int Rand();
+	static const int Rand();
 
-	static float FRand();
+	static const float FRand();
 };
