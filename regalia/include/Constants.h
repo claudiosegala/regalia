@@ -153,7 +153,7 @@ namespace Book {
 }
 
 namespace SelectPersona {
-	const std::string Title = "assets/img/score/chapter_title.png";
+	const std::string Title = "assets/img/select/select_title.png";
 }
 
 namespace Countdown {

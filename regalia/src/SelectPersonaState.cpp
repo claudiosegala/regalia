@@ -37,7 +37,7 @@ void SelectPersonaState::LoadAssets() {
 
 	auto chapter = new GameObject();
 	chapter->AddComponent<Sprite>(Constants::SelectPersona::Title)->SetScale(2, 2);
-	chapter->box.vector = Vec2(175, 75);
+	chapter->box.vector = Vec2(202, 70);
 	(void)AddObject(chapter);
 
 	auto chapterNumber = new GameObject();
