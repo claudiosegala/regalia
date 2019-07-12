@@ -28,7 +28,7 @@ namespace Window {
 }
 
 namespace Game {
-	const int Sets = 5;
+	const int Sets = 9;
 	const bool FriendlyFire = false;
 	const float SetLength = 45.0f;
 	const Vec2 MaxVelocity = { 100.0f, 1000.0f };
