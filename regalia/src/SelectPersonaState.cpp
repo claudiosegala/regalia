@@ -14,13 +14,13 @@ SelectPersonaState::SelectPersonaState() {
 
 	GameData::NumPlayers = std::min(in.NumberOfControllers(), Constants::Game::MaxNumPlayers);
 
-	if (GameData::NumPlayers < Constants::Game::MinNumPlayers) {
-		throw new std::runtime_error("You need more players to play this game!");
-	}
+	//if (GameData::NumPlayers < Constants::Game::MinNumPlayers) {
+	//	throw new std::runtime_error("You need more players to play this game!");
+	//}
 
-	if (GameData::NumPlayers > Constants::Game::MaxNumPlayers) {
-		throw new std::runtime_error("You need less players to play this game!");
-	}
+	//if (GameData::NumPlayers > Constants::Game::MaxNumPlayers) {
+	//	throw new std::runtime_error("You need less players to play this game!");
+	//}
 
 	LoadAssets();
 }
