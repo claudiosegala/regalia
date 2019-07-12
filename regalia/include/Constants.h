@@ -432,7 +432,7 @@ namespace Bullet {
 	    true);
 
 	const SpriteSheetData GoticaGreenExplosion(
-	    "assets/img/spritesheetsExplosion/gotica_explosao_verde.png",
+	    "assets/img/spritesheets/gotica_explosao_verde.png",
 	    128,
 	    16,
 	    100,
