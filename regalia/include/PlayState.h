@@ -38,8 +38,6 @@ private:
 
 	TileMap* tileMap = nullptr;
 
-	void CheckCollision();
-
 	void CreateField();
 
 	void CreatePlayers();
@@ -48,11 +46,19 @@ private:
 
 	void CreateGameTimer();
 
+	const void CheckCollision();
+
 	const BackgroundData& GetBackgroundData(int idx);
 
 	const TileSetData& GetTileSetData(int idx);
 
 	const TileMapData& GetTileMapData(int idx);
 
-	void LoadScoreState();
+	const int GetWinnerId();
+
+	const void PauseSet();
+
+	const void EndSet();
+
+	const void LoadScoreState();
 };
