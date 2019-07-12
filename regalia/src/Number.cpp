@@ -21,6 +21,18 @@ const int Number::Rand() {
 	return rand();
 }
 
+const int Number::RandRange(int lower, int upper) {
+	if (upper == lower) {
+		return upper;
+	}
+	assert(upper > lower);
+	return lower + Rand() % (upper - lower);
+}
+
+const int Number::RandRange(std::pair<int, int> range) {
+	return RandRange(range.first, range.second);
+}
+
 const float Number::FRand() {
 	return float(rand()) / float(RAND_MAX); // 0.0 to 1.0
 }

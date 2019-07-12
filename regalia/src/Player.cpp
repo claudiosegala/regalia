@@ -120,6 +120,10 @@ void Player::LoadAssets() {
 void Player::UpdateAnimationState() {
 	using namespace Constants::Player;
 
+	if (InputManager::GetInstance().GamepadPress(SDL_CONTROLLER_BUTTON_BACK)) {
+		associated.GetComponent<Sprite>()->RunAnimation(Constants::Player::AnimationState::DyingAnimation, []() { W("Morreu"); }, 5);
+	}
+
 	Sprite::Direction nextDirX;
 	AnimationState nextAnimation;
 	unsigned nextAnimationHoldTime = 0;

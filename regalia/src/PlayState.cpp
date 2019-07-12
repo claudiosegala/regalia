@@ -18,6 +18,7 @@
 #include <PlayerAim.h>
 #include <CountdownState.h>
 #include "GameTimer.h"
+#include "BackgroundAnimator.h"
 
 PlayState::PlayState() {
 	Logger::Info("Initializing Play State");
@@ -110,8 +111,7 @@ void PlayState::CreateField() {
 
 	for (auto&& bgData : Constants::Play::CityBackground) {
 		go = new GameObject();
-		go->AddComponent<Sprite>(bgData.SpriteSheet);
-		go->box.vector = bgData.InitialPosition;
+		go->AddComponent<BackgroundAnimator>(bgData);
 		(void)AddObject(go);
 	}
 

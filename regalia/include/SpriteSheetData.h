@@ -4,15 +4,14 @@
 
 class SpriteSheetData {
 public:
-
 	std::string file;
-	
+
 	unsigned frameTime;
-	
+
 	bool selfDestruct;
-	
+
 	SpriteSheetData(const std::string& file, int imageWidth, int imageHeight, unsigned frameTime, int totalAnimations, const std::map<int, int>& animationsFrames, bool selfDestruct = false);
-	
+
 	SpriteSheetData(const SpriteSheetData& other) = delete;
 
 	inline SDL_Rect GetAnimationRect(int animationId, int frame) const {
@@ -44,6 +43,10 @@ public:
 		UNUSED(width);
 		UNUSED(height);
 	};
+
+	inline unsigned GetAnimationTime(int animationId) const {
+		return GetNumberOfFrames(animationId) * frameTime;
+	}
 
 private:
 	std::vector<std::vector<SDL_Rect>> animationsRect;

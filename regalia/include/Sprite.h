@@ -35,7 +35,7 @@ public:
 	void SetAnimationDirX(Direction dirX);
 
 	// Run the selected animation once, then calls the callback function
-	void RunAnimation(int animationId, std::function<void()> callback = nullptr);
+	void RunAnimation(int animationId, std::function<void()> callback = nullptr, int times = 1);
 
 	Vec2 GetScale() const;
 
@@ -68,6 +68,8 @@ private:
 	const SpriteSheetData* spriteSheetData = nullptr;
 
 	int animationOnce = -1;
+
+	int animationTimes = 0;
 
 	std::function<void()> animationFinishedCallback = nullptr;
 

@@ -44,6 +44,7 @@
     <ClCompile Include="src\Charge.cpp" />
     <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\BackgroundAnimationData.cpp" />
+    <ClCompile Include="src\BackgroundAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="include\Charge.h" />
     <ClInclude Include="include\Util.h" />
     <ClInclude Include="include\BackgroundAnimationData.h" />
+    <ClInclude Include="include\BackgroundAnimator.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\img\mister_n_spritesheet.png" />

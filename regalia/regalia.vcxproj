@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\BackgroundAnimationData.h" />
+    <ClInclude Include="include\BackgroundAnimator.h" />
     <ClInclude Include="include\Charge.h" />
     <ClInclude Include="include\GameTimer.h" />
     <ClInclude Include="include\Bullet.h" />
@@ -186,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BackgroundAnimationData.cpp" />
+    <ClCompile Include="src\BackgroundAnimator.cpp" />
     <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\Charge.cpp" />
     <ClCompile Include="src\CollisionMap.cpp" />

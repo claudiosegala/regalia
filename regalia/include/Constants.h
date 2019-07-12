@@ -30,7 +30,7 @@ namespace Window {
 
 namespace Game {
 	const int Sets = 9;
-	const bool FriendlyFire = false;
+	const bool FriendlyFire = true;
 	const float SetLength = 45.0f;
 	const float Gravity = 600.0f;
 	const float LongJumpGravity = 420.0f;
@@ -218,7 +218,7 @@ namespace Play {
 		            { 0, 4 },
 		        }),
 		    { 0, 0 },
-		    {} },
+		    {{1, 1}} },
 		{ // Subway
 		    new SpriteSheetData(
 		        "assets/img/backgrounds/cidade_metro_100ms_252_371.png",
@@ -229,43 +229,43 @@ namespace Play {
 		        { { 0, 11 },
 		            { 1, 1 } }),
 		    { 252, 371 },
-		    {} },
-		{ // Crane
-		    new SpriteSheetData(
-		        "assets/img/backgrounds/cidade_gindaste_200ms_305_161.png",
-		        360,
-		        27,
-		        200,
-		        1,
-		        {
-		            { 0, 10 },
-		        }),
-		    { 305, 161 },
-		    {} },
-		{ // Cars 1
-		    new SpriteSheetData(
-		        "assets/img/backgrounds/cidade_carros1_150ms_162_270.png",
-		        623,
-		        4,
-		        150,
-		        1,
-		        {
-		            { 0, 7 },
-		        }),
-		    { 162, 270 },
-		    {} },
-		{ // Cars 2
-		    new SpriteSheetData(
-		        "assets/img/backgrounds/cidade_carros2_150ms_162_270.png",
-		        979,
-		        4,
-		        150,
-		        1,
-		        {
-		            { 0, 11 },
-		        }),
-		    { 162, 270 },
-		    {} }
+		    {{1, 1}, {5, 15}} },
+		//{ // Crane
+		//    new SpriteSheetData(
+		//        "assets/img/backgrounds/cidade_gindaste_200ms_305_161.png",
+		//        360,
+		//        27,
+		//        200,
+		//        1,
+		//        {
+		//            { 0, 10 },
+		//        }),
+		//    { 305, 161 },
+		//    {{1, 1}} },
+		//{ // Cars 1
+		//    new SpriteSheetData(
+		//        "assets/img/backgrounds/cidade_carros1_150ms_162_270.png",
+		//        623,
+		//        4,
+		//        150,
+		//        1,
+		//        {
+		//            { 0, 7 },
+		//        }),
+		//    { 162, 270 },
+		//    {{1, 1}} },
+		//{ // Cars 2
+		//    new SpriteSheetData(
+		//        "assets/img/backgrounds/cidade_carros2_150ms_162_270.png",
+		//        979,
+		//        4,
+		//        150,
+		//        1,
+		//        {
+		//            { 0, 11 },
+		//        }),
+		//    { 162, 270 },
+		//    {{1, 1}} }
 	};
 
 	const std::vector<BackgroundData> Backgrounds = {

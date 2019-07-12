@@ -98,9 +98,10 @@ void Sprite::SetAnimationDirX(Direction dirX) {
 	} // else keep previous direction
 }
 
-void Sprite::RunAnimation(int animationId, std::function<void()> callback) {
+void Sprite::RunAnimation(int animationId, std::function<void()> callback, int times) {
 	animationOnce = animationId;
 	animationFinishedCallback = std::move(callback);
+	animationTimes = times;
 }
 
 Vec2 Sprite::GetScale() const {
@@ -131,7 +132,7 @@ void Sprite::Update(unsigned dt) {
 
 		currentFrame = (currentFrame + 1) % frameCount;
 
-		if (currentFrame == 0 && animationFinishedCallback != nullptr) {
+		if (currentFrame == 0 && --animationTimes == 0 && animationFinishedCallback != nullptr) {
 			animationFinishedCallback();
 			animationFinishedCallback = nullptr;
 		}

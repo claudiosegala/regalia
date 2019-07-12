@@ -14,5 +14,9 @@ public:
 
 	static const int Rand();
 
+	static const int RandRange(int lower, int upper);
+
+	static const int RandRange(std::pair<int, int> range);
+
 	static const float FRand();
 };
