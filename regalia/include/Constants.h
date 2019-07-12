@@ -134,7 +134,7 @@ namespace Score {
 	const std::string Music = "assets/audio/score_song.ogg";
 	const int VictoriesSize = 75;
 	const int OptionSize = 45;
-	const SpriteSheetData Nums (
+	const SpriteSheetData Nums(
 	    "assets/img/score/nums.png",
 	    48,
 	    48,
@@ -177,6 +177,60 @@ namespace Credit {
 
 namespace Play {
 	const std::string Music = "assets/audio/Batalha I Loop.ogg";
+
+	namespace CityBackground {
+		const SpriteSheetData Background(
+		    "assets/img/backgrounds/cidade_pisca_300ms.png",
+		    3840,
+		    528,
+		    300,
+		    1,
+		    {
+		        { 0, 4 },
+		    });
+
+		const SpriteSheetData Subway(
+		    "assets/img/backgrounds/cidade_metro_100ms_252_371.png",
+		    1332,
+		    16,
+		    150,
+		    2,
+		    {
+		        { 0, 11 },
+		        {1, 1} 
+		    });
+		
+		const SpriteSheetData Crane(
+		    "assets/img/backgrounds/cidade_gindaste_200ms_305_161.png",
+		    360,
+		    27,
+		    200,
+		    1,
+		    {
+		        { 0, 10 },
+		    });
+		
+		const SpriteSheetData Cars1(
+		    "assets/img/backgrounds/cidade_carros1_150ms_162_270.png",
+		    623,
+		    4,
+		    150,
+		    1,
+		    {
+		        { 0, 7 },
+		    });
+		
+		const SpriteSheetData Cars2(
+		    "assets/img/backgrounds/cidade_carros2_150ms_162_270.png",
+		    979,
+		    4,
+		    150,
+		    1,
+		    {
+		        { 0, 11 },
+		    });
+		
+	}
 
 	const std::vector<BackgroundData> Backgrounds = {
 		{ "assets/img/backgrounds/catacombs_01.png" },

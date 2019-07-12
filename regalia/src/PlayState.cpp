@@ -106,12 +106,36 @@ void PlayState::CreateField() {
 	field_index = Number::Rand();
 
 	GameObject* go;
-	const auto& back = GetBackgroundData(field_index);
 	const auto& tileMapData = GetTileMapData(field_index);
 
+	// Background
 	go = new GameObject();
-	go->AddComponent<Sprite>(back.file);
+	go->AddComponent<Sprite>(&Constants::Play::CityBackground::Background);
 	go->box.vector = Vec2(0, 0);
+	(void)AddObject(go);
+
+	// Cars 1
+	go = new GameObject();
+	go->AddComponent<Sprite>(&Constants::Play::CityBackground::Cars1);
+	go->box.vector = { 162, 270 };
+	(void)AddObject(go);
+
+	// Cars 2
+	go = new GameObject();
+	go->AddComponent<Sprite>(&Constants::Play::CityBackground::Cars2);
+	go->box.vector = { 162, 270 };
+	(void)AddObject(go);
+
+	// Crane
+	go = new GameObject();
+	go->AddComponent<Sprite>(&Constants::Play::CityBackground::Crane);
+	go->box.vector = { 305, 161 };
+	(void)AddObject(go);
+
+	// Subway
+	go = new GameObject();
+	go->AddComponent<Sprite>(&Constants::Play::CityBackground::Subway);
+	go->box.vector = { 252, 371 };
 	(void)AddObject(go);
 
 	go = new GameObject();
