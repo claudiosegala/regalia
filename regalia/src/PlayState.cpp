@@ -103,12 +103,12 @@ void PlayState::Resume() {
 }
 
 void PlayState::CreateField() {
-	field_index = Number::Rand();
 
 	GameObject* go;
-	const auto& tileMapData = GetTileMapData(field_index);
+	const auto& tileMapData = GetTileMapData(Number::Rand());
+	const auto& backgroundAnimationData = GetBackgroundData(Number::Rand());
 
-	for (auto&& bgData : Constants::Play::CityBackground) {
+	for (auto&& bgData : backgroundAnimationData) {
 		go = new GameObject();
 		go->AddComponent<Sprite>(bgData.SpriteSheet);
 		go->box.vector = bgData.InitialPosition;
@@ -172,10 +172,12 @@ const void PlayState::CheckCollision() {
 	}
 }
 
-const BackgroundData& PlayState::GetBackgroundData(int idx) {
-	auto& assets = Constants::Play::Backgrounds;
-
-	return assets[idx % assets.size()];
+const std::vector<BackgroundAnimationData>& PlayState::GetBackgroundData(int idx) {
+	if (idx % 2) {
+		return Constants::Play::CatacombsBackground;
+	} else {
+		return Constants::Play::CityBackground;
+	}
 }
 
 const TileMapData& PlayState::GetTileMapData(int idx) {

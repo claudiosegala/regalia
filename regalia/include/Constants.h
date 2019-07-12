@@ -271,7 +271,7 @@ namespace Play {
 		        16,
 		        150,
 		        1,
-		        { { 0, 22 }}),
+		        { { 0, 22 } }),
 		    { 252, 371 },
 		    {} },
 		{ // Crane
@@ -312,9 +312,19 @@ namespace Play {
 		    {} }
 	};
 
-	const std::vector<BackgroundData> Backgrounds = {
-		{ "assets/img/backgrounds/catacombs_01.png" },
-		{ "assets/img/backgrounds/catacombs_02.png" },
+	const std::vector<BackgroundAnimationData> CatacombsBackground = {
+		{ // Background
+		    new SpriteSheetData(
+		        "assets/img/backgrounds/catacombs_02.png",
+		        960,
+		        528,
+		        300,
+		        1,
+		        {
+		            { 0, 1 },
+		        }),
+		    { 0, 0 },
+		    {} },
 	};
 
 	const int TileSetSize = 24;
