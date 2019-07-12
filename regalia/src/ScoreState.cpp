@@ -120,22 +120,28 @@ void ScoreState::LoadChapter() {
 	if (GameData::Finished) {
 		go = new GameObject();
 		go->AddComponent<Sprite>(Constants::Score::End)->SetScale(2, 2);
-		go->box.vector = Vec2(175, 75);
+		go->box.vector = Vec2(202, 70);
 
 		(void)AddObject(go);
 	} else {
 		go = new GameObject();
 		go->AddComponent<Sprite>(Constants::Score::Chapter)->SetScale(2, 2);
-		go->box.vector = Vec2(175, 75);
+		go->box.vector = Vec2(202, 70);
 
 		(void)AddObject(go);
 
-		/*go = new GameObject();
-		go->AddComponent<Sprite>(Constants::Score::Nums)->SetAnimation(GameData::Set);
-		go->box.vector = Vec2(300, 75);
+		go = new GameObject();
+		go->AddComponent<Sprite>(&Constants::Score::Nums, GameData::Set + 1)->SetScale(2.0f, 2.0f);
+		go->box.vector = Vec2(382, 70);
 
-		(void)AddObject(go);*/
+		(void)AddObject(go);
 	}
+
+	go = new GameObject();
+	go->AddComponent<Sprite>(&Constants::Score::NavBar, GameData::Finished)->SetScale(2.0f, 2.0f);
+	go->box.vector = Vec2(152, 392);
+
+	(void)AddObject(go);
 }
 
 void ScoreState::LoadScore() {

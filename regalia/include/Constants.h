@@ -170,9 +170,9 @@ namespace Score {
 	const int VictoriesSize = 75;
 	const int OptionSize = 45;
 	const SpriteSheetData Nums(
-	    "assets/img/score/nums.png",
-	    48,
-	    48,
+	    "assets/img/score/numbers_spritesheet.png",
+	    220,
+	    36,
 	    100,
 	    10,
 	    {
@@ -227,6 +227,16 @@ namespace Score {
 	        { 3, 1 },
 	    });
 
+	const SpriteSheetData NavBar(
+	    "assets/img/score/nav_prompts_spritesheet.png",
+	    310,
+	    11,
+	    100,
+	    2,
+	    {
+	        { 0, 1 },
+	        { 1, 1 },
+	    });
 }
 
 namespace Story {

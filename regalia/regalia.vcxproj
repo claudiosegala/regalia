@@ -243,7 +243,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\img\aim.png" />
+    <Image Include="assets\img\credito.png" />
+    <Image Include="assets\img\historia.png" />
     <Image Include="assets\img\mister_n_spritesheet.png" />
+    <Image Include="assets\img\score\capitulo_titulo.png" />
+    <Image Include="assets\img\score\card_spritesheet.png" />
+    <Image Include="assets\img\score\numbers_spritesheet.png" />
+    <Image Include="assets\img\score\player_label_spritesheet.png" />
+    <Image Include="assets\img\score\points_spritesheet.png" />
+    <Image Include="assets\img\score\score_menu_bg.png" />
     <Image Include="assets\img\tileSetSample.png" />
     <Image Include="assets\img\tileSet_01.png" />
   </ItemGroup>
