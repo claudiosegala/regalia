@@ -33,7 +33,7 @@ void TileMap::Load(const std::string& file) {
 	    >> mapDepth >> ignore;
 
 	fileStream >> tileSetFile;
-	tileSetFile = tileSetFile.substr(0, tileSetFile.find(",", 0));
+	tileSetFile = tileSetFile.substr(0, tileSetFile.find(',', 0));
 
 	// Read the initial positions on this tile map
 	for (int i = 0; i < 4; ++i) {
