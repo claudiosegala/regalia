@@ -35,6 +35,7 @@ namespace Game {
 	const float Gravity = 500.0f;
 	const float LongJumpGravity = 350.0f;
 	const int MillisecondsPerRound = 10000;
+	const int MinNumPlayers = 1; // TODO: change to 2
 	const std::string Font = "assets/font/Dark Crystal.ttf";
 }
 

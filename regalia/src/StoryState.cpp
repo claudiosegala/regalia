@@ -27,8 +27,6 @@ void StoryState::LoadAssets() {
 	go->box.vector.Reset();
 
 	(void)AddObject(go);
-
-	// TODO: add message to say "Press ESC to return to Menu"
 }
 
 void StoryState::Update(unsigned dt) {

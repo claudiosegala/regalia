@@ -7,8 +7,6 @@
 #include <TileMap.h>
 #include <Sprite.h>
 
-// TODO: add animation of Ready? Go!
-
 class PlayState : public State {
 public:
 	PlayState();

@@ -315,7 +315,7 @@ void Game::Init_RDR() {
 	renderer = SDL_CreateRenderer(window, index, flags);
 
 	if (renderer == nullptr) {
-		SDL_GetNumRenderDrivers(); // TODO: WTF is this?
+		SDL_GetNumRenderDrivers();
 
 		auto msg = "SDLError: " + std::string(SDL_GetError()) + "\n";
 		throw std::runtime_error(msg);

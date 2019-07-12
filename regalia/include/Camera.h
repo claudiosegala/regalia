@@ -18,7 +18,6 @@ public:
 	static void Update(unsigned dt);
 
 private:
-	// TODO: change this to a shared_ptr
 	static GameObject* focus;
 
 	static Vec2 GetMovement();

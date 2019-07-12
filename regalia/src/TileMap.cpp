@@ -65,7 +65,7 @@ void TileMap::SetTileSet(TileSet* ts) {
 	tileSet = ts;
 }
 
-// TODO: redo this, this is wrong in so many levels
+// TODO-LATER: redo this, this is wrong in so many levels
 unsigned int TileMap::Pos(int col, int row, int layer) {
 	auto mapSize = (mapWidth * mapHeight);
 	auto rowSize = (mapWidth);
