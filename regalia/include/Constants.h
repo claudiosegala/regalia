@@ -361,7 +361,7 @@ namespace Bullet {
 	    "assets/img/spritesheets/wand_red.png",
 	    128,
 	    16,
-	    100,
+	    75,
 	    1,
 	    {
 	        { 0, 8 },
@@ -371,7 +371,7 @@ namespace Bullet {
 	    "assets/img/spritesheets/wand_blue.png",
 	    128,
 	    16,
-	    100,
+	    75,
 	    1,
 	    {
 	        { 0, 8 },
