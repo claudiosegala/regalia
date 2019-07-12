@@ -5,7 +5,7 @@
 
 class TileMap : public Component {
 public:
-	TileMap(GameObject& go, const std::string& file, TileSet* ts);
+	TileMap(GameObject& go, const std::string& file);
 
 	~TileMap();
 
@@ -45,4 +45,6 @@ private:
 	void SetCollisionMap();
 
 	Vec2 initialPositions[4];
+
+	std::string tileSetFile;
 };

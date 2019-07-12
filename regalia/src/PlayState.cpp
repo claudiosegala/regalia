@@ -107,7 +107,6 @@ void PlayState::CreateField() {
 
 	GameObject* go;
 	const auto& back = GetBackgroundData(field_index);
-	const auto& tileSet = GetTileSetData(field_index);
 	const auto& tileMapData = GetTileMapData(field_index);
 
 	go = new GameObject();
@@ -116,7 +115,7 @@ void PlayState::CreateField() {
 	(void)AddObject(go);
 
 	go = new GameObject();
-	tileMap = go->AddComponent<TileMap>(tileMapData.file, new TileSet(*go, tileSet.width, tileSet.height, tileSet.file));
+	tileMap = go->AddComponent<TileMap>(tileMapData.file);
 
 	go->box.vector = Vec2(0, 0);
 	(void)AddObject(go);
@@ -174,12 +173,6 @@ const void PlayState::CheckCollision() {
 
 const BackgroundData& PlayState::GetBackgroundData(int idx) {
 	auto& assets = Constants::Play::Backgrounds;
-
-	return assets[idx % assets.size()];
-}
-
-const TileSetData& PlayState::GetTileSetData(int idx) {
-	auto& assets = Constants::Play::TileSets;
 
 	return assets[idx % assets.size()];
 }

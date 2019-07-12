@@ -4,11 +4,13 @@
 #include <TileMap.h>
 #include <CollisionMap.h>
 
-TileMap::TileMap(GameObject& go, const std::string& file, TileSet* ts)
-    : Component(go)
-    , tileSet(ts) {
+TileMap::TileMap(GameObject& go, const std::string& file)
+    : Component(go) {
 
 	Load(file);
+
+	tileSet = new TileSet(go, Constants::Play::TileSetSize, Constants::Play::TileSetSize, tileSetFile);
+
 	SetCollisionMap();
 }
 
@@ -29,6 +31,9 @@ void TileMap::Load(const std::string& file) {
 	fileStream >> mapWidth >> ignore
 	    >> mapHeight >> ignore
 	    >> mapDepth >> ignore;
+
+	fileStream >> tileSetFile;
+	tileSetFile = tileSetFile.substr(0, tileSetFile.find(",", 0));
 
 	// Read the initial positions on this tile map
 	for (int i = 0; i < 4; ++i) {

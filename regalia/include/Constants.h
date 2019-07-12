@@ -157,9 +157,7 @@ namespace Play {
 		{ "assets/img/backgrounds/catacombs_02.png" },
 	};
 
-	const std::vector<TileSetData> TileSets = {
-		{ 24, 24, "assets/img/tile_sets/01.png" }
-	};
+	const int TileSetSize = 24;
 
 	const std::vector<TileMapData> TileMaps = {
 		{ "assets/map/map1.csv" },

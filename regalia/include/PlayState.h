@@ -48,8 +48,6 @@ private:
 
 	const BackgroundData& GetBackgroundData(int idx);
 
-	const TileSetData& GetTileSetData(int idx);
-
 	const TileMapData& GetTileMapData(int idx);
 
 	const int GetWinnerId();
