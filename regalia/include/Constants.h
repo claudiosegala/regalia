@@ -71,10 +71,19 @@ namespace Menu {
 	const int TextSize = 48;
 
 	const std::string Music = "assets/audio/Menu.ogg";
-	const std::string Background = "assets/img/menu/livro_fundo.png";
-	const std::string BackgroundInitial = "assets/img/menu/livro_fundo.png";
 	const std::string Sound = "assets/audio/Mudança de opção no menu (Regalia).ogg";
 	const std::string ConfirmSound = "assets/audio/Clique em menu (regalia).ogg";
+	const std::string Background = "assets/img/menu/livro_fundo.png";
+
+	const SpriteSheetData BackgroundInitial(
+	    "assets/img/menu/background_initial.png",
+	    6240,
+	    264,
+	    100,
+	    1,
+	    { 
+			{ 0, 13 }, 
+		});
 
 	const SpriteSheetData Credits(
 	    "assets/img/menu/botao_creditos_spritesheet.png",
@@ -271,7 +280,7 @@ namespace Play {
 		        16,
 		        150,
 		        1,
-		        { { 0, 22 }}),
+		        { { 0, 22 } }),
 		    { 252, 371 },
 		    {} },
 		{ // Crane

@@ -125,9 +125,13 @@ void MenuState::ChangeMode() {
 
 void MenuState::CreateBackground() {
 	auto go = new GameObject();
-	auto background = mode == MenuModes::Initial ? Constants::Menu::BackgroundInitial : Constants::Menu::Background;
 
-	go->AddComponent<Sprite>(Constants::Menu::Background)->SetScale(2.0f, 2.0f);
+	if (mode == MenuModes::Initial) {
+		go->AddComponent<Sprite>(&Constants::Menu::BackgroundInitial, 0)->SetScale(2.0f, 2.0f);
+	} else {
+		go->AddComponent<Sprite>(Constants::Menu::Background)->SetScale(2.0f, 2.0f);
+	}
+
 	go->box.SetCenter(Constants::Window::Center);
 
 	(void)AddObject(go);
