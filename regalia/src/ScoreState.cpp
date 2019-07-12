@@ -28,8 +28,9 @@ ScoreState::~ScoreState() {
 
 void ScoreState::LoadAssets() {
 	LoadBackground();
+	LoadChapter();
+	//LoadOptions();
 	LoadScore();
-	LoadOptions();
 }
 
 void ScoreState::Update(unsigned dt) {
@@ -61,13 +62,13 @@ void ScoreState::Update(unsigned dt) {
 		}
 	}
 
-	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)) { // restart
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_B)) { // restart
 		game->Push(new PlayState());
 		popRequested = 2;
 		return;
 	}
 
-	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER)) { // go back to menu
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_Y)) { // go back to menu
 		game->Push(new MenuState());
 		popRequested = 3;
 		return;
@@ -112,89 +113,95 @@ void ScoreState::LoadBackground() {
 	(void)AddObject(go);
 }
 
-void ScoreState::LoadScore() {
-	auto pos = Vec2(20, 150); // sprite frame width, arbitrario
+void ScoreState::LoadChapter() {
+	GameObject* go;
 
-	{
-		auto go = new GameObject();
-		auto text = GameData::Paused
-		    ? std::string("Set ") + std::to_string(GameData::Set)
-		    : std::string("Scoreboard");
-
-		go->AddComponent<Text>(Constants::Game::Font, Constants::Score::VictoriesSize, Text::TextStyle::BLENDED, text, Constants::Colors::White);
-		go->box.SetCenter({ Constants::Window::Width / 2, 50 });
+	if (GameData::Finished) {
+		go = new GameObject();
+		go->AddComponent<Sprite>(Constants::Score::End)->SetScale(2, 2);
+		go->box.vector = Vec2(175, 75);
 
 		(void)AddObject(go);
-	}
+	} else {
+		go = new GameObject();
+		go->AddComponent<Sprite>(Constants::Score::Chapter)->SetScale(2, 2);
+		go->box.vector = Vec2(175, 75);
 
-	for (int i = 0; i < GameData::NumPlayers; i++) {
+		(void)AddObject(go);
+
+		/*go = new GameObject();
+		go->AddComponent<Sprite>(Constants::Score::Nums)->SetAnimation(GameData::Set);
+		go->box.vector = Vec2(300, 75);
+
+		(void)AddObject(go);*/
+	}
+}
+
+void ScoreState::LoadScore() {
+	auto pos = Vec2(500, 100); // sprite frame width, arbitrario
+
+	for (int i = 0; i < Constants::Game::MaxNumPlayers; i++) {
 		auto victories = 0;
 
 		for (int j = 0; j < Constants::Game::Sets; j++) {
 			victories += (GameData::Result[j] == i);
 		}
 
-		{
-			auto go = new GameObject();
-
-			switch (GameData::Personas[i]) {
-				case Constants::PersonaType::MISTER_N_RED:
-					go->AddComponent<Sprite>(&Constants::Player::MisterNRed)->SetScale(3.0f, 3.0f);
-					break;
-
-				case Constants::PersonaType::MISTER_N_BLUE:
-					go->AddComponent<Sprite>(&Constants::Player::MisterNBlue)->SetScale(3.0f, 3.0f);
-					break;
-				
-				case Constants::PersonaType::GOTICA_RED:
-					go->AddComponent<Sprite>(&Constants::Player::GoticaRed)->SetScale(3.0f, 3.0f);
-					break;
-
-				case Constants::PersonaType::GOTICA_PURPLE:
-					go->AddComponent<Sprite>(&Constants::Player::GoticaPurple)->SetScale(3.0f, 3.0f);
-					break;
-				
-				default:
-					throw std::runtime_error("Invalid persona type");
-			}
-
-			go->box.vector = pos;
-
-			(void)AddObject(go);
-		}
-
-		{
-			auto go = new GameObject();
-			auto text = std::to_string(victories);
-
-			go->AddComponent<Text>(Constants::Game::Font, Constants::Score::VictoriesSize, Text::TextStyle::BLENDED, text, Constants::Colors::White);
-			go->box.SetCenter(pos + Vec2(187, 72));
-
-			(void)AddObject(go);
+		if (i < GameData::NumPlayers) {
+			LoadCard(1 + (victories == Constants::Game::VictoriesToWin), pos);
+			LoadPlayer(i, pos);
+			LoadPersona(GameData::Personas[i], pos);
+			LoadVictories(i, victories, pos);
+		} else {
+			LoadCard(0, pos);
 		}
 
 		pos += Vec2(230, 0);
 	}
 }
 
-void ScoreState::LoadOptions() {
-	std::vector<std::string> options;
+void ScoreState::LoadCard(int animation, Vec2 pos) {
+	(void)animation;
+	(void)pos;
+}
 
-	if (GameData::Paused) {
-		options.emplace_back("A - Continue Match");
-	} else if (!GameData::Finished) {
-		options.emplace_back("A - Continue to Next Set");
+void ScoreState::LoadPlayer(int n, Vec2 pos) {
+	(void)n;
+	(void)pos;
+}
+
+void ScoreState::LoadPersona(Constants::PersonaType type, Vec2 pos) {
+	auto go = new GameObject();
+
+	switch (type) {
+		case Constants::PersonaType::MISTER_N_RED:
+			go->AddComponent<Sprite>(&Constants::Player::MisterNRed)->SetScale(3.0f, 3.0f);
+			break;
+		case Constants::PersonaType::MISTER_N_BLUE:
+			go->AddComponent<Sprite>(&Constants::Player::MisterNBlue)->SetScale(3.0f, 3.0f);
+			break;
+		case Constants::PersonaType::GOTICA_RED:
+			go->AddComponent<Sprite>(&Constants::Player::GoticaRed)->SetScale(3.0f, 3.0f);
+			break;
+		case Constants::PersonaType::GOTICA_PURPLE:
+			go->AddComponent<Sprite>(&Constants::Player::GoticaPurple)->SetScale(3.0f, 3.0f);
+			break;
+		default:
+			throw std::runtime_error("Invalid persona type");
 	}
 
-	options.emplace_back("R1 - Restart");
-	options.emplace_back("L1 - Return to Main Menu");
+	go->box.vector = pos;
 
-	for (size_t i = 0; i < options.size(); i++) {
-		auto go = new GameObject();
+	(void)AddObject(go);
+}
 
-		go->AddComponent<Text>(Constants::Game::Font, Constants::Score::OptionSize, Text::TextStyle::BLENDED, options[i], Constants::Colors::White);
-		go->box.SetCenter({ Constants::Window::Width / 2, 350 + 50 * int(i) });
+void ScoreState::LoadVictories(int id, int victories, Vec2 pos) {
+	auto go = new GameObject();
+	auto text = std::to_string(1);
+	(void)id;
+	(void)victories;
+	go->AddComponent<Text>(Constants::Game::Font, Constants::Score::VictoriesSize, Text::TextStyle::BLENDED, text, Constants::Colors::White);
+	go->box.SetCenter(pos + Vec2(187, 72));
 
-		(void)AddObject(go);
-	}
+	(void)AddObject(go);
 }

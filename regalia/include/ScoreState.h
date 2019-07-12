@@ -28,7 +28,15 @@ private:
 
 	void LoadBackground();
 
+	void LoadChapter();
+	
 	void LoadScore();
 
-	void LoadOptions();
+	void LoadCard(int animation, Vec2 pos);
+
+	void LoadPlayer(int n, Vec2 pos);
+
+	void LoadPersona(Constants::PersonaType type, Vec2 pos);
+
+	void LoadVictories(int id, int victories, Vec2 pos);	
 };
