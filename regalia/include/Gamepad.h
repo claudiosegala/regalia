@@ -4,7 +4,12 @@
 
 class Gamepad {
 public:
-	enum Stick {
+	enum class Stick {
+		Left,
+		Right
+	};
+
+	enum class Trigger {
 		Left,
 		Right
 	};
@@ -23,9 +28,17 @@ public:
 	
 	bool ButtonReleased(SDL_GameControllerButton button, int counter);
 
+	bool IsAxisHolded(SDL_GameControllerAxis axis);
+
+	bool AxisBinded(SDL_GameControllerAxis axis, int counter);
+
+	bool AxisReleased(SDL_GameControllerAxis axis, int counter);
+
 	void Rumble(float intensity, unsigned int duration);
 	
 	Vec2 GetStickPosition(Stick side);
+
+	int GetTriggerIntensity(Trigger side);
 
 private:
 	SDL_GameController* controller = nullptr;
@@ -36,5 +49,7 @@ private:
 	
 	int buttonUpdate[16] = { 0 };
 	
-	Sint16 axis[6] = { 0 };
+	Sint16 axisState[6] = { 0 };
+
+	int axisUpdate[6] = { 0 };
 };

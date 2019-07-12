@@ -108,14 +108,66 @@ bool InputManager::IsGamepadDown(SDL_GameControllerButton button, int controller
 	return controllers[controllerNumber].IsButtonDown(button);
 }
 
+bool InputManager::GamepadAxisHolded(SDL_GameControllerAxis axis) {
+	for (auto i = 0; i < (int)controllers.size(); i++) {
+		if (GamepadAxisHolded(axis, i)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool InputManager::GamepadAxisHolded(SDL_GameControllerAxis axis, int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, false);
+	return controllers[controllerNumber].AxisBinded(axis, updateCounter);
+}
+
+bool InputManager::GamepadAxisRelease(SDL_GameControllerAxis axis) {
+	for (auto i = 0; i < (int)controllers.size(); i++) {
+		if (GamepadAxisRelease(axis, i)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool InputManager::GamepadAxisRelease(SDL_GameControllerAxis axis, int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, false);
+	return controllers[controllerNumber].AxisReleased(axis, updateCounter);
+}
+
+bool InputManager::IsGamepadAxisDown(SDL_GameControllerAxis axis) {
+	for (auto i = 0; i < (int)controllers.size(); i++) {
+		if (IsGamepadAxisDown(axis, i)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool InputManager::IsGamepadAxisDown(SDL_GameControllerAxis axis, int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, false);
+	return controllers[controllerNumber].IsAxisHolded(axis);
+}
+
 Vec2 InputManager::GamepadLeftStick(int controllerNumber) {
 	PROTECT_RANGE(controllerNumber, Vec2());
-	return controllers[controllerNumber].GetStickPosition(Gamepad::Left);
+	return controllers[controllerNumber].GetStickPosition(Gamepad::Stick::Left);
 }
 
 Vec2 InputManager::GamepadRightStick(int controllerNumber) {
 	PROTECT_RANGE(controllerNumber, Vec2());
-	return controllers[controllerNumber].GetStickPosition(Gamepad::Right);
+	return controllers[controllerNumber].GetStickPosition(Gamepad::Stick::Right);
+}
+
+int InputManager::GamepadLeftTrigger(int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, bool());
+	return controllers[controllerNumber].GetTriggerIntensity(Gamepad::Trigger::Left);
+}
+
+int InputManager::GamepadRightTrigger(int controllerNumber) {
+	PROTECT_RANGE(controllerNumber, bool());
+	return controllers[controllerNumber].GetTriggerIntensity(Gamepad::Trigger::Right);
 }
 
 void InputManager::GamepadRumble(int controllerNumber, float intensity, unsigned duration) {

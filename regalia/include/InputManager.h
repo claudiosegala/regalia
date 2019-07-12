@@ -39,9 +39,25 @@ public:
 
 	bool IsGamepadDown(SDL_GameControllerButton button, int controllerNumber);
 
+	bool GamepadAxisHolded(SDL_GameControllerAxis axis);
+
+	bool GamepadAxisHolded(SDL_GameControllerAxis axis, int controllerNumber);
+
+	bool GamepadAxisRelease(SDL_GameControllerAxis axis);
+
+	bool GamepadAxisRelease(SDL_GameControllerAxis axis, int controllerNumber);
+
+	bool IsGamepadAxisDown(SDL_GameControllerAxis axis);
+
+	bool IsGamepadAxisDown(SDL_GameControllerAxis axis, int controllerNumber);
+
 	Vec2 GamepadLeftStick(int controllerNumber);
 
 	Vec2 GamepadRightStick(int controllerNumber);
+
+	int GamepadLeftTrigger(int controllerNumber);
+
+	int GamepadRightTrigger(int controllerNumber);
 
 	void GamepadRumble(int controllerNumber, float intensity, unsigned int duration);
 
