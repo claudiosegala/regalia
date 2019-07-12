@@ -267,12 +267,11 @@ namespace Play {
 		{ // Subway
 		    new SpriteSheetData(
 		        "assets/img/backgrounds/cidade_metro_100ms_252_371.png",
-		        1332,
+		        2442,
 		        16,
 		        150,
-		        2,
-		        { { 0, 11 },
-		            { 1, 1 } }),
+		        1,
+		        { { 0, 22 }}),
 		    { 252, 371 },
 		    {} },
 		{ // Crane
