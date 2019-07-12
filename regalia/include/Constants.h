@@ -35,7 +35,7 @@ namespace Game {
 	const float Gravity = 600.0f;
 	const float LongJumpGravity = 420.0f;
 	const int MillisecondsPerRound = 45000;
-	const int MinNumPlayers = 1; // TODO: change to 2
+	const int MinNumPlayers = 2; // TODO: change to 2
 	const int MaxNumPlayers = 4;
 	const int VictoriesToWin = 3;
 	const std::string Font = "assets/font/Dark Crystal.ttf";
@@ -77,13 +77,13 @@ namespace Menu {
 
 	const SpriteSheetData BackgroundInitial(
 	    "assets/img/menu/background_initial.png",
-	    6240,
+	    5760,
 	    264,
 	    100,
 	    1,
-	    {
-	        { 0, 13 },
-	    });
+	    { 
+			{ 0, 12 }, 
+		});
 
 	const SpriteSheetData Credits(
 	    "assets/img/menu/botao_creditos_spritesheet.png",
@@ -324,13 +324,13 @@ namespace Play {
 	const std::vector<BackgroundAnimationData> CatacombsBackground = {
 		{ // Background
 		    new SpriteSheetData(
-		        "assets/img/backgrounds/catacombs_02.png",
-		        960,
+		        "assets/img/backgrounds/catacumba_4frames_200ms.png",
+		        3840,
 		        528,
-		        300,
+		        200,
 		        1,
 		        {
-		            { 0, 1 },
+		            { 0, 4 },
 		        }),
 		    { 0, 0 },
 		    {} },

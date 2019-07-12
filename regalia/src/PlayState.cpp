@@ -60,7 +60,7 @@ void PlayState::Update(unsigned dt) {
 	}
 
 	// TODO: change to Player::counter == 1
-	if (player_count == 0) {
+	if (player_count == 1) {
 		EndSet();
 		return;
 	}
