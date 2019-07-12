@@ -8,13 +8,16 @@
 #include "GameData.h"
 #include "Sound.h"
 #include "PlayState.h"
+#include "Game.h"
+
 
 Bullet::Bullet(GameObject& go, BulletData& data, PlayState* play_state)
     : Component(go)
     , shooterId(data.shooterId)
     , play_state(play_state)
     , damage(data.damage)
-    , level(data.level) {
+    , level(data.level)
+	, personaType(data.personaType) {
 
 	if (level <= 0 || level > 3) {
 		throw std::runtime_error("Invalid bullet level");
@@ -34,7 +37,7 @@ Bullet::Bullet(GameObject& go, BulletData& data, PlayState* play_state)
 }
 
 void Bullet::Update(unsigned dt) {
-	if (level <= 0/* || play_state->alive_player_count == 1*/) {
+	if (level <= 0 /* || play_state->alive_player_count == 1*/) {
 		Die();
 		return;
 	}
@@ -48,7 +51,7 @@ void Bullet::NotifyCollision(GameObject& go) {
 	auto player = go.GetComponent<Player>();
 
 	if (player != nullptr && (player->id != shooterId || Constants::Game::FriendlyFire)) {
-		associated.RequestDelete();
+		Die();
 	}
 }
 
@@ -104,4 +107,35 @@ void Bullet::MoveAndBounce(unsigned dt) {
 
 void Bullet::Die() {
 	associated.RequestDelete();
+
+	auto go = new GameObject();
+
+	switch (personaType) {
+		case Constants::PersonaType::MISTER_N_RED:
+			go->AddComponent<Sprite>(&Constants::Bullet::MisterNRedExplosion);
+			break;
+
+		case Constants::PersonaType::MISTER_N_BLUE:
+			go->AddComponent<Sprite>(&Constants::Bullet::MisterNBlueExplosion);
+			break;
+
+		case Constants::PersonaType::GOTICA_GREEN:
+			go->AddComponent<Sprite>(&Constants::Bullet::GoticaGreenExplosion);
+			break;
+
+		case Constants::PersonaType::GOTICA_PURPLE:
+			go->AddComponent<Sprite>(&Constants::Bullet::GoticaPurpleExplosion);
+			break;
+
+		default:
+			throw std::runtime_error("Invalid persona type");
+	}
+
+	go->box.SetCenter(associated.box.Center());
+	go->angle = associated.angle;
+
+	auto game = Game::GetInstance();
+	auto state = game->GetCurrentState();
+
+	(void)state->AddObject(go);
 }

@@ -81,9 +81,9 @@ namespace Menu {
 	    264,
 	    100,
 	    1,
-	    { 
-			{ 0, 13 }, 
-		});
+	    {
+	        { 0, 13 },
+	    });
 
 	const SpriteSheetData Credits(
 	    "assets/img/menu/botao_creditos_spritesheet.png",
@@ -357,14 +357,24 @@ namespace Bullet {
 
 	const float Size = 16.0f;
 
-	const SpriteSheetData MisterN(
-	    "assets/img/mister_n_bullet_spritesheet.png",
-	    64,
+	const SpriteSheetData MisterNRed(
+	    "assets/img/spritesheets/wand_red.png",
+	    128,
 	    16,
 	    100,
 	    1,
 	    {
-	        { 0, 4 },
+	        { 0, 8 },
+	    });
+
+	const SpriteSheetData MisterNBlue(
+	    "assets/img/spritesheets/wand_blue.png",
+	    128,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 8 },
 	    });
 
 	const SpriteSheetData GoticaPurple(
@@ -387,6 +397,50 @@ namespace Bullet {
 	        { 0, 8 },
 	    });
 
+	// Explosions
+	const SpriteSheetData MisterNRedExplosion(
+	    "assets/img/spritesheets/wand_explosion_red.png",
+	    144,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 9 },
+	    },
+	    true);
+
+	const SpriteSheetData MisterNBlueExplosion(
+	    "assets/img/spritesheets/wand_explosion_blue.png",
+	    144,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 9 },
+	    },
+	    true);
+
+	const SpriteSheetData GoticaPurpleExplosion(
+	    "assets/img/spritesheets/gotica_explosao_roxo.png",
+	    128,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 8 },
+	    },
+	    true);
+
+	const SpriteSheetData GoticaGreenExplosion(
+	    "assets/img/spritesheetsExplosion/gotica_explosao_verde.png",
+	    128,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 8 },
+	    },
+	    true);
 }
 
 namespace Key {

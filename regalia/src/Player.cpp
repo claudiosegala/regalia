@@ -221,8 +221,11 @@ void Player::LoadAndShoot() {
 
 		switch (personaType) {
 			case Constants::PersonaType::MISTER_N_RED:
+				spriteSheetData = &Constants::Bullet::MisterNRed;
+				break;
+
 			case Constants::PersonaType::MISTER_N_BLUE:
-				spriteSheetData = &Constants::Bullet::MisterN;
+				spriteSheetData = &Constants::Bullet::MisterNBlue;
 				break;
 
 			case Constants::PersonaType::GOTICA_GREEN:
@@ -242,7 +245,8 @@ void Player::LoadAndShoot() {
 			Constants::Bullet::DefaultDamage,
 			bulletAngle,
 			bulletLevel,
-			spriteSheetData
+			spriteSheetData,
+			personaType
 		};
 
 		CreateBullet(bulletData);
