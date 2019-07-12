@@ -107,7 +107,7 @@ void ScoreState::Resume() {
 void ScoreState::LoadBackground() {
 	auto go = new GameObject();
 
-	go->AddComponent<Sprite>(Constants::Score::Background);
+	go->AddComponent<Sprite>(Constants::Score::Background)->SetScale(2.0f, 2.0f);
 
 	go->box.SetCenter(Constants::Window::Center);
 
@@ -147,12 +147,12 @@ void ScoreState::LoadScore() {
 		}
 
 		if (i < GameData::NumPlayers) {
-			LoadCard(victories == Constants::Game::VictoriesToWin ? 2 : 0, cardPositions[i]);
+			LoadCard(victories == Constants::Game::VictoriesToWin ? 2 : 0, Constants::Book::CardPositions[i]);
 			LoadPlayerLabel(i);
 			LoadPersona(i);
 			LoadVictories(i, victories);
 		} else {
-			LoadCard(1, cardPositions[i]);
+			LoadCard(1, Constants::Book::CardPositions[i]);
 		}
 	}
 }
@@ -169,7 +169,7 @@ void ScoreState::LoadPlayerLabel(int n) {
 	auto go = new GameObject();
 	auto sprite = go->AddComponent<Sprite>(&Constants::Score::PlayerLabel, n + 1);
 	sprite->SetScale(2.0f, 2.0f);
-	go->box.vector = playerLabelPositions[n];
+	go->box.vector = Constants::Book::PlayerLabelPositions[n];
 	(void)AddObject(go);
 }
 
@@ -197,7 +197,7 @@ void ScoreState::LoadPersona(int n) {
 			throw std::runtime_error("Invalid persona type");
 	}
 
-	go->box.vector = personasPositions[n];
+	go->box.vector = Constants::Book::PersonasPositions[n];
 
 	(void)AddObject(go);
 }
@@ -208,7 +208,7 @@ void ScoreState::LoadVictories(int n, int victories) {
 	auto sprite = go->AddComponent<Sprite>(&Constants::Score::Victories, victories);
 	sprite->SetScale(2.0f, 2.0f);
 
-	go->box.vector = victoriesPositions[n];
+	go->box.vector = Constants::Book::VictoriesPositions[n];
 
 	(void)AddObject(go);
 }

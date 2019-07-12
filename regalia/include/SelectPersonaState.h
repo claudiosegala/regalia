@@ -12,6 +12,12 @@ public:
 
 	void LoadAssets() override;
 
+	void LoadCard(int animation, Vec2 pos);
+
+	void LoadPlayerLabel(int n);
+
+	void LoadPersona(int n);
+
 	void Update(unsigned dt) override;
 
 	void Render() override;
@@ -47,11 +53,4 @@ private:
 	std::vector<std::pair<GameObject*, GameObject*>> arrows;
 
 	std::vector<Timer> timers;
-
-	const Vec2 positions[4] = {
-		{ 300, 110 },
-		{ 640, 110 },
-		{ 300, 320 },
-		{ 640, 320 },
-	};
 };

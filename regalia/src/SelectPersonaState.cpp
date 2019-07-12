@@ -8,7 +8,6 @@
 #include "PlayState.h"
 
 SelectPersonaState::SelectPersonaState() {
-
 	Logger::Info("Initializing Menu State");
 
 	auto& in = InputManager::GetInstance();
@@ -32,35 +31,67 @@ SelectPersonaState::~SelectPersonaState() {
 
 void SelectPersonaState::LoadAssets() {
 	auto background = new GameObject();
-	background->AddComponent<Sprite>(Constants::Menu::Background);
-	background->GetComponent<Sprite>()->SetScale(2.0f, 2.0f);
+	background->AddComponent<Sprite>(Constants::Score::Background)->SetScale(2.0f, 2.0f);
+	background->box.SetCenter(Constants::Window::Center);
 	(void)AddObject(background);
 
-	for (int i = 0; i < GameData::NumPlayers; ++i) {
-		personaConfirmed.push_back(false);
-		currentPersona.push_back(Constants::PersonaType::MISTER_N_RED);
-		timers.push_back(Timer());
+	auto chapter = new GameObject();
+	chapter->AddComponent<Sprite>(Constants::SelectPersona::Title)->SetScale(2, 2);
+	chapter->box.vector = Vec2(175, 75);
+	(void)AddObject(chapter);
 
-		auto playerGo = new GameObject();
-		auto sprite = playerGo->AddComponent<Sprite>(personas[Constants::PersonaType::MISTER_N_RED].spriteSheetData);
-		sprite->SetScale(3.0f, 3.0f);
-		playerGo->box.SetCenter(positions[i]);
-		(void)AddObject(playerGo);
-		players.push_back(playerGo);
+	for (int i = 0; i < Constants::Game::MaxNumPlayers; i++) {
+		if (i < GameData::NumPlayers) {
+			personaConfirmed.push_back(false);
+			currentPersona.push_back(Constants::PersonaType::MISTER_N_RED);
+			timers.push_back(Timer());
 
-		auto rightArrowGO = new GameObject();
-		rightArrowGO->AddComponent<Sprite>("assets/img/aim.png");
-		rightArrowGO->box.SetCenter(positions[i] + Vec2(75, 0));
-		(void)AddObject(rightArrowGO);
-
-		auto leftArrowGO = new GameObject();
-		leftArrowGO->AddComponent<Sprite>("assets/img/aim.png");
-		leftArrowGO->box.SetCenter(positions[i] + Vec2(-75, 0));
-		leftArrowGO->angle = float(M_PI);
-		(void)AddObject(leftArrowGO);
-
-		arrows.emplace_back(rightArrowGO, leftArrowGO);
+			LoadCard(0, Constants::Book::CardPositions[i]);
+			LoadPlayerLabel(i);
+			LoadPersona(i);
+			//LoadVictories(i, victories);
+		} else {
+			LoadCard(1, Constants::Book::CardPositions[i]);
+		}
 	}
+}
+
+void SelectPersonaState::LoadCard(int animation, Vec2 pos) {
+	auto go = new GameObject();
+	auto sprite = go->AddComponent<Sprite>(&Constants::Score::Cards, animation);
+	sprite->SetScale(2.0f, 2.0f);
+	go->box.vector = pos;
+	(void)AddObject(go);
+}
+
+void SelectPersonaState::LoadPlayerLabel(int n) {
+	auto go = new GameObject();
+	auto sprite = go->AddComponent<Sprite>(&Constants::Score::PlayerLabel, n + 1);
+	sprite->SetScale(2.0f, 2.0f);
+	go->box.vector = Constants::Book::PlayerLabelPositions[n];
+	(void)AddObject(go);
+}
+
+void SelectPersonaState::LoadPersona(int n) {
+	auto playerGo = new GameObject();
+	auto sprite = playerGo->AddComponent<Sprite>(personas[Constants::PersonaType::MISTER_N_RED].spriteSheetData);
+	sprite->SetScale(2.0f, 2.0f);
+	playerGo->box.vector = Constants::Book::PersonasPositions[n];
+	(void)AddObject(playerGo);
+	players.push_back(playerGo);
+
+	auto rightArrowGO = new GameObject();
+	rightArrowGO->AddComponent<Sprite>("assets/img/aim.png")->SetScale(0.75f, 0.75f);
+	rightArrowGO->box.vector = Constants::Book::PersonasPositions[n] + Vec2(60, 110);
+	(void)AddObject(rightArrowGO);
+
+	auto leftArrowGO = new GameObject();
+	leftArrowGO->AddComponent<Sprite>("assets/img/aim.png")->SetScale(0.75f, 0.75f);
+	leftArrowGO->box.vector = Constants::Book::PersonasPositions[n] + Vec2(10, 110);
+	leftArrowGO->angle = float(M_PI);
+	(void)AddObject(leftArrowGO);
+
+	arrows.emplace_back(rightArrowGO, leftArrowGO);
 }
 
 void SelectPersonaState::Update(unsigned dt) {

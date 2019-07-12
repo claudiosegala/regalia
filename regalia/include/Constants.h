@@ -121,6 +121,40 @@ namespace Menu {
 
 }
 
+namespace Book {
+	const Vec2 CardPositions[4] = {
+		{ 528, 70 },
+		{ 652, 70 },
+		{ 528, 246 },
+		{ 652, 246 }
+	};
+
+	const Vec2 PlayerLabelPositions[4] = {
+		{ 564, 82 },
+		{ 688, 82 },
+		{ 564, 258 },
+		{ 688, 258 }
+	};
+
+	const Vec2 PersonasPositions[4] = {
+		{ 536, 90 },
+		{ 660, 90 },
+		{ 536, 266 },
+		{ 660, 266 }
+	};
+
+	const Vec2 VictoriesPositions[4] = {
+		{ 540, 198 },
+		{ 664, 198 },
+		{ 540, 374 },
+		{ 664, 374 }
+	};
+}
+
+namespace SelectPersona {
+	const std::string Title = "assets/img/score/capitulo_titulo.png";
+}
+
 namespace Countdown {
 	const bool Enabled = false; // Change this to enable or disable the countdown
 	const std::string Sound = "assets/audio/Som de batalha (Regalia).ogg";
