@@ -25,7 +25,7 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 	invincible = GameData::IsTimeUp();
 
 	LoadAssets(data);
-	associated.hitbox = new Rect(associated.box);
+	associated.hitbox = new Rect(associated.box.vector, Constants::Bullet::Size, Constants::Bullet::Size);
 
 	auto sound = associated.AddComponent<Sound>(Constants::SharedAssets::Sounds::Shot);
 	sound->Play();
@@ -59,8 +59,9 @@ void Bullet::LoadAssets(BulletData& data) {
 }
 
 void Bullet::MoveAndBounce(unsigned dt) {
-	auto& box = *associated.hitbox = associated.box;
-	const auto startingPosition = box.vector;
+	associated.hitbox->SetCenter(associated.box.Center());
+
+	auto& box = *associated.hitbox;
 	auto maxDelta = CollisionMap::FindMaxDelta(box, speed, dt);
 
 	auto dist = speed * float(maxDelta) / 1000.0f;
@@ -96,5 +97,5 @@ void Bullet::MoveAndBounce(unsigned dt) {
 		}
 	}
 
-	associated.box += box.vector - startingPosition;
+	associated.box.SetCenter(box.Center());
 }

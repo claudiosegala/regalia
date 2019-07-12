@@ -31,6 +31,6 @@ private:
 	bool invincible;
 
 	void LoadAssets(BulletData& data);
-	
+
 	void MoveAndBounce(unsigned dt);
 };
