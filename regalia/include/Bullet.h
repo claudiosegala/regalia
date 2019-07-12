@@ -31,6 +31,8 @@ private:
 
 	bool invincible;
 
+	Constants::PersonaType personaType;
+
 	void LoadAssets(BulletData& data);
 
 	void MoveAndBounce(unsigned dt);

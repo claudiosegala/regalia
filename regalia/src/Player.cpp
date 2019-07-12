@@ -245,7 +245,8 @@ void Player::LoadAndShoot() {
 			Constants::Bullet::DefaultDamage,
 			bulletAngle,
 			bulletLevel,
-			spriteSheetData
+			spriteSheetData,
+			personaType
 		};
 
 		CreateBullet(bulletData);

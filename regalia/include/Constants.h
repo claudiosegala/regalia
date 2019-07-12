@@ -397,6 +397,50 @@ namespace Bullet {
 	        { 0, 8 },
 	    });
 
+	// Explosions
+	const SpriteSheetData MisterNRedExplosion(
+	    "assets/img/spritesheets/wand_explosion_red.png",
+	    144,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 9 },
+	    },
+	    true);
+
+	const SpriteSheetData MisterNBlueExplosion(
+	    "assets/img/spritesheets/wand_explosion_blue.png",
+	    144,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 9 },
+	    },
+	    true);
+
+	const SpriteSheetData GoticaPurpleExplosion(
+	    "assets/img/spritesheets/gotica_explosao_roxo.png",
+	    128,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 8 },
+	    },
+	    true);
+
+	const SpriteSheetData GoticaGreenExplosion(
+	    "assets/img/spritesheetsExplosion/gotica_explosao_verde.png",
+	    128,
+	    16,
+	    100,
+	    1,
+	    {
+	        { 0, 8 },
+	    },
+	    true);
 }
 
 namespace Key {

@@ -124,7 +124,7 @@ void Sprite::Update(unsigned dt) {
 	if (timeElapsed >= spriteSheetData->frameTime) {
 		timeElapsed = 0;
 
-		if (spriteSheetData->selfDestruct && currentFrame == frameCount) {
+		if (spriteSheetData->selfDestruct && currentFrame == frameCount - 1) {
 			associated.RequestDelete();
 			return;
 		}
