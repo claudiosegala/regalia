@@ -77,12 +77,12 @@ namespace Menu {
 
 	const SpriteSheetData BackgroundInitial(
 	    "assets/img/menu/background_initial.png",
-	    6240,
+	    5760,
 	    264,
 	    100,
 	    1,
 	    { 
-			{ 0, 13 }, 
+			{ 0, 12 }, 
 		});
 
 	const SpriteSheetData Credits(
