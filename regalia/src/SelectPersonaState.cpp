@@ -54,7 +54,6 @@ void SelectPersonaState::LoadAssets() {
 			LoadCard(0, Constants::Book::CardPositions[i]);
 			LoadPlayerLabel(i);
 			LoadPersona(i);
-			//LoadVictories(i, victories);
 		} else {
 			LoadCard(1, Constants::Book::CardPositions[i]);
 		}
