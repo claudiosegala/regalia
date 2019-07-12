@@ -36,8 +36,6 @@ private:
 
 	TileMap* tileMap = nullptr;
 
-	void CheckCollision();
-
 	void CreateField();
 
 	void CreatePlayers();
@@ -45,6 +43,8 @@ private:
 	void CreatePlayer(Constants::PersonaType persona);
 
 	void CreateGameTimer();
+
+	const void CheckCollision();
 
 	const BackgroundData& GetBackgroundData(int idx);
 
@@ -54,5 +54,9 @@ private:
 
 	const int GetWinnerId();
 
-	void LoadScoreState();
+	const void PauseSet();
+
+	const void EndSet();
+
+	const void LoadScoreState();
 };

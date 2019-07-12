@@ -40,6 +40,8 @@ void PlayState::LoadAssets() {
 }
 
 void PlayState::Update(unsigned dt) {
+	GameData::CurrentRoundTimer.Update(dt);
+
 	auto& in = InputManager::GetInstance();
 
 	popRequested = in.PopRequested();
@@ -53,19 +55,13 @@ void PlayState::Update(unsigned dt) {
 	}
 
 	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_START)) {
-		GameData::Paused = true;
-		LoadScoreState();
+		PauseSet();
 		return;
 	}
 
-	GameData::CurrentRoundTimer.Update(dt);
-
 	// TODO: change to Player::counter == 1
 	if (player_count == 0) {
-		GameData::Result[GameData::Set] = GetWinnerId();
-		GameData::Set++;
-		GameData::Finished = (GameData::Set == Constants::Game::Sets);
-		LoadScoreState();
+		EndSet();
 		return;
 	}
 
@@ -82,7 +78,7 @@ void PlayState::Start() {
 	Logger::Info("Starting Play State");
 	Camera::Reset();
 	GameData::CurrentRoundTimer.Restart();
-	
+
 	LoadAssets();
 	StartArray();
 
@@ -106,29 +102,6 @@ void PlayState::Resume() {
 	music.Play();
 }
 
-void PlayState::CheckCollision() {
-	std::vector<int> goIdxs;
-
-	for (size_t i = 0; i < objectArray.size(); i++) {
-		if (objectArray[i]->hitbox != nullptr) {
-			goIdxs.push_back(int(i));
-		}
-	}
-
-	for (size_t i = 0; i < goIdxs.size(); i++) {
-		auto go1 = objectArray[goIdxs[i]];
-
-		for (size_t j = i + 1; j < goIdxs.size(); j++) {
-			auto go2 = objectArray[goIdxs[j]];
-
-			if (Collision::IsColliding(*(go1->hitbox), *(go2->hitbox), go1->angle, go2->angle)) {
-				go1->NotifyCollision(*go2);
-				go2->NotifyCollision(*go1);
-			}
-		}
-	}
-}
-
 void PlayState::CreateField() {
 	field_index = Number::Rand();
 
@@ -144,7 +117,6 @@ void PlayState::CreateField() {
 
 	go = new GameObject();
 	tileMap = go->AddComponent<TileMap>(tileMapData.file, new TileSet(*go, tileSet.width, tileSet.height, tileSet.file));
-
 
 	go->box.vector = Vec2(0, 0);
 	(void)AddObject(go);
@@ -174,6 +146,29 @@ void PlayState::CreatePlayer(Constants::PersonaType persona) {
 	go = new GameObject();
 	go->AddComponent<PlayerAim>(player);
 	(void)AddObject(go);
+}
+
+const void PlayState::CheckCollision() {
+	std::vector<int> goIdxs;
+
+	for (size_t i = 0; i < objectArray.size(); i++) {
+		if (objectArray[i]->hitbox != nullptr) {
+			goIdxs.push_back(int(i));
+		}
+	}
+
+	for (size_t i = 0; i < goIdxs.size(); i++) {
+		auto go1 = objectArray[goIdxs[i]];
+
+		for (size_t j = i + 1; j < goIdxs.size(); j++) {
+			auto go2 = objectArray[goIdxs[j]];
+
+			if (Collision::IsColliding(*(go1->hitbox), *(go2->hitbox), go1->angle, go2->angle)) {
+				go1->NotifyCollision(*go2);
+				go2->NotifyCollision(*go1);
+			}
+		}
+	}
 }
 
 const BackgroundData& PlayState::GetBackgroundData(int idx) {
@@ -206,7 +201,21 @@ const int PlayState::GetWinnerId() {
 	return player->id;
 }
 
-void PlayState::LoadScoreState() {
+const void PlayState::PauseSet() {
+	GameData::Paused = true;
+
+	LoadScoreState();
+}
+
+const void PlayState::EndSet() {
+	GameData::Result[GameData::Set] = GetWinnerId();
+	GameData::Set++;
+	GameData::Finished = (GameData::Set == Constants::Game::Sets);
+
+	LoadScoreState();
+}
+
+const void PlayState::LoadScoreState() {
 	auto game = Game::GetInstance();
 
 	game->Push(new ScoreState());
