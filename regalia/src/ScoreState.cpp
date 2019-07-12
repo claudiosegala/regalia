@@ -62,6 +62,7 @@ void ScoreState::Update(unsigned dt) {
 	}
 
 	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)) { // restart
+		GameData::Init();
 		game->Push(new PlayState());
 		popRequested = 2;
 		return;
