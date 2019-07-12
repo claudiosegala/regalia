@@ -30,13 +30,6 @@ void MenuState::LoadAssets() {
 
 	CreateBackground();
 
-	CreateOption(Play, &Constants::Menu::Play, { 650, 230 });
-	CreateOption(Story, &Constants::Menu::History, { 320, 130 });
-	CreateOption(Credits, &Constants::Menu::Credits, { 320, 230 });
-	CreateOption(Exit, &Constants::Menu::Exit, { 320, 330 });
-
-	CreateSound();
-
 	music.Open(Constants::Menu::Music);
 }
 
@@ -53,6 +46,14 @@ void MenuState::Update(unsigned dt) {
 		return;
 	}
 
+	if (mode == MenuModes::Initial) {
+		if (in.GamepadPress(SDL_CONTROLLER_BUTTON_A)) {
+			ChangeMode();
+		}
+
+		return;
+	}
+
 	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_DOWN)) {
 		SelectedOption = (SelectedOption + 1) % MAX_OPTION;
 		sound->Play();
@@ -61,6 +62,7 @@ void MenuState::Update(unsigned dt) {
 		if (SelectedOption < 0) {
 			SelectedOption = MAX_OPTION - 1;
 		}
+
 		sound->Play();
 	} else if (in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_LEFT) || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_RIGHT)) {
 		SelectedOption = SelectedOption == Play ? Story : Play;
@@ -113,18 +115,29 @@ void MenuState::Resume() {
 	music.Play();
 }
 
+void MenuState::ChangeMode() {
+	mode = MenuModes::SelectOptions;
+
+	CreateBackground();
+	CreateOptions();
+	CreateSound();
+}
+
 void MenuState::CreateBackground() {
 	auto go = new GameObject();
+	auto background = mode == MenuModes::Initial ? Constants::Menu::BackgroundInitial : Constants::Menu::Background;
 
-	go->AddComponent<Sprite>(Constants::Menu::Background);
-
-	go->box.width = Constants::Window::Width;
-	go->box.height = Constants::Window::Height;
-	go->GetComponent<Sprite>()->SetScale(2.0f, 2.0f);
-
-	go->box.vector.Reset();
+	go->AddComponent<Sprite>(Constants::Menu::Background)->SetScale(2.0f, 2.0f);
+	go->box.SetCenter(Constants::Window::Center);
 
 	(void)AddObject(go);
+}
+
+void MenuState::CreateOptions() {
+	CreateOption(Play, &Constants::Menu::Play, { 650, 230 });
+	CreateOption(Story, &Constants::Menu::History, { 320, 130 });
+	CreateOption(Credits, &Constants::Menu::Credits, { 320, 230 });
+	CreateOption(Exit, &Constants::Menu::Exit, { 320, 330 });
 }
 
 void MenuState::CreateOption(int option, const SpriteSheetData* spriteSheetData, Vec2 position) {

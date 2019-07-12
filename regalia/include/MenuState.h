@@ -25,6 +25,11 @@ public:
 	void Resume() override;
 
 private:
+	enum class MenuModes {
+		Initial,
+		SelectOptions
+	};
+
 	enum {
 		Play,
 		Story,
@@ -35,14 +40,20 @@ private:
 
 	int SelectedOption = Play;
 
+	MenuModes mode = MenuModes::Initial;
+
 	std::map<int, Sprite*> OptionSprite;
 
 	Music music;
 
-	Sound* sound;
+	Sound* sound = nullptr;
+
+	void ChangeMode();
 
 	void CreateBackground();
-	
+
+	void CreateOptions();
+
 	void CreateOption(int option, const SpriteSheetData* spriteSheetData, Vec2 position);
 
 	void CreateSound();
