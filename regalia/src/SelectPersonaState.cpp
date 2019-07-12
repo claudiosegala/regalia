@@ -37,7 +37,7 @@ void SelectPersonaState::LoadAssets() {
 
 	auto chapter = new GameObject();
 	chapter->AddComponent<Sprite>(Constants::SelectPersona::Title)->SetScale(2, 2);
-	chapter->box.vector = Vec2(175, 75);
+	chapter->box.vector = Vec2(202, 70);
 	(void)AddObject(chapter);
 
 	for (int i = 0; i < Constants::Game::MaxNumPlayers; i++) {
@@ -49,7 +49,6 @@ void SelectPersonaState::LoadAssets() {
 			LoadCard(0, Constants::Book::CardPositions[i]);
 			LoadPlayerLabel(i);
 			LoadPersona(i);
-			//LoadVictories(i, victories);
 		} else {
 			LoadCard(1, Constants::Book::CardPositions[i]);
 		}
