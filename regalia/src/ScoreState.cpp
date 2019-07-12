@@ -185,8 +185,8 @@ void ScoreState::LoadPersona(int n) {
 			go->AddComponent<Sprite>(&Constants::Player::MisterNBlue)->SetScale(2.0f, 2.0f);
 			break;
 
-		case Constants::PersonaType::GOTICA_RED:
-			go->AddComponent<Sprite>(&Constants::Player::GoticaRed)->SetScale(2.0f, 2.0f);
+		case Constants::PersonaType::GOTICA_GREEN:
+			go->AddComponent<Sprite>(&Constants::Player::GoticaGreen)->SetScale(2.0f, 2.0f);
 			break;
 
 		case Constants::PersonaType::GOTICA_PURPLE:

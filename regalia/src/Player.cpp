@@ -104,8 +104,8 @@ void Player::LoadAssets() {
 			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterNBlue, Constants::Player::StartFallingAnimation);
 			break;
 
-		case Constants::PersonaType::GOTICA_RED:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaRed, Constants::Player::StartFallingAnimation);
+		case Constants::PersonaType::GOTICA_GREEN:
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaGreen, Constants::Player::StartFallingAnimation);
 			break;
 
 		case Constants::PersonaType::GOTICA_PURPLE:
@@ -231,7 +231,7 @@ void Player::LoadAndShoot() {
 				spriteSheetData = &Constants::Bullet::MisterN;
 				break;
 
-			case Constants::PersonaType::GOTICA_RED:
+			case Constants::PersonaType::GOTICA_GREEN:
 				spriteSheetData = &Constants::Bullet::GoticaGreen;
 				break;
 
@@ -260,10 +260,12 @@ void Player::UpdateSpeed(unsigned long dt) {
 	auto direction = in.GamepadLeftStick(id);
 
 	const auto jump = in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
-	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_A, id);
+	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_A, id)
+	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id);
 
 	const auto jumpHold = in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
-	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, id);
+	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, id)
+	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id);
 
 	const auto keyLeft = in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
 

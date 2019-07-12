@@ -35,7 +35,7 @@ private:
 		{ Constants::PersonaType::MISTER_N_RED, { true, &Constants::Player::MisterNRed } },
 		{ Constants::PersonaType::MISTER_N_BLUE, { true, &Constants::Player::MisterNBlue } },
 		{ Constants::PersonaType::GOTICA_PURPLE, { true, &Constants::Player::GoticaPurple } },
-		{ Constants::PersonaType::GOTICA_RED, { true, &Constants::Player::GoticaRed } },
+		{ Constants::PersonaType::GOTICA_GREEN, { true, &Constants::Player::GoticaGreen } },
 	};
 
 	std::vector<bool> personaConfirmed;
