@@ -40,11 +40,6 @@ void SelectPersonaState::LoadAssets() {
 	chapter->box.vector = Vec2(202, 70);
 	(void)AddObject(chapter);
 
-	auto chapterNumber = new GameObject();
-	chapterNumber->AddComponent<Sprite>(&Constants::Score::Nums, 1)->SetScale(2.0f, 2.0f);
-	chapterNumber->box.vector = Vec2(355, 75);
-	(void)AddObject(chapterNumber);
-
 	for (int i = 0; i < Constants::Game::MaxNumPlayers; i++) {
 		if (i < GameData::NumPlayers) {
 			personaConfirmed.push_back(false);
@@ -136,9 +131,12 @@ void SelectPersonaState::Update(unsigned dt) {
 			} else if (timers[i].Get() > 300) {
 				auto leftStickX = in.GamepadLeftStick(i).x;
 
-				if (leftStickX != 0) {
+				auto selectNext = leftStickX > 0 || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
+				auto selectPrevious = leftStickX < 0 || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+
+				if (selectNext || selectPrevious) {
 					do {
-						currentPersona[i] = leftStickX > 0 ? nextPersona(currentPersona[i]) : previousPersona(currentPersona[i]);
+						currentPersona[i] = selectNext ? nextPersona(currentPersona[i]) : previousPersona(currentPersona[i]);
 					} while (!personas[currentPersona[i]].isAvailable);
 
 					players[i]->GetComponent<Sprite>()->Open(personas[currentPersona[i]].spriteSheetData);
