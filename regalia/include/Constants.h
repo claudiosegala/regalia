@@ -171,9 +171,7 @@ namespace Story {
 }
 
 namespace Credit {
-	const int TextSize = 15;
-
-	const std::string Background = "assets/img/tileSet_01.png";
+	const std::string Background = "assets/img/credito.png";
 }
 
 namespace Play {

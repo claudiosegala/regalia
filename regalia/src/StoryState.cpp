@@ -11,7 +11,6 @@
 StoryState::StoryState() {
 	Logger::Info("Initializing Story State");
 
-	//music.Open(Constants::Story::Music);
 	LoadAssets();
 }
 
