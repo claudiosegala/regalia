@@ -19,7 +19,7 @@ Player::Player(GameObject& go, int id, Constants::PersonaType persona, Vec2 init
     , personaType(persona) {
 
 	associated.box.SetCenter(initialPosition);
-	associated.hitbox = new Rect(associated.box.vector + Vec2(13, 11), 22, 36);
+	associated.hitbox = new Rect(associated.box.vector + Vec2(15, 11), 18, 34);
 
 	LoadAssets();
 
@@ -322,7 +322,7 @@ void Player::UpdateSpeed(unsigned long dt) {
 		}
 	}
 
-	speed.Limit(Constants::Game::MaxVelocity);
+	speed.Limit(Constants::Player::MaxVelocity);
 }
 
 void Player::MoveAndSlide(unsigned long dt) {
