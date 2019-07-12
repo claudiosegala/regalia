@@ -192,9 +192,9 @@ namespace Bullet {
 	        { 0, 4 },
 	    });
 
-	const SpriteSheetData Gotica(
-	    "assets/img/gotica_bullet_spritesheet.png",
-	    128,
+	const SpriteSheetData GoticaPurple(
+	    "assets/img/spritesheets/goth_bullet_spritesheet_purple.png",
+	    192,
 	    16,
 	    100,
 	    1,
@@ -202,24 +202,14 @@ namespace Bullet {
 	        { 0, 8 },
 	    });
 
-	const SpriteSheetData Alquimista(
-	    "assets/img/alquimista_bullet_spritesheet.png",
-	    64,
+	const SpriteSheetData GoticaGreen(
+	    "assets/img/spritesheets/goth_bullet_spritesheet_green.png",
+	    192,
 	    16,
 	    100,
 	    1,
 	    {
-	        { 0, 4 },
-	    });
-
-	const SpriteSheetData Monge(
-	    "assets/img/monge_bullet_spritesheet.png",
-	    64,
-	    16,
-	    100,
-	    1,
-	    {
-	        { 0, 4 },
+	        { 0, 8 },
 	    });
 
 }
@@ -286,7 +276,7 @@ namespace Player {
 	};
 
 	const SpriteSheetData Charge(
-	    "assets/img/charge_spritesheet.png",
+	    "assets/img/spritesheets/charge_spritesheet.png",
 	    2368,
 	    64,
 	    80,
