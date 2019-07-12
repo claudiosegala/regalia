@@ -7,10 +7,12 @@
 #include <Sprite.h>
 #include "GameData.h"
 #include "Sound.h"
+#include "PlayState.h"
 
-Bullet::Bullet(GameObject& go, BulletData& data)
+Bullet::Bullet(GameObject& go, BulletData& data, PlayState* play_state)
     : Component(go)
     , shooterId(data.shooterId)
+    , play_state(play_state)
     , damage(data.damage)
     , level(data.level) {
 
@@ -25,15 +27,15 @@ Bullet::Bullet(GameObject& go, BulletData& data)
 	invincible = GameData::IsTimeUp();
 
 	LoadAssets(data);
-	associated.hitbox = new Rect(associated.box);
+	associated.hitbox = new Rect(associated.box.vector, Constants::Bullet::Size, Constants::Bullet::Size);
 
 	auto sound = associated.AddComponent<Sound>(Constants::SharedAssets::Sounds::Shot);
 	sound->Play();
 }
 
 void Bullet::Update(unsigned dt) {
-	if (level <= 0) {
-		associated.RequestDelete();
+	if (level <= 0 || play_state->alive_player_count == 1) {
+		Die();
 		return;
 	}
 
@@ -59,8 +61,9 @@ void Bullet::LoadAssets(BulletData& data) {
 }
 
 void Bullet::MoveAndBounce(unsigned dt) {
-	auto& box = *associated.hitbox = associated.box;
-	const auto startingPosition = box.vector;
+	associated.hitbox->SetCenter(associated.box.Center());
+
+	auto& box = *associated.hitbox;
 	auto maxDelta = CollisionMap::FindMaxDelta(box, speed, dt);
 
 	auto dist = speed * float(maxDelta) / 1000.0f;
@@ -96,5 +99,9 @@ void Bullet::MoveAndBounce(unsigned dt) {
 		}
 	}
 
-	associated.box += box.vector - startingPosition;
+	associated.box.SetCenter(box.Center());
+}
+
+void Bullet::Die() {
+	associated.RequestDelete();
 }

@@ -7,12 +7,13 @@
 #include <Timer.h>
 #include <StopWatch.h>
 #include <Charge.h>
+#include <PlayState.h>
 
 class Player : public Component {
 public:
 	const int id;
 
-	Player(GameObject& go, int id, Constants::PersonaType persona, Vec2 initialPosition);
+	Player(GameObject& go, int id, Constants::PersonaType persona, Vec2 initialPosition, PlayState* play_state = nullptr);
 
 	~Player();
 
@@ -40,6 +41,8 @@ private:
 		IsLoading = 1 << 2,
 		IsShooting = 1 << 3
 	};
+
+	PlayState* play_state;
 
 	int collisions = None;
 

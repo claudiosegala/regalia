@@ -1,16 +1,15 @@
 #pragma once
 
 #include <Component.h>
-#include <GameObject.h>
 #include <Interfaces.h>
 #include <Vec2.h>
-#include <Rect.h>
+#include "PlayState.h"
 
 class Bullet : public Component {
 public:
 	int shooterId;
 
-	Bullet(GameObject& go, BulletData& data);
+	Bullet(GameObject& go, BulletData& data, PlayState* play_state);
 
 	void Update(unsigned dt) override;
 
@@ -22,6 +21,8 @@ public:
 
 private:
 
+	PlayState* play_state;
+
 	int damage;
 
 	int level;
@@ -31,6 +32,8 @@ private:
 	bool invincible;
 
 	void LoadAssets(BulletData& data);
-	
+
 	void MoveAndBounce(unsigned dt);
+
+	void Die();
 };

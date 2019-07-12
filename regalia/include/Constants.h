@@ -29,7 +29,6 @@ namespace Window {
 
 namespace Game {
 	const int Sets = 5;
-	const int Players = 2;
 	const bool FriendlyFire = false;
 	const float SetLength = 45.0f;
 	const Vec2 MaxVelocity = { 100.0f, 1000.0f };
@@ -179,6 +178,8 @@ namespace Bullet {
 	const float DefaultSpeed = 350.0f;
 
 	const float DefaultMaxDistance = 400.0f;
+
+	const float Size = 16.0f;
 
 	const SpriteSheetData MisterN(
 	    "assets/img/mister_n_bullet_spritesheet.png",
