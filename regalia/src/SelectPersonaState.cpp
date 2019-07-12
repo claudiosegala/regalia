@@ -40,11 +40,6 @@ void SelectPersonaState::LoadAssets() {
 	chapter->box.vector = Vec2(202, 70);
 	(void)AddObject(chapter);
 
-	auto chapterNumber = new GameObject();
-	chapterNumber->AddComponent<Sprite>(&Constants::Score::Nums, 1)->SetScale(2.0f, 2.0f);
-	chapterNumber->box.vector = Vec2(355, 75);
-	(void)AddObject(chapterNumber);
-
 	for (int i = 0; i < Constants::Game::MaxNumPlayers; i++) {
 		if (i < GameData::NumPlayers) {
 			personaConfirmed.push_back(false);
