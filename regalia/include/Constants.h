@@ -134,13 +134,7 @@ namespace Score {
 }
 
 namespace Story {
-	const int TextSize = 15;
-
-	const std::string Story = "Here, on the other hand, I've gone crazy \
-				and really let the literal span several lines, \
-				without bothering with quoting each line's \
-				content. This works, but you can't indent.";
-	const std::string Background = "assets/img/tileSet_01.png";
+	const std::string Background = "assets/img/historia.png";
 }
 
 namespace Credit {

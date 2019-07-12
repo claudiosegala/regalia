@@ -31,7 +31,7 @@ void MenuState::LoadAssets() {
 	CreateBackground();
 
 	CreateOption(Play, &Constants::Menu::Play, { 650, 230 });
-	CreateOption(History, &Constants::Menu::History, { 320, 130 });
+	CreateOption(Story, &Constants::Menu::History, { 320, 130 });
 	CreateOption(Credits, &Constants::Menu::Credits, { 320, 230 });
 	CreateOption(Exit, &Constants::Menu::Exit, { 320, 330 });
 
@@ -63,7 +63,7 @@ void MenuState::Update(unsigned dt) {
 		}
 		sound->Play();
 	} else if (in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_LEFT) || in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_RIGHT)) {
-		SelectedOption = SelectedOption == Play ? History : Play;
+		SelectedOption = SelectedOption == Play ? Story : Play;
 		sound->Play();
 	}
 
