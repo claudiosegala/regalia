@@ -51,6 +51,8 @@ void MenuState::Update(unsigned dt) {
 			ChangeMode();
 		}
 
+		UpdateArray(dt);
+
 		return;
 	}
 
