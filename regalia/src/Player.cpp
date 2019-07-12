@@ -66,12 +66,6 @@ void Player::Update(unsigned dt) {
 		return;
 	}
 
-	auto& in = InputManager::GetInstance();
-
-	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id) || in.GamepadAxisHolded(SDL_CONTROLLER_AXIS_TRIGGERLEFT, id)) {
-		in.GamepadRumble(id, 0.5, 1000);
-	}
-
 	shootingCoolDown.Update(dt);
 	currentAnimationTimer.Update(dt);
 
