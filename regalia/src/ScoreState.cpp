@@ -69,6 +69,7 @@ void ScoreState::Update(unsigned dt) {
 	}
 
 	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_B)) { // go back to menu
+		GameData::Init();
 		game->Push(new MenuState());
 		popRequested = 3;
 		return;
