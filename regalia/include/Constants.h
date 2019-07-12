@@ -122,7 +122,7 @@ namespace Menu {
 }
 
 namespace Countdown {
-	const bool Enabled = true; // Change this to enable or disable the countdown
+	const bool Enabled = false; // Change this to enable or disable the countdown
 	const std::string Sound = "assets/audio/Som de batalha (Regalia).ogg";
 	const int TextSize = 180;
 	const int StartValue = 3;
@@ -153,10 +153,11 @@ namespace Score {
 	        { 8, 1 },
 	        { 9, 1 },
 	    });
+
 	const SpriteSheetData Cards(
 	    "assets/img/score/card_spritesheet.png",
-	    48,
-	    48,
+	    168,
+	    82,
 	    100,
 	    3,
 	    {
@@ -164,6 +165,34 @@ namespace Score {
 	        { 1, 1 },
 	        { 2, 1 },
 	    });
+
+	const SpriteSheetData PlayerLabel(
+	    "assets/img/score/player_label_spritesheet.png",
+	    100,
+	    4,
+	    100,
+	    5,
+	    {
+	        { 0, 1 },
+	        { 1, 1 },
+	        { 2, 1 },
+	        { 3, 1 },
+	        { 4, 1 },
+	    });
+
+	const SpriteSheetData Victories(
+	    "assets/img/score/points_spritesheet.png",
+	    176,
+	    10,
+	    100,
+	    4,
+	    {
+	        { 0, 1 },
+	        { 1, 1 },
+	        { 2, 1 },
+	        { 3, 1 },
+	    });
+
 }
 
 namespace Story {

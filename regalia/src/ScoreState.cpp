@@ -139,8 +139,6 @@ void ScoreState::LoadChapter() {
 }
 
 void ScoreState::LoadScore() {
-	auto pos = Vec2(500, 100); // sprite frame width, arbitrario
-
 	for (int i = 0; i < Constants::Game::MaxNumPlayers; i++) {
 		auto victories = 0;
 
@@ -149,60 +147,68 @@ void ScoreState::LoadScore() {
 		}
 
 		if (i < GameData::NumPlayers) {
-			LoadCard(1 + (victories == Constants::Game::VictoriesToWin), pos);
-			LoadPlayer(i, pos);
-			LoadPersona(GameData::Personas[i], pos);
-			LoadVictories(i, victories, pos);
+			LoadCard(victories == Constants::Game::VictoriesToWin ? 2 : 0, cardPositions[i]);
+			LoadPlayerLabel(i);
+			LoadPersona(i);
+			LoadVictories(i, victories);
 		} else {
-			LoadCard(0, pos);
+			LoadCard(1, cardPositions[i]);
 		}
-
-		pos += Vec2(230, 0);
 	}
 }
 
 void ScoreState::LoadCard(int animation, Vec2 pos) {
-	(void)animation;
-	(void)pos;
+	auto go = new GameObject();
+	auto sprite = go->AddComponent<Sprite>(&Constants::Score::Cards, animation);
+	sprite->SetScale(2.0f, 2.0f);
+	go->box.vector = pos;
+	(void)AddObject(go);
 }
 
-void ScoreState::LoadPlayer(int n, Vec2 pos) {
-	(void)n;
-	(void)pos;
+void ScoreState::LoadPlayerLabel(int n) {
+	auto go = new GameObject();
+	auto sprite = go->AddComponent<Sprite>(&Constants::Score::PlayerLabel, n + 1);
+	sprite->SetScale(2.0f, 2.0f);
+	go->box.vector = playerLabelPositions[n];
+	(void)AddObject(go);
 }
 
-void ScoreState::LoadPersona(Constants::PersonaType type, Vec2 pos) {
+void ScoreState::LoadPersona(int n) {
 	auto go = new GameObject();
 
-	switch (type) {
+	switch (GameData::Personas[n]) {
 		case Constants::PersonaType::MISTER_N_RED:
-			go->AddComponent<Sprite>(&Constants::Player::MisterNRed)->SetScale(3.0f, 3.0f);
+			go->AddComponent<Sprite>(&Constants::Player::MisterNRed)->SetScale(2.0f, 2.0f);
 			break;
+
 		case Constants::PersonaType::MISTER_N_BLUE:
-			go->AddComponent<Sprite>(&Constants::Player::MisterNBlue)->SetScale(3.0f, 3.0f);
+			go->AddComponent<Sprite>(&Constants::Player::MisterNBlue)->SetScale(2.0f, 2.0f);
 			break;
+
 		case Constants::PersonaType::GOTICA_RED:
-			go->AddComponent<Sprite>(&Constants::Player::GoticaRed)->SetScale(3.0f, 3.0f);
+			go->AddComponent<Sprite>(&Constants::Player::GoticaRed)->SetScale(2.0f, 2.0f);
 			break;
+
 		case Constants::PersonaType::GOTICA_PURPLE:
-			go->AddComponent<Sprite>(&Constants::Player::GoticaPurple)->SetScale(3.0f, 3.0f);
+			go->AddComponent<Sprite>(&Constants::Player::GoticaPurple)->SetScale(2.0f, 2.0f);
 			break;
+
 		default:
 			throw std::runtime_error("Invalid persona type");
 	}
 
-	go->box.vector = pos;
+	go->box.vector = personasPositions[n];
 
 	(void)AddObject(go);
 }
 
-void ScoreState::LoadVictories(int id, int victories, Vec2 pos) {
+void ScoreState::LoadVictories(int n, int victories) {
 	auto go = new GameObject();
-	auto text = std::to_string(1);
-	(void)id;
-	(void)victories;
-	go->AddComponent<Text>(Constants::Game::Font, Constants::Score::VictoriesSize, Text::TextStyle::BLENDED, text, Constants::Colors::White);
-	go->box.SetCenter(pos + Vec2(187, 72));
+
+	auto sprite = go->AddComponent<Sprite>(&Constants::Score::Victories, victories);
+	sprite->SetScale(2.0f, 2.0f);
+
+	go->box.vector = victoriesPositions[n];
 
 	(void)AddObject(go);
 }
