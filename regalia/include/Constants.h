@@ -206,8 +206,8 @@ namespace Credit {
 namespace Play {
 	const std::string Music = "assets/audio/Batalha I Loop.ogg";
 
-	namespace CityBackground {
-		const BackgroundAnimationData Background(
+	const std::vector<BackgroundAnimationData> CityBackground = {
+		{ // Background
 		    new SpriteSheetData(
 		        "assets/img/backgrounds/cidade_pisca_300ms.png",
 		        3840,
@@ -218,9 +218,8 @@ namespace Play {
 		            { 0, 4 },
 		        }),
 		    { 0, 0 },
-		    {});
-
-		const BackgroundAnimationData Subway(
+		    {} },
+		{ // Subway
 		    new SpriteSheetData(
 		        "assets/img/backgrounds/cidade_metro_100ms_252_371.png",
 		        1332,
@@ -230,9 +229,8 @@ namespace Play {
 		        { { 0, 11 },
 		            { 1, 1 } }),
 		    { 252, 371 },
-		    {});
-
-		const BackgroundAnimationData Crane(
+		    {} },
+		{ // Crane
 		    new SpriteSheetData(
 		        "assets/img/backgrounds/cidade_gindaste_200ms_305_161.png",
 		        360,
@@ -243,9 +241,8 @@ namespace Play {
 		            { 0, 10 },
 		        }),
 		    { 305, 161 },
-		    {});
-
-		const BackgroundAnimationData Cars1(
+		    {} },
+		{ // Cars 1
 		    new SpriteSheetData(
 		        "assets/img/backgrounds/cidade_carros1_150ms_162_270.png",
 		        623,
@@ -256,9 +253,8 @@ namespace Play {
 		            { 0, 7 },
 		        }),
 		    { 162, 270 },
-		    {});
-
-		const BackgroundAnimationData Cars2(
+		    {} },
+		{ // Cars 2
 		    new SpriteSheetData(
 		        "assets/img/backgrounds/cidade_carros2_150ms_162_270.png",
 		        979,
@@ -269,9 +265,8 @@ namespace Play {
 		            { 0, 11 },
 		        }),
 		    { 162, 270 },
-		    {});
-
-	}
+		    {} }
+	};
 
 	const std::vector<BackgroundData> Backgrounds = {
 		{ "assets/img/backgrounds/catacombs_01.png" },
@@ -514,5 +509,4 @@ namespace Player {
 	    });
 
 }
-
 }

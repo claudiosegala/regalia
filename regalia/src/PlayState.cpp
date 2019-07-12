@@ -108,35 +108,12 @@ void PlayState::CreateField() {
 	GameObject* go;
 	const auto& tileMapData = GetTileMapData(field_index);
 
-	// Background
-	go = new GameObject();
-	go->AddComponent<Sprite>(Constants::Play::CityBackground::Background.SpriteSheet);
-	go->box.vector = Constants::Play::CityBackground::Background.InitialPosition;
-	(void)AddObject(go);
-
-	// Cars 1
-	go = new GameObject();
-	go->AddComponent<Sprite>(Constants::Play::CityBackground::Cars1.SpriteSheet);
-	go->box.vector = Constants::Play::CityBackground::Cars1.InitialPosition;
-	(void)AddObject(go);
-
-	// Cars 2
-	go = new GameObject();
-	go->AddComponent<Sprite>(Constants::Play::CityBackground::Cars2.SpriteSheet);
-	go->box.vector = Constants::Play::CityBackground::Cars2.InitialPosition;
-	(void)AddObject(go);
-
-	// Crane
-	go = new GameObject();
-	go->AddComponent<Sprite>(Constants::Play::CityBackground::Crane.SpriteSheet);
-	go->box.vector = Constants::Play::CityBackground::Crane.InitialPosition;
-	(void)AddObject(go);
-
-	// Subway
-	go = new GameObject();
-	go->AddComponent<Sprite>(Constants::Play::CityBackground::Subway.SpriteSheet);
-	go->box.vector = Constants::Play::CityBackground::Subway.InitialPosition;
-	(void)AddObject(go);
+	for (auto&& bgData : Constants::Play::CityBackground) {
+		go = new GameObject();
+		go->AddComponent<Sprite>(bgData.SpriteSheet);
+		go->box.vector = bgData.InitialPosition;
+		(void)AddObject(go);
+	}
 
 	go = new GameObject();
 	tileMap = go->AddComponent<TileMap>(tileMapData.file);

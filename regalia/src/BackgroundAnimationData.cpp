@@ -8,7 +8,3 @@ BackgroundAnimationData::BackgroundAnimationData(SpriteSheetData* SpriteSheet, V
     , InitialPosition(InitialPosition)
     , IntervalRange(std::move(IntervalRange)) {
 }
-
-BackgroundAnimationData::~BackgroundAnimationData() {
-	delete SpriteSheet;
-}
