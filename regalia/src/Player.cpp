@@ -68,7 +68,7 @@ void Player::Update(unsigned dt) {
 
 	auto& in = InputManager::GetInstance();
 
-	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id)) {
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id) || in.GamepadAxisHolded(SDL_CONTROLLER_AXIS_TRIGGERLEFT, id)) {
 		in.GamepadRumble(id, 0.5, 1000);
 	}
 
@@ -197,18 +197,18 @@ void Player::LoadAndShoot() {
 	auto& in = InputManager::GetInstance();
 
 	playerState &= ~IsLoading & ~IsShooting;
-	canShoot |= shootingCoolDown.IsTimeUp() && in.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id);
+	canShoot |= shootingCoolDown.IsTimeUp() && (in.GamepadPress(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id) || in.GamepadAxisHolded(SDL_CONTROLLER_AXIS_TRIGGERRIGHT, id));
 
 	if (!canShoot) {
 		return;
 	}
 
-	if (in.IsGamepadDown(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
+	if (in.IsGamepadDown(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id) || in.IsGamepadAxisDown(SDL_CONTROLLER_AXIS_TRIGGERRIGHT, id)) {
 
 		playerState |= IsLoading;
 		charge->Load();
 
-	} else if (in.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id)) {
+	} else if (in.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id) || in.GamepadAxisRelease(SDL_CONTROLLER_AXIS_TRIGGERRIGHT, id)) {
 		auto rightStick = in.GamepadRightStick(id);
 		auto bulletLevel = charge->GetLevel();
 
@@ -261,11 +261,13 @@ void Player::UpdateSpeed(unsigned long dt) {
 
 	const auto jump = in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
 	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_A, id)
-	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id);
+	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id)
+	    || in.GamepadAxisHolded(SDL_CONTROLLER_AXIS_TRIGGERLEFT, id);
 
 	const auto jumpHold = in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
 	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, id)
-	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id);
+	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id)
+	    || in.IsGamepadAxisDown(SDL_CONTROLLER_AXIS_TRIGGERLEFT, id);
 
 	const auto keyLeft = in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
 
