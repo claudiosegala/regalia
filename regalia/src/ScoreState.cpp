@@ -110,12 +110,6 @@ void ScoreState::LoadBackground() {
 
 // TODO: improve to be more generic
 void ScoreState::LoadScore() {
-	std::map<int, int> score;
-
-	for (auto winner : GameData::Result) {
-		score[winner]++;
-	}
-
 	auto pos = Vec2(20, 150); // sprite frame width, arbitrario
 
 	{
