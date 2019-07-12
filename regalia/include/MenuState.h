@@ -27,7 +27,7 @@ public:
 private:
 	enum {
 		Play,
-		History,
+		Story,
 		Credits,
 		Exit,
 		MAX_OPTION

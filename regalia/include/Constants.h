@@ -35,6 +35,8 @@ namespace Game {
 	const float LongJumpGravity = 420.0f;
 	const int MillisecondsPerRound = 45000;
 	const int MinNumPlayers = 1; // TODO: change to 2
+	const int MaxNumPlayers = 4;
+	const int VictoriesToWin = 3;
 	const std::string Font = "assets/font/Dark Crystal.ttf";
 }
 
@@ -126,20 +128,45 @@ namespace Countdown {
 }
 
 namespace Score {
-	const std::string Background = "assets/img/black.jpeg";
+	const std::string Background = "assets/img/score/score_menu_bg.png";
+	const std::string Chapter = "assets/img/score/capitulo_titulo.png";
+	const std::string End = "assets/img/score/fim.png";
 	const std::string Music = "assets/audio/score_song.ogg";
 	const int VictoriesSize = 75;
 	const int OptionSize = 45;
+	const SpriteSheetData Nums (
+	    "assets/img/score/nums.png",
+	    48,
+	    48,
+	    100,
+	    10,
+	    {
+	        { 0, 1 },
+	        { 1, 1 },
+	        { 2, 1 },
+	        { 3, 1 },
+	        { 4, 1 },
+	        { 5, 1 },
+	        { 6, 1 },
+	        { 7, 1 },
+	        { 8, 1 },
+	        { 9, 1 },
+	    });
+	const SpriteSheetData Cards(
+	    "assets/img/score/card_spritesheet.png",
+	    48,
+	    48,
+	    100,
+	    3,
+	    {
+	        { 0, 1 },
+	        { 1, 1 },
+	        { 2, 1 },
+	    });
 }
 
 namespace Story {
-	const int TextSize = 15;
-
-	const std::string Story = "Here, on the other hand, I've gone crazy \
-				and really let the literal span several lines, \
-				without bothering with quoting each line's \
-				content. This works, but you can't indent.";
-	const std::string Background = "assets/img/tileSet_01.png";
+	const std::string Background = "assets/img/historia.png";
 }
 
 namespace Credit {
