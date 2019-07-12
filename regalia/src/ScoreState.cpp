@@ -29,7 +29,6 @@ ScoreState::~ScoreState() {
 void ScoreState::LoadAssets() {
 	LoadBackground();
 	LoadChapter();
-	//LoadOptions();
 	LoadScore();
 }
 
@@ -62,14 +61,14 @@ void ScoreState::Update(unsigned dt) {
 		}
 	}
 
-	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_B)) { // restart
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_Y)) { // restart
 		GameData::Init();
 		game->Push(new PlayState());
 		popRequested = 2;
 		return;
 	}
 
-	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_Y)) { // go back to menu
+	if (in.GamepadPress(SDL_CONTROLLER_BUTTON_B)) { // go back to menu
 		game->Push(new MenuState());
 		popRequested = 3;
 		return;
