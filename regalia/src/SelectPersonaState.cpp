@@ -15,7 +15,7 @@ SelectPersonaState::SelectPersonaState() {
 
 	GameData::NumPlayers = std::min(in.NumberOfControllers(), 4);
 
-	if (GameData::NumPlayers < Constants::Play::MinNumPlayers) {
+	if (GameData::NumPlayers < Constants::Game::MinNumPlayers) {
 		throw new std::runtime_error("You need more players to play this game!");
 	}
 
