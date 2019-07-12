@@ -127,6 +127,7 @@ namespace Countdown {
 
 namespace Score {
 	const std::string Background = "assets/img/black.jpeg";
+	const std::string Music = "assets/audio/score_song.ogg";
 	const int VictoriesSize = 75;
 	const int OptionSize = 45;
 }

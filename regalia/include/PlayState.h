@@ -29,6 +29,8 @@ public:
 
 	int player_count = 0;
 
+	int alive_player_count = 0;
+
 private:
 	int field_index = 0;
 

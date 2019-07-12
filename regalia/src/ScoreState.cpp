@@ -17,7 +17,7 @@
 ScoreState::ScoreState() {
 	Logger::Info("Initializing Story State");
 
-	//music.Open(Constants::Story::Music);
+	music.Open(Constants::Score::Music);
 
 	LoadAssets();
 }
@@ -87,15 +87,19 @@ void ScoreState::Start() {
 	StartArray();
 
 	started = true;
+
+	music.Play();
 }
 
 void ScoreState::Pause() {
 	Logger::Info("Pausing Title State");
+	music.Stop(0);
 }
 
 void ScoreState::Resume() {
 	Logger::Info("Resuming Title State");
 	Camera::Reset();
+	music.Play();
 }
 
 void ScoreState::LoadBackground() {
@@ -110,12 +114,6 @@ void ScoreState::LoadBackground() {
 
 // TODO: improve to be more generic
 void ScoreState::LoadScore() {
-	std::map<int, int> score;
-
-	for (auto winner : GameData::Result) {
-		score[winner]++;
-	}
-
 	auto pos = Vec2(20, 150); // sprite frame width, arbitrario
 
 	{
