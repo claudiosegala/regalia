@@ -13,7 +13,7 @@ enum class PersonaType {
 	MISTER_N_RED = 0,
 	MISTER_N_BLUE,
 	GOTICA_PURPLE,
-	GOTICA_RED,
+	GOTICA_GREEN,
 	MAX_VALUE
 };
 
@@ -424,8 +424,8 @@ namespace Player {
 	        { DyingAnimation, 11 },
 	    });
 
-	const SpriteSheetData GoticaRed(
-	    "assets/img/spritesheets/goth_spritesheet_red.png",
+	const SpriteSheetData GoticaGreen(
+	    "assets/img/spritesheets/goth_spritesheet_green.png",
 	    2640,
 	    48,
 	    100,

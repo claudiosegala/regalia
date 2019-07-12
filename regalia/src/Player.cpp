@@ -104,8 +104,8 @@ void Player::LoadAssets() {
 			sprite = associated.AddComponent<Sprite>(&Constants::Player::MisterNBlue, Constants::Player::StartFallingAnimation);
 			break;
 
-		case Constants::PersonaType::GOTICA_RED:
-			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaRed, Constants::Player::StartFallingAnimation);
+		case Constants::PersonaType::GOTICA_GREEN:
+			sprite = associated.AddComponent<Sprite>(&Constants::Player::GoticaGreen, Constants::Player::StartFallingAnimation);
 			break;
 
 		case Constants::PersonaType::GOTICA_PURPLE:
@@ -231,7 +231,7 @@ void Player::LoadAndShoot() {
 				spriteSheetData = &Constants::Bullet::MisterN;
 				break;
 
-			case Constants::PersonaType::GOTICA_RED:
+			case Constants::PersonaType::GOTICA_GREEN:
 				spriteSheetData = &Constants::Bullet::GoticaGreen;
 				break;
 
