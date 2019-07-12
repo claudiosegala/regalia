@@ -46,7 +46,7 @@ private:
 
 	const void CheckCollision();
 
-	const BackgroundData& GetBackgroundData(int idx);
+	const std::vector<BackgroundAnimationData>& GetBackgroundData(int idx);
 
 	const TileMapData& GetTileMapData(int idx);
 
