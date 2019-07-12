@@ -40,6 +40,10 @@ void Player::Start() {
 }
 
 void Player::NotifyCollision(GameObject& go) {
+	if (playerState & IsDying) {
+		return;
+	}
+
 	if (play_state != nullptr && play_state->alive_player_count == 1) {
 		return; // Don't die when you're the only one left alive
 	}
@@ -371,7 +375,7 @@ void Player::Die() {
 
 void Player::CreateBullet(BulletData data) {
 	auto go = new GameObject();
-	
+
 	(void)go->AddComponent<Bullet>(data, play_state);
 
 	go->box.SetCenter(associated.box.Center());
@@ -385,7 +389,7 @@ void Player::CreateBullet(BulletData data) {
 
 void Player::CreateChargingAnimation(GameObject* playerGO) {
 	auto go = new GameObject();
-	
+
 	charge = go->AddComponent<Charge>(playerGO);
 
 	auto game = Game::GetInstance();

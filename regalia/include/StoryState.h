@@ -20,7 +20,4 @@ public:
 	void Pause() override;
 
 	void Resume() override;
-
-private:
-	Music music;
 };

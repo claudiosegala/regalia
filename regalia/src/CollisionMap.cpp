@@ -60,7 +60,7 @@ void CollisionMap::SetMap(std::vector<int> _map, int _rows, int _cols) {
 
 	map.resize(rows);
 
-	for (int i = 0; i < rows; i++) {
+	for (long long i = 0; i < rows; i++) {
 		map[i].resize(cols);
 		
 		for (int j = 0; j < cols; j++) {
