@@ -195,6 +195,24 @@ const int PlayState::GetWinnerId() {
 	return player->id;
 }
 
+const bool PlayState::IsGameFinished() {
+	for (int i = 0; i < GameData::NumPlayers; i++) {
+		int cnt = 0;
+
+		for (int j = 0; j < Constants::Game::Sets; j++) {
+			if (GameData::Result[j] == i) {
+				cnt++;
+			}
+		}
+
+		if (cnt >= 3) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 const void PlayState::PauseSet() {
 	GameData::Paused = true;
 
@@ -204,7 +222,7 @@ const void PlayState::PauseSet() {
 const void PlayState::EndSet() {
 	GameData::Result[GameData::Set] = GetWinnerId();
 	GameData::Set++;
-	GameData::Finished = (GameData::Set == Constants::Game::Sets);
+	GameData::Finished = IsGameFinished();
 
 	LoadScoreState();
 }

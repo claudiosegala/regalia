@@ -112,7 +112,6 @@ void ScoreState::LoadBackground() {
 	(void)AddObject(go);
 }
 
-// TODO: improve to be more generic
 void ScoreState::LoadScore() {
 	auto pos = Vec2(20, 150); // sprite frame width, arbitrario
 

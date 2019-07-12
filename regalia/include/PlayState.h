@@ -52,6 +52,8 @@ private:
 
 	const int GetWinnerId();
 
+	const bool IsGameFinished();
+
 	const void PauseSet();
 
 	const void EndSet();
