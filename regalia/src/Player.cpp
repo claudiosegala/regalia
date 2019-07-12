@@ -228,8 +228,11 @@ void Player::LoadAndShoot() {
 				break;
 
 			case Constants::PersonaType::GOTICA_RED:
+				spriteSheetData = &Constants::Bullet::GoticaGreen;
+				break;
+
 			case Constants::PersonaType::GOTICA_PURPLE:
-				spriteSheetData = &Constants::Bullet::Gotica;
+				spriteSheetData = &Constants::Bullet::GoticaPurple;
 				break;
 
 			default:
