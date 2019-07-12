@@ -153,7 +153,7 @@ namespace Book {
 }
 
 namespace SelectPersona {
-	const std::string Title = "assets/img/score/capitulo_titulo.png";
+	const std::string Title = "assets/img/score/chapter_title.png";
 }
 
 namespace Countdown {
@@ -165,8 +165,8 @@ namespace Countdown {
 
 namespace Score {
 	const std::string Background = "assets/img/score/score_menu_bg.png";
-	const std::string Chapter = "assets/img/score/capitulo_titulo.png";
-	const std::string End = "assets/img/score/fim.png";
+	const std::string Chapter = "assets/img/score/chapter_title.png";
+	const std::string End = "assets/img/score/end_title.png";
 	const std::string Music = "assets/audio/score_song.ogg";
 	const int VictoriesSize = 75;
 	const int OptionSize = 45;
