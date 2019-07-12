@@ -31,7 +31,7 @@ namespace Game {
 	const int Sets = 9;
 	const bool FriendlyFire = false;
 	const float SetLength = 45.0f;
-	const float Gravity = 700.0f;
+	const float Gravity = 600.0f;
 	const float LongJumpGravity = 420.0f;
 	const int MillisecondsPerRound = 45000;
 	const int MinNumPlayers = 1; // TODO: change to 2
@@ -293,15 +293,15 @@ namespace Player {
 
 	const unsigned ShootingCoolDown = 500u;
 
-	const float LateralForce = 450.0f;
+	const float LateralForce = 600.0f;
 
-	const float SpeedMultiplier = 120.0f;
+	const float SpeedMultiplier = 160.0f;
 
 	const Vec2 MaxVelocity = { SpeedMultiplier, 1000.0f };
 
 	const float JumpSpeed = -300.0f;
 
-	const float WallJumpSpeed = -350.0f;
+	const float WallJumpSpeed = -450.0f;
 
 	const int Hp = 50;
 
