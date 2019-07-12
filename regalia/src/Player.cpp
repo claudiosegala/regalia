@@ -260,10 +260,12 @@ void Player::UpdateSpeed(unsigned long dt) {
 	auto direction = in.GamepadLeftStick(id);
 
 	const auto jump = in.GamepadPress(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
-	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_A, id);
+	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_A, id)
+	    || in.GamepadPress(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id);
 
 	const auto jumpHold = in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_UP, id)
-	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, id);
+	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_A, id)
+	    || in.IsGamepadDown(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, id);
 
 	const auto keyLeft = in.IsGamepadDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT, id);
 
