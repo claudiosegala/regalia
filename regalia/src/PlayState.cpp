@@ -141,12 +141,14 @@ void PlayState::CreatePlayer(Constants::PersonaType persona) {
 	alive_player_count++;
 
 	auto go = new GameObject();
-	go->AddComponent<Player>(playerId, persona, tileMap->GetPlayerInitialPosition(playerId), this);
+	const auto playerComponent = go->AddComponent<Player>(playerId, persona, tileMap->GetPlayerInitialPosition(playerId), this);
 	auto player = AddObject(go);
 
 	go = new GameObject();
-	go->AddComponent<PlayerAim>(player);
+	const auto playerAimComponent = go->AddComponent<PlayerAim>(player);
 	(void)AddObject(go);
+
+	playerComponent->playerAim = playerAimComponent;
 }
 
 const void PlayState::CheckCollision() {

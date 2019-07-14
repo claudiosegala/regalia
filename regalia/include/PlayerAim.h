@@ -7,12 +7,16 @@ public:
 	
 	~PlayerAim();
 
+	float GetAngle();
+
 	void Update(unsigned dt) override;
 	
 	void Render() override;
 
 private:
 	std::weak_ptr<GameObject> player;
+
+	float lastAngle = 0.0f;
 
 	void LoadAssets();
 };

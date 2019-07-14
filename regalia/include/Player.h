@@ -8,6 +8,7 @@
 #include <StopWatch.h>
 #include <Charge.h>
 #include <PlayState.h>
+#include "PlayerAim.h"
 
 class Player : public Component {
 public:
@@ -24,6 +25,10 @@ public:
 	void Update(unsigned dt) override;
 
 	void Render() override;
+
+	bool Loading() const;
+
+	PlayerAim* playerAim = nullptr;
 
 private:
 	enum Sides : int {

@@ -18,6 +18,10 @@ PlayerAim::PlayerAim(GameObject& go, std::weak_ptr<GameObject> player)
 
 PlayerAim::~PlayerAim() {}
 
+float PlayerAim::GetAngle() {
+	return associated.angle;
+}
+
 void PlayerAim::Update(unsigned dt) {
 	UNUSED(dt);
 
@@ -27,11 +31,12 @@ void PlayerAim::Update(unsigned dt) {
 		return;
 	}
 
-	auto playerId = currentPlayer->GetComponent<Player>()->id;
+	auto playerComponent = currentPlayer->GetComponent<Player>();
+	auto playerId = playerComponent->id;
 
 	auto& in = InputManager::GetInstance();
 	auto stick = in.GamepadRightStick(playerId);
-	auto show = stick.x != 0 || stick.y != 0;
+	auto show = stick.x != 0 || stick.y != 0 || playerComponent->Loading();
 
 	associated.hide = !show;
 
@@ -39,8 +44,9 @@ void PlayerAim::Update(unsigned dt) {
 		return;
 	}
 
-	auto angle = stick.GetAngle();
-	auto dist = Constants::Player::ArrowDistance;
+	const auto angle = stick.IsOrigin() ? lastAngle : stick.GetAngle();
+	lastAngle = angle;
+	const auto dist = Constants::Player::ArrowDistance;
 	auto position = dist.GetRotate(angle) + currentPlayer->box.Center();
 
 	associated.box.SetCenter(position);

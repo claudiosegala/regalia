@@ -66,6 +66,10 @@ int Charge::GetLevel() {
 	throw std::runtime_error("Something went wrong");
 }
 
+void Charge::Die() {
+	associated.RequestDelete();
+}
+
 void Charge::LoadAssets() {
 	associated.AddComponent<Sprite>(&Constants::Player::Charge);
 }

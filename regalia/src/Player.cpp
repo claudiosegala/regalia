@@ -88,6 +88,10 @@ void Player::Render() {
 #endif
 }
 
+bool Player::Loading() const {
+	return playerState & IsLoading;
+}
+
 void Player::LoadAssets() {
 	switch (personaType) {
 		case Constants::PersonaType::MISTER_N_RED:
@@ -203,18 +207,13 @@ void Player::LoadAndShoot() {
 		charge->Load();
 
 	} else if (in.GamepadRelease(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER, id) || in.GamepadAxisRelease(SDL_CONTROLLER_AXIS_TRIGGERRIGHT, id)) {
-		auto rightStick = in.GamepadRightStick(id);
-		auto bulletLevel = charge->GetLevel();
+		const auto bulletLevel = charge->GetLevel();
 
 		charge->Unload();
 
-		if (rightStick.GetLength() == 0) { // Only shoot when aiming
-			return;
-		}
-
 		canShoot = false;
 		playerState |= IsShooting;
-		bulletAngle = rightStick.GetAngle();
+		bulletAngle = playerAim->GetAngle();
 		shootingCoolDown.Start(Constants::Player::ShootingCoolDown);
 
 		const SpriteSheetData* spriteSheetData;
@@ -372,6 +371,7 @@ void Player::Die() {
 		play_state->alive_player_count--;
 	}
 
+	charge->Die();
 	associated.GetComponent<Sprite>()->RunAnimation(Constants::Player::DyingAnimation, [&]() { associated.RequestDelete(); });
 }
 

@@ -20,6 +20,8 @@ public:
 
 	int GetLevel();
 
+	void Die();
+
 private:
 	int overload = false;
 
