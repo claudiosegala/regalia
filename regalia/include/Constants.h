@@ -166,7 +166,7 @@ namespace SelectPersona {
 }
 
 namespace Countdown {
-	const bool Enabled = false; // Change this to enable or disable the countdown
+	const bool Enabled = true; // Change this to enable or disable the countdown
 	const std::string Sound = "assets/audio/Som de batalha (Regalia).ogg";
 	const int TextSize = 180;
 	const int StartValue = 3;
