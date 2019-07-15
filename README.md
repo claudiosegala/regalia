@@ -68,7 +68,7 @@ Esse jogo foi fortemente inspirado em *TowerFall*, mas com uma pegada estratégi
 
 ![tela instruções](data/game.jpeg)
 
-## Membros
+## Grupo
 
 + Claudio Segala Rodrigues Silva Filho - 150032552
   + Responsável principalmente pela colisão entre objetos, física e lógica dos estados.
@@ -76,3 +76,10 @@ Esse jogo foi fortemente inspirado em *TowerFall*, mas com uma pegada estratégi
   + Responsável principalmente pelas animações, tile maps, transição entre estados de animação e mira.
 + Ricardo Arôso Mendes Kury - 14/0161082
   + Responsável principalmente pela física, movimentação dos personagens, efeitos sonoros e gerenciamento de input dos gamepads.
+
+## Links
+
+[Repositório](https://github.com/claudiosegala/regalia)
+
+[Download dos binários (Windows 64 bits)](https://github.com/claudiosegala/regalia/releases/download/v1.0-beta/Regalia.Win64.Release.-.v1.0-beta.zip)
+
