@@ -25,7 +25,13 @@ Para a infelicidade deles, todos acharam o túmulo do grande mago ao mesmo tempo
 
 ## Como Jogar
 
+* O jogo foi desenvolvido primariamente para Windows, portanto recomenda-se o uso dessa plataforma.
+
+#### Compilando no Windows
+
 O modo preferível para se compilar o código é usando o Visual Studio. Nesse caso, basta abrir o arquivo `regalia.sln`, selecionar o alvo da compilação (Debug/Release, x64/x86) e executar o comando Build All (por padrão, atalho Ctrl + Shift + B) ou Run (Ctrl + F5), para executar o jogo imediatamente após a compilação. As dependências serão resolvidas automaticamente via Nuget.
+
+#### Compilando no Linux / Mac
 
 Em sistemas Linux e Mac (ou Windows com MinGW), é necessário instalar as dependências manualmente.
 
