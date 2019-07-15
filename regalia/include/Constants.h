@@ -31,10 +31,9 @@ namespace Window {
 namespace Game {
 	const int Sets = 9;
 	const bool FriendlyFire = false;
-	const float SetLength = 45.0f;
 	const float Gravity = 600.0f;
 	const float LongJumpGravity = 420.0f;
-	const int MillisecondsPerRound = 45000;
+	const int MillisecondsPerRound = 35000;
 	const int MinNumPlayers = 2; // TODO: change to 2
 	const int MaxNumPlayers = 4;
 	const int VictoriesToWin = 3;
